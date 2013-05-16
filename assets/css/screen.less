@@ -1,0 +1,147 @@
+@import 'wee.less';
+
+// Overrides
+
+html {
+	font-size: 52.5%;
+}
+p {
+	.font-size(1.6);
+}
+
+// Global
+
+.subpage {
+	.padding(top, 4);
+}
+
+// Header
+
+header[role='banner'] {
+	background: #006e89;
+	color: #fff;
+	.fill;
+	.font-size(2.5, 6);
+	.text-shadow(dark);
+	.container {
+		padding: 0;
+	}
+	#logo {
+		background: #006e89;
+		color: #fff;
+		padding-left: @bumperPadding;
+		sup {
+			color: #d7eaee;
+			font-family: @headingFontFamily;
+			font-weight: normal;
+			.lowercase;
+		}
+	}
+}
+nav[role='navigation'] {
+	background: darken(#006e89, 10%);
+	a {
+		color: #d7eaee;
+		.block;
+		.font-size(1.8, 6);
+		.padded;
+		.transition(color);
+		&:hover {
+			background: darken(#006e89, 12%);
+			color: #fff;
+		}
+	}
+	li {
+		border-top: 1px solid #257589;
+		&:first-child {
+			border-top: none;
+		}
+	}
+}
+#pull {
+	color: #fff;
+	position: absolute;
+	right: @bumperPadding;
+	top: 0;
+	.hide;
+}
+
+// Footer
+
+footer[role='contentinfo'] {
+	background: @lightestGrey;
+	border-top: 1px solid @lighterGrey;
+	color: @grey;
+	.align-center;
+	.margin(top, 8);
+	.min-width;
+	.padding(bottom, 3);
+	.padding(top, 2.5);
+	.text-shadow(light, 1);
+}
+
+// Index
+
+#hero {
+	.align-center;
+	.background-image('intro-background.jpg', 50%, 0, no-repeat, scroll, cover);
+	.margin(bottom, 4);
+	.container {
+		.padding(bottom, 6.5);
+		.padding(top, 6);
+	}
+	p {
+		color: #fff;
+		.centered-block(1000px);
+		.margin(bottom, 3);
+		.text-shadow(inner, dark, .3);
+		a {
+			color: @white;
+			.text-decoration(underline, dotted);
+		}
+	}
+}
+#breakdown {
+	h3 {
+		font-weight: normal;
+	}
+}
+#features {
+	h4 {
+		color: @darkerGrey;
+	}
+	p {
+		.margin(bottom, 2.5);
+	}
+}
+#examples {
+	.clear;
+}
+#left-examples {
+	&:after {
+		content: '';
+		.hr;
+	}
+}
+#getting-started {
+	&:after {
+		content: '';
+		.hr;
+	}
+	img {
+		.fill;
+		.margin(bottom, @blockMarginBottom);
+	}
+}
+
+// Media Queries
+
+@media (min-width: @mobileLandscape) {
+	.mobileLandscape;
+}
+@media (min-width: @tabletPortrait) {
+	.tabletPortrait;
+}
+@media (min-width: @smallDesktop) {
+	.smallDesktop;
+}

@@ -1,0 +1,43 @@
+# --------------------------------
+# Rewrite Rules
+# --------------------------------
+
+RewriteEngine On
+Options +FollowSymLinks
+
+#AddDefaultCharset UTF-8
+#Header set X-UA-Compatible "IE=edge,chrome=1"
+
+# Force www
+#RewriteCond %{HTTP_HOST} !^(www|cdn)\.weecss\.com [NC]
+#RewriteRule ^(.*)$ http://www.weecss.com/$1 [R=301,L]
+
+# Remove www (don't use both force and remove)
+#RewriteCond %{HTTP_HOST} ^www.weecss.com$ [NC]
+#RewriteRule ^(.*)$ http://weecss.com/$1 [R=301,L]
+
+# Remove root index file
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^/]+/)*index\.html\ HTTP/
+#RewriteRule ^(([^/]+/)*)index\.html$ http://%{HTTP_HOST}/ [R=301,NS,L,QSA]
+
+# Remove subdirectory index files
+#RewriteCond %{THE_REQUEST} ^[^/]*/index\.html/ [NC]
+#RewriteRule ^index\.html/(.+) http://%{HTTP_HOST}/$1 [R=301,L,QSA]
+
+# Remove trailing slash
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^(.+)/$ /$1 [R=301,L,QSA]
+
+# Remove extension
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME}\.html -f
+#RewriteRule ^(.*)$ $1.html
+
+# --------------------------------
+# Maintenance
+# --------------------------------
+
+#RewriteCond %{REMOTE_ADDR} !^111.111.111.
+#RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+#RewriteCond $1 !^(cdn) [NC]
+#RewriteRule ^(.*)$ /maintenance.html [R=307,L]

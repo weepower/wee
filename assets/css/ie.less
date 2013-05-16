@@ -1,0 +1,33 @@
+// WeeCSS //
+
+@ie8FallbackSize: 3;	// Assumed IE8 screen size
+
+
+
+// Editing below this point is not recommended
+
+@import 'wee.less';
+
+html {
+	font-family: '{@ie8FallbackSize}';
+}
+
+.mobilePortrait;
+
+.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 1) {
+	.mobileLandscape;
+}
+.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 2) {
+	.tabletPortrait;
+}
+.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 3) {
+	.smallDesktop;
+}
+.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 4) {
+	.mediumDesktop;
+}
+.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 5) {
+	.largeDesktop;
+}
+
+.fallback(@ie8FallbackSize);

@@ -1,0 +1,1324 @@
+// WeeCSS //
+
+///////////////
+// Variables //
+///////////////
+
+// Layout
+
+@maxWidth: 1400px;			// Maximum container width (px)
+@minWidth: 260px;			// Minimum container width (px)
+@bumperPadding: 5%;			// Bumper padding on containers (%)
+@gridMargin: 5%;			// Default margin for spaced columns (%)
+@blockMarginBottom: 1.4;	// Bottom margin for paragraphs, lists, and form elements (rem)
+
+// Greyscale
+
+@black: #000;
+@white: #fff;
+
+@lightestGrey: lighten(#000, 95%);
+@lighterGrey: lighten(#000, 85%);
+@lightGrey: lighten(#000, 75%);
+@grey: lighten(#000, 65%);
+@darkGrey: lighten(#000, 45%);
+@darkerGrey: lighten(#000, 35%);
+@darkestGrey: lighten(#000, 25%);
+
+// Base
+
+@baseColor: #000;								// Default font color
+@baseFontFamily: Arial, Helvetica, sans-serif;	// Font family
+@baseFontSize: 1.5;								// Font size (rem)
+@baseBackgroundColor: #fff;						// Body background color
+
+// Links
+
+@linkColor: #09666e;						// Color
+@linkHoverColor: darken(@linkColor, 30%);	// Hover color
+@linkActiveColor: darken(@linkColor, 50%);	// Active color
+@linkTextDecoration: none;					// Text decoration (none|underline)
+
+// Paragraphs
+
+@paragraphColor: @darkerGrey;	// Color
+@paragraphFontWeight: normal;	// Font weight (normal|bold|italic)
+@paragraphLineHeight: 1.7em;	// Line height (em)
+@paragraphMarginBottom: 1.4;	// Bottom margin (rem)
+
+// Images
+
+@imagePath: '../img/';		// Background image path
+@imageMarginBottom: 1.4;	// Bottom margin (rem)
+@imageMarginSide: 1.4;		// Horizontal margin (rem)
+
+// Lists
+
+@listFontSize: @baseFontSize;				// Font size (rem)
+@listLineHeight: @paragraphLineHeight;		// Line height (em)
+@listMarginBottom: @paragraphMarginBottom;	// Bottom margin (rem)
+
+@dtColor: @darkGrey;			// Color
+@dtFontFamily: Georgia, Times;	// Font family
+@dtFontSize: 2;					// Font size (rem)
+@dtMarginBottom: 1;				// Bottom margin (rem)
+
+// Quotes
+
+@quoteColor: @darkestGrey;			// Color
+@quoteFontFamily: Georgia, Times;	// Font family
+@quoteFontSize: 2;					// Font size (rem)
+@quoteFontStyle: italic;			// Font style (normal|italic|oblique)
+@quoteLineHeight: 1.4em;			// Line height (em)
+@quotePaddingVertical: 1em;			// Vertical padding (em)
+@quotePaddingHorizontal: 2.5em;		// Horizontal padding (em)
+@quoteBorderColor: @lightGrey;		// Border color
+
+@citeColor: @grey;					// Color
+@citeFontFamily: @baseFontFamily;	// Font family
+@citeFontSize: 1.8;					// Font size (rem)
+@citeFontStyle: normal;				// Font style (normal, italic, or oblique)
+@citeLineHeight: 1.2em;				// Line height (em)
+@citeMarginTop: 1.4;				// Margin top (rem)
+@citeIndicator: '— ';				// Indicator
+
+// Typography
+
+@smallFontSize: .8em;					// Small font size (em)
+@selectionBackgroundColor: @lightGrey;	// Browser selection color
+
+// Code
+
+@codeFontFamily: Monaco, Andale Mono, 'Courier New';	// Font family
+@codeFontSize: 1.4;										// Font size (rem)
+@codeLineHeight: 1.4em;									// Line height (em)
+@codeBorderRadius: 3px;									// Border radius (px)
+@codePaddingVertical: .15em;							// Vertical padding (em)
+@codePaddingHorizontal: .4em;							// Horizontal padding (em)
+
+// Tables
+
+@tableCellPaddingVertical: .6;				// Vertical padding (rem)
+@tableCellPaddingHorizontal: .8;			// Horizontal padding (rem)
+@tableCellLineHeight: @paragraphLineHeight;	// Line height (em)
+@tableCellBorderColor: @lightGrey;			// Border color
+
+@tableCaptionBackgroundColor: @lightestGrey;					// Background color
+@tableCaptionPaddingVertical: @tableCellPaddingVertical;		// Vertical padding (rem)
+@tableCaptionPaddingHorizontal: @tableCellPaddingHorizontal;	// Horizontal padding (rem)
+@tableCaptionFontStyle: italic;									// Font style
+
+// Horizontal Rules
+
+@ruleColor: @lightGrey;	// Color
+@ruleMargin: 2.4;		// Vertical margin (rem)
+
+// Headings
+
+@headingColor: #000;									// Color
+@headingFontFamily: 'Roboto Slab', Arial, sans-serif;	// Font family
+@headingLineHeight: 1.4em;								// Line height (em)
+@headingMarginBottom: 1.4;								// Bottom margin (rem)
+
+@h1: 4.4; // Font size (rem)
+@h2: 3.6;
+@h3: 3.0;
+@h4: 2.6;
+@h5: 2.2;
+@h6: 1.8;
+
+@subHeaderColor: @darkGrey;	// Color for subheading class
+
+// Forms
+
+@formFontFamily: @baseFontFamily;	// Font family
+@formFontSize: @baseFontSize;		// Font size (rem)
+
+@inputBorderColor: @lightGrey;	// Border color
+@inputBorderRadius: 3px;		// Border radius (px)
+@inputMinimumWidth: 200px;		// Minimum width (px)
+@inputMinimumHeight: 3.5;		// Minimum height (rem)
+@inputPaddingVertical: .2;		// Vertial padding (rem)
+@inputPaddingHorizontal: .8;	// Horizontal padding (rem)
+
+@multiSelectMinimumHeight: 8;	// Minimum height (rem)
+
+@checkboxMarginRight: .8;	// Right margin (rem)
+@checkboxMarginBottom: 1;	// Bottom margin (rem)
+
+@textareaLineHeight: 1.3;		// Line height (rem)
+@textareaMinimumHeight: 8;		// Minimum height (rem)
+@textareaResize: vertical;		// Resize (none|horizontal|vertical|both)
+@textareaPaddingVertical: 1;	// Vertical padding (rem)
+@textareaPaddingHorizontal: 1;	// Horizontal padding (rem)
+
+@legendColor: @darkerGrey;			// Color
+@legendFontFamily: @baseFontFamily;	// Font family
+@legendFontSize: 2;					// Font size (rem)
+@legendMarginBottom: 1.4;			// Bottom margin (rem)
+
+@labelFontWeight: normal;	// Font weight (normal|bold|italic)
+@labelLineHeight: 1.3;		// Line height (rem)
+@labelMarginBottom: .4;		// Margin bottom (rem)
+@labelMarginRight: 1;		// Margin right (rem)
+
+// Buttons
+
+@buttonFontSize: @baseFontSize;		// Font size (rem)
+@buttonBorderRadius: 0px;			// Border radius (px)
+@buttonPaddingVertical: .7em;		// Vertical padding (em)
+@buttonPaddingHorizontal: 2.6em;	// Horizontal padding (em)
+
+@buttonColor: #fff;											// Text color
+@buttonBackground: @darkGrey;								// Background color
+@buttonHoverBackground: darken(@buttonBackground, 5%);		// Hover background color
+@buttonActiveBackground: darken(@buttonBackground, 10%);	// Active background color
+@buttonBorderColor: darken(@buttonBackground, 5%);			// Border color
+
+@coloredButtonColor: #fff;												// Text color
+@coloredButtonBackground: #006e89;										// Background color
+@coloredButtonHoverBackground: darken(@coloredButtonBackground, 5%);	// Hover background color
+@coloredButtonActiveBackground: darken(@coloredButtonBackground, 10%);	// Active background color
+@coloredButtonBorderColor: darken(@coloredButtonBackground, 5%);		// Border color
+
+@disabledButtonColor: @darkGrey;									// Text color
+@disabledButtonBackground: @lighterGrey;							// Background color
+@disabledButtonBorderColor: darken(@disabledButtonBackground, 5%);	// Border color
+
+// Responsive
+
+@breakpointOffset: 25px;	// Breakpoint modifier
+
+@mobilePortrait: 320px;							// JavaScript value = 1
+@mobileLandscape: 480px - @breakpointOffset;	// JavaScript value = 2
+@tabletPortrait: 768px - @breakpointOffset;		// JavaScript value = 3
+@smallDesktop: 1024px - @breakpointOffset;		// JavaScript value = 4
+@mediumDesktop: 1280px - @breakpointOffset;		// JavaScript value = 5
+@largeDesktop: 1440px - @breakpointOffset;		// JavaScript value = 6
+
+@mobileNavBorderColor: #fff;	// Border color
+@mobileNavLeft: -3.2;			// Left position (negative rem)
+@mobileNavWidth: 2.4;			// Width (rem)
+@mobileNavTop: .85em;			// Top position (em)
+
+
+
+// Editing below this point is not recommended
+
+////////////
+// Mixins //
+////////////
+
+// Text Shadows
+
+.text-shadow (@value: '1px 1px 0 rgba(0, 0, 0, .2), -1px -1px 0 rgba(255, 255, 255, .2)') when (isstring(@value)) {
+	text-shadow: ~'@{value}';
+}
+.text-shadow (light, @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
+	.text-shadow('@{x} @{y} @{blur} rgba(255, 255, 255, @{alpha})');
+}
+.text-shadow (dark, @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
+	.text-shadow('@{x} @{y} @{blur} rgba(0, 0, 0, @{alpha})');
+}
+.text-shadow (inner, light, @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
+	@nx: (@x * -1);
+	@ny: (@y * -1);
+	.text-shadow('@{nx} @{ny} @{blur} rgba(255, 255, 255, @{alpha})');
+}
+.text-shadow (inner, dark, @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
+	@nx: (@x * -1);
+	@ny: (@y * -1);
+	.text-shadow('@{nx} @{ny} @{blur} rgba(0, 0, 0, @{alpha})');
+}
+
+// Box Shadows
+
+.shadow (@value: '1px 1px 0 rgba(0, 0, 0, .2), inset 1px 1px 0 rgba(255, 255, 255, .2)') when (isstring(@value)) {
+	-webkit-box-shadow: ~'@{value}';
+	box-shadow: ~'@{value}';
+}
+.shadow (light, @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+	.shadow('@{x} @{y} @{blur} @{spread} rgba(255, 255, 255, @{alpha})');
+}
+.shadow (dark, @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+	.shadow('@{x} @{y} @{blur} @{spread} rgba(0, 0, 0, @{alpha})');
+}
+.shadow (inner, light, @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+	.shadow('inset @{x} @{y} @{blur} @{spread} rgba(255, 255, 255, @{alpha})');
+}
+.shadow (inner, dark, @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+	.shadow('inset @{x} @{y} @{blur} @{spread} rgba(0, 0, 0, @{alpha})');
+}
+
+// Font Loading
+
+.load-font (@name; @file; @weight: normal; @style: normal) {
+	@font-face {
+		font-family: '@{name}';
+		src: url('../font/@{file}.eot');
+		src: url('../font/@{file}.eot?iefix') format('embedded-opentype'),
+			 url('../font/@{file}.woff') format('woff'),
+			 url('../font/@{file}.ttf') format('truetype'),
+			 url('../font/@{file}.svg#@{name}') format('svg');
+		font-weight: @weight;
+		font-style: @style;
+	}
+}
+
+// Font Selection
+
+.font (@family) {
+	font-family: @family;
+}
+.font (@family; @size) {
+	.font(@family);
+	.font-size(@size);
+}
+.font (@family; @size; @weight) {
+	font-weight: @weight;
+	.font(@family; @size);
+}
+.font (@family; @size; @weight; @height) {
+	.font(@family; @size; @weight);
+	.line-height(@height);
+}
+.font (@family; @size; @height; @weight; @style) {
+	.font(@family; @size; @weight; @height);
+	font-style: @style;
+}
+
+// Font Size
+
+.font-size (@size) when (isem(@size)), (ispixel(@size)), (ispercentage(@size)) {
+	font-size: @size;
+}
+.font-size (@size) when not (isem(@size)) and not (ispixel(@size)) and not (ispercentage(@size)) {
+	font-size: unit((@size * 10), px);
+	font-size: unit(@size, rem);
+}
+.font-size (@size; @height) {
+	.font-size(@size);
+	.line-height(@height);
+}
+
+// Text Styling
+
+.uppercase () {
+	text-transform: uppercase;
+}
+.lowercase () {
+	text-transform: lowercase;
+}
+.capitalize () {
+	text-transform: capitalize;
+}
+.no-wrap () {
+	white-space: nowrap;
+}
+.ellipsis () {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	.no-wrap;
+}
+.underline () {
+	text-decoration: underline;
+}
+.text-decoration (@line: underline; @style: solid; @color: inherit) {
+	text-decoration: @line;
+	-moz-text-decoration-line: @line;
+	-moz-text-decoration-style: @style;
+	-moz-text-decoration-color: @color;
+	text-decoration: @color @style @line;
+}
+
+// Line Height
+
+.line-height (@height) when (isem(@height)), (ispixel(@height)), (ispercentage(@height)) {
+	line-height: @height;
+}
+.line-height (@height) when not (isem(@height)) and not (ispixel(@height)) and not (ispercentage(@height)) {
+	line-height: unit((@height * 10), px);
+	line-height: unit(@height, rem);
+}
+
+// Margin
+
+.margin (top, @top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+	margin-top: @top;
+}
+.margin (top, @top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+	margin-top: unit((@top * 10), px);
+	margin-top: unit(@top, rem);
+}
+.margin (right, @right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+	margin-right: @right;
+}
+.margin (right, @right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+	margin-right: unit((@right * 10), px);
+	margin-right: unit(@right, rem);
+}
+.margin (bottom, @bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+	margin-bottom: @bottom;
+}
+.margin (bottom, @bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+	margin-bottom: unit((@bottom * 10), px);
+	margin-bottom: unit(@bottom, rem);
+}
+.margin (left, @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) { 
+	margin-left: @left;
+}
+.margin (left, @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+	margin-left: unit((@left * 10), px);
+	margin-left: unit(@left, rem);
+}
+.margin (@margin) when not (iskeyword(@margin)) and (isem(@margin)), (ispixel(@margin)), (ispercentage(@margin)) {
+	padding: @margin;
+}
+.margin (@margin) when not (iskeyword(@margin)) and not (isem(@margin)) and not (ispixel(@margin)) and not (ispercentage(@margin)) {
+	margin: unit((@margin * 10), px);
+	margin: unit(@margin, rem);
+}
+.margin (@y; @x) when not (iskeyword(@y)) {
+	.margin(@x; @y; @x; @y);
+}
+.margin (@top; @right; @bottom; @left) {
+	.margin(top; @top);
+	.margin(right; @right);
+	.margin(bottom; @bottom);
+	.margin(left; @left);
+}
+
+// Padding
+
+.padding (top, @top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+	padding-top: @top;
+}
+.padding (top, @top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+	padding-top: unit((@top * 10), px);
+	padding-top: unit(@top, rem);
+}
+.padding (right, @right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+	padding-right: @right;
+}
+.padding (right, @right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+	padding-right: unit((@right * 10), px);
+	padding-right: unit(@right, rem);
+}
+.padding (bottom, @bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+	padding-bottom: @bottom;
+}
+.padding (bottom, @bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+	padding-bottom: unit((@bottom * 10), px);
+	padding-bottom: unit(@bottom, rem);
+}
+.padding (left, @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) { 
+	padding-left: @left;
+}
+.padding (left, @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+	padding-left: unit((@left * 10), px);
+	padding-left: unit(@left, rem);
+}
+.padding (@padding) when not (iskeyword(@padding)) and (isem(@padding)), (ispixel(@padding)), (ispercentage(@padding)) {
+	padding: @padding;
+}
+.padding (@padding) when not (iskeyword(@padding)) and not (isem(@padding)) and not (ispixel(@padding)) and not (ispercentage(@padding)) {
+	padding: unit((@padding * 10), px);
+	padding: unit(@padding, rem);
+}
+.padding (@y; @x) when not (iskeyword(@y)) {
+	.padding(@y; @x; @y; @x);
+}
+.padding (@top; @right; @bottom; @left) {
+	.padding(top; @top);
+	.padding(right; @right);
+	.padding(bottom; @bottom);
+	.padding(left; @left);
+}
+
+// Rounded Corners
+
+.background-clip (@property: border) {
+	-moz-background-clip: @property;
+	-webkit-background-clip: ~'@{property}-box';
+	background-clip: ~'@{property}-box';
+}
+.rounded (@radius) when (isem(@radius)), (ispixel(@radius)), (ispercentage(@radius)) {
+	border-radius: @radius;
+	.background-clip;
+}
+.rounded (@radius) when not (isem(@radius)) and not (ispixel(@radius)) and not (ispercentage(@radius)) {
+	border-radius: unit((@radius * 10), px);
+	border-radius: unit(@radius, rem);
+	.background-clip;
+}
+.rounded (@topRight; @bottomRight; @bottomLeft; @topLeft) {
+	border-radius: @arguments;
+	.background-clip;
+}
+
+// Transitions
+
+.transition (@property: all; @duration: .2s; @ease: ease-in-out; @delay: 0s) {
+	-moz-transition: @arguments;
+	-webkit-transition: @arguments;
+	transition: @arguments;
+}
+
+// Gradients
+
+.gradient (@color: @grey; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2)) {
+	background-color: @color;
+	background-color: @start;
+	background: -moz-linear-gradient(top, @start, @end);
+	background: -webkit-gradient(linear, left top, left bottom, from(@start), to(@end));
+	background: -webkit-linear-gradient(top, @start, @end);
+	background: -linear-gradient(top, @start, @end);
+}
+.gradient-color (@color: @grey; @spread) when (ispercentage(@spead)) {
+	@lighter: lighten(@color, @spread);
+	@darker: darken(@color, @spread);
+	background: @color;
+	background: -moz-linear-gradient(top, @lighter 0%, @darker 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @lighter), color-stop(100%, @darker));
+	background: -webkit-linear-gradient(top, @lighter 0%, @darker 100%);
+	background: linear-gradient(to bottom, @lighter 0%, @darker 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{lighter}', endColorstr='@{darker}', GradientType=0);
+}
+
+// Backgrounds
+
+.background-size (...) {
+	background-size: @arguments;
+}
+.background-image (@filename; @x; @y; @repeat) {
+	background: url('@{imagePath}@{filename}') @repeat @x @y;
+}
+.background-image (@filename; @x; @y; @repeat; @attachment) {
+	.background-image(@filename; @x; @y; @repeat);
+	background-attachment: @attachment;
+}
+.background-image (@filename; @x; @y; @repeat; @attachment; @size) {
+	background-attachment: @attachment;
+	.background-image(@filename; @x; @y; @repeat; @attachment);
+	.background-size(@size);
+}
+
+// Transforms
+
+.transform (...) {
+	-ms-transform: @arguments;
+	-webkit-transform: @arguments;
+	transform: @arguments;
+}
+.rotate (@deg: 45) {
+	.transform(rotate(unit(@deg, deg)));
+}
+.scale (@ratio: 1) {
+	.transform(scale(@ratio));
+}
+.skew (@x: 45; @y: 0) {
+	.transform(skew(@x, @y));
+}
+.translate (@x: 0; @y: 0) {
+	.transform(translate(@x, @y));
+}
+.transform-origin (@x; @y: 0) {
+	.transform(transform-origin(@x, @y));
+}
+
+// Animation
+
+.animation(...) {
+	-moz-animation: @arguments;
+	-webkit-animation: @arguments;
+	animation: @arguments;
+}
+
+// Layout
+
+.block-row () {
+	width: auto;
+	margin-left: 0;
+	.block;
+}
+.block-col () {
+	width: auto;
+	margin-left: 0;
+	.block;
+}
+.centered-block () {
+	margin-left: auto;
+	margin-right: auto;
+	.block;
+}
+.centered-block (@maxWidth) {
+	max-width: @maxWidth;
+	.centered-block;
+}
+
+// Positioning
+
+.top (@top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+	top: @top;
+}
+.top (@top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+	top: unit((@top * 10), px);
+	top: unit(@top, rem);
+}
+.right (@right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+	right: @right;
+}
+.right (@right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+	right: unit((@right * 10), px);
+	right: unit(@right, rem);
+}
+.bottom (@bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+	bottom: @bottom;
+}
+.bottom (@bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+	bottom: unit((@bottom * 10), px);
+	bottom: unit(@bottom, rem);
+}
+.left (@left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
+	left: @left;
+}
+.left (@left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+	left: unit((@left * 10), px);
+	left: unit(@left, rem);
+}
+
+// Sizing
+
+.min-height (@height: @minHeight) when (isem(@height)), (ispixel(@height)), (ispercentage(@height)) {
+	min-height: @height;
+}
+.min-height (@height: @minHeight) when not (isem(@height)) and not (ispixel(@height)) and not (ispercentage(@height)) {
+	min-height: unit((@height * 10), px);
+	min-height: unit(@height, rem);
+}
+.height (@height) when (isem(@height)), (ispixel(@height)), (ispercentage(@height)) {
+	height: @height;
+}
+.height (@height) when not (isem(@height)) and not (ispixel(@height)) and not (ispercentage(@height)) {
+	height: unit((@height * 10), px);
+	height: unit(@height, rem);
+}
+.min-width (@width: @minWidth) when (isem(@width)), (ispixel(@width)), (ispercentage(@width)) {
+	min-width: @minWidth;
+}
+.min-width (@width: @minWidth) when not (isem(@width)) and not (ispixel(@width)) and not (ispercentage(@width)) {
+	min-width: unit((@minWidth * 10), px);
+	min-width: unit(@minWidth, rem);
+}
+.width (@width) when (isem(@width)), (ispixel(@width)), (ispercentage(@width)) {
+	width: @width;
+}
+.width (@width) when not (isem(@width)) and not (ispixel(@width)) and not (ispercentage(@width)) {
+	width: unit((@width * 10), px);
+	width: unit(@width, rem);
+}
+
+// Other
+
+.opacity (@alpha) {
+	opacity: (@alpha / 100);
+	filter: ~"alpha(opacity=@{alpha})";
+}
+.resizable (@direction: both) {
+	resize: @direction;
+	overflow: auto;
+}
+.hide-text () {
+	overflow: hidden;
+	text-indent: 100%;
+	.no-wrap;
+}
+.selection () {
+	background: @selectionBackgroundColor;
+	text-shadow: none;
+}
+
+////////////
+// Layout //
+////////////
+
+.padded {
+	padding-left: @bumperPadding;
+	padding-right: @bumperPadding;
+}
+.container {
+	max-width: @maxWidth;
+	min-width: @minWidth;
+	.centered-block;
+	.padded;
+}
+.row {
+	margin-left: (@gridMargin * -1);
+	max-width: (100% + @gridMargin);
+}
+.column () {
+	margin-left: @gridMargin;
+	margin-right: -.25em;
+	overflow: hidden;
+	*overflow: visible;
+	vertical-align: top;
+	.inline-block;
+}
+.col (closed, @share: 1; @columns: 12) {
+	margin-left: 0;
+	width: ((100% / @columns) * @share);
+	.column;
+}
+.col (spaced, @share: 1; @columns: 12; @margin: (@gridMargin / 2)) {
+	margin: 0 @margin;
+	width: ((100% / @columns) * @share) - @margin * 2;
+	.column;
+}
+
+///////////////
+// Normalize //
+///////////////
+
+* {
+	margin: 0;
+	outline: 0;
+	padding: 0;
+	.border-box;
+}
+html {
+	font-family: '1';
+	font-size: 62.5%;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+body {
+	background: @baseBackgroundColor;
+	color: @baseColor;
+	line-height: 1;
+	min-height: 100%;
+	position: relative;
+	.font(@baseFontFamily; @baseFontSize);
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+	.block;
+}
+embed,
+img,
+object {
+	max-width: 100%;
+}
+embed,
+object {
+	height: 100%;
+}
+audio,
+canvas,
+video {
+	.inline-block;
+}
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+b,
+strong,
+.bold {
+	font-weight: bold;
+}
+canvas {
+	-ms-touch-action: double-tap-zoom;
+}
+figure {
+	position: relative;
+}
+img {
+	vertical-align: middle;
+	-ms-interpolation-mode: bicubic;
+	.inline-block;
+}
+sub,
+sup {
+	font-size: .6em;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sub {
+	bottom: -.25em;
+	.margin(left; .3);
+}
+sup {
+	top: -1em;
+	.margin(left; .3);
+}
+::-moz-selection {
+	.selection;
+}
+::selection {
+	.selection;
+}
+
+////////////
+// Global //
+////////////
+
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.align-center {
+	text-align: center;
+}
+.align-left {
+	text-align: left;
+}
+.align-right {
+	text-align: right;
+}
+.img-left {
+	.left;
+	.margin(.35em; @imageMarginBottom; @imageMarginSide; 0);
+}
+.img-right {
+	.left;
+	.margin(.35em; 0; @imageMarginBottom; @imageMarginSide);
+}
+.hidden {
+	visibility: hidden;
+}
+.visible {
+	visibility: visible;
+}
+.hide {
+	display: none;
+}
+.show {
+	display: inherit;
+}
+.inline {
+	display: inline;
+}
+.block {
+	display: block;
+}
+.inline-block {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+.inline-list {
+	li {
+		.inline;
+	}
+}
+.spaced {
+	.margin(bottom; @blockMarginBottom);
+}
+.spaced-block {
+	.block;
+	.margin(bottom; @blockMarginBottom);
+}
+.clear {
+	clear: both;
+	*zoom: 1;
+	&:before,
+	&:after {
+		content: '';
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}
+.fill {
+	width: 100%;
+}
+.border-box {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+//////////////
+// Headings //
+//////////////
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	font-family: @headingFontFamily;
+	.line-height(@headingLineHeight);
+	.margin(bottom; @headingMarginBottom);
+	small {
+		font-weight: normal;
+	}
+}
+h1,
+.h1 {
+	.font-size(@h1);
+}
+h2,
+.h2 {
+	.font-size(@h2);
+}
+h3,
+.h3 {
+	.font-size(@h3);
+}
+h4,
+.h4 {
+	.font-size(@h4);
+}
+h5,
+.h5 {
+	.font-size(@h5);
+}
+h6,
+.h6 {
+	.font-size(@h6);
+}
+.subheader {
+	color: @subHeaderColor;
+	font-weight: normal;
+}
+
+////////////////
+// Typography //
+////////////////
+
+p {
+	color: @paragraphColor;
+	font-weight: @paragraphFontWeight;
+	.line-height(@paragraphLineHeight);
+	.margin(bottom; @paragraphMarginBottom);
+}
+small {
+	.font-size(@smallFontSize);
+}
+blockquote,
+q {
+	border-left: 1px solid @quoteBorderColor;
+	color: @quoteColor;
+	.font(@quoteFontFamily; @quoteFontSize; @quoteLineHeight; normal; @quoteFontStyle);
+	.padding(@quotePaddingVertical; @quotePaddingHorizontal);
+	cite {
+		color: @citeColor;
+		font-style: @citeFontStyle;
+		.block;
+		.font(@citeFontFamily; @citeFontSize; @citeLineHeight; normal; @citeFontStyle);
+		.margin(top; @citeMarginTop);
+		&:before {
+			content: @citeIndicator;
+		}
+	}
+}
+code {
+	background-color: @lightestGrey;
+	border: 1px solid @lightGrey;
+	color: @darkestGrey;
+	font-family: @codeFontFamily;
+	line-height: @codeLineHeight;
+	.font-size(@codeFontSize);
+	.padding(@codePaddingVertical; @codePaddingHorizontal);
+	.rounded(@codeBorderRadius);
+}
+a {
+	color: @linkColor;
+	text-decoration: @linkTextDecoration;
+	&:focus {
+		outline: thin dotted;
+	}
+	&:hover {
+		color: @linkHoverColor;
+		outline: 0;
+	}
+	&:active {
+		color: @linkActiveColor;
+		outline: 0;
+	}
+	img {
+		border: 0;
+	}
+}
+hr,
+.hr {
+	border: 0;
+	border-top: 1px solid @ruleColor;
+	height: 1px;
+	.block;
+	.margin(top; @ruleMargin);
+	.margin(bottom; @ruleMargin);
+}
+
+////////////
+// Tables //
+////////////
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	empty-cells: show;
+	table-layout: fixed;
+	word-wrap: break-word;
+	*white-space: normal;
+	-ms-word-wrap: break-word;
+	.fill;
+	td,
+	th {
+		border-top: 1px solid @tableCellBorderColor;
+		line-height: @tableCellLineHeight;
+		vertical-align: top;
+		.align-left;
+		.padding(@tableCellPaddingVertical; @tableCellPaddingHorizontal);
+	}
+	thead,
+	tfoot {
+		.bold;
+		th {
+			color: @darkestGrey;
+			vertical-align: bottom;
+		}
+	}
+	caption {
+		background-color: @tableCaptionBackgroundColor;
+		border-bottom: 0;
+		font-style: @tableCaptionFontStyle;
+		.padding(@tableCaptionPaddingVertical; @tableCaptionPaddingHorizontal);
+	}
+}
+
+///////////
+// Lists //
+///////////
+
+dl,
+ol,
+ul {
+	list-style-position: inside;
+	.font-size(@listFontSize);
+	.line-height(@listLineHeight);
+	.margin(bottom; @listMarginBottom);
+}
+ol,
+ul {
+	ol,
+	ul {
+		margin-left: 20px;
+		margin-bottom: 0;
+	}
+}
+ul {
+	list-style-type: disc;
+}
+ol {
+	list-style-type: decimal;
+}
+nav {
+	ol,
+	ul {
+		list-style: none;
+		margin: 0;
+	}
+}
+dt {
+	color: @dtColor;
+	font-family: @dtFontFamily;
+	.font-size(@dtFontSize);
+	.margin(bottom; @dtMarginBottom);
+}
+
+///////////
+// Forms //
+///////////
+
+form {
+	.margin(bottom; @blockMarginBottom);
+}
+button,
+input,
+select,
+textarea {
+	font-family: @formFontFamily;
+	line-height: normal;
+	margin: 0;
+	vertical-align: baseline;
+	*vertical-align: middle;
+	.font-size(@formFontSize);
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+fieldset {
+	border: 0;
+	.margin(bottom; @blockMarginBottom);
+}
+legend {
+	border: 0;
+	color: @legendColor;
+	font-family: @legendFontFamily;
+	line-height: normal;
+	.fill;
+	.font-size(@legendFontSize);
+	.spaced-block;
+}
+label {
+	font-weight: @labelFontWeight;
+	.block;
+	.line-height(@labelLineHeight);
+	.margin(bottom; @labelMarginBottom);
+}
+.checkbox {
+	.block;
+	.margin(bottom, @checkboxMarginBottom);
+	input {
+		&[type='checkbox'],
+		&[type='radio'] {
+			padding: 0;
+			.left;
+			.margin(right; @checkboxMarginRight);
+			.margin(top; ((@labelLineHeight - 1) / 2));
+		}
+	}
+	label {
+		overflow: hidden;
+		*zoom: 1;
+		.line-height(@labelLineHeight);
+	}
+}
+input[type='email'],
+input[type='file'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+textarea {
+	background-color: #fff;
+	border: 1px solid @inputBorderColor;
+	color: @darkGrey;
+	width: 100%;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	.background-clip;
+	.font-size(@formFontSize; 1.3);
+	.margin(bottom; @blockMarginBottom);
+	.min-height(@inputMinimumHeight);
+	.min-width(@inputMinimumWidth);
+	.padding(@inputPaddingVertical; @inputPaddingHorizontal);
+	.rounded(@inputBorderRadius);
+	.shadow(inner; dark; .1; 1px; 1px; 2px; 0);
+	&:hover {
+		border: 1px solid darken(@inputBorderColor, 10%);
+	}
+	&:focus {
+		.shadow(dark; .1; 0; 0; 2px; 2px);
+	}
+}
+input {
+	&[type='button'],
+	&[type='reset'],
+	&[type='submit'] {
+		cursor: pointer;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+	}
+}
+select {
+	border: 1px solid @inputBorderColor;
+	outline: 0;
+	padding: 7px;
+	width: 99%;
+	.font-size(1.4);
+	.inline-block;
+	.margin(bottom; @blockMarginBottom);
+	.min-width(@inputMinimumWidth);
+	.rounded(@inputBorderRadius);
+	&:hover {
+		border: 1px solid darken(@inputBorderColor, 10%);
+	}
+	&[multiple] {
+		vertical-align: top;
+		.min-height(@multiSelectMinimumHeight);
+	}
+}
+textarea {
+	overflow: auto;
+	resize: @textareaResize;
+	vertical-align: top;
+	.line-height(@textareaLineHeight);
+	.min-height(@textareaMinimumHeight);
+	.padding(@textareaPaddingVertical; @textareaPaddingHorizontal);
+}
+button[disabled],
+input[disabled] {
+	cursor: default;
+}
+.inline-field {
+	button,
+	input,
+	select,
+	textarea {
+		width: auto;
+		.inline-block;
+	}
+	label {
+		.inline-block;
+		.margin(right; @labelMarginRight);
+	}
+}
+
+/////////////
+// Buttons //
+/////////////
+
+.button {
+	background: @buttonBackground;
+	border: 1px solid @buttonBorderColor;
+	color: @buttonColor;
+	cursor: pointer;
+	-webkit-tap-highlight-color: @buttonHoverBackground;
+	.font-size(@buttonFontSize);
+	.inline-block;
+	.margin(bottom; @blockMarginBottom);
+	.padding(@buttonPaddingVertical; @buttonPaddingHorizontal);
+	.rounded(@buttonBorderRadius);
+	.shadow(inner; light; .3; 0);
+	.transition(background-color);
+	&:hover {
+		background: @buttonHoverBackground;
+		color: @buttonColor;
+	}
+	&:active {
+		background: @buttonActiveBackground;
+		color: @buttonColor;
+	}
+}
+.colored-button {
+	background: @coloredButtonBackground;
+	border-color: @coloredButtonBorderColor;
+	color: @coloredButtonColor;
+	-webkit-tap-highlight-color: @coloredButtonHoverBackground;
+	&:hover {
+		background: @coloredButtonHoverBackground;
+		color: @coloredButtonColor;
+	}
+	&:active {
+		background: @coloredButtonActiveBackground;
+		color: @coloredButtonColor;
+	}
+}
+.button[disabled],
+.disabled-button {
+	&,
+	&:active,
+	&:hover {
+		background: @disabledButtonBackground;
+		border: 1px solid @disabledButtonBorderColor;
+		color: @disabledButtonColor;
+	}
+}
+
+////////////////
+// Responsive //
+////////////////
+
+.mobile-nav:before {
+	content: '';
+	border-bottom: .15em solid @mobileNavBorderColor;
+	border-top: .45em double @mobileNavBorderColor;
+	height: .15em;
+	position: absolute;
+	.left(@mobileNavLeft);
+	.top(@mobileNavTop);
+	.width(@mobileNavWidth);
+}
+.desktop-only
+.tablet-only, {
+	.hide;
+}
+
+.mobilePortrait () {
+	@import 'breakpoints/mobilePortrait.less';
+}
+.mobileLandscape () {
+	@import 'breakpoints/mobileLandscape.less';
+}
+.tabletPortrait () {
+	@import 'breakpoints/tabletPortrait.less';
+}
+.smallDesktop () {
+	@import 'breakpoints/smallDesktop.less';
+}
+.mediumDesktop () {
+	@import 'breakpoints/mediumDesktop.less';
+}
+.largeDesktop () {
+	@import 'breakpoints/largeDesktop.less';
+}
+
+@media (min-width: @mobilePortrait) {
+	.not-mobile {
+		.hide;
+	}
+}
+@media (min-width: @mobileLandscape) {
+	html {
+		font-family: '2';
+	}
+}
+@media (min-width: @tabletPortrait) {
+	html {
+		font-family: '3';
+	}
+	.tablet-only {
+		.show;
+	}
+	.mobile-only,
+	.not-tablet {
+		.hide;
+	}
+}
+@media (min-width: @smallDesktop) {
+	html {
+		font-family: '4';
+	}
+	.desktop-only {
+		.show;
+	}
+	.not-desktop,
+	.tablet-only {
+		.hide;
+	}
+}
+@media (min-width: @mediumDesktop) {
+	html {
+		font-family: '5';
+	}
+}
+@media (min-width: @largeDesktop) {
+	html {
+		font-family: '6';
+	}
+}
