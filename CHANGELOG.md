@@ -1,3 +1,9 @@
+# 0.1.2
+
+2013-05-17
+
+- FIXED: Updated header tags to use predefined variable
+
 # 0.1.1
 
 2013-05-17

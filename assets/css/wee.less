@@ -115,7 +115,7 @@
 
 // Headings
 
-@headingColor: #000;									// Color
+@headingColor: @black;									// Color
 @headingFontFamily: 'Roboto Slab', Arial, sans-serif;	// Font family
 @headingLineHeight: 1.4em;								// Line height (em)
 @headingMarginBottom: 1.4;								// Bottom margin (rem)
@@ -868,6 +868,7 @@ h6,
 .h4,
 .h5,
 .h6 {
+	color: @headingColor;
 	font-family: @headingFontFamily;
 	.line-height(@headingLineHeight);
 	.margin(bottom; @headingMarginBottom);
