@@ -30,7 +30,7 @@
 @baseColor: #000;								// Default font color
 @baseFontFamily: Arial, Helvetica, sans-serif;	// Font family
 @baseFontSize: 1.5;								// Font size (rem)
-@baseBackgroundColor: #fff;						// Body background color
+@baseBackgroundColor: @white;					// Body background color
 
 // Links
 
@@ -134,20 +134,21 @@
 @formFontFamily: @baseFontFamily;	// Font family
 @formFontSize: @baseFontSize;		// Font size (rem)
 
+@inputBackground: @white;		// Background
 @inputBorderColor: @lightGrey;	// Border color
 @inputBorderRadius: 3px;		// Border radius (px)
-@inputMinimumWidth: 200px;		// Minimum width (px)
-@inputMinimumHeight: 3.5;		// Minimum height (rem)
+@inputMinWidth: 200px;			// Minimum width (px)
+@inputMinHeight: 3.5;			// Minimum height (rem)
 @inputPaddingVertical: .2;		// Vertial padding (rem)
 @inputPaddingHorizontal: .8;	// Horizontal padding (rem)
 
-@multiSelectMinimumHeight: 8;	// Minimum height (rem)
+@multiSelectMinHeight: 8;		// Minimum height (rem)
 
 @checkboxMarginRight: .8;	// Right margin (rem)
 @checkboxMarginBottom: 1;	// Bottom margin (rem)
 
 @textareaLineHeight: 1.3;		// Line height (rem)
-@textareaMinimumHeight: 8;		// Minimum height (rem)
+@textareaMinHeight: 8;			// Minimum height (rem)
 @textareaResize: vertical;		// Resize (none|horizontal|vertical|both)
 @textareaPaddingVertical: 1;	// Vertical padding (rem)
 @textareaPaddingHorizontal: 1;	// Horizontal padding (rem)
@@ -169,13 +170,13 @@
 @buttonPaddingVertical: .7em;		// Vertical padding (em)
 @buttonPaddingHorizontal: 2.6em;	// Horizontal padding (em)
 
-@buttonColor: #fff;											// Text color
+@buttonColor: @white;										// Text color
 @buttonBackground: @darkGrey;								// Background color
 @buttonHoverBackground: darken(@buttonBackground, 5%);		// Hover background color
 @buttonActiveBackground: darken(@buttonBackground, 10%);	// Active background color
 @buttonBorderColor: darken(@buttonBackground, 5%);			// Border color
 
-@coloredButtonColor: #fff;												// Text color
+@coloredButtonColor: @white;											// Text color
 @coloredButtonBackground: #006e89;										// Background color
 @coloredButtonHoverBackground: darken(@coloredButtonBackground, 5%);	// Hover background color
 @coloredButtonActiveBackground: darken(@coloredButtonBackground, 10%);	// Active background color
@@ -196,7 +197,7 @@
 @mediumDesktop: 1280px - @breakpointOffset;		// JavaScript value = 5
 @largeDesktop: 1440px - @breakpointOffset;		// JavaScript value = 6
 
-@mobileNavBorderColor: #fff;	// Border color
+@mobileNavBorderColor: @white;	// Border color
 @mobileNavLeft: -3.2;			// Left position (negative rem)
 @mobileNavWidth: 2.4;			// Width (rem)
 @mobileNavTop: .85em;			// Top position (em)
@@ -604,11 +605,11 @@
 	height: unit(@height, rem);
 }
 .min-width (@width: @minWidth) when (isem(@width)), (ispixel(@width)), (ispercentage(@width)) {
-	min-width: @minWidth;
+	min-width: @width;
 }
 .min-width (@width: @minWidth) when not (isem(@width)) and not (ispixel(@width)) and not (ispercentage(@width)) {
-	min-width: unit((@minWidth * 10), px);
-	min-width: unit(@minWidth, rem);
+	min-width: unit((@width * 10), px);
+	min-width: unit(@width, rem);
 }
 .width (@width) when (isem(@width)), (ispixel(@width)), (ispercentage(@width)) {
 	width: @width;
@@ -1115,7 +1116,7 @@ input[type='search'],
 input[type='tel'],
 input[type='text'],
 textarea {
-	background-color: #fff;
+	background: @inputBackground;
 	border: 1px solid @inputBorderColor;
 	color: @darkGrey;
 	width: 100%;
@@ -1124,8 +1125,8 @@ textarea {
 	.background-clip;
 	.font-size(@formFontSize; 1.3);
 	.margin(bottom; @blockMarginBottom);
-	.min-height(@inputMinimumHeight);
-	.min-width(@inputMinimumWidth);
+	.min-height(@inputMinHeight);
+	.min-width(@inputMinWidth);
 	.padding(@inputPaddingVertical; @inputPaddingHorizontal);
 	.rounded(@inputBorderRadius);
 	.shadow(inner; dark; .1; 1px; 1px; 2px; 0);
@@ -1153,14 +1154,14 @@ select {
 	.font-size(1.4);
 	.inline-block;
 	.margin(bottom; @blockMarginBottom);
-	.min-width(@inputMinimumWidth);
+	.min-width(@inputMinWidth);
 	.rounded(@inputBorderRadius);
 	&:hover {
 		border: 1px solid darken(@inputBorderColor, 10%);
 	}
 	&[multiple] {
 		vertical-align: top;
-		.min-height(@multiSelectMinimumHeight);
+		.min-height(@multiSelectMinHeight);
 	}
 }
 textarea {
@@ -1168,7 +1169,7 @@ textarea {
 	resize: @textareaResize;
 	vertical-align: top;
 	.line-height(@textareaLineHeight);
-	.min-height(@textareaMinimumHeight);
+	.min-height(@textareaMinHeight);
 	.padding(@textareaPaddingVertical; @textareaPaddingHorizontal);
 }
 button[disabled],
