@@ -12,18 +12,18 @@
 @gridMargin: 5%;			// Default margin for spaced columns (%)
 @blockMarginBottom: 1.4;	// Bottom margin for paragraphs, lists, and form elements (rem)
 
-// Greyscale
+// Grayscale
 
 @black: #000;
 @white: #fff;
 
-@lightestGrey: lighten(#000, 95%);
-@lighterGrey: lighten(#000, 85%);
-@lightGrey: lighten(#000, 75%);
-@grey: lighten(#000, 65%);
-@darkGrey: lighten(#000, 45%);
-@darkerGrey: lighten(#000, 35%);
-@darkestGrey: lighten(#000, 25%);
+@lightestGray: lighten(#000, 95%);
+@lighterGray: lighten(#000, 85%);
+@lightGray: lighten(#000, 75%);
+@gray: lighten(#000, 65%);
+@darkGray: lighten(#000, 45%);
+@darkerGray: lighten(#000, 35%);
+@darkestGray: lighten(#000, 25%);
 
 // Base
 
@@ -41,7 +41,7 @@
 
 // Paragraphs
 
-@paragraphColor: @darkerGrey;	// Color
+@paragraphColor: @darkerGray;	// Color
 @paragraphFontWeight: normal;	// Font weight (normal|bold|italic)
 @paragraphLineHeight: 1.7em;	// Line height (em)
 @paragraphMarginBottom: 1.4;	// Bottom margin (rem)
@@ -58,23 +58,23 @@
 @listLineHeight: @paragraphLineHeight;		// Line height (em)
 @listMarginBottom: @paragraphMarginBottom;	// Bottom margin (rem)
 
-@dtColor: @darkGrey;			// Color
+@dtColor: @darkGray;			// Color
 @dtFontFamily: Georgia, Times;	// Font family
 @dtFontSize: 2;					// Font size (rem)
 @dtMarginBottom: 1;				// Bottom margin (rem)
 
 // Quotes
 
-@quoteColor: @darkestGrey;			// Color
+@quoteColor: @darkestGray;			// Color
 @quoteFontFamily: Georgia, Times;	// Font family
 @quoteFontSize: 2;					// Font size (rem)
 @quoteFontStyle: italic;			// Font style (normal|italic|oblique)
 @quoteLineHeight: 1.4em;			// Line height (em)
 @quotePaddingVertical: 1em;			// Vertical padding (em)
 @quotePaddingHorizontal: 2.5em;		// Horizontal padding (em)
-@quoteBorderColor: @lightGrey;		// Border color
+@quoteBorderColor: @lightGray;		// Border color
 
-@citeColor: @grey;					// Color
+@citeColor: @gray;					// Color
 @citeFontFamily: @baseFontFamily;	// Font family
 @citeFontSize: 1.8;					// Font size (rem)
 @citeFontStyle: normal;				// Font style (normal, italic, or oblique)
@@ -85,7 +85,7 @@
 // Typography
 
 @smallFontSize: .8em;					// Small font size (em)
-@selectionBackgroundColor: @lightGrey;	// Browser selection color
+@selectionBackgroundColor: @lightGray;	// Browser selection color
 
 // Code
 
@@ -101,16 +101,16 @@
 @tableCellPaddingVertical: .6;				// Vertical padding (rem)
 @tableCellPaddingHorizontal: .8;			// Horizontal padding (rem)
 @tableCellLineHeight: @paragraphLineHeight;	// Line height (em)
-@tableCellBorderColor: @lightGrey;			// Border color
+@tableCellBorderColor: @lightGray;			// Border color
 
-@tableCaptionBackgroundColor: @lightestGrey;					// Background color
+@tableCaptionBackgroundColor: @lightestGray;					// Background color
 @tableCaptionPaddingVertical: @tableCellPaddingVertical;		// Vertical padding (rem)
 @tableCaptionPaddingHorizontal: @tableCellPaddingHorizontal;	// Horizontal padding (rem)
 @tableCaptionFontStyle: italic;									// Font style
 
 // Horizontal Rules
 
-@ruleColor: @lightGrey;	// Color
+@ruleColor: @lightGray;	// Color
 @ruleMargin: 2.4;		// Vertical margin (rem)
 
 // Headings
@@ -127,7 +127,7 @@
 @h5: 2.2;
 @h6: 1.8;
 
-@subHeaderColor: @darkGrey;	// Color for subheading class
+@subHeaderColor: @darkGray;	// Color for subheading class
 
 // Forms
 
@@ -135,7 +135,7 @@
 @formFontSize: @baseFontSize;		// Font size (rem)
 
 @inputBackground: @white;		// Background
-@inputBorderColor: @lightGrey;	// Border color
+@inputBorderColor: @lightGray;	// Border color
 @inputBorderRadius: 3px;		// Border radius (px)
 @inputMinWidth: 200px;			// Minimum width (px)
 @inputMinHeight: 3.5;			// Minimum height (rem)
@@ -153,7 +153,7 @@
 @textareaPaddingVertical: 1;	// Vertical padding (rem)
 @textareaPaddingHorizontal: 1;	// Horizontal padding (rem)
 
-@legendColor: @darkerGrey;			// Color
+@legendColor: @darkerGray;			// Color
 @legendFontFamily: @baseFontFamily;	// Font family
 @legendFontSize: 2;					// Font size (rem)
 @legendMarginBottom: 1.4;			// Bottom margin (rem)
@@ -171,7 +171,7 @@
 @buttonPaddingHorizontal: 2.6em;	// Horizontal padding (em)
 
 @buttonColor: @white;										// Text color
-@buttonBackground: @darkGrey;								// Background color
+@buttonBackground: @darkGray;								// Background color
 @buttonHoverBackground: darken(@buttonBackground, 5%);		// Hover background color
 @buttonActiveBackground: darken(@buttonBackground, 10%);	// Active background color
 @buttonBorderColor: darken(@buttonBackground, 5%);			// Border color
@@ -182,8 +182,8 @@
 @coloredButtonActiveBackground: darken(@coloredButtonBackground, 10%);	// Active background color
 @coloredButtonBorderColor: darken(@coloredButtonBackground, 5%);		// Border color
 
-@disabledButtonColor: @darkGrey;									// Text color
-@disabledButtonBackground: @lighterGrey;							// Background color
+@disabledButtonColor: @darkGray;									// Text color
+@disabledButtonBackground: @lighterGray;							// Background color
 @disabledButtonBorderColor: darken(@disabledButtonBackground, 5%);	// Border color
 
 // Responsive
@@ -483,7 +483,7 @@
 
 // Gradients
 
-.gradient (@color: @grey; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2)) {
+.gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2)) {
 	background-color: @color;
 	background-color: @start;
 	background: -moz-linear-gradient(top, @start, @end);
@@ -491,7 +491,7 @@
 	background: -webkit-linear-gradient(top, @start, @end);
 	background: -linear-gradient(top, @start, @end);
 }
-.gradient-color (@color: @grey; @spread) when (ispercentage(@spead)) {
+.gradient-color (@color: @gray; @spread) when (ispercentage(@spead)) {
 	@lighter: lighten(@color, @spread);
 	@darker: darken(@color, @spread);
 	background: @color;
@@ -952,9 +952,9 @@ q {
 	}
 }
 code {
-	background-color: @lightestGrey;
-	border: 1px solid @lightGrey;
-	color: @darkestGrey;
+	background-color: @lightestGray;
+	border: 1px solid @lightGray;
+	color: @darkestGray;
 	font-family: @codeFontFamily;
 	line-height: @codeLineHeight;
 	.font-size(@codeFontSize);
@@ -1014,7 +1014,7 @@ table {
 	tfoot {
 		.bold;
 		th {
-			color: @darkestGrey;
+			color: @darkestGray;
 			vertical-align: bottom;
 		}
 	}
@@ -1135,7 +1135,7 @@ input[type='text'],
 textarea {
 	background: @inputBackground;
 	border: 1px solid @inputBorderColor;
-	color: @darkGrey;
+	color: @darkGray;
 	width: 100%;
 	-moz-appearance: none;
 	-webkit-appearance: none;

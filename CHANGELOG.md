@@ -5,6 +5,7 @@
 - FIXED: Resolved issue where margin was being applied to closed columns
 - UPDATED: Removed closed keyword from closed col mixin
 - UPDATED: Renamed col mixin to column and column to grid
+- UPDATED: Renamed grey variable names to gray
 
 # 0.1.3
 
