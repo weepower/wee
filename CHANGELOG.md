@@ -1,3 +1,11 @@
+# 0.1.4
+
+2013-05-19
+
+- FIXED: Resolved issue where margin was being applied to closed columns
+- UPDATED: Removed closed keyword from closed col mixin
+- UPDATED: Renamed col mixin to column and column to grid
+
 # 0.1.3
 
 2013-05-18

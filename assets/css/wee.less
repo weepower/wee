@@ -673,23 +673,23 @@
 	margin-left: (@gridMargin * -1);
 	max-width: (100% + @gridMargin);
 }
-.column () {
-	margin-left: @gridMargin;
+.grid (@margin: @gridMargin) {
+	margin-left: @margin;
 	margin-right: -.25em;
 	overflow: hidden;
 	*overflow: visible;
 	vertical-align: top;
 	.inline-block;
 }
-.col (closed, @share: 1; @columns: 12) {
+.column (@share; @columns) when not (iskeyword(@share)) {
 	margin-left: 0;
 	width: ((100% / @columns) * @share);
-	.column;
+	.grid(0);
 }
-.col (spaced, @share: 1; @columns: 12; @margin: (@gridMargin / 2)) {
+.column (spaced, @share; @columns; @margin: (@gridMargin / 2)) {
 	margin: 0 @margin;
-	width: ((100% / @columns) * @share) - @margin * 2;
-	.column;
+	width: (((100% / @columns) * @share) - (@margin * 2));
+	.grid;
 }
 
 ///////////////
