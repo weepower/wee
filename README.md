@@ -1,4 +1,4 @@
-# [WeeCSS Beta 0.l.2](https://github.com/weestack/weecss)
+# [WeeCSS Beta 0.l.3](https://github.com/weestack/weecss)
 
 Wee is a lightweight, extensible bootstrap that empowers you to rapidly build responsive, semantic web interfaces. To read more, visit [http://www.weecss.com](http://www.weecss.com).
 

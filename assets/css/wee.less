@@ -372,6 +372,14 @@
 	margin-left: unit((@left * 10), px);
 	margin-left: unit(@left, rem);
 }
+.margin (horizontal, @x) {
+	.margin(left; @x);
+	.margin(right; @x);
+}
+.margin (vertical, @y) {
+	.margin(top; @y);
+	.margin(bottom; @y);
+}
 .margin (@margin) when not (iskeyword(@margin)) and (isem(@margin)), (ispixel(@margin)), (ispercentage(@margin)) {
 	padding: @margin;
 }
@@ -380,7 +388,7 @@
 	margin: unit(@margin, rem);
 }
 .margin (@y; @x) when not (iskeyword(@y)) {
-	.margin(@x; @y; @x; @y);
+	.margin(@y; @x; @y; @x);
 }
 .margin (@top; @right; @bottom; @left) {
 	.margin(top; @top);
@@ -418,6 +426,14 @@
 .padding (left, @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
 	padding-left: unit((@left * 10), px);
 	padding-left: unit(@left, rem);
+}
+.padding (horizontal, @x) {
+	.padding(left; @x);
+	.padding(right; @x);
+}
+.padding (vertical, @y) {
+	.padding(top; @y);
+	.padding(bottom; @y);
 }
 .padding (@padding) when not (iskeyword(@padding)) and (isem(@padding)), (ispixel(@padding)), (ispercentage(@padding)) {
 	padding: @padding;
