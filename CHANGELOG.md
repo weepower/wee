@@ -1,3 +1,13 @@
+# 0.1.5
+
+2013-05-20
+
+- FIXED: Resolved issue with overflow on grid columns
+- UPDATED: Removed IE hacks from main wee.less and added them to ie.less
+- UPDATED: Updated formFontFamily and formFontSize to inputFontFamily and inputFontSize
+- ADDED: Added @placeholderColor variable for input placeholders
+- ADDED: Added @InputColor variable for input text color
+
 # 0.1.4
 
 2013-05-19

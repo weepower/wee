@@ -1,6 +1,6 @@
 // WeeCSS //
 
-@ie8FallbackSize: 3;	// Assumed IE8 screen size
+@breakpoint: 3;	// Assumed IE8 screen size
 
 
 
@@ -8,26 +8,56 @@
 
 @import 'wee.less';
 
+///////////////////
+// Compatability //
+///////////////////
+
+.inline-block {
+	*display: inline;
+	*zoom: 1;
+}
+.clear {
+	*zoom: 1;
+}
+table {
+	*white-space: normal;
+}
+button,
+input,
+select,
+textarea {
+	*vertical-align: middle;
+}
+.checkbox {
+	label {
+		*zoom: 1;
+	}
+}
+
+////////////////
+// Responsive //
+////////////////
+
 html {
-	font-family: '{@ie8FallbackSize}';
+	font-family: '{@breakpoint}';
 }
 
 .mobilePortrait;
 
-.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 1) {
+.fallback (@breakpoint) when (@breakpoint > 1) {
 	.mobileLandscape;
 }
-.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 2) {
+.fallback (@breakpoint) when (@breakpoint > 2) {
 	.tabletPortrait;
 }
-.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 3) {
+.fallback (@breakpoint) when (@breakpoint > 3) {
 	.smallDesktop;
 }
-.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 4) {
+.fallback (@breakpoint) when (@breakpoint > 4) {
 	.mediumDesktop;
 }
-.fallback (@ie8FallbackSize) when (@ie8FallbackSize > 5) {
+.fallback (@breakpoint) when (@breakpoint > 5) {
 	.largeDesktop;
 }
 
-.fallback(@ie8FallbackSize);
+.fallback(@breakpoint);

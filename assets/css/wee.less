@@ -131,9 +131,9 @@
 
 // Forms
 
-@formFontFamily: @baseFontFamily;	// Font family
-@formFontSize: @baseFontSize;		// Font size (rem)
-
+@inputFontFamily: @baseFontFamily;	// Font family
+@inputFontSize: @baseFontSize;		// Font size (rem)
+@inputColor: @darkerGray;		// Color
 @inputBackground: @white;		// Background
 @inputBorderColor: @lightGray;	// Border color
 @inputBorderRadius: 3px;		// Border radius (px)
@@ -141,6 +141,8 @@
 @inputMinHeight: 3.5;			// Minimum height (rem)
 @inputPaddingVertical: .2;		// Vertial padding (rem)
 @inputPaddingHorizontal: .8;	// Horizontal padding (rem)
+
+@placeholderColor: ligten(@inputColor, 40%);	// Color
 
 @multiSelectMinHeight: 8;		// Minimum height (rem)
 
@@ -676,8 +678,6 @@
 .grid (@margin: @gridMargin) {
 	margin-left: @margin;
 	margin-right: -.25em;
-	overflow: hidden;
-	*overflow: visible;
 	vertical-align: top;
 	.inline-block;
 }
@@ -832,8 +832,6 @@ sup {
 }
 .inline-block {
 	display: inline-block;
-	*display: inline;
-	*zoom: 1;
 }
 .inline-list {
 	li {
@@ -849,7 +847,6 @@ sup {
 }
 .clear {
 	clear: both;
-	*zoom: 1;
 	&:before,
 	&:after {
 		content: '';
@@ -999,7 +996,6 @@ table {
 	empty-cells: show;
 	table-layout: fixed;
 	word-wrap: break-word;
-	*white-space: normal;
 	-ms-word-wrap: break-word;
 	.fill;
 	td,
@@ -1077,17 +1073,28 @@ button,
 input,
 select,
 textarea {
-	font-family: @formFontFamily;
 	line-height: normal;
 	margin: 0;
 	vertical-align: baseline;
-	*vertical-align: middle;
-	.font-size(@formFontSize);
+	.font(@inputFontFamily);
+	.font-size(@inputFontSize);
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner {
 	border: 0;
 	padding: 0;
+}
+::-webkit-input-placeholder {
+	color: @placeholderColor;
+}
+:-moz-placeholder {
+	color: @placeholderColor;
+}
+::-moz-placeholder {
+	color: @placeholderColor;
+}
+:-ms-input-placeholder {
+	color: @placeholderColor;
 }
 fieldset {
 	border: 0;
@@ -1122,7 +1129,6 @@ label {
 	}
 	label {
 		overflow: hidden;
-		*zoom: 1;
 		.line-height(@labelLineHeight);
 	}
 }
@@ -1135,12 +1141,11 @@ input[type='text'],
 textarea {
 	background: @inputBackground;
 	border: 1px solid @inputBorderColor;
-	color: @darkGray;
+	color: @inputColor;
 	width: 100%;
 	-moz-appearance: none;
 	-webkit-appearance: none;
-	.background-clip;
-	.font-size(@formFontSize; 1.3);
+	.background-clip;;
 	.margin(bottom; @blockMarginBottom);
 	.min-height(@inputMinHeight);
 	.min-width(@inputMinWidth);
