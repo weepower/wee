@@ -34,27 +34,26 @@ header[role='banner'] {
 			color: #d7eaee;
 			font-family: @headingFontFamily;
 			font-weight: normal;
-			.lowercase;
 		}
 	}
 }
 nav[role='navigation'] {
 	background: darken(#006e89, 10%);
+	li {
+		border-top: 1px solid #257589;
+		&:first-child {
+			border-top: none;
+		}
+	}
 	a {
 		color: #d7eaee;
+		.block;
 		.font-size(1.8, 6);
-		.inline-block;
 		.padded;
 		.transition(color);
 		&:hover {
 			background: darken(#006e89, 12%);
 			color: #fff;
-		}
-	}
-	li {
-		border-top: 1px solid #257589;
-		&:first-child {
-			border-top: none;
 		}
 	}
 }
@@ -124,10 +123,6 @@ footer[role='contentinfo'] {
 	}
 }
 #getting-started {
-	&:after {
-		content: '';
-		.hr;
-	}
 	img {
 		.fill;
 		.margin(bottom, @blockMarginBottom);

@@ -13,14 +13,14 @@ header[role='banner'] {
 		.padded;
 	}
 	#logo {
-		float: left;
 		padding: 0;
+		.left;
 	}
 }
 nav[role='navigation'] {
 	background: none;
-	float: right;
 	padding: 0;
+	.right;
 	ul {
 		.inline-list;
 	}
@@ -29,6 +29,7 @@ nav[role='navigation'] {
 		padding: 0;
 	}
 	a {
+		.inline-block;
 		.padding(0, 1.4);
 		&:hover {
 			background: inherit;

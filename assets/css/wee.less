@@ -675,20 +675,18 @@
 	margin-left: (@gridMargin * -1);
 	max-width: (100% + @gridMargin);
 }
-.grid (@margin: @gridMargin) {
+.grid (@margin: (@gridMargin - .25%)) {
 	margin-left: @margin;
 	margin-right: -.25em;
 	vertical-align: top;
 	.inline-block;
 }
 .column (@share; @columns) when not (iskeyword(@share)) {
-	margin-left: 0;
 	width: ((100% / @columns) * @share);
 	.grid(0);
 }
 .column (spaced, @share; @columns; @margin: (@gridMargin / 2)) {
-	margin: 0 @margin;
-	width: (((100% / @columns) * @share) - (@margin * 2));
+	width: (((100% / @columns) * @share) - (@margin * 2) + .25%);
 	.grid;
 }
 
@@ -700,6 +698,7 @@
 	margin: 0;
 	outline: 0;
 	padding: 0;
+	vertical-align: middle;
 	.border-box;
 }
 html {
@@ -759,7 +758,6 @@ figure {
 	position: relative;
 }
 img {
-	vertical-align: middle;
 	-ms-interpolation-mode: bicubic;
 	.inline-block;
 }

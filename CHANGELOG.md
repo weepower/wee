@@ -1,3 +1,11 @@
+# 0.1.6
+
+2013-05-22
+
+- FIXED: Adjusted math to more accurately size spaced columns
+- UPDATED: Replaced a few example LESS rules with mixins
+- ADDED: Added rel="home" to home link
+
 # 0.1.5
 
 2013-05-20
