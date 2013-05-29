@@ -44,7 +44,7 @@
 @paragraphColor: @darkerGray;	// Color
 @paragraphFontWeight: normal;	// Font weight (normal|bold|italic)
 @paragraphLineHeight: 1.7em;	// Line height (em)
-@paragraphMarginBottom: 1.4;	// Bottom margin (rem)
+@paragraphMarginBottom: 2;		// Bottom margin (rem)
 
 // Headings
 
@@ -52,7 +52,7 @@
 @headingFontFamily: 'Roboto Slab', Arial, sans-serif;	// Font family
 @headingFontWeight: normal;								// Font weight
 @headingLineHeight: 1.4em;								// Line height (em)
-@headingMarginBottom: 1.4;								// Bottom margin (rem)
+@headingMarginBottom: 1;								// Bottom margin (rem)
 
 @h1: 4.4; // Font size (rem)
 @h2: 3.6;
@@ -95,8 +95,8 @@
 @quoteFontSize: 2;					// Font size (rem)
 @quoteFontStyle: italic;			// Font style (normal|italic|oblique)
 @quoteLineHeight: 1.4em;			// Line height (em)
-@quotePaddingVertical: 1em;			// Vertical padding (em)
-@quotePaddingHorizontal: 2em;		// Horizontal padding (em)
+@quotePaddingVertical: 1em;			// Vertical padding
+@quotePaddingHorizontal: 2em;		// Horizontal padding
 @quoteBorderColor: @lighterGray;	// Border color
 @quoteBorderWidth: 3px;				// Border width (px)
 
@@ -956,6 +956,7 @@ q {
 	color: @quoteColor;
 	.font(@quoteFontFamily; @quoteFontSize; normal; @quoteLineHeight; @quoteFontStyle);
 	.padding(@quotePaddingVertical; @quotePaddingHorizontal);
+	.margin(bottom; @blockMarginBottom);
 	cite {
 		color: @citeColor;
 		font-style: @citeFontStyle;
