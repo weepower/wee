@@ -1,3 +1,15 @@
+# 0.1.7
+
+2013-05-29
+
+- UPDATED: Rearranged some of the variable order to make more sense
+- UPDATED: Extended the examples in the index.html with better lists and new address and description list elements
+- ADDED: Added empty canonical URL meta tag as example
+- ADDED: Added new variables for more flexible description list control
+- ADDED: Added a quote border width variable
+- ADDED: Added address control base styling with variables to match
+- ADDED: Added a disabled button cursor variable
+
 # 0.1.6
 
 2013-05-22

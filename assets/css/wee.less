@@ -46,6 +46,23 @@
 @paragraphLineHeight: 1.7em;	// Line height (em)
 @paragraphMarginBottom: 1.4;	// Bottom margin (rem)
 
+// Headings
+
+@headingColor: @black;									// Color
+@headingFontFamily: 'Roboto Slab', Arial, sans-serif;	// Font family
+@headingFontWeight: normal;								// Font weight
+@headingLineHeight: 1.4em;								// Line height (em)
+@headingMarginBottom: 1.4;								// Bottom margin (rem)
+
+@h1: 4.4; // Font size (rem)
+@h2: 3.6;
+@h3: 3.0;
+@h4: 2.6;
+@h5: 2.2;
+@h6: 1.8;
+
+@subHeaderColor: @darkGray;	// Color for subheading class
+
 // Images
 
 @imagePath: '../img/';		// Background image path
@@ -54,14 +71,22 @@
 
 // Lists
 
+@listColor: @paragraphColor;				// Color
 @listFontSize: @baseFontSize;				// Font size (rem)
 @listLineHeight: @paragraphLineHeight;		// Line height (em)
 @listMarginBottom: @paragraphMarginBottom;	// Bottom margin (rem)
 
-@dtColor: @darkGray;			// Color
-@dtFontFamily: Georgia, Times;	// Font family
-@dtFontSize: 2;					// Font size (rem)
-@dtMarginBottom: 1;				// Bottom margin (rem)
+@dlMarginBottom: @blockMarginBottom;	// Bottom margin (rem)
+
+@dtColor: @darkGray;				// Color
+@dtFontFamily: @headingFontFamily;	// Font family
+@dtFontSize: 2;						// Font size (rem)
+@dtMarginBottom: .2;				// Bottom margin (rem)
+
+@ddColor: @gray;					// Color
+@ddFontFamily: @baseFontFamily;		// Font family
+@ddFontSize: @baseFontSize;			// Font size (rem)
+@ddMarginBottom: 1;					// Bottom margin (rem)
 
 // Quotes
 
@@ -71,8 +96,9 @@
 @quoteFontStyle: italic;			// Font style (normal|italic|oblique)
 @quoteLineHeight: 1.4em;			// Line height (em)
 @quotePaddingVertical: 1em;			// Vertical padding (em)
-@quotePaddingHorizontal: 2.5em;		// Horizontal padding (em)
-@quoteBorderColor: @lightGray;		// Border color
+@quotePaddingHorizontal: 2em;		// Horizontal padding (em)
+@quoteBorderColor: @lighterGray;	// Border color
+@quoteBorderWidth: 3px;				// Border width (px)
 
 @citeColor: @gray;					// Color
 @citeFontFamily: @baseFontFamily;	// Font family
@@ -81,6 +107,14 @@
 @citeLineHeight: 1.2em;				// Line height (em)
 @citeMarginTop: 1.4;				// Margin top (rem)
 @citeIndicator: '— ';				// Indicator
+
+// Addresses
+
+@addressColor: @darkestGray;				// Color
+@addressFontFamily: @baseFontFamily;		// Font family
+@addressFontSize: @baseFontSize;			// Font size (rem)
+@addressFontStyle: normal;					// Font style (normal|italic|oblique)
+@addressLineHeight: @paragraphLineHeight;	// Line height (em)
 
 // Typography
 
@@ -112,22 +146,6 @@
 
 @ruleColor: @lightGray;	// Color
 @ruleMargin: 2.4;		// Vertical margin (rem)
-
-// Headings
-
-@headingColor: @black;									// Color
-@headingFontFamily: 'Roboto Slab', Arial, sans-serif;	// Font family
-@headingLineHeight: 1.4em;								// Line height (em)
-@headingMarginBottom: 1.4;								// Bottom margin (rem)
-
-@h1: 4.4; // Font size (rem)
-@h2: 3.6;
-@h3: 3.0;
-@h4: 2.6;
-@h5: 2.2;
-@h6: 1.8;
-
-@subHeaderColor: @darkGray;	// Color for subheading class
 
 // Forms
 
@@ -187,6 +205,7 @@
 @disabledButtonColor: @darkGray;									// Text color
 @disabledButtonBackground: @lighterGray;							// Background color
 @disabledButtonBorderColor: darken(@disabledButtonBackground, 5%);	// Border color
+@disabledButtonCursor: not-allowed;									// Cursor (default|not-allowed)
 
 // Responsive
 
@@ -285,7 +304,7 @@
 	.font(@family; @size; @weight);
 	.line-height(@height);
 }
-.font (@family; @size; @height; @weight; @style) {
+.font (@family; @size; @weight; @height; @style) {
 	.font(@family; @size; @weight; @height);
 	font-style: @style;
 }
@@ -483,9 +502,9 @@
 	transition: @arguments;
 }
 
-// Gradients
+// Backgrounds
 
-.gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2)) {
+.background-gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2)) {
 	background-color: @color;
 	background-color: @start;
 	background: -moz-linear-gradient(top, @start, @end);
@@ -493,7 +512,7 @@
 	background: -webkit-linear-gradient(top, @start, @end);
 	background: -linear-gradient(top, @start, @end);
 }
-.gradient-color (@color: @gray; @spread) when (ispercentage(@spead)) {
+.background-gradient (@color: @gray; @spread) when (ispercentage(@spread)) {
 	@lighter: lighten(@color, @spread);
 	@darker: darken(@color, @spread);
 	background: @color;
@@ -503,14 +522,13 @@
 	background: linear-gradient(to bottom, @lighter 0%, @darker 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{lighter}', endColorstr='@{darker}', GradientType=0);
 }
-
-// Backgrounds
-
-.background-size (...) {
-	background-size: @arguments;
+.background-image (@filename) {
+	background-image: url('@{imagePath}@{filename}');
 }
-.background-image (@filename; @x; @y; @repeat) {
-	background: url('@{imagePath}@{filename}') @repeat @x @y;
+.background-image (@filename; @x; @y; @repeat: no-repeat) {
+	background-image: url('@{imagePath}@{filename}');
+	background-position: @x @y;
+	background-repeat: @repeat;
 }
 .background-image (@filename; @x; @y; @repeat; @attachment) {
 	.background-image(@filename; @x; @y; @repeat);
@@ -520,6 +538,9 @@
 	background-attachment: @attachment;
 	.background-image(@filename; @x; @y; @repeat; @attachment);
 	.background-size(@size);
+}
+.background-size (...) {
+	background-size: @arguments;
 }
 
 // Transforms
@@ -880,6 +901,7 @@ h6,
 .h6 {
 	color: @headingColor;
 	font-family: @headingFontFamily;
+	font-weight: @headingFontWeight;
 	.line-height(@headingLineHeight);
 	.margin(bottom; @headingMarginBottom);
 	small {
@@ -930,15 +952,15 @@ small {
 }
 blockquote,
 q {
-	border-left: 1px solid @quoteBorderColor;
+	border-left: @quoteBorderWidth solid @quoteBorderColor;
 	color: @quoteColor;
-	.font(@quoteFontFamily; @quoteFontSize; @quoteLineHeight; normal; @quoteFontStyle);
+	.font(@quoteFontFamily; @quoteFontSize; normal; @quoteLineHeight; @quoteFontStyle);
 	.padding(@quotePaddingVertical; @quotePaddingHorizontal);
 	cite {
 		color: @citeColor;
 		font-style: @citeFontStyle;
 		.block;
-		.font(@citeFontFamily; @citeFontSize; @citeLineHeight; normal; @citeFontStyle);
+		.font(@citeFontFamily; @citeFontSize; normal; @citeLineHeight; @citeFontStyle);
 		.margin(top; @citeMarginTop);
 		&:before {
 			content: @citeIndicator;
@@ -982,6 +1004,10 @@ hr,
 	.margin(top; @ruleMargin);
 	.margin(bottom; @ruleMargin);
 }
+address {
+	color: @addressColor;
+	.font(@addressFontFamily; @addressFontSize; normal; @addressLineHeight; @addressFontStyle);
+}
 
 ////////////
 // Tables //
@@ -995,6 +1021,7 @@ table {
 	word-wrap: break-word;
 	-ms-word-wrap: break-word;
 	.fill;
+	.margin(bottom; @blockMarginBottom);
 	td,
 	th {
 		border-top: 1px solid @tableCellBorderColor;
@@ -1026,6 +1053,7 @@ table {
 dl,
 ol,
 ul {
+	color: @listColor;
 	list-style-position: inside;
 	.font-size(@listFontSize);
 	.line-height(@listLineHeight);
@@ -1037,10 +1065,17 @@ ul {
 	ul {
 		margin-left: 20px;
 		margin-bottom: 0;
+		ul {}
 	}
 }
 ul {
 	list-style-type: disc;
+	ul {
+		list-style-type: circle;
+		ul {
+			list-style-type: square;
+		}
+	}
 }
 ol {
 	list-style-type: decimal;
@@ -1052,11 +1087,18 @@ nav {
 		margin: 0;
 	}
 }
+dl {
+	.margin(bottom; @dlMarginBottom);
+}
 dt {
 	color: @dtColor;
-	font-family: @dtFontFamily;
-	.font-size(@dtFontSize);
+	.font(@dtFontFamily; @dtFontSize);
 	.margin(bottom; @dtMarginBottom);
+}
+dd {
+	color: @ddColor;
+	.font(@ddFontFamily; @ddFontSize);
+	.margin(bottom; @ddMarginBottom);
 }
 
 ///////////
@@ -1257,6 +1299,7 @@ input[disabled] {
 		background: @disabledButtonBackground;
 		border: 1px solid @disabledButtonBorderColor;
 		color: @disabledButtonColor;
+		cursor: @disabledButtonCursor;
 	}
 }
 

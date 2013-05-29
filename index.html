@@ -6,8 +6,9 @@
 <title>Wee Bootstrap | Responsive LESS CSS Framework</title>
 <meta name="description" content="Wee is a lightweight, extensible bootstrap that empowers you to rapidly build responsive, semantic web interfaces.">
 <meta name="viewport" content="width=device-width">
+<link rel="canonical" href="">
 <link rel="stylesheet" href="assets/css/screen.css">
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,700">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto+Slab:400">
 <link rel="apple-touch-icon" href="touchicon.png">
 <link rel="icon" href="favicon.ico">
 <meta name="msapplication-TileColor" content="#006e89">
@@ -21,14 +22,13 @@
 <body itemscope itemtype="http://schema.org/WebPage">
 <header role="banner">
 	<div class="container">
-		<a href="#" rel="home" id="logo"><b>Wee</b><sup>css</sup></a>
+		<a href="#" rel="home" id="logo"><b>Wee</b></a>
 		<nav role="navigation">
 			<ul>
 				<li><a href="#">One</a></li>
 				<li><a href="#">Two</a></li>
 				<li><a href="#">Three</a></li>
 				<li><a href="#">Four</a></li>
-				<li><a href="#">Five</a></li>
 			</ul>
 		</nav>
 		<a href="#" class="mobile-nav" id="pull">menu</a>
@@ -37,7 +37,7 @@
 <main role="main">
 	<div id="hero">
 		<section class="container">
-			<p class="h3 subheader">Wee is a lightweight, extensible bootstrap that empowers you to rapidly build responsive, semantic web interfaces.</p>
+			<p class="h3 subheader">Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects.</p>
 			<a href="http://www.weecss.com/" class="button colored-button">More Information</a>
 		</section>
 	</div>
@@ -160,7 +160,12 @@
 				<ul>
 					<li>Lorem ipsum dolor
 						<ul>
-							<li>Lorem ipsum dolor</li>
+							<li>Lorem ipsum dolor
+								<ul>
+									<li>Lorem ipsum dolor</li>
+									<li>Lorem ipsum dolor</li>
+								</ul>
+							</li>
 							<li>Lorem ipsum dolor
 								<ol>
 									<li>Lorem ipsum dolor</li>
@@ -177,12 +182,38 @@
 				<ol>
 					<li>Lorem ipsum dolor
 						<ol>
-							<li>Lorem ipsum dolor</li>
-							<li>Lorem ipsum dolor</li>
+							<li>Lorem ipsum dolor
+								<ul>
+									<li>Lorem ipsum dolor</li>
+									<li>Lorem ipsum dolor</li>
+								</ul>
+							</li>
+							<li>Lorem ipsum dolor
+								<ol>
+									<li>Lorem ipsum dolor</li>
+									<li>Lorem ipsum dolor</li>
+								</ol>
+							</li>
 						</ol>
 					</li>
 					<li>Lorem ipsum dolor</li>
-				</ol>
+					<li>Lorem ipsum dolor</li>
+				</ul>
+				<hr>
+				<h4 class="subheader">Description List</h4>
+				<dl>
+					<dt>Lorem ipsum dolor</dt>
+					<dd>Lorem ipsum dolor</dd>
+					<dt>Lorem ipsum dolor</dt>
+					<dd>Lorem ipsum dolor</dd>
+				</dl>
+				<hr>
+				<h2>Address</h2>
+				<address>
+					<strong>Lorem ipsum dolor</strong><br>
+					123 Main Street<br>
+					City, ST 12345
+				</address>
 			</div>
 		</div>
 	</div>
