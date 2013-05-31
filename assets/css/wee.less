@@ -682,17 +682,17 @@
 // Layout //
 ////////////
 
-.padded {
-	padding-left: @bumperPadding;
-	padding-right: @bumperPadding;
-}
 .container {
 	max-width: @maxWidth;
 	min-width: @minWidth;
 	.centered-block;
 	.padded;
 }
-.row {
+.padded {
+	padding-left: @bumperPadding;
+	padding-right: @bumperPadding;
+}
+.row () {
 	margin-left: (@gridMargin * -1);
 	max-width: (100% + @gridMargin);
 }
