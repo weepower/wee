@@ -48,11 +48,11 @@
 
 // Headings
 
-@headingColor: @black;									// Color
-@headingFontFamily: 'Roboto Slab', Arial, sans-serif;	// Font family
-@headingFontWeight: normal;								// Font weight
-@headingLineHeight: 1.4em;								// Line height (em)
-@headingMarginBottom: 1;								// Bottom margin (rem)
+@headingColor: @black;							// Color
+@headingFontFamily: 'Noto Sans', sans-serif;	// Font family
+@headingFontWeight: normal;						// Font weight
+@headingLineHeight: 1.4em;						// Line height (em)
+@headingMarginBottom: 1;						// Bottom margin (rem)
 
 @h1: 4.4; // Font size (rem)
 @h2: 3.6;
@@ -75,6 +75,8 @@
 @listFontSize: @baseFontSize;				// Font size (rem)
 @listLineHeight: @paragraphLineHeight;		// Line height (em)
 @listMarginBottom: @paragraphMarginBottom;	// Bottom margin (rem)
+
+@liMarginBottom: .2;	// Bottom margin (rem)
 
 @dlMarginBottom: @blockMarginBottom;	// Bottom margin (rem)
 
@@ -185,8 +187,9 @@
 
 // Buttons
 
+@buttonFontFamily: @baseFontFamily;	// Font family
 @buttonFontSize: @baseFontSize;		// Font size (rem)
-@buttonBorderRadius: 0px;			// Border radius (px)
+@buttonBorderRadius: 3px;			// Border radius (px)
 @buttonPaddingVertical: .7em;		// Vertical padding (em)
 @buttonPaddingHorizontal: 2.6em;	// Horizontal padding (em)
 
@@ -345,6 +348,9 @@
 .underline () {
 	text-decoration: underline;
 }
+.underline (@style; @color: inherit) {
+	.text-decoration(underline; @style; @color);
+}
 .text-decoration (@line: underline; @style: solid; @color: inherit) {
 	text-decoration: @line;
 	-moz-text-decoration-line: @line;
@@ -386,7 +392,7 @@
 	margin-bottom: unit((@bottom * 10), px);
 	margin-bottom: unit(@bottom, rem);
 }
-.margin (left, @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) { 
+.margin (left, @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
 	margin-left: @left;
 }
 .margin (left, @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
@@ -441,7 +447,7 @@
 	padding-bottom: unit((@bottom * 10), px);
 	padding-bottom: unit(@bottom, rem);
 }
-.padding (left, @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) { 
+.padding (left, @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
 	padding-left: @left;
 }
 .padding (left, @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
@@ -471,6 +477,61 @@
 	.padding(right; @right);
 	.padding(bottom; @bottom);
 	.padding(left; @left);
+}
+
+// Borders
+
+.border (top, @top; @color: #000; @style: solid) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+	border-top: @top @style @color;
+}
+.border (top, @top; @color: #000; @style: solid) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+	border-top: unit((@top * 10), px) @style @color;
+	border-top: unit(@top, rem) @style @color;
+}
+.border (right, @right; @color: #000; @style: solid) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+	border-right: @right @style @color;
+}
+.border (right, @right; @color: #000; @style: solid) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+	border-right: unit((@right * 10), px) @style @color;
+	border-right: unit(@right, rem) @style @color;
+}
+.border (bottom, @bottom; @color: #000; @style: solid) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+	border-bottom: @bottom @style @color;
+}
+.border (bottom, @bottom; @color: #000; @style: solid) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+	border-bottom: unit((@bottom * 10), px) @style @color;
+	border-bottom: unit(@bottom, rem) @style @color;
+}
+.border (left, @left; @color: #000; @style: solid) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
+	border-left: @left @style @color;
+}
+.border (left, @left; @color: #000; @style: solid) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+	border-left: unit((@left * 10), px) @style @color;
+	border-left: unit(@left, rem) @style @color;
+}
+.border (horizontal, @x; @color: #000; @style: solid) {
+	.border(left; @x; @style; @color);
+	.border(right; @x; @style; @color);
+}
+.border (vertical, @y; @color: #000; @style: solid) {
+	.border(top; @y; @style; @color);
+	.border(bottom; @y; @style; @color);
+}
+.border (@width; @color: #000; @style: solid) when not (iskeyword(@width)) and (isem(@width)), (ispixel(@width)), (ispercentage(@width)) {
+	border: @width @style @color;
+}
+.border (@width; @color: #000; @style: solid) when not (iskeyword(@width)) and not (isem(@width)) and not (ispixel(@width)) and not (ispercentage(@width)) {
+	border: unit((@width * 10), px) @style @color;
+	border: unit(@width, rem) @style @color;
+}
+.border (@y; @x; @color: #000; @style: solid) when not (iskeyword(@y)) {
+	.border(@y; @x; @y; @x);
+}
+.border (@top; @right; @bottom; @left; @color: #000; @style: solid) {
+	.border(top; @top; @style; @color);
+	.border(right; @right; @style; @color);
+	.border(bottom; @bottom; @style; @color);
+	.border(left; @left; @style; @color);
 }
 
 // Rounded Corners
@@ -827,8 +888,8 @@ sup {
 	.margin(.35em; @imageMarginBottom; @imageMarginSide; 0);
 }
 .img-right {
-	.left;
 	.margin(.35em; 0; @imageMarginBottom; @imageMarginSide);
+	.right;
 }
 .hidden {
 	visibility: hidden;
@@ -1060,6 +1121,9 @@ ul {
 	.font-size(@listFontSize);
 	.line-height(@listLineHeight);
 	.margin(bottom; @listMarginBottom);
+	li {
+		.margin(bottom; @liMarginBottom);
+	}
 }
 ol,
 ul {
@@ -1067,7 +1131,6 @@ ul {
 	ul {
 		margin-left: 20px;
 		margin-bottom: 0;
-		ul {}
 	}
 }
 ul {
@@ -1087,6 +1150,9 @@ nav {
 	ul {
 		list-style: none;
 		margin: 0;
+	}
+	li {
+		margin-bottom: 0;
 	}
 }
 dl {
@@ -1125,9 +1191,6 @@ input::-moz-focus-inner {
 	border: 0;
 	padding: 0;
 }
-::-webkit-input-placeholder {
-	color: @placeholderColor;
-}
 :-moz-placeholder {
 	color: @placeholderColor;
 }
@@ -1135,6 +1198,9 @@ input::-moz-focus-inner {
 	color: @placeholderColor;
 }
 :-ms-input-placeholder {
+	color: @placeholderColor;
+}
+::-webkit-input-placeholder {
 	color: @placeholderColor;
 }
 fieldset {
@@ -1186,7 +1252,7 @@ textarea {
 	width: 100%;
 	-moz-appearance: none;
 	-webkit-appearance: none;
-	.background-clip;;
+	.background-clip;
 	.margin(bottom; @blockMarginBottom);
 	.min-height(@inputMinHeight);
 	.min-width(@inputMinWidth);
@@ -1199,6 +1265,9 @@ textarea {
 	&:focus {
 		.shadow(dark; .1; 0; 0; 2px; 2px);
 	}
+}
+input[type='search']::-webkit-search-decoration {
+	display: none;
 }
 input {
 	&[type='button'],
@@ -1262,8 +1331,10 @@ input[disabled] {
 	border: 1px solid @buttonBorderColor;
 	color: @buttonColor;
 	cursor: pointer;
+	text-shadow: none;
 	-webkit-tap-highlight-color: @buttonHoverBackground;
-	.font-size(@buttonFontSize);
+	.align-center;
+	.font(@buttonFontFamily; @buttonFontSize);
 	.inline-block;
 	.margin(bottom; @blockMarginBottom);
 	.padding(@buttonPaddingVertical; @buttonPaddingHorizontal);
@@ -1271,11 +1342,11 @@ input[disabled] {
 	.shadow(inner; light; .3; 0);
 	.transition(background-color);
 	&:hover {
-		background: @buttonHoverBackground;
+		background-color: @buttonHoverBackground;
 		color: @buttonColor;
 	}
 	&:active {
-		background: @buttonActiveBackground;
+		background-color: @buttonActiveBackground;
 		color: @buttonColor;
 	}
 }
@@ -1285,11 +1356,11 @@ input[disabled] {
 	color: @coloredButtonColor;
 	-webkit-tap-highlight-color: @coloredButtonHoverBackground;
 	&:hover {
-		background: @coloredButtonHoverBackground;
+		background-color: @coloredButtonHoverBackground;
 		color: @coloredButtonColor;
 	}
 	&:active {
-		background: @coloredButtonActiveBackground;
+		background-color: @coloredButtonActiveBackground;
 		color: @coloredButtonColor;
 	}
 }
@@ -1319,8 +1390,10 @@ input[disabled] {
 	.top(@mobileNavTop);
 	.width(@mobileNavWidth);
 }
-.desktop-only
-.tablet-only, {
+.only-desktop,
+.only-tablet,
+.show-desktop,
+.show-tablet {
 	.hide;
 }
 
@@ -1344,7 +1417,7 @@ input[disabled] {
 }
 
 @media (min-width: @mobilePortrait) {
-	.not-mobile {
+	.hide-mobile {
 		.hide;
 	}
 }
@@ -1357,11 +1430,12 @@ input[disabled] {
 	html {
 		font-family: '3';
 	}
-	.tablet-only {
+	.only-tablet,
+	.show-tablet {
 		.show;
 	}
-	.mobile-only,
-	.not-tablet {
+	.only-mobile,
+	.hide-tablet {
 		.hide;
 	}
 }
@@ -1369,11 +1443,12 @@ input[disabled] {
 	html {
 		font-family: '4';
 	}
-	.desktop-only {
+	.only-desktop,
+	.show-desktop {
 		.show;
 	}
-	.not-desktop,
-	.tablet-only {
+	.hide-desktop,
+	.only-tablet {
 		.hide;
 	}
 }

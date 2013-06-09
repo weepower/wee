@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width">
 <link rel="canonical" href="">
 <link rel="stylesheet" href="assets/css/screen.css">
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto+Slab:400">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
 <link rel="apple-touch-icon" href="touchicon.png">
 <link rel="icon" href="favicon.ico">
 <meta name="msapplication-TileColor" content="#006e89">
@@ -25,7 +25,7 @@
 		<a href="#" rel="home" id="logo"><b>Wee</b></a>
 		<nav role="navigation">
 			<ul>
-				<li><a href="#">One</a></li>
+				<li><a href="#" class="active">Home</a></li>
 				<li><a href="#">Two</a></li>
 				<li><a href="#">Three</a></li>
 				<li><a href="#">Four</a></li>
@@ -36,13 +36,14 @@
 </header>
 <main role="main">
 	<div id="hero">
+		<p id="hero-title">Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects.</p>
 		<section class="container">
-			<p class="h3 subheader">Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects.</p>
+			<p class="h4">While it doesn't try to be everything to everyone, Wee gives you a lot juice to get things started.</p>
 			<a href="http://www.weecss.com/" class="button colored-button">More Information</a>
 		</section>
 	</div>
 	<div class="container">
-		<p id="getting-started"><img data-src="holder.js/350x175/auto/text:Responsive Image" alt="Placeholder Image" class="img-left">The <code>screen.less</code> file should serve as your primary stylesheet. It includes <code>wee.less</code> which begins with a list of user-configurable variables. You should also include and configure the responsive files as applicable. We know you have your own style so we don't make assumptions and stay out of your way. For more information visit <a href="http://www.weecss.com">weecss.com</a>.</p>
+		<p id="getting-started"><img data-src="holder.js/350x175/auto/text:Responsive Image" alt="Placeholder Image" class="img-left">The <code>screen.less</code> file should serve as your primary <abbr title="Cascading Style Sheet">CSS</abbr>. It includes <code>wee.less</code> which begins with a list of user-configurable variables. You should also include and configure the responsive files as applicable. We know you have your own style so we don't make assumptions. For more information visit <a href="http://www.weecss.com">weecss.com</a>.</p>
 		<hr class="mobile-only">
 		<div id="examples">
 			<div id="left-examples">
@@ -145,6 +146,11 @@
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					<cite>John Doe</cite>
 				</blockquote>
+				<figure>
+				<figcaption>
+					<strong>Fig. 4.2 | </strong>Type Anatomy, an excerpt from Mark Boulton's book<cite title="http://designingfortheweb.co.uk/book/part3/part3_chapter11.php">"Designing for the Web"</cite>
+					</figcaption>
+				</figure>
 			</div>
 			<div id="right-examples">
 				<h2>Headings</h2>
@@ -220,7 +226,7 @@
 </main>
 <footer role="contentinfo">
 	<div class="container">
-		<p>Built with Wee version 0.1.6. <a href="mailto:hello@weestack.com">hello@weestack.com</a><br>Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2</a>.</p>
+		<p>Built with Wee version 0.2.0. <a href="mailto:hello@weestack.com">hello@weestack.com</a><br>Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2</a>.</p>
 		<a href="https://twitter.com/weecss">Twitter</a> / <a href="https://github.com/weestack/weecss">Github</a> / <a href="https://github.com/weestack/weecss/issues">Issues</a> / <a href="https://github.com/weestack/weecss/blob/master/CHANGELOG.md">Changelog</a>
 	</div>
 </footer>

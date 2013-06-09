@@ -3,7 +3,7 @@
 // Overrides
 
 html {
-	font-size: 52.5%;
+	font-size: 55%;
 }
 p {
 	.font-size(1.6);
@@ -12,33 +12,34 @@ p {
 // Global
 
 .subpage {
-	.padding(top, 4);
+	.padding(top; 4);
 }
 
 // Header
 
 header[role='banner'] {
-	background: #006e89;
+	@backgroundColor: #006e89;
+	background: @backgroundColor;
 	color: #fff;
+	position: relative;
+	.border(top; 1; darken(@backgroundColor, 10%));
 	.fill;
-	.font-size(2.5, 6);
-	.text-shadow(dark);
+	.font(@headingFontFamily; 2; 400; 5.8);
+	.shadow(dark; .2; 0; 2px; 2px);
+	.text-shadow(inner; dark; .4);
+	.uppercase;
 	.container {
 		padding: 0;
 	}
 	#logo {
-		background: #006e89;
-		color: #fff;
+		background: @backgroundColor;
+		color: @white;
 		padding-left: @bumperPadding;
-		sup {
-			color: #d7eaee;
-			font-family: @headingFontFamily;
-			font-weight: normal;
-		}
 	}
 }
 nav[role='navigation'] {
-	background: darken(#006e89, 10%);
+	@backgroundColor: #006e89;
+	background: darken(@backgroundColor, 10%);
 	li {
 		border-top: 1px solid #257589;
 		&:first-child {
@@ -48,21 +49,28 @@ nav[role='navigation'] {
 	a {
 		color: #d7eaee;
 		.block;
-		.font-size(1.8, 6);
+		.font-size(1.4; 5);
 		.padded;
 		.transition(color);
 		&:hover {
-			background: darken(#006e89, 12%);
-			color: #fff;
+			background: darken(@backgroundColor, 12%);
+			color: @white;
 		}
+	}
+	.active {
+		color: @white;
+		.bold;
 	}
 }
 #pull {
 	color: #fff;
 	position: absolute;
 	right: @bumperPadding;
-	top: 0;
+	top: 6px;
+	.bold;
+	.font-size(1.8);
 	.hide;
+	.line-height(4.5);
 }
 
 // Footer
@@ -83,22 +91,31 @@ footer[role='contentinfo'] {
 
 #hero {
 	.align-center;
-	.background-image('intro-background.jpg', 50%, 0, no-repeat, scroll, cover);
-	.margin(bottom, 4);
-	.container {
-		.padding(bottom, 6.5);
-		.padding(top, 6);
-	}
+	.background-image('intro-background.jpg'; 50%; 0; no-repeat; scroll; cover);
+	.margin(bottom; 4);
 	p {
-		color: #fff;
-		.centered-block(1000px);
-		.margin(bottom, 3);
-		.text-shadow(inner, dark, .3);
-		a {
-			color: @white;
-			.text-decoration(underline, dotted);
+		.text-shadow(inner; dark; .3);
+	}
+	.container {
+		.padding(bottom; 5);
+		.padding(top; 2);
+		p {
+			color: #fff;
+			.bold;
+			.centered-block(800px);
+			.margin(bottom; 2.8);
 		}
 	}
+	.button {
+		.font(@headingFontFamily; 1.4);
+	}
+}
+#hero-title {
+	background: darken(#006e89, 4%);
+	color: #9dcfdb;
+	.font(@headingFontFamily; 1.5; 400);
+	.padding(vertical; 2);
+	.padded;
 }
 #breakdown {
 	h3 {
