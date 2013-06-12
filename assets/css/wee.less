@@ -42,7 +42,7 @@
 // Paragraphs
 
 @paragraphColor: @darkerGray;	// Color
-@paragraphFontWeight: normal;	// Font weight (normal|bold|italic)
+@paragraphFontWeight: normal;	// Font weight
 @paragraphLineHeight: 1.7em;	// Line height (em)
 @paragraphMarginBottom: 2;		// Bottom margin (rem)
 
@@ -180,7 +180,7 @@
 @legendFontSize: 2;					// Font size (rem)
 @legendMarginBottom: 1.4;			// Bottom margin (rem)
 
-@labelFontWeight: normal;	// Font weight (normal|bold|italic)
+@labelFontWeight: normal;	// Font weight
 @labelLineHeight: 1.3;		// Line height (rem)
 @labelMarginBottom: .4;		// Margin bottom (rem)
 @labelMarginRight: 1;		// Margin right (rem)
@@ -189,6 +189,7 @@
 
 @buttonFontFamily: @baseFontFamily;	// Font family
 @buttonFontSize: @baseFontSize;		// Font size (rem)
+@buttonFontWeight: normal;			// Font weight 
 @buttonBorderRadius: 3px;			// Border radius (px)
 @buttonPaddingVertical: .7em;		// Vertical padding (em)
 @buttonPaddingHorizontal: 2.6em;	// Horizontal padding (em)
@@ -1334,7 +1335,7 @@ input[disabled] {
 	text-shadow: none;
 	-webkit-tap-highlight-color: @buttonHoverBackground;
 	.align-center;
-	.font(@buttonFontFamily; @buttonFontSize);
+	.font(@buttonFontFamily; @buttonFontSize; @buttonFontWeight);
 	.inline-block;
 	.margin(bottom; @blockMarginBottom);
 	.padding(@buttonPaddingVertical; @buttonPaddingHorizontal);
