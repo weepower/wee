@@ -11,6 +11,7 @@ Components: WeeCSS, LESS, jQuery, holder.js
 
 # THANKS
 
+weecss.com
 lesscss.org
 jquery.com
 imsky.github.io/holder
