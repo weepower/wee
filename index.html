@@ -8,24 +8,24 @@
 <meta name="viewport" content="width=device-width">
 <link rel="canonical" href="">
 <link rel="stylesheet" href="assets/css/screen.css">
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto+Slab:400">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700">
 <link rel="apple-touch-icon" href="touchicon.png">
 <link rel="icon" href="favicon.ico">
 <meta name="msapplication-TileColor" content="#006e89">
 <meta name="msapplication-TileImage" content="tileicon.png">
 <!--[if lt IE 9]>
 <link rel="stylesheet" href="assets/css/ie.css">
-<script src="assets/js/vendor/html5shiv.js"></script>
+<script src="assets/js/vendor/html5shiv.min.js"></script>
 <![endif]-->
 <!-- Tracking code here -->
 </head>
 <body itemscope itemtype="http://schema.org/WebPage">
 <header role="banner">
 	<div class="container">
-		<a href="#" rel="home" id="logo"><b>Wee</b></a>
+		<b id="logo"><a href="#" rel="home">Wee</a></b>
 		<nav role="navigation">
 			<ul>
-				<li><a href="#">One</a></li>
+				<li><a href="#" class="active">Home</a></li>
 				<li><a href="#">Two</a></li>
 				<li><a href="#">Three</a></li>
 				<li><a href="#">Four</a></li>
@@ -36,18 +36,19 @@
 </header>
 <main role="main">
 	<div id="hero">
+		<p id="hero-title">Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects.</p>
 		<section class="container">
-			<p class="h3 subheader">Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects.</p>
+			<p class="h4">While it doesn't try to be everything to everyone, Wee puts the lorem in your ipsum.</p>
 			<a href="http://www.weecss.com/" class="button colored-button">More Information</a>
 		</section>
 	</div>
 	<div class="container">
-		<p id="getting-started"><img data-src="holder.js/350x175/auto/text:Responsive Image" alt="Placeholder Image" class="img-left">The <code>screen.less</code> file should serve as your primary stylesheet. It includes <code>wee.less</code> which begins with a list of user-configurable variables. You should also include and configure the responsive files as applicable. We know you have your own style so we don't make assumptions and stay out of your way. For more information visit <a href="http://www.weecss.com">weecss.com</a>.</p>
+		<p id="getting-started"><img data-src="holder.js/350x175//#999999:#ffffff/auto/text:Responsive Placeholder" alt="Responsive Placeholder" class="left">The <code>screen.less</code> file should serve as your primary <abbr title="Cascading Style Sheet">CSS</abbr>. It includes <code>wee.less</code> which begins with a list of user-configurable variables. You should also include and configure the responsive LESS files as applicable. We know you have your own style so we don't make assumptions. For more information visit <a href="http://www.weecss.com">weecss.com</a>.</p>
 		<hr class="mobile-only">
 		<div id="examples">
 			<div id="left-examples">
 				<h2 class="clear">Table</h2>
-				<table itemscope itemtype="http://schema.org/Table">
+				<table itemscope itemtype="http://schema.org/Table" class="table-bordered table-striped">
 					<caption itemprop="about">Caption</caption>
 					<thead>
 						<tr>
@@ -80,7 +81,7 @@
 						</tr>
 					</tfoot>
 				</table>
-				<hr>
+				<br>
 				<h2>Form Elements</h2>
 				<form action="#" id="form-example">
 					<div id="form-split">
@@ -90,7 +91,7 @@
 								<input type="text" name="name" placeholder="Placeholder Text">
 								<div class="inline-field">
 									<label for="name2">Full Name</label>
-									<input type="text" name="name2" value="" placeholder="Your Name" id="name2">
+									<input type="text" name="name2" value="" placeholder="Your Name" id="name2" disabled>
 								</div>
 								<label for="textarea">Message</label>
 								<textarea name="textarea" id="textarea" rows="3"></textarea>
@@ -128,9 +129,13 @@
 									<input type="checkbox" name="checkbox" id="checkbox">
 									<label for="checkbox">Lorem ipsum dolor sit amet</label>
 								</span>
-								<span class="checkbox">
+								<span class="radio">
 									<input type="radio" name="radio" id="radio">
 									<label for="radio">Lorem ipsum dolor sit amet</label>
+								</span>
+								<span class="radio">
+									<input type="radio" name="radio" id="radio2">
+									<label for="radio2">Lorem ipsum dolor sit amet</label>
 								</span>
 							</fieldset>
 						</div>
@@ -145,6 +150,11 @@
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					<cite>John Doe</cite>
 				</blockquote>
+				<br>
+				<figure>
+					<img data-src="holder.js/350x175//#999999:#ffffff/auto/text:Figure Image" alt="Figure Image">
+					<figcaption><b>Fig. 3.2 |</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit by <a href="#">eiusmod tempor</a></figcaption>
+				</figure>
 			</div>
 			<div id="right-examples">
 				<h2>Headings</h2>
@@ -220,13 +230,13 @@
 </main>
 <footer role="contentinfo">
 	<div class="container">
-		<p>Built with Wee version 0.1.6. <a href="mailto:hello@weestack.com">hello@weestack.com</a><br>Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2</a>.</p>
+		<p>Built with Wee version 0.2.0. <a href="mailto:hello@weestack.com">hello@weestack.com</a><br>Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2</a>.</p>
 		<a href="https://twitter.com/weecss">Twitter</a> / <a href="https://github.com/weestack/weecss">Github</a> / <a href="https://github.com/weestack/weecss/issues">Issues</a> / <a href="https://github.com/weestack/weecss/blob/master/CHANGELOG.md">Changelog</a>
 	</div>
 </footer>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="assets/js/vendor/holder.js"></script>
-<script src="assets/js/base.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+<script src="assets/js/vendor/holder.min.js"></script>
+<script src="assets/js/base.min.js"></script>
 </body>
 </html>

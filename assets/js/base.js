@@ -1,6 +1,6 @@
 $(function() {
 
-	// Remove JS Class
+	// Remove js class
 	$('html').removeClass('no-js').addClass('js');
 
 	// Responsive nav
@@ -9,18 +9,18 @@ $(function() {
 
 	$pull.click(function(e) {
 		e.preventDefault();
-		$nav.slideToggle(300);
+		$nav.slideToggle(250);
 	});
 
-	var navCheck = function() {
-		if (WEE.browserSize() == 1) {
+	var navCheck = (function() {
+		if (WEE.browserSize() === 1) {
 			$nav.hide();
 			$pull.show();
 		} else {
 			$nav.show();
 			$pull.hide();
 		}
-	}
+	});
 
 	navCheck();
 

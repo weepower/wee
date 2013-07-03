@@ -9,7 +9,7 @@ Options +FollowSymLinks
 #Header set X-UA-Compatible "IE=edge,chrome=1"
 
 # Force www
-#RewriteCond %{HTTP_HOST} !^(www|cdn)\.weecss\.com [NC]
+#RewriteCond %{HTTP_HOST} !^(www|assets)\.weecss\.com [NC]
 #RewriteRule ^(.*)$ http://www.weecss.com/$1 [R=301,L]
 
 # Remove www (don't use both force and remove)
@@ -39,5 +39,5 @@ Options +FollowSymLinks
 
 #RewriteCond %{REMOTE_ADDR} !^111.111.111.
 #RewriteCond %{REQUEST_URI} !^/maintenance\.html$
-#RewriteCond $1 !^(cdn) [NC]
+#RewriteCond $1 !^(assets) [NC]
 #RewriteRule ^(.*)$ /maintenance.html [R=307,L]
