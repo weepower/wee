@@ -1,3 +1,26 @@
+# 0.2.0
+
+2013-07-02
+
+- FIXED: Updated navCheck JavaScript function to be a self-invoking anonymous function
+- FIXED: Replaced all commas in mixin parameter lists with semicolons
+- UPDATED: Updated htaccess to reference assets subdomain instead of cdn
+- UPDATED: Updated mobile browser size check in JavaScript to search for exact match ===
+- UPDATED: Wraped html element font elements for responsive detection in double quotes for processors that strip them
+- UPDATED: Updated jQuery to 1.10.1
+- UPDATED: Minor cosmetic changes to the base index html
+- UPDATED: Split out variables.less for easier maintenance and user friendliness
+- UPDATED: Set rounded mixin default to 3px
+- UPDATED: Row mixin can now be used as a class
+- UPDATED: Updated references of .margin(bottom; @blockMarginBottom) to .spaced
+- ADDED: Added minified version of base script, holder, and html5shiv
+- ADDED: Added basic figure example to base index html
+- ADDED: Added radio class to Wee and reference in base index html
+- ADDED: Added italic mixin
+- ADDED: Added a number of default HTML5 objects to Wee with base styline
+- ADDED: Added new table-bordered and table-striped classes
+- ADDED: Added new variables for styling of disabled form elements
+
 # 0.1.7
 
 2013-05-29
