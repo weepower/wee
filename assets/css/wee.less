@@ -1,235 +1,6 @@
 // WeeCSS //
 
-///////////////
-// Variables //
-///////////////
-
-// Layout
-
-@maxWidth: 1400px;			// Maximum container width (px)
-@minWidth: 260px;			// Minimum container width (px)
-@bumperPadding: 5%;			// Bumper padding on containers (%)
-@gridMargin: 5%;			// Default margin for spaced columns (%)
-@blockMarginBottom: 1.4;	// Bottom margin for paragraphs, lists, and form elements (rem)
-
-// Grayscale
-
-@black: #000;
-@white: #fff;
-
-@lightestGray: lighten(#000, 95%);
-@lighterGray: lighten(#000, 85%);
-@lightGray: lighten(#000, 75%);
-@gray: lighten(#000, 65%);
-@darkGray: lighten(#000, 45%);
-@darkerGray: lighten(#000, 35%);
-@darkestGray: lighten(#000, 25%);
-
-// Base
-
-@baseColor: #000;								// Default font color
-@baseFontFamily: Arial, Helvetica, sans-serif;	// Font family
-@baseFontSize: 1.5;								// Font size (rem)
-@baseBackgroundColor: @white;					// Body background color
-
-// Links
-
-@linkColor: #09666e;						// Color
-@linkHoverColor: darken(@linkColor, 30%);	// Hover color
-@linkActiveColor: darken(@linkColor, 50%);	// Active color
-@linkTextDecoration: none;					// Text decoration (none|underline)
-
-// Paragraphs
-
-@paragraphColor: @darkerGray;	// Color
-@paragraphFontWeight: normal;	// Font weight
-@paragraphLineHeight: 1.7em;	// Line height (em)
-@paragraphMarginBottom: 2;		// Bottom margin (rem)
-
-// Headings
-
-@headingColor: @black;							// Color
-@headingFontFamily: 'Noto Sans', sans-serif;	// Font family
-@headingFontWeight: normal;						// Font weight
-@headingLineHeight: 1.4em;						// Line height (em)
-@headingMarginBottom: 1;						// Bottom margin (rem)
-
-@h1: 4.4; // Font size (rem)
-@h2: 3.6;
-@h3: 3.0;
-@h4: 2.6;
-@h5: 2.2;
-@h6: 1.8;
-
-@subHeaderColor: @darkGray;	// Color for subheading class
-
-// Images
-
-@imagePath: '../img/';		// Background image path
-@imageMarginBottom: 1.4;	// Bottom margin (rem)
-@imageMarginSide: 1.4;		// Horizontal margin (rem)
-
-// Lists
-
-@listColor: @paragraphColor;				// Color
-@listFontSize: @baseFontSize;				// Font size (rem)
-@listLineHeight: @paragraphLineHeight;		// Line height (em)
-@listMarginBottom: @paragraphMarginBottom;	// Bottom margin (rem)
-
-@liMarginBottom: .2;	// Bottom margin (rem)
-
-@dlMarginBottom: @blockMarginBottom;	// Bottom margin (rem)
-
-@dtColor: @darkGray;				// Color
-@dtFontFamily: @headingFontFamily;	// Font family
-@dtFontSize: 2;						// Font size (rem)
-@dtMarginBottom: .2;				// Bottom margin (rem)
-
-@ddColor: @gray;					// Color
-@ddFontFamily: @baseFontFamily;		// Font family
-@ddFontSize: @baseFontSize;			// Font size (rem)
-@ddMarginBottom: 1;					// Bottom margin (rem)
-
-// Quotes
-
-@quoteColor: @darkestGray;			// Color
-@quoteFontFamily: Georgia, Times;	// Font family
-@quoteFontSize: 2;					// Font size (rem)
-@quoteFontStyle: italic;			// Font style (normal|italic|oblique)
-@quoteLineHeight: 1.4em;			// Line height (em)
-@quotePaddingVertical: 1em;			// Vertical padding
-@quotePaddingHorizontal: 2em;		// Horizontal padding
-@quoteBorderColor: @lighterGray;	// Border color
-@quoteBorderWidth: 3px;				// Border width (px)
-
-@citeColor: @gray;					// Color
-@citeFontFamily: @baseFontFamily;	// Font family
-@citeFontSize: 1.8;					// Font size (rem)
-@citeFontStyle: normal;				// Font style (normal, italic, or oblique)
-@citeLineHeight: 1.2em;				// Line height (em)
-@citeMarginTop: 1.4;				// Margin top (rem)
-@citeIndicator: '— ';				// Indicator
-
-// Addresses
-
-@addressColor: @darkestGray;				// Color
-@addressFontFamily: @baseFontFamily;		// Font family
-@addressFontSize: @baseFontSize;			// Font size (rem)
-@addressFontStyle: normal;					// Font style (normal|italic|oblique)
-@addressLineHeight: @paragraphLineHeight;	// Line height (em)
-
-// Typography
-
-@smallFontSize: .8em;					// Small font size (em)
-@selectionBackgroundColor: @lightGray;	// Browser selection color
-
-// Code
-
-@codeFontFamily: Monaco, Andale Mono, 'Courier New';	// Font family
-@codeFontSize: 1.4;										// Font size (rem)
-@codeLineHeight: 1.4em;									// Line height (em)
-@codeBorderRadius: 3px;									// Border radius (px)
-@codePaddingVertical: .15em;							// Vertical padding (em)
-@codePaddingHorizontal: .4em;							// Horizontal padding (em)
-
-// Tables
-
-@tableCellPaddingVertical: .6;				// Vertical padding (rem)
-@tableCellPaddingHorizontal: .8;			// Horizontal padding (rem)
-@tableCellLineHeight: @paragraphLineHeight;	// Line height (em)
-@tableCellBorderColor: @lightGray;			// Border color
-
-@tableCaptionBackgroundColor: @lightestGray;					// Background color
-@tableCaptionPaddingVertical: @tableCellPaddingVertical;		// Vertical padding (rem)
-@tableCaptionPaddingHorizontal: @tableCellPaddingHorizontal;	// Horizontal padding (rem)
-@tableCaptionFontStyle: italic;									// Font style
-
-// Horizontal Rules
-
-@ruleColor: @lightGray;	// Color
-@ruleMargin: 2.4;		// Vertical margin (rem)
-
-// Forms
-
-@inputFontFamily: @baseFontFamily;	// Font family
-@inputFontSize: @baseFontSize;		// Font size (rem)
-@inputColor: @darkerGray;		// Color
-@inputBackground: @white;		// Background
-@inputBorderColor: @lightGray;	// Border color
-@inputBorderRadius: 3px;		// Border radius (px)
-@inputMinWidth: 200px;			// Minimum width (px)
-@inputMinHeight: 3.5;			// Minimum height (rem)
-@inputPaddingVertical: .2;		// Vertial padding (rem)
-@inputPaddingHorizontal: .8;	// Horizontal padding (rem)
-
-@placeholderColor: ligten(@inputColor, 40%);	// Color
-
-@multiSelectMinHeight: 8;		// Minimum height (rem)
-
-@checkboxMarginRight: .8;	// Right margin (rem)
-@checkboxMarginBottom: 1;	// Bottom margin (rem)
-
-@textareaLineHeight: 1.3;		// Line height (rem)
-@textareaMinHeight: 8;			// Minimum height (rem)
-@textareaResize: vertical;		// Resize (none|horizontal|vertical|both)
-@textareaPaddingVertical: 1;	// Vertical padding (rem)
-@textareaPaddingHorizontal: 1;	// Horizontal padding (rem)
-
-@legendColor: @darkerGray;			// Color
-@legendFontFamily: @baseFontFamily;	// Font family
-@legendFontSize: 2;					// Font size (rem)
-@legendMarginBottom: 1.4;			// Bottom margin (rem)
-
-@labelFontWeight: normal;	// Font weight
-@labelLineHeight: 1.3;		// Line height (rem)
-@labelMarginBottom: .4;		// Margin bottom (rem)
-@labelMarginRight: 1;		// Margin right (rem)
-
-// Buttons
-
-@buttonFontFamily: @baseFontFamily;	// Font family
-@buttonFontSize: @baseFontSize;		// Font size (rem)
-@buttonFontWeight: normal;			// Font weight 
-@buttonBorderRadius: 3px;			// Border radius (px)
-@buttonPaddingVertical: .7em;		// Vertical padding (em)
-@buttonPaddingHorizontal: 2.6em;	// Horizontal padding (em)
-
-@buttonColor: @white;										// Text color
-@buttonBackground: @darkGray;								// Background color
-@buttonHoverBackground: darken(@buttonBackground, 5%);		// Hover background color
-@buttonActiveBackground: darken(@buttonBackground, 10%);	// Active background color
-@buttonBorderColor: darken(@buttonBackground, 5%);			// Border color
-
-@coloredButtonColor: @white;											// Text color
-@coloredButtonBackground: #006e89;										// Background color
-@coloredButtonHoverBackground: darken(@coloredButtonBackground, 5%);	// Hover background color
-@coloredButtonActiveBackground: darken(@coloredButtonBackground, 10%);	// Active background color
-@coloredButtonBorderColor: darken(@coloredButtonBackground, 5%);		// Border color
-
-@disabledButtonColor: @darkGray;									// Text color
-@disabledButtonBackground: @lighterGray;							// Background color
-@disabledButtonBorderColor: darken(@disabledButtonBackground, 5%);	// Border color
-@disabledButtonCursor: not-allowed;									// Cursor (default|not-allowed)
-
-// Responsive
-
-@breakpointOffset: 25px;	// Breakpoint modifier
-
-@mobilePortrait: 320px;							// JavaScript value = 1
-@mobileLandscape: 480px - @breakpointOffset;	// JavaScript value = 2
-@tabletPortrait: 768px - @breakpointOffset;		// JavaScript value = 3
-@smallDesktop: 1024px - @breakpointOffset;		// JavaScript value = 4
-@mediumDesktop: 1280px - @breakpointOffset;		// JavaScript value = 5
-@largeDesktop: 1440px - @breakpointOffset;		// JavaScript value = 6
-
-@mobileNavBorderColor: @white;	// Border color
-@mobileNavLeft: -3.2;			// Left position (negative rem)
-@mobileNavWidth: 2.4;			// Width (rem)
-@mobileNavTop: .85em;			// Top position (em)
-
-
-
-// Editing below this point is not recommended
+@import 'variables.less';
 
 ////////////
 // Mixins //
@@ -240,18 +11,18 @@
 .text-shadow (@value: '1px 1px 0 rgba(0, 0, 0, .2), -1px -1px 0 rgba(255, 255, 255, .2)') when (isstring(@value)) {
 	text-shadow: ~'@{value}';
 }
-.text-shadow (light, @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
+.text-shadow (light; @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
 	.text-shadow('@{x} @{y} @{blur} rgba(255, 255, 255, @{alpha})');
 }
-.text-shadow (dark, @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
+.text-shadow (dark; @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
 	.text-shadow('@{x} @{y} @{blur} rgba(0, 0, 0, @{alpha})');
 }
-.text-shadow (inner, light, @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
+.text-shadow (inner; light; @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
 	@nx: (@x * -1);
 	@ny: (@y * -1);
 	.text-shadow('@{nx} @{ny} @{blur} rgba(255, 255, 255, @{alpha})');
 }
-.text-shadow (inner, dark, @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
+.text-shadow (inner; dark; @alpha: .2; @x: 1px; @y: 1px; @blur: 0) {
 	@nx: (@x * -1);
 	@ny: (@y * -1);
 	.text-shadow('@{nx} @{ny} @{blur} rgba(0, 0, 0, @{alpha})');
@@ -263,16 +34,16 @@
 	-webkit-box-shadow: ~'@{value}';
 	box-shadow: ~'@{value}';
 }
-.shadow (light, @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+.shadow (light; @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
 	.shadow('@{x} @{y} @{blur} @{spread} rgba(255, 255, 255, @{alpha})');
 }
-.shadow (dark, @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+.shadow (dark; @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
 	.shadow('@{x} @{y} @{blur} @{spread} rgba(0, 0, 0, @{alpha})');
 }
-.shadow (inner, light, @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+.shadow (inner; light; @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
 	.shadow('inset @{x} @{y} @{blur} @{spread} rgba(255, 255, 255, @{alpha})');
 }
-.shadow (inner, dark, @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+.shadow (inner; dark; @alpha: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
 	.shadow('inset @{x} @{y} @{blur} @{spread} rgba(0, 0, 0, @{alpha})');
 }
 
@@ -359,6 +130,9 @@
 	-moz-text-decoration-color: @color;
 	text-decoration: @color @style @line;
 }
+.italic {
+	font-style: italic;
+}
 
 // Line Height
 
@@ -372,39 +146,39 @@
 
 // Margin
 
-.margin (top, @top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+.margin (top; @top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
 	margin-top: @top;
 }
-.margin (top, @top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+.margin (top; @top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
 	margin-top: unit((@top * 10), px);
 	margin-top: unit(@top, rem);
 }
-.margin (right, @right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+.margin (right; @right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
 	margin-right: @right;
 }
-.margin (right, @right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+.margin (right; @right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
 	margin-right: unit((@right * 10), px);
 	margin-right: unit(@right, rem);
 }
-.margin (bottom, @bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+.margin (bottom; @bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
 	margin-bottom: @bottom;
 }
-.margin (bottom, @bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+.margin (bottom; @bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
 	margin-bottom: unit((@bottom * 10), px);
 	margin-bottom: unit(@bottom, rem);
 }
-.margin (left, @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
+.margin (left; @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
 	margin-left: @left;
 }
-.margin (left, @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+.margin (left; @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
 	margin-left: unit((@left * 10), px);
 	margin-left: unit(@left, rem);
 }
-.margin (horizontal, @x) {
+.margin (horizontal; @x) {
 	.margin(left; @x);
 	.margin(right; @x);
 }
-.margin (vertical, @y) {
+.margin (vertical; @y) {
 	.margin(top; @y);
 	.margin(bottom; @y);
 }
@@ -427,39 +201,39 @@
 
 // Padding
 
-.padding (top, @top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+.padding (top; @top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
 	padding-top: @top;
 }
-.padding (top, @top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+.padding (top; @top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
 	padding-top: unit((@top * 10), px);
 	padding-top: unit(@top, rem);
 }
-.padding (right, @right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+.padding (right; @right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
 	padding-right: @right;
 }
-.padding (right, @right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+.padding (right; @right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
 	padding-right: unit((@right * 10), px);
 	padding-right: unit(@right, rem);
 }
-.padding (bottom, @bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+.padding (bottom; @bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
 	padding-bottom: @bottom;
 }
-.padding (bottom, @bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+.padding (bottom; @bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
 	padding-bottom: unit((@bottom * 10), px);
 	padding-bottom: unit(@bottom, rem);
 }
-.padding (left, @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
+.padding (left; @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
 	padding-left: @left;
 }
-.padding (left, @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+.padding (left; @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
 	padding-left: unit((@left * 10), px);
 	padding-left: unit(@left, rem);
 }
-.padding (horizontal, @x) {
+.padding (horizontal; @x) {
 	.padding(left; @x);
 	.padding(right; @x);
 }
-.padding (vertical, @y) {
+.padding (vertical; @y) {
 	.padding(top; @y);
 	.padding(bottom; @y);
 }
@@ -482,39 +256,39 @@
 
 // Borders
 
-.border (top, @top; @color: #000; @style: solid) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+.border (top; @top; @color: #000; @style: solid) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
 	border-top: @top @style @color;
 }
-.border (top, @top; @color: #000; @style: solid) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+.border (top; @top; @color: #000; @style: solid) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
 	border-top: unit((@top * 10), px) @style @color;
 	border-top: unit(@top, rem) @style @color;
 }
-.border (right, @right; @color: #000; @style: solid) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+.border (right; @right; @color: #000; @style: solid) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
 	border-right: @right @style @color;
 }
-.border (right, @right; @color: #000; @style: solid) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+.border (right; @right; @color: #000; @style: solid) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
 	border-right: unit((@right * 10), px) @style @color;
 	border-right: unit(@right, rem) @style @color;
 }
-.border (bottom, @bottom; @color: #000; @style: solid) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+.border (bottom; @bottom; @color: #000; @style: solid) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
 	border-bottom: @bottom @style @color;
 }
-.border (bottom, @bottom; @color: #000; @style: solid) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+.border (bottom; @bottom; @color: #000; @style: solid) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
 	border-bottom: unit((@bottom * 10), px) @style @color;
 	border-bottom: unit(@bottom, rem) @style @color;
 }
-.border (left, @left; @color: #000; @style: solid) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
+.border (left; @left; @color: #000; @style: solid) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
 	border-left: @left @style @color;
 }
-.border (left, @left; @color: #000; @style: solid) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+.border (left; @left; @color: #000; @style: solid) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
 	border-left: unit((@left * 10), px) @style @color;
 	border-left: unit(@left, rem) @style @color;
 }
-.border (horizontal, @x; @color: #000; @style: solid) {
+.border (horizontal; @x; @color: #000; @style: solid) {
 	.border(left; @x; @style; @color);
 	.border(right; @x; @style; @color);
 }
-.border (vertical, @y; @color: #000; @style: solid) {
+.border (vertical; @y; @color: #000; @style: solid) {
 	.border(top; @y; @style; @color);
 	.border(bottom; @y; @style; @color);
 }
@@ -542,7 +316,7 @@
 	-webkit-background-clip: ~'@{property}-box';
 	background-clip: ~'@{property}-box';
 }
-.rounded (@radius) when (isem(@radius)), (ispixel(@radius)), (ispercentage(@radius)) {
+.rounded (@radius: 3px) when (isem(@radius)), (ispixel(@radius)), (ispercentage(@radius)) {
 	border-radius: @radius;
 	.background-clip;
 }
@@ -754,7 +528,7 @@
 	padding-left: @bumperPadding;
 	padding-right: @bumperPadding;
 }
-.row () {
+.row {
 	margin-left: (@gridMargin * -1);
 	max-width: (100% + @gridMargin);
 }
@@ -768,7 +542,7 @@
 	width: ((100% / @columns) * @share);
 	.grid(0);
 }
-.column (spaced, @share; @columns; @margin: (@gridMargin / 2)) {
+.column (spaced; @share; @columns; @margin: (@gridMargin / 2)) {
 	width: (((100% / @columns) * @share) - (@margin * 2) + .25%);
 	.grid;
 }
@@ -784,7 +558,7 @@
 	.border-box;
 }
 html {
-	font-family: '1';
+	font-family: "'1'";
 	font-size: 62.5%;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
@@ -831,13 +605,29 @@ abbr[title] {
 b,
 strong,
 .bold {
-	font-weight: bold;
+	font-weight: @boldFontWeight;
+}
+mark {
+	background: @markBackgroundColor;
+	color: @markColor;
 }
 canvas {
 	-ms-touch-action: double-tap-zoom;
 }
 figure {
+	border: 1px solid @figureBorderColor;
 	position: relative;
+	.align-center;
+	.padding(@figurePadding);
+	.spaced;
+	img {
+		.spaced;
+	}
+	figcaption {
+		color: @figcaptionColor;
+		font-style: @figcaptionFontStyle;
+		line-height: @paragraphLineHeight;
+	}
 }
 img {
 	-ms-interpolation-mode: bicubic;
@@ -923,7 +713,7 @@ sup {
 }
 .spaced-block {
 	.block;
-	.margin(bottom; @blockMarginBottom);
+	.spaced;
 }
 .clear {
 	clear: both;
@@ -1012,25 +802,34 @@ p {
 small {
 	.font-size(@smallFontSize);
 }
+address,
+cite,
+dfn,
+em,
+i,
+var {
+	.italic;
+}
 blockquote,
 q {
 	border-left: @quoteBorderWidth solid @quoteBorderColor;
 	color: @quoteColor;
 	.font(@quoteFontFamily; @quoteFontSize; normal; @quoteLineHeight; @quoteFontStyle);
 	.padding(@quotePaddingVertical; @quotePaddingHorizontal);
-	.margin(bottom; @blockMarginBottom);
+	.spaced;
 	cite {
-		color: @citeColor;
-		font-style: @citeFontStyle;
 		.block;
-		.font(@citeFontFamily; @citeFontSize; normal; @citeLineHeight; @citeFontStyle);
+		.font(@citeFontFamily; @citeFontSize; @citeFontWeight; @citeLineHeight; @citeFontStyle);
 		.margin(top; @citeMarginTop);
 		&:before {
 			content: @citeIndicator;
 		}
 	}
 }
-code {
+code,
+kbd,
+pre,
+samp {
 	background-color: @lightestGray;
 	border: 1px solid @lightGray;
 	color: @darkestGray;
@@ -1039,6 +838,11 @@ code {
 	.font-size(@codeFontSize);
 	.padding(@codePaddingVertical; @codePaddingHorizontal);
 	.rounded(@codeBorderRadius);
+}
+del,
+s,
+strike {
+	text-decoration: line-through;
 }
 a {
 	color: @linkColor;
@@ -1070,7 +874,7 @@ hr,
 address {
 	color: @addressColor;
 	.font(@addressFontFamily; @addressFontSize; normal; @addressLineHeight; @addressFontStyle);
-	.margin(bottom; @blockMarginBottom);
+	.spaced;
 }
 
 ////////////
@@ -1085,7 +889,7 @@ table {
 	word-wrap: break-word;
 	-ms-word-wrap: break-word;
 	.fill;
-	.margin(bottom; @blockMarginBottom);
+	.spaced;
 	td,
 	th {
 		border-top: 1px solid @tableCellBorderColor;
@@ -1107,6 +911,32 @@ table {
 		border-bottom: 0;
 		font-style: @tableCaptionFontStyle;
 		.padding(@tableCaptionPaddingVertical; @tableCaptionPaddingHorizontal);
+	}
+}
+.table-bordered {
+	caption {
+		border: 1px solid @tableCellBorderColor;
+		border-bottom: 0;
+	}
+	td,
+	th {
+		border-right: 1px solid @tableCellBorderColor;
+		&:first-child {
+			border-left: 1px solid @tableCellBorderColor;
+		}
+	}
+	tfoot {
+		border: 1px solid @tableCellBorderColor;
+		border-top: 0;
+	}
+}
+.table-striped {
+	tr {
+		&:nth-child(even) {
+			td {
+				background-color: @evenTableCellBackgroundColor;
+			}
+		}
 	}
 }
 
@@ -1175,7 +1005,7 @@ dd {
 ///////////
 
 form {
-	.margin(bottom; @blockMarginBottom);
+	.spaced;
 }
 button,
 input,
@@ -1206,7 +1036,7 @@ input::-moz-focus-inner {
 }
 fieldset {
 	border: 0;
-	.margin(bottom; @blockMarginBottom);
+	.spaced;
 }
 legend {
 	border: 0;
@@ -1223,9 +1053,10 @@ label {
 	.line-height(@labelLineHeight);
 	.margin(bottom; @labelMarginBottom);
 }
-.checkbox {
+.checkbox,
+.radio {
 	.block;
-	.margin(bottom, @checkboxMarginBottom);
+	.margin(bottom; @checkboxMarginBottom);
 	input {
 		&[type='checkbox'],
 		&[type='radio'] {
@@ -1254,12 +1085,12 @@ textarea {
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	.background-clip;
-	.margin(bottom; @blockMarginBottom);
 	.min-height(@inputMinHeight);
 	.min-width(@inputMinWidth);
 	.padding(@inputPaddingVertical; @inputPaddingHorizontal);
 	.rounded(@inputBorderRadius);
 	.shadow(inner; dark; .1; 1px; 1px; 2px; 0);
+	.spaced;
 	&:hover {
 		border: 1px solid darken(@inputBorderColor, 10%);
 	}
@@ -1286,9 +1117,9 @@ select {
 	width: 99%;
 	.font-size(1.4);
 	.inline-block;
-	.margin(bottom; @blockMarginBottom);
 	.min-width(@inputMinWidth);
 	.rounded(@inputBorderRadius);
+	.spaced;
 	&:hover {
 		border: 1px solid darken(@inputBorderColor, 10%);
 	}
@@ -1305,9 +1136,10 @@ textarea {
 	.min-height(@textareaMinHeight);
 	.padding(@textareaPaddingVertical; @textareaPaddingHorizontal);
 }
-button[disabled],
 input[disabled] {
-	cursor: default;
+	background-color: @disabledInputBackgroundColor;
+	color: @disabledInputColor;
+	cursor: @disabledInputCursor;
 }
 .inline-field {
 	button,
@@ -1337,10 +1169,10 @@ input[disabled] {
 	.align-center;
 	.font(@buttonFontFamily; @buttonFontSize; @buttonFontWeight);
 	.inline-block;
-	.margin(bottom; @blockMarginBottom);
 	.padding(@buttonPaddingVertical; @buttonPaddingHorizontal);
 	.rounded(@buttonBorderRadius);
 	.shadow(inner; light; .3; 0);
+	.spaced;
 	.transition(background-color);
 	&:hover {
 		background-color: @buttonHoverBackground;
@@ -1364,6 +1196,9 @@ input[disabled] {
 		background-color: @coloredButtonActiveBackground;
 		color: @coloredButtonColor;
 	}
+}
+button[disabled] {
+	cursor: @disabledButtonCursor;
 }
 .button[disabled],
 .disabled-button {
@@ -1424,12 +1259,12 @@ input[disabled] {
 }
 @media (min-width: @mobileLandscape) {
 	html {
-		font-family: '2';
+		font-family: "'2'";
 	}
 }
 @media (min-width: @tabletPortrait) {
 	html {
-		font-family: '3';
+		font-family: "'3'";
 	}
 	.only-tablet,
 	.show-tablet {
@@ -1442,7 +1277,7 @@ input[disabled] {
 }
 @media (min-width: @smallDesktop) {
 	html {
-		font-family: '4';
+		font-family: "'4'";
 	}
 	.only-desktop,
 	.show-desktop {
@@ -1455,11 +1290,11 @@ input[disabled] {
 }
 @media (min-width: @mediumDesktop) {
 	html {
-		font-family: '5';
+		font-family: "'5'";
 	}
 }
 @media (min-width: @largeDesktop) {
 	html {
-		font-family: '6';
+		font-family: "'6'";
 	}
 }

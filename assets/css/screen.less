@@ -28,12 +28,18 @@ header[role='banner'] {
 	.shadow(dark; .2; 0; 2px; 2px);
 	.text-shadow(inner; dark; .4);
 	.uppercase;
+	a {
+		color: @white;
+		.transition;
+		&:hover {
+			.text-shadow(light; .5; 0; 0; 15px);
+		}
+	}
 	.container {
 		padding: 0;
 	}
 	#logo {
 		background: @backgroundColor;
-		color: @white;
 		padding-left: @bumperPadding;
 	}
 }
@@ -80,11 +86,11 @@ footer[role='contentinfo'] {
 	border-top: 1px solid @lighterGray;
 	color: @gray;
 	.align-center;
-	.margin(top, 8);
+	.margin(top; 8);
 	.min-width;
-	.padding(bottom, 3);
-	.padding(top, 2.5);
-	.text-shadow(light, 1);
+	.padding(bottom; 3);
+	.padding(top; 2.5);
+	.text-shadow(light; 1);
 }
 
 // Index
@@ -114,8 +120,8 @@ footer[role='contentinfo'] {
 	background: darken(#006e89, 4%);
 	color: #9dcfdb;
 	.font(@headingFontFamily; 1.5; 400);
-	.padding(vertical; 2);
 	.padded;
+	.padding(vertical; 2);
 }
 #breakdown {
 	h3 {
@@ -127,22 +133,16 @@ footer[role='contentinfo'] {
 		color: @darkerGray;
 	}
 	p {
-		.margin(bottom, 2.5);
+		.margin(bottom; 2.5);
 	}
 }
 #examples {
 	.clear;
 }
-#left-examples {
-	&:after {
-		content: '';
-		.hr;
-	}
-}
 #getting-started {
 	img {
 		.fill;
-		.margin(bottom, @blockMarginBottom);
+		.margin(bottom; @blockMarginBottom);
 	}
 }
 

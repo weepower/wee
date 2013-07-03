@@ -12,15 +12,15 @@ $(function() {
 		$nav.slideToggle(250);
 	});
 
-	var navCheck = function() {
-		if (WEE.browserSize() == 1) {
+	var navCheck = (function() {
+		if (WEE.browserSize() === 1) {
 			$nav.hide();
 			$pull.show();
 		} else {
 			$nav.show();
 			$pull.hide();
 		}
-	}
+	});
 
 	navCheck();
 

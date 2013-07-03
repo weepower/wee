@@ -1,6 +1,6 @@
-# [WeeCSS Beta 0.l.7](https://github.com/weestack/weecss)
+# [WeeCSS Beta 0.2.0](https://github.com/weestack/weecss)
 
-Wee is a lightweight, extensible bootstrap that empowers you to rapidly build responsive, semantic web interfaces. To read more, visit [http://www.weecss.com](http://www.weecss.com).
+Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects. To read more, visit [http://www.weecss.com](http://www.weecss.com).
 
 
 ## Quick Start
@@ -8,7 +8,7 @@ Wee is a lightweight, extensible bootstrap that empowers you to rapidly build re
 To get started begin by pulling the latest Wee source:
 
 * [Download the latest release](https://github.com/weestack/weecss/archive/master.zip).
-* Clone the repository from `git clone git://github.com/weestack/weecss.git`.
+* Clone the repository from 'git clone git://github.com/weestack/weecss.git'.
 
 
 ## Bugs
