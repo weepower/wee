@@ -1,3 +1,44 @@
+# 0.3.0
+
+2013-07-16
+
+- FIXED: Resolved issues with margin and padding overloaded mixins in certain scenarios
+- FIXED: Removed oveflow hidden on labels which was causing some problems
+- UPDATED: Split out variables.less into its own file for improved upgradability
+- UPDATED: Split out custom.less for project customization
+- UDPATED: Split out responsive.less so non-responsive sites and more easily exlude it
+- UPDATED: Updated screen.less to serve as an aggregator of other less files
+- UPDATED: Made slight adjustments in logic to beter utilize LESS 1.4
+- UDPATED: Removed canonical meta tag and tracking code comment in index.html
+- UPDATED: Replaced some inline tags in wee.less with internal mixin references
+- UPDATED: Removed list font size
+- ADDED: Added min-height and height of 100% to body and html
+- ADDED: Added align-bottom and align-top classes
+
+# 0.2.0
+
+2013-07-02
+
+- FIXED: Updated navCheck JavaScript function to be a self-invoking anonymous function
+- FIXED: Replaced all commas in mixin parameter lists with semicolons
+- UPDATED: Updated htaccess to reference assets subdomain instead of cdn
+- UPDATED: Updated mobile browser size check in JavaScript to search for exact match ===
+- UPDATED: Wraped html element font elements for responsive detection in double quotes for processors that strip them
+- UPDATED: Updated jQuery to 1.10.1
+- UPDATED: Minor cosmetic changes to the base index html
+- UPDATED: Split out variables.less for easier maintenance and user friendliness
+- UPDATED: Set rounded mixin default to 3px
+- UPDATED: Row mixin can now be used as a class
+- UPDATED: Updated references of .margin(bottom; @blockMarginBottom) to .spaced
+- ADDED: Added minified version of base script, holder, and html5shiv
+- ADDED: Added basic figure example to base index html
+- ADDED: Added radio class to Wee and reference in base index html
+- ADDED: Added italic mixin
+- ADDED: Added a number of default HTML5 objects to Wee with base styline
+- ADDED: Added new table-bordered and table-striped classes
+- ADDED: Added new variables for styling of disabled form elements
+
+>>>>>>> Stashed changes
 # 0.1.7
 
 2013-05-29

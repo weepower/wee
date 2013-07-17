@@ -1,6 +1,6 @@
-# --------------------------------
+# --------------------
 # Rewrite Rules
-# --------------------------------
+# --------------------
 
 RewriteEngine On
 Options +FollowSymLinks
@@ -33,11 +33,11 @@ Options +FollowSymLinks
 #RewriteCond %{REQUEST_FILENAME}\.html -f
 #RewriteRule ^(.*)$ $1.html
 
-# --------------------------------
+# --------------------
 # Maintenance
-# --------------------------------
+# --------------------
 
-#RewriteCond %{REMOTE_ADDR} !^111.111.111.
+#RewriteCond %{REMOTE_ADDR} !^123.123.123.
 #RewriteCond %{REQUEST_URI} !^/maintenance\.html$
 #RewriteCond $1 !^(assets) [NC]
 #RewriteRule ^(.*)$ /maintenance.html [R=307,L]
