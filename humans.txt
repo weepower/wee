@@ -1,17 +1,13 @@
-# TEAM
+# Team
 
-Name: WeeStack
-Email: hello@weestack.com
-Twitter: weecss
+WeeStack - hello@weestack.com - twitter.com/weecss
 
-# SITE
+# Technology
 
 Standards: HTML5, CSS3, ARIA, Schema
-Components: WeeCSS, LESS, jQuery, holder.js
+Components: WeeCSS, LessCSS, jQuery, holder.js
 
-# THANKS
+# Thanks
 
 weecss.com
 lesscss.org
-jquery.com
-imsky.github.io/holder

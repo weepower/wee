@@ -5,7 +5,7 @@ $(function() {
 
 	// Responsive nav
 	var $pull = $('#pull'),
-	$nav = $('nav[role="navigation"]');
+		$nav = $('nav[role="navigation"]');
 
 	$pull.click(function(e) {
 		e.preventDefault();

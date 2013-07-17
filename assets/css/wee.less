@@ -1,7 +1,3 @@
-// WeeCSS //
-
-@import 'variables.less';
-
 ////////////
 // Mixins //
 ////////////
@@ -80,16 +76,16 @@
 	.line-height(@height);
 }
 .font (@family; @size; @weight; @height; @style) {
-	.font(@family; @size; @weight; @height);
 	font-style: @style;
+	.font(@family; @size; @weight; @height);
 }
 
 // Font Size
 
-.font-size (@size) when (isem(@size)), (ispixel(@size)), (ispercentage(@size)) {
+.font-size (@size) when (ispixel(@size)), (ispercentage(@size)), (isem(@size)) {
 	font-size: @size;
 }
-.font-size (@size) when not (isem(@size)) and not (ispixel(@size)) and not (ispercentage(@size)) {
+.font-size (@size) when not (ispixel(@size)) and not (ispercentage(@size)) and not (isem(@size)) {
 	font-size: unit((@size * 10), px);
 	font-size: unit(@size, rem);
 }
@@ -136,41 +132,41 @@
 
 // Line Height
 
-.line-height (@height) when (isem(@height)), (ispixel(@height)), (ispercentage(@height)) {
+.line-height (@height) when (ispixel(@height)), (ispercentage(@height)), (isem(@height)) {
 	line-height: @height;
 }
-.line-height (@height) when not (isem(@height)) and not (ispixel(@height)) and not (ispercentage(@height)) {
+.line-height (@height) when not (ispixel(@height)) and not (ispercentage(@height)) and not (isem(@height)) {
 	line-height: unit((@height * 10), px);
 	line-height: unit(@height, rem);
 }
 
 // Margin
 
-.margin (top; @top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+.margin (top; @top) when (ispixel(@top)), (ispercentage(@top)), (isem(@top)) {
 	margin-top: @top;
 }
-.margin (top; @top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+.margin (top; @top) when not (ispixel(@top)) and not (ispercentage(@top)) and not (isem(@top)) {
 	margin-top: unit((@top * 10), px);
 	margin-top: unit(@top, rem);
 }
-.margin (right; @right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+.margin (right; @right) when (ispixel(@right)), (ispercentage(@right)), (isem(@right)) {
 	margin-right: @right;
 }
-.margin (right; @right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+.margin (right; @right) when not (ispixel(@right)) and not (ispercentage(@right)) and not (isem(@right)) {
 	margin-right: unit((@right * 10), px);
 	margin-right: unit(@right, rem);
 }
-.margin (bottom; @bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+.margin (bottom; @bottom) when (ispixel(@bottom)), (ispercentage(@bottom)), (isem(@bottom)) {
 	margin-bottom: @bottom;
 }
-.margin (bottom; @bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+.margin (bottom; @bottom) when not (ispixel(@bottom)) and not (ispercentage(@bottom)) and not (isem(@bottom)) {
 	margin-bottom: unit((@bottom * 10), px);
 	margin-bottom: unit(@bottom, rem);
 }
-.margin (left; @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
+.margin (left; @left) when (ispixel(@left)), (ispercentage(@left)), (isem(@left)) {
 	margin-left: @left;
 }
-.margin (left; @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+.margin (left; @left) when not (ispixel(@left)) and not (ispercentage(@left)) and not (isem(@left)) {
 	margin-left: unit((@left * 10), px);
 	margin-left: unit(@left, rem);
 }
@@ -182,10 +178,10 @@
 	.margin(top; @y);
 	.margin(bottom; @y);
 }
-.margin (@margin) when not (iskeyword(@margin)) and (isem(@margin)), (ispixel(@margin)), (ispercentage(@margin)) {
+.margin (@margin) when (ispixel(@margin)), (ispercentage(@margin)), (isem(@margin)) {
 	padding: @margin;
 }
-.margin (@margin) when not (iskeyword(@margin)) and not (isem(@margin)) and not (ispixel(@margin)) and not (ispercentage(@margin)) {
+.margin (@margin) when not (ispixel(@margin)) and not (ispercentage(@margin)) and not (isem(@margin)) {
 	margin: unit((@margin * 10), px);
 	margin: unit(@margin, rem);
 }
@@ -201,31 +197,31 @@
 
 // Padding
 
-.padding (top; @top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+.padding (top; @top) when (ispixel(@top)), (ispercentage(@top)), (isem(@top)) {
 	padding-top: @top;
 }
-.padding (top; @top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+.padding (top; @top) when not (ispixel(@top)) and not (ispercentage(@top)) and not (isem(@top)) {
 	padding-top: unit((@top * 10), px);
 	padding-top: unit(@top, rem);
 }
-.padding (right; @right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+.padding (right; @right) when (ispixel(@right)), (ispercentage(@right)), (isem(@right)) {
 	padding-right: @right;
 }
-.padding (right; @right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+.padding (right; @right) when not (ispixel(@right)) and not (ispercentage(@right)) and not (isem(@right)) {
 	padding-right: unit((@right * 10), px);
 	padding-right: unit(@right, rem);
 }
-.padding (bottom; @bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+.padding (bottom; @bottom) when (ispixel(@bottom)), (ispercentage(@bottom)), (isem(@bottom)) {
 	padding-bottom: @bottom;
 }
-.padding (bottom; @bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+.padding (bottom; @bottom) when not (ispixel(@bottom)) and not (ispercentage(@bottom)) and not (isem(@bottom)) {
 	padding-bottom: unit((@bottom * 10), px);
 	padding-bottom: unit(@bottom, rem);
 }
-.padding (left; @left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
+.padding (left; @left) when (ispixel(@left)), (ispercentage(@left)), (isem(@left)) {
 	padding-left: @left;
 }
-.padding (left; @left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+.padding (left; @left) when not (ispixel(@left)) and not (ispercentage(@left)) and not (isem(@left)) {
 	padding-left: unit((@left * 10), px);
 	padding-left: unit(@left, rem);
 }
@@ -237,10 +233,10 @@
 	.padding(top; @y);
 	.padding(bottom; @y);
 }
-.padding (@padding) when not (iskeyword(@padding)) and (isem(@padding)), (ispixel(@padding)), (ispercentage(@padding)) {
+.padding (@padding) when (ispixel(@padding)), (ispercentage(@padding)), (isem(@padding)) {
 	padding: @padding;
 }
-.padding (@padding) when not (iskeyword(@padding)) and not (isem(@padding)) and not (ispixel(@padding)) and not (ispercentage(@padding)) {
+.padding (@padding) when not (ispixel(@padding)) and not (ispercentage(@padding)) and not (isem(@padding)) {
 	padding: unit((@padding * 10), px);
 	padding: unit(@padding, rem);
 }
@@ -256,57 +252,54 @@
 
 // Borders
 
-.border (top; @top; @color: #000; @style: solid) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+.border (top; @color: @baseColor; @top: 1px; @style: solid) when (ispixel(@top)), (ispercentage(@top)), (isem(@top)) {
 	border-top: @top @style @color;
 }
-.border (top; @top; @color: #000; @style: solid) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+.border (top; @color; @top; @style: solid) when not (ispixel(@top)) and not (ispercentage(@top)) and not (isem(@top)) {
 	border-top: unit((@top * 10), px) @style @color;
 	border-top: unit(@top, rem) @style @color;
 }
-.border (right; @right; @color: #000; @style: solid) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+.border (right; @color: @baseColor; @right: 1px; @style: solid) when (ispixel(@right)), (ispercentage(@right)), (isem(@right)) {
 	border-right: @right @style @color;
 }
-.border (right; @right; @color: #000; @style: solid) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+.border (right; @color; @right; @style: solid) when not (ispixel(@right)) and not (ispercentage(@right)) and not (isem(@right)) {
 	border-right: unit((@right * 10), px) @style @color;
 	border-right: unit(@right, rem) @style @color;
 }
-.border (bottom; @bottom; @color: #000; @style: solid) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+.border (bottom; @color: @baseColor; @bottom: 1px; @style: solid) when (ispixel(@bottom)), (ispercentage(@bottom)), (isem(@bottom)) {
 	border-bottom: @bottom @style @color;
 }
-.border (bottom; @bottom; @color: #000; @style: solid) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+.border (bottom; @color; @bottom; @style: solid) when not (ispixel(@bottom)) and not (ispercentage(@bottom)) and not (isem(@bottom)) {
 	border-bottom: unit((@bottom * 10), px) @style @color;
 	border-bottom: unit(@bottom, rem) @style @color;
 }
-.border (left; @left; @color: #000; @style: solid) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
+.border (left; @color: @baseColor; @left: 1px; @style: solid) when (ispixel(@left)), (ispercentage(@left)), (isem(@left)) {
 	border-left: @left @style @color;
 }
-.border (left; @left; @color: #000; @style: solid) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+.border (left; @color; @left; @style: solid) when not (ispixel(@left)) and not (ispercentage(@left)) and not (isem(@left)) {
 	border-left: unit((@left * 10), px) @style @color;
 	border-left: unit(@left, rem) @style @color;
 }
-.border (horizontal; @x; @color: #000; @style: solid) {
-	.border(left; @x; @style; @color);
-	.border(right; @x; @style; @color);
+.border (horizontal; @color: @baseColor; @x: 1px; @style: solid) {
+	.border(left; @color; @x; @style);
+	.border(right; @color; @x; @style);
 }
-.border (vertical; @y; @color: #000; @style: solid) {
-	.border(top; @y; @style; @color);
-	.border(bottom; @y; @style; @color);
+.border (vertical; @color: @baseColor; @y: 1px; @style: solid) {
+	.border(top; @color; @y; @style);
+	.border(bottom; @color; @y; @style);
 }
-.border (@width; @color: #000; @style: solid) when not (iskeyword(@width)) and (isem(@width)), (ispixel(@width)), (ispercentage(@width)) {
+.border (@color: @baseColor; @width: 1px; @style: solid) when not (iskeyword(@color)) and (ispixel(@width)), (ispercentage(@width)), (isem(@width)) {
 	border: @width @style @color;
 }
-.border (@width; @color: #000; @style: solid) when not (iskeyword(@width)) and not (isem(@width)) and not (ispixel(@width)) and not (ispercentage(@width)) {
+.border (@color; @width; @style: solid) when not (iskeyword(@color)) and not (ispixel(@width)) and not (ispercentage(@width)) and not (isem(@width)) {
 	border: unit((@width * 10), px) @style @color;
 	border: unit(@width, rem) @style @color;
 }
-.border (@y; @x; @color: #000; @style: solid) when not (iskeyword(@y)) {
-	.border(@y; @x; @y; @x);
-}
-.border (@top; @right; @bottom; @left; @color: #000; @style: solid) {
-	.border(top; @top; @style; @color);
-	.border(right; @right; @style; @color);
-	.border(bottom; @bottom; @style; @color);
-	.border(left; @left; @style; @color);
+.border (@top; @right; @bottom; @left; @color: @baseColor; @style: solid) when not (iskeyword(@top)) and (isnumber(@bottom)) {
+	.border(top; @color; @top; @style);
+	.border(right; @color; @right; @style);
+	.border(bottom; @color; @bottom; @style);
+	.border(left; @color; @left; @style);
 }
 
 // Rounded Corners
@@ -316,11 +309,11 @@
 	-webkit-background-clip: ~'@{property}-box';
 	background-clip: ~'@{property}-box';
 }
-.rounded (@radius: 3px) when (isem(@radius)), (ispixel(@radius)), (ispercentage(@radius)) {
+.rounded (@radius: 3px) when (ispixel(@radius)), (ispercentage(@radius)), (isem(@radius)) {
 	border-radius: @radius;
 	.background-clip;
 }
-.rounded (@radius) when not (isem(@radius)) and not (ispixel(@radius)) and not (ispercentage(@radius)) {
+.rounded (@radius) when not (ispixel(@radius)) and not (ispercentage(@radius)) and not (isem(@radius)) {
 	border-radius: unit((@radius * 10), px);
 	border-radius: unit(@radius, rem);
 	.background-clip;
@@ -434,64 +427,78 @@
 
 // Positioning
 
-.top (@top) when (isem(@top)), (ispixel(@top)), (ispercentage(@top)) {
+.top (@top) when (ispixel(@top)), (ispercentage(@top)), (isem(@top)) {
 	top: @top;
 }
-.top (@top) when not (isem(@top)) and not (ispixel(@top)) and not (ispercentage(@top)) {
+.top (@top) when not (ispixel(@top)) and not (ispercentage(@top)) and not (isem(@top)) {
 	top: unit((@top * 10), px);
 	top: unit(@top, rem);
 }
-.right (@right) when (isem(@right)), (ispixel(@right)), (ispercentage(@right)) {
+.right (@right) when (ispixel(@right)), (ispercentage(@right)), (isem(@right)) {
 	right: @right;
 }
-.right (@right) when not (isem(@right)) and not (ispixel(@right)) and not (ispercentage(@right)) {
+.right (@right) when not (ispixel(@right)) and not (ispercentage(@right)) and not (isem(@right)) {
 	right: unit((@right * 10), px);
 	right: unit(@right, rem);
 }
-.bottom (@bottom) when (isem(@bottom)), (ispixel(@bottom)), (ispercentage(@bottom)) {
+.bottom (@bottom) when (ispixel(@bottom)), (ispercentage(@bottom)), (isem(@bottom)) {
 	bottom: @bottom;
 }
-.bottom (@bottom) when not (isem(@bottom)) and not (ispixel(@bottom)) and not (ispercentage(@bottom)) {
+.bottom (@bottom) when not (ispixel(@bottom)) and not (ispercentage(@bottom)) and not (isem(@bottom)) {
 	bottom: unit((@bottom * 10), px);
 	bottom: unit(@bottom, rem);
 }
-.left (@left) when (isem(@left)), (ispixel(@left)), (ispercentage(@left)) {
+.left (@left) when (ispixel(@left)), (ispercentage(@left)), (isem(@left)) {
 	left: @left;
 }
-.left (@left) when not (isem(@left)) and not (ispixel(@left)) and not (ispercentage(@left)) {
+.left (@left) when not (ispixel(@left)) and not (ispercentage(@left)) and not (isem(@left)) {
 	left: unit((@left * 10), px);
 	left: unit(@left, rem);
 }
 
 // Sizing
 
-.min-height (@height: @minHeight) when (isem(@height)), (ispixel(@height)), (ispercentage(@height)) {
-	min-height: @height;
+.width (@width) when (ispixel(@width)), (ispercentage(@width)), (isem(@width)) {
+	width: @width;
 }
-.min-height (@height: @minHeight) when not (isem(@height)) and not (ispixel(@height)) and not (ispercentage(@height)) {
-	min-height: unit((@height * 10), px);
-	min-height: unit(@height, rem);
+.width (@width) when not (ispixel(@width)) and not (ispercentage(@width)) and not (isem(@width)) {
+	width: unit((@width * 10), px);
+	width: unit(@width, rem);
 }
-.height (@height) when (isem(@height)), (ispixel(@height)), (ispercentage(@height)) {
+.height (@height) when (ispixel(@height)), (ispercentage(@height)), (isem(@height)) {
 	height: @height;
 }
-.height (@height) when not (isem(@height)) and not (ispixel(@height)) and not (ispercentage(@height)) {
+.height (@height) when not (ispixel(@height)) and not (ispercentage(@height)) and not (isem(@height)) {
 	height: unit((@height * 10), px);
 	height: unit(@height, rem);
 }
-.min-width (@width: @minWidth) when (isem(@width)), (ispixel(@width)), (ispercentage(@width)) {
+.min-width (@width: @minWidth) when (ispixel(@width)), (ispercentage(@width)), (isem(@width)) {
 	min-width: @width;
 }
-.min-width (@width: @minWidth) when not (isem(@width)) and not (ispixel(@width)) and not (ispercentage(@width)) {
+.min-width (@width: @minWidth) when not (ispixel(@width)) and not (ispercentage(@width)) and not (isem(@width)) {
 	min-width: unit((@width * 10), px);
 	min-width: unit(@width, rem);
 }
-.width (@width) when (isem(@width)), (ispixel(@width)), (ispercentage(@width)) {
-	width: @width;
+.max-width (@width) when (ispixel(@width)), (ispercentage(@width)), (isem(@width)) {
+	max-width: @width;
 }
-.width (@width) when not (isem(@width)) and not (ispixel(@width)) and not (ispercentage(@width)) {
-	width: unit((@width * 10), px);
-	width: unit(@width, rem);
+.max-width (@width) when not (ispixel(@width)) and not (ispercentage(@width)) and not (isem(@width)) {
+	max-width: unit((@width * 10), px);
+	max-width: unit(@width, rem);
+}
+.min-height (@height: @minHeight) when (ispixel(@height)), (ispercentage(@height)), (isem(@height)) {
+	min-height: @height;
+}
+.min-height (@height: @minHeight) when not (ispixel(@height)) and not (ispercentage(@height)) and not (isem(@height)) {
+	min-height: unit((@height * 10), px);
+	min-height: unit(@height, rem);
+}
+.max-height (@height) when (ispixel(@height)), (ispercentage(@height)), (isem(@height)) {
+	max-height: @height;
+}
+.max-height (@height) when not (ispixel(@height)) and not (ispercentage(@height)) and not (isem(@height)) {
+	max-height: unit((@height * 10), px);
+	max-height: unit(@height, rem);
 }
 
 // Other
@@ -519,24 +526,24 @@
 ////////////
 
 .container {
-	max-width: @maxWidth;
-	min-width: @minWidth;
 	.centered-block;
+	.max-width(@maxWidth);
+	.min-width(@minWidth);
 	.padded;
 }
 .padded {
-	padding-left: @bumperPadding;
-	padding-right: @bumperPadding;
+	.padding(left; @bumperPadding);
+	.padding(right; @bumperPadding);
 }
 .row {
-	margin-left: (@gridMargin * -1);
-	max-width: (100% + @gridMargin);
+	.margin(left; (@gridMargin * -1));
+	.max-width((100% + @gridMargin));
 }
 .grid (@margin: (@gridMargin - .25%)) {
-	margin-left: @margin;
-	margin-right: -.25em;
-	vertical-align: top;
+	.align-top;
 	.inline-block;
+	.margin(left; @margin);
+	.margin(right; -.25em);
 }
 .column (@share; @columns) when not (iskeyword(@share)) {
 	width: ((100% / @columns) * @share);
@@ -557,19 +564,23 @@
 	padding: 0;
 	.border-box;
 }
+body,
+html {
+	.height(100%);
+	.min-height(100%);
+}
 html {
 	font-family: "'1'";
-	font-size: 62.5%;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
+	.font-size(62.5%);
 }
 body {
 	background: @baseBackgroundColor;
 	color: @baseColor;
-	line-height: 1;
-	min-height: 100%;
 	position: relative;
 	.font(@baseFontFamily; @baseFontSize);
+	.line-height(1);
 }
 article,
 aside,
@@ -588,11 +599,11 @@ summary {
 embed,
 img,
 object {
-	max-width: 100%;
+	.max-width(100%);
 }
 embed,
 object {
-	height: 100%;
+	.height(100%);
 }
 audio,
 canvas,
@@ -600,7 +611,7 @@ video {
 	.inline-block;
 }
 abbr[title] {
-	border-bottom: 1px dotted;
+	.border(bottom);
 }
 b,
 strong,
@@ -615,9 +626,9 @@ canvas {
 	-ms-touch-action: double-tap-zoom;
 }
 figure {
-	border: 1px solid @figureBorderColor;
 	position: relative;
 	.align-center;
+	.border(@figureBorderColor);
 	.padding(@figurePadding);
 	.spaced;
 	img {
@@ -626,7 +637,7 @@ figure {
 	figcaption {
 		color: @figcaptionColor;
 		font-style: @figcaptionFontStyle;
-		line-height: @paragraphLineHeight;
+		.line-height(@paragraphLineHeight);
 	}
 }
 img {
@@ -635,18 +646,18 @@ img {
 }
 sub,
 sup {
-	font-size: .6em;
 	line-height: 0;
 	position: relative;
 	vertical-align: baseline;
+	.font-size(.6em);
 }
 sub {
-	bottom: -.25em;
+	.bottom(-.25em);
 	.margin(left; .3);
 }
 sup {
-	top: -1em;
 	.margin(left; .3);
+	.top(-1em);
 }
 ::-moz-selection {
 	.selection;
@@ -665,6 +676,9 @@ sup {
 .right {
 	float: right;
 }
+.align-bottom {
+	vertical-align: bottom;
+}
 .align-center {
 	text-align: center;
 }
@@ -673,6 +687,9 @@ sup {
 }
 .align-right {
 	text-align: right;
+}
+.align-top {
+	vertical-align: top;
 }
 .img-left {
 	.left;
@@ -812,8 +829,8 @@ var {
 }
 blockquote,
 q {
-	border-left: @quoteBorderWidth solid @quoteBorderColor;
 	color: @quoteColor;
+	.border(left; @quoteBorderColor; @quoteBorderWidth);
 	.font(@quoteFontFamily; @quoteFontSize; normal; @quoteLineHeight; @quoteFontStyle);
 	.padding(@quotePaddingVertical; @quotePaddingHorizontal);
 	.spaced;
@@ -831,11 +848,11 @@ kbd,
 pre,
 samp {
 	background-color: @lightestGray;
-	border: 1px solid @lightGray;
 	color: @darkestGray;
 	font-family: @codeFontFamily;
-	line-height: @codeLineHeight;
+	.border(@lightGray);
 	.font-size(@codeFontSize);
+	.line-height(@codeLineHeight);
 	.padding(@codePaddingVertical; @codePaddingHorizontal);
 	.rounded(@codeBorderRadius);
 }
@@ -865,9 +882,9 @@ a {
 hr,
 .hr {
 	border: 0;
-	border-top: 1px solid @ruleColor;
-	height: 1px;
 	.block;
+	.border(top; @ruleColor; @ruleWidth; @ruleStyle);
+	.height(1px);
 	.margin(top; @ruleMargin);
 	.margin(bottom; @ruleMargin);
 }
@@ -892,10 +909,10 @@ table {
 	.spaced;
 	td,
 	th {
-		border-top: 1px solid @tableCellBorderColor;
-		line-height: @tableCellLineHeight;
-		vertical-align: top;
 		.align-left;
+		.align-top;
+		.border(top; @tableCellBorderColor);
+		.line-height(@tableCellLineHeight);
 		.padding(@tableCellPaddingVertical; @tableCellPaddingHorizontal);
 	}
 	thead,
@@ -903,7 +920,7 @@ table {
 		.bold;
 		th {
 			color: @darkestGray;
-			vertical-align: bottom;
+			.align-bottom;
 		}
 	}
 	caption {
@@ -914,20 +931,17 @@ table {
 	}
 }
 .table-bordered {
+	.border(bottom; @tableCellBorderColor);
 	caption {
-		border: 1px solid @tableCellBorderColor;
+		.border(@tableCellBorderColor);
 		border-bottom: 0;
 	}
 	td,
 	th {
-		border-right: 1px solid @tableCellBorderColor;
+		.border(right; @tableCellBorderColor);
 		&:first-child {
-			border-left: 1px solid @tableCellBorderColor;
+			.border(left; @tableCellBorderColor);
 		}
-	}
-	tfoot {
-		border: 1px solid @tableCellBorderColor;
-		border-top: 0;
 	}
 }
 .table-striped {
@@ -949,7 +963,6 @@ ol,
 ul {
 	color: @listColor;
 	list-style-position: inside;
-	.font-size(@listFontSize);
 	.line-height(@listLineHeight);
 	.margin(bottom; @listMarginBottom);
 	li {
@@ -960,8 +973,8 @@ ol,
 ul {
 	ol,
 	ul {
-		margin-left: 20px;
-		margin-bottom: 0;
+		.margin(bottom; 0);
+		.margin(left; 20px);
 	}
 }
 ul {
@@ -1067,7 +1080,6 @@ label {
 		}
 	}
 	label {
-		overflow: hidden;
 		.line-height(@labelLineHeight);
 	}
 }
@@ -1079,12 +1091,12 @@ input[type='tel'],
 input[type='text'],
 textarea {
 	background: @inputBackground;
-	border: 1px solid @inputBorderColor;
 	color: @inputColor;
-	width: 100%;
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	.background-clip;
+	.border(@inputBorderColor);
+	.fill;
 	.min-height(@inputMinHeight);
 	.min-width(@inputMinWidth);
 	.padding(@inputPaddingVertical; @inputPaddingHorizontal);
@@ -1092,14 +1104,14 @@ textarea {
 	.shadow(inner; dark; .1; 1px; 1px; 2px; 0);
 	.spaced;
 	&:hover {
-		border: 1px solid darken(@inputBorderColor, 10%);
+		.border(darken(@inputBorderColor, 10%));
 	}
 	&:focus {
 		.shadow(dark; .1; 0; 0; 2px; 2px);
 	}
 }
 input[type='search']::-webkit-search-decoration {
-	display: none;
+	.hide;
 }
 input {
 	&[type='button'],
@@ -1111,27 +1123,27 @@ input {
 	}
 }
 select {
-	border: 1px solid @inputBorderColor;
 	outline: 0;
-	padding: 7px;
-	width: 99%;
+	.border(@inputBorderColor);
 	.font-size(1.4);
 	.inline-block;
 	.min-width(@inputMinWidth);
+	.padding(@inputPaddingVertical; @inputPaddingVertical; @inputPaddingVertical; @inputPaddingHorizontal);
 	.rounded(@inputBorderRadius);
 	.spaced;
+	.width(99%);
 	&:hover {
-		border: 1px solid darken(@inputBorderColor, 10%);
+		.border(darken(@inputBorderColor, 10%));
 	}
 	&[multiple] {
-		vertical-align: top;
+		.align-top;
 		.min-height(@multiSelectMinHeight);
 	}
 }
 textarea {
 	overflow: auto;
 	resize: @textareaResize;
-	vertical-align: top;
+	.align-top;
 	.line-height(@textareaLineHeight);
 	.min-height(@textareaMinHeight);
 	.padding(@textareaPaddingVertical; @textareaPaddingHorizontal);
@@ -1161,12 +1173,12 @@ input[disabled] {
 
 .button {
 	background: @buttonBackground;
-	border: 1px solid @buttonBorderColor;
 	color: @buttonColor;
 	cursor: pointer;
 	text-shadow: none;
 	-webkit-tap-highlight-color: @buttonHoverBackground;
 	.align-center;
+	.border(@buttonBorderColor);
 	.font(@buttonFontFamily; @buttonFontSize; @buttonFontWeight);
 	.inline-block;
 	.padding(@buttonPaddingVertical; @buttonPaddingHorizontal);
@@ -1206,95 +1218,8 @@ button[disabled] {
 	&:active,
 	&:hover {
 		background: @disabledButtonBackground;
-		border: 1px solid @disabledButtonBorderColor;
 		color: @disabledButtonColor;
 		cursor: @disabledButtonCursor;
-	}
-}
-
-////////////////
-// Responsive //
-////////////////
-
-.mobile-nav:before {
-	content: '';
-	border-bottom: .15em solid @mobileNavBorderColor;
-	border-top: .45em double @mobileNavBorderColor;
-	height: .15em;
-	position: absolute;
-	.left(@mobileNavLeft);
-	.top(@mobileNavTop);
-	.width(@mobileNavWidth);
-}
-.only-desktop,
-.only-tablet,
-.show-desktop,
-.show-tablet {
-	.hide;
-}
-
-.mobilePortrait () {
-	@import 'breakpoints/mobilePortrait.less';
-}
-.mobileLandscape () {
-	@import 'breakpoints/mobileLandscape.less';
-}
-.tabletPortrait () {
-	@import 'breakpoints/tabletPortrait.less';
-}
-.smallDesktop () {
-	@import 'breakpoints/smallDesktop.less';
-}
-.mediumDesktop () {
-	@import 'breakpoints/mediumDesktop.less';
-}
-.largeDesktop () {
-	@import 'breakpoints/largeDesktop.less';
-}
-
-@media (min-width: @mobilePortrait) {
-	.hide-mobile {
-		.hide;
-	}
-}
-@media (min-width: @mobileLandscape) {
-	html {
-		font-family: "'2'";
-	}
-}
-@media (min-width: @tabletPortrait) {
-	html {
-		font-family: "'3'";
-	}
-	.only-tablet,
-	.show-tablet {
-		.show;
-	}
-	.only-mobile,
-	.hide-tablet {
-		.hide;
-	}
-}
-@media (min-width: @smallDesktop) {
-	html {
-		font-family: "'4'";
-	}
-	.only-desktop,
-	.show-desktop {
-		.show;
-	}
-	.hide-desktop,
-	.only-tablet {
-		.hide;
-	}
-}
-@media (min-width: @mediumDesktop) {
-	html {
-		font-family: "'5'";
-	}
-}
-@media (min-width: @largeDesktop) {
-	html {
-		font-family: "'6'";
+		.border(@disabledButtonBorderColor);
 	}
 }

@@ -1,16 +1,6 @@
-// WeeCSS //
-
-@breakpoint: 3;	// Assumed IE8 screen size
-
-
-
-// Editing below this point is not recommended
-
+@import 'variables.less';
 @import 'wee.less';
-
-///////////////////
-// Compatability //
-///////////////////
+@import 'responsive.less';
 
 .inline-block {
 	*display: inline;
@@ -39,25 +29,23 @@ textarea {
 ////////////////
 
 html {
-	font-family: "'@{breakpoint}'";
+	font-family: "'@{ieBreakpoint}'";
 }
 
-.mobilePortrait;
-
-.fallback (@breakpoint) when (@breakpoint > 1) {
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 1) {
 	.mobileLandscape;
 }
-.fallback (@breakpoint) when (@breakpoint > 2) {
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 2) {
 	.tabletPortrait;
 }
-.fallback (@breakpoint) when (@breakpoint > 3) {
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 3) {
 	.smallDesktop;
 }
-.fallback (@breakpoint) when (@breakpoint > 4) {
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 4) {
 	.mediumDesktop;
 }
-.fallback (@breakpoint) when (@breakpoint > 5) {
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 5) {
 	.largeDesktop;
 }
 
-.fallback(@breakpoint);
+.fallback(@ieBreakpoint);

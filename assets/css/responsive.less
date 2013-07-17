@@ -1,0 +1,88 @@
+@mobileLandscape: (@mobileLandscapeWidth - @breakpointOffset);
+@tabletPortrait: (@tabletPortraitWidth - @breakpointOffset);
+@smallDesktop: (@smallDesktopWidth - @breakpointOffset);
+@mediumDesktop: (@mediumDesktopWidth - @breakpointOffset);
+@largeDesktop: (@largeDesktopWidth - @breakpointOffset);
+
+.mobileLandscape {
+	@import 'breakpoints/mobileLandscape.less';
+}
+.tabletPortrait {
+	@import 'breakpoints/tabletPortrait.less';
+}
+.smallDesktop {
+	@import 'breakpoints/smallDesktop.less';
+}
+.mediumDesktop {
+	@import 'breakpoints/mediumDesktop.less';
+}
+.largeDesktop {
+	@import 'breakpoints/largeDesktop.less';
+}
+
+.mobile-nav:before {
+	content: '';
+	border-bottom: .15em solid @mobileNavBorderColor;
+	border-top: .45em double @mobileNavBorderColor;
+	height: .15em;
+	position: absolute;
+	.left(@mobileNavLeft);
+	.top(@mobileNavTop);
+	.width(@mobileNavWidth);
+}
+.hide-mobile,
+.only-desktop,
+.only-tablet,
+.show-desktop,
+.show-tablet {
+	.hide;
+}
+
+@media (min-width: @mobileLandscape) {
+	html {
+		font-family: "'2'";
+	}
+	.mobileLandscape;
+}
+@media (min-width: @tabletPortrait) {
+	html {
+		font-family: "'3'";
+	}
+	.hide-mobile,
+	.only-tablet,
+	.show-tablet {
+		.show;
+	}
+	.only-mobile,
+	.hide-tablet {
+		.hide;
+	}
+	.tabletPortrait;
+}
+@media (min-width: @smallDesktop) {
+	html {
+		font-family: "'4'";
+	}
+	.hide-tablet,
+	.only-desktop,
+	.show-desktop {
+		.show;
+	}
+	.hide-desktop,
+	.only-tablet {
+		.hide;
+	}
+	.smallDesktop;
+}
+@media (min-width: @mediumDesktop) {
+	html {
+		font-family: "'5'";
+	}
+	.mediumDesktop;
+}
+@media (min-width: @largeDesktop) {
+	html {
+		font-family: "'6'";
+	}
+	.largeDesktop;
+}

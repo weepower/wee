@@ -1,3 +1,20 @@
+# 0.3.0
+
+2013-07-16
+
+- FIXED: Resolved issues with margin and padding overloaded mixins in certain scenarios
+- FIXED: Removed oveflow hidden on labels which was causing some problems
+- UPDATED: Split out variables.less into its own file for improved upgradability
+- UPDATED: Split out custom.less for project customization
+- UDPATED: Split out responsive.less so non-responsive sites and more easily exlude it
+- UPDATED: Updated screen.less to serve as an aggregator of other less files
+- UPDATED: Made slight adjustments in logic to beter utilize LESS 1.4
+- UDPATED: Removed canonical meta tag and tracking code comment in index.html
+- UPDATED: Replaced some inline tags in wee.less with internal mixin references
+- UPDATED: Removed list font size
+- ADDED: Added min-height and height of 100% to body and html
+- ADDED: Added align-bottom and align-top classes
+
 # 0.2.0
 
 2013-07-02
@@ -21,6 +38,7 @@
 - ADDED: Added new table-bordered and table-striped classes
 - ADDED: Added new variables for styling of disabled form elements
 
+>>>>>>> Stashed changes
 # 0.1.7
 
 2013-05-29
