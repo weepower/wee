@@ -1,8 +1,16 @@
+////////////////
+// Responsive //
+////////////////
+
+// Breakpoints
+
 @mobileLandscape: (@mobileLandscapeWidth - @breakpointOffset);
 @tabletPortrait: (@tabletPortraitWidth - @breakpointOffset);
 @smallDesktop: (@smallDesktopWidth - @breakpointOffset);
 @mediumDesktop: (@mediumDesktopWidth - @breakpointOffset);
 @largeDesktop: (@largeDesktopWidth - @breakpointOffset);
+
+// Import Mixins
 
 .mobileLandscape {
 	@import 'breakpoints/mobileLandscape.less';
@@ -20,16 +28,29 @@
 	@import 'breakpoints/largeDesktop.less';
 }
 
-.mobile-nav:before {
-	content: '';
-	border-bottom: .15em solid @mobileNavBorderColor;
-	border-top: .45em double @mobileNavBorderColor;
-	height: .15em;
-	position: absolute;
-	.left(@mobileNavLeft);
-	.top(@mobileNavTop);
-	.width(@mobileNavWidth);
+// IE10 Metro Compatability
+
+@-ms-viewport {
+	width: device-width;
 }
+
+// Mobile Nav Selector
+
+.mobile-nav {
+	&:before {
+		content: '';
+		border-bottom: .15em solid @mobileNavBorderColor;
+		border-top: .45em double @mobileNavBorderColor;
+		height: .15em;
+		position: absolute;
+		.left(@mobileNavLeft);
+		.top(@mobileNavTop);
+		.width(@mobileNavWidth);
+	}
+}
+
+// Breakpoint-Specific Display Toggles
+
 .hide-mobile,
 .only-desktop,
 .only-tablet,
@@ -37,6 +58,8 @@
 .show-tablet {
 	.hide;
 }
+
+// Media Queries
 
 @media (min-width: @mobileLandscape) {
 	html {
