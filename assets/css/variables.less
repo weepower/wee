@@ -1,12 +1,20 @@
-// Layout
+////////////
+// Layout //
+////////////
 
-@maxWidth: 1400px;       // Maximum container width (px)
-@minWidth: 260px;        // Minimum container width (px)
-@bumperPadding: 5%;      // Bumper padding on containers (%)
-@gridMargin: 5%;         // Default margin for spaced columns (%)
+@maxWidth: 1400px; // Maximum container width (px)
+@minWidth: 260px;  // Minimum container width (px)
+
+@bumperPadding: 5%; // Bumper padding on containers (%)
+
+@gridMargin: 5%;  // Default margin for spaced columns (%)
+@gridColumns: 10; // Default number of columns in grid
+
 @blockMarginBottom: 1.4; // Bottom margin for paragraphs, lists, and form elements (rem)
 
-// Grayscale
+///////////////
+// Grayscale //
+///////////////
 
 @white: #fff;
 @lightestGray: lighten(#000, 95%);
@@ -18,28 +26,38 @@
 @darkestGray: lighten(#000, 25%);
 @black: #000;
 
-// Base
+//////////
+// Base //
+//////////
+
+// All units are based off a 62.5% base size (~10px)
 
 @baseColor: #000;                              // Default font color
 @baseFontFamily: Arial, Helvetica, sans-serif; // Font family
 @baseFontSize: 1.5;                            // Font size (rem)
 @baseBackgroundColor: @white;                  // Body background color
 
-// Links
+///////////
+// Links //
+///////////
 
 @linkColor: #09666e;                       // Color
 @linkHoverColor: darken(@linkColor, 30%);  // Hover color
 @linkActiveColor: darken(@linkColor, 50%); // Active color
 @linkTextDecoration: none;                 // Text decoration (none|underline)
 
-// Paragraphs
+////////////////
+// Paragraphs //
+////////////////
 
 @paragraphColor: @darkGray;   // Color
 @paragraphFontWeight: normal; // Font weight
 @paragraphLineHeight: 1.7em;  // Line height (em)
 @paragraphMarginBottom: 2;    // Bottom margin (rem)
 
-// Headings
+//////////////
+// Headings //
+//////////////
 
 @headingColor: @black;                       // Color
 @headingFontFamily: 'Noto Sans', sans-serif; // Font family
@@ -56,7 +74,9 @@
 
 @subHeaderColor: @darkGray; // Color for subheading class
 
-// Images
+////////////
+// Images //
+////////////
 
 @imagePath: '../img/';   // Background image path
 @imageMarginBottom: 1.4; // Bottom margin (rem)
@@ -68,7 +88,9 @@
 @figcaptionColor: @darkGray;  // Color
 @figcaptionFontStyle: italic; // Font style
 
-// Lists
+///////////
+// Lists //
+///////////
 
 @listColor: @paragraphColor;               // Color
 @listLineHeight: @paragraphLineHeight;     // Line height (em)
@@ -88,7 +110,9 @@
 @ddFontSize: @baseFontSize;     // Font size (rem)
 @ddMarginBottom: 1;             // Bottom margin (rem)
 
-// Quotes
+////////////
+// Quotes //
+////////////
 
 @quoteColor: @darkestGray;        // Color
 @quoteFontFamily: Georgia, Times; // Font family
@@ -109,7 +133,9 @@
 @citeMarginTop: 1.4;              // Margin top (rem)
 @citeIndicator: '\2014\00a0';     // Indicator
 
-// Addresses
+///////////////
+// Addresses //
+///////////////
 
 @addressColor: @darkestGray;              // Color
 @addressFontFamily: @baseFontFamily;      // Font family
@@ -117,7 +143,9 @@
 @addressFontStyle: normal;                // Font style (normal|italic|oblique)
 @addressLineHeight: @paragraphLineHeight; // Line height (em)
 
-// Miscellaneous
+///////////////////
+// Miscellaneous //
+///////////////////
 
 @smallFontSize: .8em;                  // Small font size (em)
 @selectionBackgroundColor: @lightGray; // Browser selection color
@@ -125,7 +153,9 @@
 @markBackgroundColor: yellow;          // Mark background color
 @markColor: @baseColor;                // Mark color
 
-// Code
+//////////
+// Code //
+//////////
 
 @codeFontFamily: Monaco, 'Andale Mono', 'Courier New'; // Font family
 @codeFontSize: 1.4;                                    // Font size (rem)
@@ -134,7 +164,9 @@
 @codePaddingVertical: .15em;                           // Vertical padding (em)
 @codePaddingHorizontal: .4em;                          // Horizontal padding (em)
 
-// Tables
+////////////
+// Tables //
+////////////
 
 @tableCellPaddingVertical: .6;              // Vertical padding (rem)
 @tableCellPaddingHorizontal: .8;            // Horizontal padding (rem)
@@ -148,14 +180,18 @@
 
 @evenTableCellBackgroundColor: @lightestGray; // Background color
 
-// Horizontal Rules
+//////////////////////
+// Horizontal Rules //
+//////////////////////
 
 @ruleColor: @lightGray; // Color
 @ruleWidth: 1px;        // Width (px)
 @ruleStyle: solid;      // Style (solid|dotted|dashed)
 @ruleMargin: 2.4;       // Vertical margin (rem)
 
-// Forms
+///////////
+// Forms //
+///////////
 
 @inputFontFamily: @baseFontFamily; // Font family
 @inputFontSize: @baseFontSize;     // Font size (rem)
@@ -196,7 +232,9 @@
 @labelMarginBottom: .4;   // Margin bottom (rem)
 @labelMarginRight: 1;     // Margin right (rem)
 
-// Buttons
+/////////////
+// Buttons //
+/////////////
 
 @buttonFontFamily: @baseFontFamily; // Font family
 @buttonFontSize: @baseFontSize;     // Font size (rem)
@@ -222,7 +260,9 @@
 @disabledButtonBorderColor: darken(@disabledButtonBackground, 5%); // Border color
 @disabledButtonCursor: not-allowed;                                // Cursor (default|not-allowed)
 
-// Responsive
+////////////////
+// Responsive //
+////////////////
 
 @breakpointOffset: 25px; // Breakpoint offset, subtracted from breakpoint width
 
@@ -232,7 +272,7 @@
 @mediumDesktopWidth: 1280px;  // JavaScript value = 5
 @largeDesktopWidth: 1440px;   // JavaScript value = 6
 
-@ieBreakpoint: 3; // Assumed IE8 screen size (using JavaScript values above)
+@ieBreakpoint: 4; // Assumed IE8 screen size (using JavaScript values above)
 
 @mobileNavBorderColor: @white; // Border color
 @mobileNavLeft: -3.2;          // Left position (negative rem)

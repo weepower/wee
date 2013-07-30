@@ -2,26 +2,25 @@
 @import 'wee.less';
 @import 'responsive.less';
 
-.inline-block {
-	*display: inline;
-	*zoom: 1;
-}
-.clear {
-	*zoom: 1;
-}
 table {
-	*white-space: normal;
+	white-space: normal;
 }
 button,
 input,
 select,
 textarea {
-	*vertical-align: middle;
+	vertical-align: middle;
 }
-.checkbox {
-	label {
-		*zoom: 1;
-	}
+.inline-block {
+	display: inline;
+	zoom: 1;
+}
+.clear {
+	zoom: 1;
+}
+.clear,
+.checkbox label {
+	*zoom: 1;
 }
 
 ////////////////

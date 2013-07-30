@@ -1,3 +1,27 @@
+# 0.4.0
+
+2013-07-30
+
+- FIXED: Removed media queries from the custom.less example file
+- UPDATED: Replaced a few rules in custom.less and responsive files with mixins
+- UPDATED: Combined two ie.less rules
+- UPDATED: Upgraded jQuery to 1.10.2
+- UPDATED: Upgraded LESS to 1.4.2
+- UPDATED: Removed unnecessary mobilePortrait.less file
+- UPDATED: Updated default IE8 breakpoint to "4" (1024px)
+- UPDATED: Set hide and show classes to be !important
+- ADDED: Added IE10 Metro compatability to responsive.less
+- ADDED: Added more comments and updated comment style in reponsive, variable and screen less files
+- ADDED: Added @gridColumns variable for defining default number of grid columns
+- ADDED: Added transition delay and transition duration mixins
+- ADDED: Added generic background mixin
+- ADDED: Added background attachment and position mixins
+- ADDED: Added transform-origin mixin
+- ADDED: Added translate overload mixin to take third parameter for z-index 3d translates
+- ADDED: Added absolute, fixed and relative mxins for positioning
+- ADDED: Added align-middle mixin to set vertical-align: middle
+- ADDED: Added column-offset mixin for positioning columns
+
 # 0.3.0
 
 2013-07-16
