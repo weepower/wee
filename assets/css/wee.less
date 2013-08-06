@@ -341,8 +341,33 @@
 
 // Backgrounds
 
-.background (...) {
-	background: @arguments;
+.background (@color: @baseBackgroundColor) {
+	background: @color;
+}
+.background (@color; @filename) {
+	background: @color @filename;
+}
+.background (@color; @filename; @x; @y: 0; @repeat: no-repeat) {
+	background: @color url('@{imagePath}@{filename}') @x @y @repeat;
+}
+.background-color (@color: @baseBackgroundColor) {
+	background-color: @color;
+}
+.background-image (@filename) {
+	background-image: url('@{imagePath}@{filename}');
+}
+.background-image (@filename; @x; @y; @repeat: no-repeat) {
+	.background-image(@filename);
+	.background-position(@x; @y);
+	.background-repeat(@repeat);
+}
+.background-image (@filename; @x; @y; @repeat; @attachment) {
+	.background-attachment(@attachment);
+	.background-image(@filename; @x; @y; @repeat);
+}
+.background-image (@filename; @x; @y; @repeat; @attachment; @size) {
+	.background-image(@filename; @x; @y; @repeat; @attachment);
+	.background-size(@size);
 }
 .background-gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2)) {
 	background-color: @color;
@@ -362,30 +387,17 @@
 	background: linear-gradient(to bottom, @lighter 0%, @darker 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{lighter}', endColorstr='@{darker}', GradientType=0);
 }
-.background-image (@filename) {
-	background-image: url('@{imagePath}@{filename}');
-}
-.background-image (@filename; @x; @y; @repeat: no-repeat) {
-	background-repeat: @repeat;
-	.background-image(@filename);
-	.background-position(@x; @y);
-}
-.background-image (@filename; @x; @y; @repeat; @attachment) {
-	background-attachment: @attachment;
-	.background-image(@filename; @x; @y; @repeat);
-}
-.background-image (@filename; @x; @y; @repeat; @attachment; @size) {
-	.background-image(@filename; @x; @y; @repeat; @attachment);
-	.background-size(@size);
-}
-.background-size (...) {
-	background-size: @arguments;
-}
 .background-attachment (...) {
 	background-attachment: @arguments;
 }
 .background-position (@x: 0; @y: 0) {
 	background-position: @x @y;
+}
+.background-repeat (...) {
+	background-repeat: @arguments;
+}
+.background-size (...) {
+	background-size: @arguments;
 }
 
 // Transforms
@@ -553,7 +565,7 @@
 	.no-wrap;
 }
 .selection () {
-	background: @selectionBackgroundColor;
+	.background(@selectionBackgroundColor);
 	text-shadow: none;
 }
 
@@ -618,8 +630,8 @@ html {
 	.font-size(62.5%);
 }
 body {
-	background: @baseBackgroundColor;
 	color: @baseColor;
+	.background;
 	.font(@baseFontFamily; @baseFontSize);
 	.line-height(1);
 	.relative;
@@ -661,8 +673,8 @@ strong,
 	font-weight: @boldFontWeight;
 }
 mark {
-	background: @markBackgroundColor;
 	color: @markColor;
+	.background(@markBackgroundColor);
 }
 canvas {
 	-ms-touch-action: double-tap-zoom;
@@ -1034,13 +1046,13 @@ ol {
 	list-style-type: decimal;
 }
 nav {
-	ol,
-	ul {
+	> ol,
+	> ul {
 		list-style: none;
 		margin: 0;
-	}
-	li {
-		margin-bottom: 0;
+		> li {
+			margin-bottom: 0;
+		}
 	}
 }
 dl {
@@ -1133,10 +1145,10 @@ input[type='search'],
 input[type='tel'],
 input[type='text'],
 textarea {
-	background: @inputBackground;
 	color: @inputColor;
 	-moz-appearance: none;
 	-webkit-appearance: none;
+	.background(@inputBackground);
 	.background-clip;
 	.border(@inputBorderColor);
 	.fill;
@@ -1215,12 +1227,12 @@ input[disabled] {
 /////////////
 
 .button {
-	background: @buttonBackground;
 	color: @buttonColor;
 	cursor: pointer;
 	text-shadow: none;
 	-webkit-tap-highlight-color: @buttonHoverBackground;
 	.align-center;
+	.background(@buttonBackground);
 	.border(@buttonBorderColor);
 	.font(@buttonFontFamily; @buttonFontSize; @buttonFontWeight);
 	.inline-block;
@@ -1239,10 +1251,10 @@ input[disabled] {
 	}
 }
 .colored-button {
-	background: @coloredButtonBackground;
 	border-color: @coloredButtonBorderColor;
 	color: @coloredButtonColor;
 	-webkit-tap-highlight-color: @coloredButtonHoverBackground;
+	.background(@coloredButtonBackground);
 	&:hover {
 		background-color: @coloredButtonHoverBackground;
 		color: @coloredButtonColor;
@@ -1260,9 +1272,9 @@ button[disabled] {
 	&,
 	&:active,
 	&:hover {
-		background: @disabledButtonBackground;
 		color: @disabledButtonColor;
 		cursor: @disabledButtonCursor;
+		.background(@disabledButtonBackground);
 		.border(@disabledButtonBorderColor);
 	}
 }
