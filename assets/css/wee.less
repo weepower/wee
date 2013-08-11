@@ -601,6 +601,12 @@
 	.grid;
 	.width(((100% / @columns) * @share) - (@margin * 2) + .25%);
 }
+.column-inset (@share; @columns: @gridColumns) {
+	.margin(right; ((100% / @columns) * @share));
+}
+.column-inset (spaced; @share; @columns: @gridColumns; @margin: (@gridMargin / 2)) {
+	.margin(right; ((100% / @columns) * @share) + ((@margin * 2) - .25%));
+}
 .column-offset (@share; @columns: @gridColumns) {
 	.margin(left; ((100% / @columns) * @share));
 }
