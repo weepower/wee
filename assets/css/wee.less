@@ -584,28 +584,31 @@
 	.padding(right; @bumperPadding);
 }
 .row {
-	.margin(left; (@gridMargin * -1));
+	letter-spacing: -0.31em;
+	.margin(left; ((@gridMargin * -1) - .25%));
 	.max-width((100% + @gridMargin));
 }
-.grid (@margin: (@gridMargin - .25%)) {
+.grid (@marginLeft: @gridMargin) {
+	letter-spacing: normal;
+    word-spacing: normal;
 	.align-top;
 	.inline-block;
-	.margin(left; @margin);
-	.margin(right; -.25em);
+	.margin(left; @marginLeft);
 }
 .column (@share; @columns: @gridColumns) when not (iskeyword(@share)) {
 	.grid(0);
+	.margin(right; -.31em);
 	.width((100% / @columns) * @share);
 }
 .column (spaced; @share; @columns: @gridColumns; @margin: (@gridMargin / 2)) {
 	.grid;
-	.width(((100% / @columns) * @share) - (@margin * 2) + .25%);
+	.width(((100% / @columns) * @share) - (@margin * 2));
 }
 .column-offset (@share; @columns: @gridColumns) {
 	.margin(left; ((100% / @columns) * @share));
 }
 .column-offset (spaced; @share; @columns: @gridColumns; @margin: (@gridMargin / 2)) {
-	.margin(left; ((100% / @columns) * @share) + ((@margin * 2) - .25%));
+	.margin(left; ((100% / @columns) * @share) + (@margin * 2));
 }
 
 ///////////////
