@@ -1,4 +1,10 @@
-@import 'screen.less';
+//////////////////////
+// IE Compatability //
+//////////////////////
+
+@import 'variables.less';  // Base variables
+@import 'wee.less';        // Mixin and CSS library
+@import 'responsive.less'; // Responsive components
 
 table {
 	white-space: normal;
@@ -7,7 +13,7 @@ button,
 input,
 select,
 textarea {
-	vertical-align: middle;
+	.align-middle;
 }
 .inline-block {
 	*display: inline;
@@ -18,9 +24,9 @@ textarea {
 	*zoom: 1;
 }
 
-////////////////
-// Responsive //
-////////////////
+///////////////////
+// Media Queries //
+///////////////////
 
 html {
 	font-family: "'@{ieBreakpoint}'";

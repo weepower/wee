@@ -1,3 +1,11 @@
+# 0.4.1
+
+2013-08-16
+
+- UPDATED: Tweaked htaccess for better charset handling and other issues
+- UPDATED: Grid now is based on negative letter spacing vs negative margin for better consistency
+- ADDED: Added new rootFontSize variable
+
 # 0.4.0
 
 2013-07-30
