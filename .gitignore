@@ -1,6 +1,7 @@
 # OS files
 .DS_Store
 Thumbs.db
+*.tmp
 
 # Tool files
 mixture.json
