@@ -1,19 +1,21 @@
-# [WeeCSS Beta 0.4.1](https://github.com/weestack/weecss)
+# [Wee Beta 0.4.1](https://github.com/weepower/wee)
 
-Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects. To read more, visit [http://www.weecss.com](http://www.weecss.com).
+Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects. To read more, visit [http://www.weepower.com](http://www.weepower.com).
 
 
 ## Quick Start
 
 To get started begin by pulling the latest Wee source:
 
-* [Download the latest release](https://github.com/weestack/weecss/archive/master.zip).
-* Clone the repository from 'git clone git://github.com/weestack/weecss.git'.
+* [Download the latest release](https://github.com/weepower/wee/archive/master.zip).
+* Clone the repository from 'git clone git://github.com/weepower/wee.git'.
+
+Grunt fan? Check out our [official Grunt file](https://github.com/weepower/wee-grunt) to compile, optimize, and minify your  source.
 
 
 ## Bugs
 
-Have a bug or a feature request? [Open a new issue](https://github.com/weestack/weecss/issues).
+Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).
 
 
 ## Community
