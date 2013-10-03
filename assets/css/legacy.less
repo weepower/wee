@@ -1,0 +1,90 @@
+//////////////////////
+// IE Compatability //
+//////////////////////
+
+@ieMode: true;
+
+@import 'wee/variables.less';       // Base variables
+@import 'wee/core/mixins.less';     // Mixin and CSS library
+@import 'wee/mixins.less';          // Custom mixins
+@import 'wee/core/responsive.less'; // Responsive components
+@import 'wee/ie.less';              // Custom IE8- styling
+
+// Override Component Output
+
+@tableEnabled: false;
+@formEnabled: false;
+@buttonEnabled: false;
+
+@import 'wee/core/base.less'; // Normalization and helpers
+
+.responsiveTesting () when (@responsiveTestMode = true) {
+	body {
+		&:after {
+			.hide();
+		}
+	}
+}
+
+.responsiveTesting();
+
+// Normalization
+
+table {
+	white-space: normal;
+}
+button,
+input,
+select,
+textarea {
+	.align-middle();
+}
+.inline-block {
+	*display: inline;
+	*zoom: 1;
+}
+.clear,
+.checkbox label {
+	*zoom: 1;
+}
+
+///////////////////
+// Media Queries //
+///////////////////
+
+html {
+	.font("'@{ieBreakpoint}'");
+}
+
+.ie-body (@width) {
+	body {
+		.min-width(@width);
+	}
+}
+
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 1) {
+	.ie-body(@mobileLandscapeWidth);
+	.mobile-landscape();
+}
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 2) {
+	.ie-body(@tabletPortraitWidth);
+	.tablet-portrait();
+}
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 3) {
+	.ie-body(@desktopSmallWidth);
+	.desktop-small();
+}
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 4) {
+	.ie-body(@desktopMediumWidth);
+	.desktop-medium();
+}
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 5) {
+	.ie-body(@desktopLargeWidth);
+	.desktop-large();
+}
+
+.responsive () when (@responsiveEnabled = true) {
+	.fallback(@ieBreakpoint);
+}
+
+.responsive();

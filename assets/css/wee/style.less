@@ -1,0 +1,106 @@
+// Overrides
+
+html {
+	.font-size(55%);
+}
+
+// Variables
+
+@blue: #006e89;
+@darkBlue: darken(@blue, 5%);
+
+// Header
+
+header[role='banner'] {
+	.container {
+		.padding(0);
+	}
+}
+#logo {
+	.absolute();
+	.padded();
+	.top(28px);
+}
+nav[role='navigation'] {
+	.align-center();
+	.font(@headingFont; 1.4);
+	.overflow(auto);
+	.uppercase();
+	ul {
+		.background(@darkBlue);
+		.margin(0);
+		.padding(top; 8.5);
+	}
+	li {
+		.border(top; @blue);
+	}
+	a {
+		.block();
+		.color(mix(@blue, #fff, 20%));
+		.line-height(4.8);
+		&:hover {
+			.background(darken(@darkBlue, 2%));
+			.color(@white);
+		}
+	}
+	.active {
+		.color(@white);
+	}
+}
+.js {
+	#nav {
+		.margin(top; -100%);
+		&.nav-active {
+			.transition(margin; .5s);
+		}
+		&.nav-show {
+			.margin(top; 0);
+		}
+	}
+}
+#pull {
+	.absolute();
+	.cursor();
+	.font-size(2.4);
+	.mobile-nav();
+	.right(12px);
+	.top(12px);
+}
+
+// Footer
+
+footer[role='contentinfo'] {
+	.align-center();
+	.background(@lightestGray);
+	.color(@gray);
+	.margin(top; 8);
+	.padding(vertical; 3);
+}
+
+// Index
+
+#top {
+	.background-image('hero-bg.jpg'; 50%);
+	.background-size(cover);
+	.margin(bottom; 4);
+}
+#hero {
+	.align-center();
+	.padding(vertical; 10; 8);
+	.container {
+		p {
+			.bold();
+			.centered-block(800px);
+			.color(@white);
+			.margin(bottom; 2.8);
+		}
+	}
+	.button {
+		.font(@headingFont; 1.4);
+	}
+}
+#features {
+	h4 {
+		.color(@darkerGray);
+	}
+}

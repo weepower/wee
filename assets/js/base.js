@@ -5,27 +5,10 @@ $(function() {
 
 	// Responsive nav
 	var $pull = $('#pull'),
-		$nav = $('nav[role="navigation"]');
+		$nav = $('#nav');
 
-	$pull.click(function(e) {
-		e.preventDefault();
-		$nav.slideToggle(250);
-	});
-
-	var navCheck = (function() {
-		if (WEE.browserSize() === 1) {
-			$nav.hide();
-			$pull.show();
-		} else {
-			$nav.show();
-			$pull.hide();
-		}
-	});
-
-	navCheck();
-
-	$(window).resize(function() {
-		navCheck();
+	$pull.click(function() {
+		$nav.addClass('nav-active').toggleClass('nav-show');
 	});
 
 	// Placeholder fallback
@@ -55,6 +38,8 @@ $(function() {
 			});
 		});
 	}
+
+	// Place your custom scripts here
 });
 
 var WEE = WEE || {};

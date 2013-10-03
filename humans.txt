@@ -1,13 +1,13 @@
 # Team
 
-WeeStack - hello@weestack.com - twitter.com/weecss
+Wee - hello@weepower.com - twitter.com/weecss
 
 # Technology
 
 Standards: HTML5, CSS3, ARIA, Schema
-Components: WeeCSS, LessCSS, jQuery, holder.js
+Components: Wee, LessCSS, jQuery, holder.js
 
 # Thanks
 
-weecss.com
+weepower.com
 lesscss.org

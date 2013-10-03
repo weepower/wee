@@ -1,0 +1,180 @@
+////////////////
+// Responsive //
+////////////////
+
+// Import Mixins
+
+.mobile-landscape () when not (@mobileLandscapeWidth = false) {
+	@import '../breakpoints/mobile-landscape.less';
+}
+.tablet-portrait () when not (@tabletPortraitWidth = false) {
+	@import '../breakpoints/tablet-portrait.less';
+}
+.desktop-small () when not (@desktopSmallWidth = false) {
+	@import '../breakpoints/desktop-small.less';
+}
+.desktop-medium () when not (@desktopMediumWidth = false) {
+	@import '../breakpoints/desktop-medium.less';
+}
+.desktop-large () when not (@desktopLargeWidth = false) {
+	@import '../breakpoints/desktop-large.less';
+}
+
+// Mobile Navigation Indicator
+
+.mobile-nav () {
+	&:before {
+		.absolute();
+		.border(bottom; @mobileNavBorderColor; .15em; solid);
+		.border(top; @mobileNavBorderColor; .45em; double);
+		.content();
+		.height(.15em);
+		.left(@mobileNavLeft);
+		.top(@mobileNavTop);
+		.width(@mobileNavWidth);
+	}
+}
+
+// Components
+
+.responsive () when (@responsiveEnabled = true)
+			and not (@ieMode = true) {
+
+	// IE Metro Compatability
+
+	@-ms-viewport {
+		.width(device-width);
+	}
+
+	// Test Mode
+
+	.wee-hint (@value) when (@responsiveTestMode = true) {
+		body {
+			&:after {
+				.content(@value);
+			}
+		}
+	}
+
+	.responsiveTesting () when (@responsiveTestMode = true) {
+		body {
+			.padding(bottom; 40px);
+			&:after {
+				.align-center();
+				.background(@bodyBackground);
+				.border(top);
+				.bottom();
+				.content('Mobile Portrait');
+				.fill();
+				.fixed();
+				.font(@headingFont; 13px);
+				.line-height(40px);
+				.height(40px);
+			}
+		}
+	}
+
+	.responsiveTesting();
+
+	// Display Toggles
+
+	.hide-mobile,
+	.only-desktop,
+	.only-tablet,
+	.show-desktop,
+	.show-tablet {
+		.hide();
+	}
+
+	// Mobile Landscape
+
+	.mobile-landscape-query () when not (@mobileLandscapeWidth = false) {
+		@media (min-width: (@mobileLandscapeWidth - @responsiveOffset)) {
+			html {
+				.font("'2'");
+			}
+			.mobile-landscape();
+			.wee-hint('Mobile Landscape');
+		}
+	}
+
+	.mobile-landscape-query();
+
+	// Tablet Portrait
+
+	.tablet-portrait-query () when not (@tabletPortraitWidth = false) {
+		@media (min-width: (@tabletPortraitWidth - @responsiveOffset)) {
+			html {
+				.font("'3'");
+			}
+			.hide-mobile,
+			.only-tablet,
+			.show-tablet {
+				.show();
+			}
+			.only-mobile,
+			.hide-tablet {
+				.hide();
+			}
+			.tablet-portrait();
+			.wee-hint('Tablet Portrait');
+		}
+	}
+
+	.tablet-portrait-query();
+
+	// Small Desktop
+
+	.desktop-small-query () when not (@desktopSmallWidth = false) {
+		@media (min-width: (@desktopSmallWidth - @responsiveOffset)) {
+			html {
+				.font("'4'");
+			}
+			.hide-mobile,
+			.hide-tablet,
+			.only-desktop,
+			.show-desktop {
+				.show();
+			}
+			.hide-desktop,
+			.only-mobile,
+			.only-tablet {
+				.hide();
+			}
+			.desktop-small();
+			.wee-hint('Small Desktop');
+		}
+	}
+
+	.desktop-small-query();
+
+	// Medium Desktop
+
+	.desktop-medium-query () when not (@desktopMediumWidth = false) {
+		@media (min-width: (@desktopMediumWidth - @responsiveOffset)) {
+			html {
+				.font("'5'");
+			}
+			.desktop-medium();
+			.wee-hint('Medium Desktop');
+		}
+	}
+
+	.desktop-medium-query();
+
+	// Large Desktop
+
+	.desktop-large-query () when not (@desktopLargeWidth = false) {
+		@media (min-width: (@desktopLargeWidth - @responsiveOffset)) {
+			html {
+				.font("'6'");
+			}
+			.desktop-large();
+			.wee-hint('Large Desktop');
+		}
+	}
+
+	.desktop-large-query();
+}
+
+.responsive();

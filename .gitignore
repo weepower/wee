@@ -1,7 +1,11 @@
-# OS files
-.DS_Store
+# System
 Thumbs.db
-*.tmp
+.DS_Store
+.tmp
 
-# Tool files
+# Tools
 mixture.json
+prepros.json
+node_modules/
+package.json
+Gruntfile.js

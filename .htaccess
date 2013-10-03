@@ -1,17 +1,15 @@
-# --------------------
-# Rewrite Rules
-# --------------------
-
 RewriteEngine On
-Options +FollowSymLinks
-Options -MultiViews
-Options -Indexes
+Options +FollowSymLinks -MultiViews -Indexes
 
 #Header set X-UA-Compatible "IE=edge"
 
 # Character set
 #AddDefaultCharset utf-8
 #AddCharset utf-8 .css .js .json .rss .xml
+
+# --------
+# Rewrites
+# --------
 
 # Force www
 #RewriteCond %{HTTP_HOST} !^www\..+$ [NC]
@@ -38,9 +36,9 @@ Options -Indexes
 #RewriteCond %{REQUEST_FILENAME}\.html -f
 #RewriteRule ^(.*)$ $1.html
 
-# --------------------
+# -----------
 # Maintenance
-# --------------------
+# -----------
 
 #RewriteCond %{REMOTE_ADDR} !^123.123.123.
 #RewriteCond %{REQUEST_URI} !^/maintenance\.html$

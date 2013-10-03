@@ -1,0 +1,49 @@
+// Header
+
+header[role='banner'] {
+	.container {
+		.padded();
+	}
+}
+#logo {
+	.left();
+	.padding(1.7; 0);
+	.position(static);
+}
+nav[role='navigation'] {
+	.crop();
+	.right();
+	ul {
+		.background(none);
+		.inline-list();
+		.padding(top; 0);
+	}
+	li {
+		.border(top; 0);
+	}
+	a {
+		.inline-block();
+		.line-height(6);
+		.padding(horizontal; 1.8);
+		&:last-child {
+			.padding(right; 0);
+		}
+		&:hover {
+			.background(none);
+		}
+	}
+}
+.js {
+	#nav {
+		.margin(top; 0);
+	}
+}
+#pull {
+	.hide();
+}
+
+// Index
+
+#top {
+	.padding(vertical; 2);
+}

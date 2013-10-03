@@ -1,3 +1,9 @@
+# 1.0.0
+
+2013-10-02
+
+- UPDATED: Stable version 1 release
+
 # 0.4.1
 
 2013-08-16
