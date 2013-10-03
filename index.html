@@ -3,50 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Wee Bootstrap | Responsive LESS CSS Framework</title>
+<title>Responsive Web Framework | Wee Bootstrap</title>
 <meta name="description" content="Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects.">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="assets/css/screen.css">
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700">
-<link rel="apple-touch-icon" href="touchicon.png">
-<link rel="icon" href="favicon.ico">
+<link rel="shortcut icon" sizes="16x16 32x32" href="favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="touchicon.png">
+<link rel="publisher" href="https://plus.google.com/108351219135018899428">
+<link rel="author" href="https://plus.google.com/117259123566095897126/posts">
 <meta name="msapplication-TileColor" content="#006e89">
 <meta name="msapplication-TileImage" content="tileicon.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@weecss">
+<meta name="twitter:creator" content="@leigeber">
+<meta property="og:title" content="Responsive Web Framework">
+<meta property="og:image" content="http://www.weepower.com/share.png">
+<meta property="og:site_name" content="Wee">
+<meta property="og:url" content="http://www.weepower.com">
 <!--[if lt IE 9]>
-<link rel="stylesheet" href="assets/css/ie.css">
+<link rel="stylesheet" href="assets/css/legacy.css">
 <script src="assets/js/vendor/html5shiv.min.js"></script>
 <![endif]-->
 </head>
 <body itemscope itemtype="http://schema.org/WebPage">
-<header role="banner">
-	<div class="container">
-		<b id="logo"><a href="#" rel="home">Wee</a></b>
-		<nav role="navigation">
-			<ul>
-				<li><a href="#" class="active">Home</a></li>
-				<li><a href="#">Two</a></li>
-				<li><a href="#">Three</a></li>
-				<li><a href="#">Four</a></li>
-			</ul>
-		</nav>
-		<a href="#" class="mobile-nav" id="pull">menu</a>
-	</div>
-</header>
-<main role="main">
+<div id="top">
+	<header role="banner">
+		<div class="container">
+			<a href="#" rel="home" id="logo">
+				<img src="assets/img/wee.png" width="60" height="20" alt="Wee Framework">
+			</a>
+			<nav role="navigation">
+				<ul id="nav">
+					<li><a href="#" class="active">Home</a></li>
+					<li><a href="#">Two</a></li>
+					<li><a href="#">Three</a></li>
+					<li><a href="#">Four</a></li>
+				</ul>
+			</nav>
+			<span aria-hidden="true" id="pull"></span>
+		</div>
+	</header>
 	<div id="hero">
-		<p id="hero-title">Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects.</p>
 		<section class="container">
-			<p class="h4">Quickly build wireframes, prototypes, websites and interfaces. It's fast, fluid and free!</p>
-			<a href="http://www.weecss.com/" class="button colored-button">More Information</a>
+			<p class="h4">Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects.</p>
+			<a href="http://www.weepower.com" class="button button-colored">More Information</a>
 		</section>
 	</div>
+</div>
+<main role="main">
 	<div class="container">
-		<p id="getting-started"><img data-src="holder.js/350x175//#999999:#ffffff/auto/text:Responsive Placeholder" alt="Responsive Placeholder" class="left">The <code>custom.less</code> file will serve as your primary stylesheet. Wee also includes <code>variables.less</code> which sets up your configuration, <code>responsive.less</code> which silently works trigger your preakpoints breakpoints, and <code>wee.less</code> which gives you boilerplate to leverage and extend. You should also configure the applicable breakpoint files. Visit <a href="http://www.weecss.com">weecss.com</a> for more info.</p>
-		<hr class="mobile-only">
+		<p id="getting-started">The <code>style.less</code> file inside the wee directory will serve as your primary stylesheet. There you'll also find <code>variables.less</code> which sets up your configuration, <code>mixins.less</code> for your custom LESS mixins, and <code>ie.less</code> for special legacy IE rules, should you need them. You should also configure the applicable breakpoint files. Visit <a href="http://www.weepower.com">weepower.com</a> for more examples and documentation.</p>
+		<hr>
 		<div id="examples">
-			<div id="left-examples">
+			<div class="examples" id="left-examples">
 				<h2 class="clear">Table</h2>
-				<table itemscope itemtype="http://schema.org/Table" class="table-bordered table-striped">
+				<table itemscope itemtype="http://schema.org/Table">
 					<caption itemprop="about">Caption</caption>
 					<thead>
 						<tr>
@@ -79,7 +91,6 @@
 						</tr>
 					</tfoot>
 				</table>
-				<br>
 				<h2>Form Elements</h2>
 				<form action="#" id="form-example">
 					<div id="form-split">
@@ -92,10 +103,10 @@
 									<input type="text" name="name2" value="" placeholder="Your Name" id="name2" disabled>
 								</div>
 								<label for="textarea">Message</label>
-								<textarea name="textarea" id="textarea" rows="3"></textarea>
+								<textarea name="textarea" id="textarea" rows="3" required></textarea>
 								<div class="inline-field">
 									<label for="textarea2">Inline Message</label>
-									<textarea name="textarea2" id="textarea2" rows="4"></textarea>
+									<textarea name="textarea2" id="textarea2" rows="4" placeholder="Short message here..."></textarea>
 								</div>
 							</fieldset>
 						</div>
@@ -123,50 +134,47 @@
 										<option value="3">Dolor</option>
 									</select>
 								</div>
-								<span class="checkbox">
+								<div class="inline-field">
 									<input type="checkbox" name="checkbox" id="checkbox">
 									<label for="checkbox">Lorem ipsum dolor sit amet</label>
-								</span>
-								<span class="radio">
+								</div>
+								<div class="inline-field">
 									<input type="radio" name="radio" id="radio">
 									<label for="radio">Lorem ipsum dolor sit amet</label>
-								</span>
-								<span class="radio">
+								</div>
+								<div class="inline-field">
 									<input type="radio" name="radio" id="radio2">
 									<label for="radio2">Lorem ipsum dolor sit amet</label>
-								</span>
+								</div>
 							</fieldset>
 						</div>
 					</div>
-					<input type="submit" value="Submit" class="button colored-button">
-					<input type="reset" value="Clear" class="button">
-					<input type="submit" value="Disabled" class="button" disabled>
+					<input type="submit" value="Submit" class="button-colored">
+					<input type="reset" value="Clear">
+					<input type="submit" value="Disabled" disabled>
 				</form>
-				<hr>
 				<h2>Blockquote</h2>
 				<blockquote>
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					<cite>John Doe</cite>
 				</blockquote>
-				<br>
+				<h2>Figure</h2>
 				<figure>
-					<img data-src="holder.js/350x175//#999999:#ffffff/auto/text:Figure Image" alt="Figure Image">
+					<img data-src="holder.js/350x175//#a6a6a6:#ffffff/auto" alt="Figure Image">
 					<figcaption><b>Fig. 3.2 |</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit by <a href="#">eiusmod tempor</a></figcaption>
 				</figure>
 			</div>
-			<div id="right-examples">
+			<div class="examples" id="right-examples">
 				<h2>Headings</h2>
-				<hgroup>
-					<h1>h1. <small>huge</small></h1>
-					<h2>h2. <small>large</small></h2>
-					<h3>h3. <small>medium</small></h3>
-					<h4>h4. <small>moderate</small></h4>
-					<h5>h5. <small>small</small></h5>
-					<h6>h6. <small>tiny</small></h6>
-				</hgroup>
+				<h1>h1. <small>huge</small></h1>
+				<h2>h2. <small>large</small></h2>
+				<h3>h3. <small>medium</small></h3>
+				<h4>h4. <small>moderate</small></h4>
+				<h5>h5. <small>small</small></h5>
+				<h6>h6. <small>tiny</small></h6>
 				<hr>
 				<h2>Lists</h2>
-				<h4 class="subheader">Unordered List</h4>
+				<h5 class="subheader">Unordered List</h5>
 				<ul>
 					<li>Lorem ipsum dolor
 						<ul>
@@ -188,7 +196,7 @@
 					<li>Lorem ipsum dolor</li>
 				</ul>
 				<hr>
-				<h4 class="subheader">Ordered List</h4>
+				<h5 class="subheader">Ordered List</h5>
 				<ol>
 					<li>Lorem ipsum dolor
 						<ol>
@@ -208,9 +216,9 @@
 					</li>
 					<li>Lorem ipsum dolor</li>
 					<li>Lorem ipsum dolor</li>
-				</ul>
+				</ol>
 				<hr>
-				<h4 class="subheader">Description List</h4>
+				<h5 class="subheader">Description List</h5>
 				<dl>
 					<dt>Lorem ipsum dolor</dt>
 					<dd>Lorem ipsum dolor</dd>
@@ -230,8 +238,8 @@
 </main>
 <footer role="contentinfo">
 	<div class="container">
-		<p>Built with Wee version 0.4.1. <a href="mailto:hello@weestack.com">hello@weestack.com</a><br>Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2</a>.</p>
-		<a href="https://twitter.com/weecss">Twitter</a> / <a href="https://github.com/weestack/weecss">Github</a> / <a href="https://github.com/weestack/weecss/issues">Issues</a> / <a href="https://github.com/weestack/weecss/blob/master/CHANGELOG.md">Changelog</a>
+		<p>Built with Wee version 1.0.0. <a href="mailto:hello@weepower.com">hello@weepower.com</a><br>Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2</a>.</p>
+		<a href="https://twitter.com/weecss">Twitter</a> / <a href="https://github.com/weepower/wee">Github</a> / <a href="https://github.com/weepower/wee/issues">Issues</a> / <a href="https://github.com/weepower/wee/blob/master/CHANGELOG.md">Changelog</a>
 	</div>
 </footer>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

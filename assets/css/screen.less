@@ -1,8 +1,14 @@
-////////////
-// WeeCSS //
-////////////
+// Wee 1.0.0 (weepower.com)
+// Licensed under the Apache License v2
+// http://www.apache.org/licenses/LICENSE-2.0
 
-@import 'variables.less';  // Base variables
-@import 'wee.less';        // Mixin and CSS library
-@import 'custom.less';     // Project-specific customizations
-@import 'responsive.less'; // Responsive components
+@import 'wee/variables.less';       // Configuration
+@import 'wee/core/mixins.less';     // Mixins
+@import 'wee/core/base.less';       // Normalization/Helpers
+@import 'wee/mixins.less';          // Custom mixins
+@import 'wee/style.less';           // Customizations
+@import 'wee/core/responsive.less'; // Responsiveness
+
+// Framework (do not modify)
+
+@ieMode: false;

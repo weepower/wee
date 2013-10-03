@@ -1,10 +1,10 @@
 /**
-* @preserve HTML5 Shiv v3.6.2 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
+* @preserve HTML5 Shiv v3.7.0 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
 */
 ;(function(window, document) {
 /*jshint evil:true */
   /** version */
-  var version = '3.6.2';
+  var version = '3.7.0';
 
   /** Preset options */
   var options = window.html5 || {};
@@ -187,7 +187,7 @@
       'var n=f.cloneNode(),c=n.createElement;' +
       'h.shivMethods&&(' +
         // unroll the `createElement` calls
-        getElements().join().replace(/\w+/g, function(nodeName) {
+        getElements().join().replace(/[\w\-]+/g, function(nodeName) {
           data.createElem(nodeName);
           data.frag.createElement(nodeName);
           return 'c("' + nodeName + '")';
