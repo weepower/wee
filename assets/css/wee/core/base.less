@@ -186,17 +186,22 @@ var,
 blockquote,
 q {
 	.color(@quoteColor);
-	.border(left; @quoteBorderColor; @quoteBorderWidth);
 	.font(@quoteFont; @quoteFontSize; normal; @quoteLineHeight; @quoteFontStyle);
-	.padding(@quotePaddingVertical; @quotePaddingHorizontal);
-	.spaced();
 	cite {
-		.block();
 		.font(@citeFont; @citeFontSize; @citeFontWeight; @citeLineHeight; @citeFontStyle);
 		.margin(top; @citeMarginTop);
 		&:before {
 			.content(@citeIndicator);
 		}
+	}
+}
+blockquote,
+.block-quote {
+	.border(left; @quoteBorderColor; @quoteBorderWidth);
+	.padding(@quotePaddingVertical; @quotePaddingHorizontal);
+	.spaced();
+	cite {
+		.block();
 	}
 }
 .wee-code () {
