@@ -1,4 +1,4 @@
-# [Wee 1.0.0](https://github.com/weepower/wee)
+# [Wee 1.0.1](https://github.com/weepower/wee)
 
 Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects. To read more, visit [http://www.weepower.com](http://www.weepower.com).
 
