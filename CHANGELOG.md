@@ -1,3 +1,11 @@
+# 1.0.2
+
+2013-10-06
+
+- ADDED: Added Bower compatability
+- UPDATED: Added additional files to .gitignore
+- UPDATED: Optimized images with new Wee Grunt script
+
 # 1.0.1
 
 2013-10-04
