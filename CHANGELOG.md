@@ -1,3 +1,9 @@
+# 1.0.4
+
+2013-10-07
+
+- FIXED: Resolved order of operations issue with legacy.less IE-specific overrides
+
 # 1.0.3
 
 2013-10-06
