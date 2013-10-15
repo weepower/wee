@@ -1,3 +1,13 @@
+# 1.0.5
+
+2013-10-14
+
+- FIXED: Resolved issue with retina background image mixin
+- ADDED: Added additional retina background mixin options
+- ADDED: Added .fill(both) mixin to set both height and width to 100%
+- UPDATED: Separated an index.local.html file from index.html to better represent relative paths and protocols by default
+- UPDATED: Updated holder.js to 2.2
+
 # 1.0.4
 
 2013-10-07
