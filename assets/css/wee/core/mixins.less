@@ -1048,26 +1048,46 @@
 .background-image (@filename) {
 	background-image: url('@{imagePath}@{filename}');
 }
+.background-image (retina; @filename; @width: auto; @height: auto) {
+	.background-image(@filename);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
+}
 .background-image (@filename; @x; @y: 0; @repeat: no-repeat) {
 	.background-image(@filename);
 	.background-position(@x; @y);
 	.background-repeat(@repeat);
 }
+.background-image (retina; @filename; @width; @height; @x; @y: 0; @repeat: no-repeat) {
+	.background-image(@filename; @x; @y; @repeat);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
+}
 .background-image (@filename; @x; @y; @repeat; @attachment) {
 	.background-attachment(@attachment);
 	.background-image(@filename; @x; @y; @repeat);
+}
+.background-image (retina; @filename; @width; @height; @x; @y; @repeat; @attachment) {
+	.background-image(@filename; @x; @y; @repeat; @attachment);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
 }
 .background-image (@filename; @x; @y; @repeat; @attachment; @size) {
 	.background-image(@filename; @x; @y; @repeat; @attachment);
 	.background-size(@size);
 }
-.background-image (retina; @filename; @width: auto; @height: auto) {
-	.background-image(@filename);
-	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
-		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.'') + @{retinaSuffix} + '.'' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
-		.background-image(@retinaFilename);
-		.background-size(@width; @height);
-	}
+.background-image (@filename; @x; @y; @repeat; @attachment; @width; @height) {
+	.background-image(@filename; @x; @y; @repeat; @attachment);
+	.background-size(@width; @height);
 }
 .background-gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2)) {
 	.background-color(@color);
@@ -1103,14 +1123,30 @@
 	background-size: @width @height;
 }
 .sprite (@color; @x: 0; @y: 0; @repeat: no-repeat; @filename: @spriteFilename) when (iscolor(@color)) {
-	.background-image(@filename);
-	.background-position(@x; @y);
-	.background-repeat(@repeat);
+	.background(@color; @filename; @x; @y; @repeat);
+}
+.sprite (retina; @color; @width: auto; @height: auto; @x: 0; @y: 0; @repeat: no-repeat; @filename: @spriteFilename) when (iscolor(@color)) {
+	.background(@color; @filename; @x; @y; @repeat);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
 }
 .sprite (@x: 0; @y: 0; @repeat: no-repeat; @filename: @spriteFilename) when (isnumber(@x)) {
 	.background-image(@filename);
 	.background-position(@x; @y);
 	.background-repeat(@repeat);
+}
+.sprite (retina; @width: auto; @height: auto; @x: 0; @y: 0; @repeat: no-repeat; @filename: @spriteFilename) when (isnumber(@x)) {
+	.background-image(@filename);
+	.background-position(@x; @y);
+	.background-repeat(@repeat);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
 }
 
 // Colors
@@ -1497,6 +1533,13 @@
 .fill (vertical) {
 	.height(100%);
 }
+.fill (both) {
+	.fill(horizontal);
+	.fill(vertical);
+}
+.fill () {
+	.fill(horizontal);
+}
 
 // Layout
 
@@ -1564,6 +1607,17 @@
 .right {
 	float: right;
 }
+.clear () {
+	clear: both;
+	&:after
+	&:before {
+		display: table;
+		.content();
+	}
+	&:after {
+		clear: both;
+	}
+}
 .img-left {
 	.left();
 	.margin(.31em; @imageMarginSide; @imageMarginBottom; 0);
@@ -1607,6 +1661,13 @@
 		.inline();
 	}
 }
+.list-style(@value)
+{
+	list-style: @value;
+}
+.unstyled () {
+	.list-style(none);
+}
 .hidden {
 	visibility: hidden;
 }
@@ -1629,25 +1690,8 @@
 	.block();
 	.spaced();
 }
-.clear () {
-	clear: both;
-	&:after
-	&:before {
-		display: table;
-		.content();
-	}
-	&:after {
-		clear: both;
-	}
-}
-.fill () {
-	.width(100%);
-}
 .border-box () {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-}
-.unstyled () {
-	list-style: none;
 }
