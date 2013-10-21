@@ -1,3 +1,11 @@
+# 1.0.6
+
+2013-10-21
+
+- FIXED: Resolved issue with retina background image mixins
+- ADDED: Added .editorconfig for recommended editor settings
+- ADDED: Added additional parameters in variables.less to control the responsive test mode bar (color, background, border color, and position)
+
 # 1.0.5
 
 2013-10-14

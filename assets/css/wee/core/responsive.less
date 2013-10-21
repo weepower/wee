@@ -48,6 +48,41 @@
 
 	// Test Mode
 
+	.wee-responsive-testing () {
+		&:after {
+			.align-center();
+			.background(@responsiveBackground);
+			.color(@responsiveTestColor);
+			.content('Mobile Portrait');
+			.fill();
+			.fixed();
+			.font(@headingFont; 13px);
+			.height(40px);
+			.line-height(40px);
+			.z-index(3000);
+			.wee-responsive-testing-border();
+		}
+		.wee-responsive-testing-position();
+	}
+	.wee-responsive-testing-border () when not (@responsiveTestBorderColor = false) and (@responsiveTestPosition = 'top') {
+		.border(bottom; @responsiveTestBorderColor);
+	}
+	.wee-responsive-testing-border () when not (@responsiveTestBorderColor = false) and not (@responsiveTestPosition = 'top') {
+		.border(top; @responsiveTestBorderColor);
+	}
+	.wee-responsive-testing-position () when (@responsiveTestPosition = 'top') {
+		.padding(top; 40px);
+		&:after {
+			.top();
+		}
+	}
+	.wee-responsive-testing-position () when not (@responsiveTestPosition = 'top') {
+		.padding(bottom; 40px);
+		&:after {
+			.bottom();
+		}
+	}
+
 	.wee-hint (@value) when (@responsiveTestMode = true) {
 		body {
 			&:after {
@@ -56,26 +91,13 @@
 		}
 	}
 
-	.responsiveTesting () when (@responsiveTestMode = true) {
+	.responsive-testing () when (@responsiveTestMode = true) {
 		body {
-			.padding(bottom; 40px);
-			&:after {
-				.align-center();
-				.background(@bodyBackground);
-				.border(top);
-				.bottom();
-				.content('Mobile Portrait');
-				.fill();
-				.fixed();
-				.font(@headingFont; 13px);
-				.height(40px);
-				.line-height(40px);
-				.z-index(3000);
-			}
+			.wee-responsive-testing();
 		}
 	}
 
-	.responsiveTesting();
+	.responsive-testing();
 
 	// Display Toggles
 

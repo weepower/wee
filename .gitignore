@@ -4,7 +4,6 @@
 Thumbs.db
 
 # Tools
-.editorconfig
 .jshintrc
 mixture.json
 prepros.json
