@@ -1,4 +1,4 @@
-# [Wee 1.0.5](https://github.com/weepower/wee)
+# [Wee 1.0.6](https://github.com/weepower/wee)
 
 Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects. To read more, visit [http://www.weepower.com](http://www.weepower.com).
 
@@ -16,6 +16,7 @@ Grunt fan? Check out our [official Grunt file](https://github.com/weepower/wee-g
 ## Bugs
 
 Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).
+To view the working Wee todo list check out our public [Trello board](https://trello.com/b/7KbnQra9/wee).
 
 
 ## Community
