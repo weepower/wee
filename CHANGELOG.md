@@ -1,3 +1,10 @@
+# 1.0.7
+
+2013-10-26
+
+- ADDED: Added spaceless variablr to optionally eliminate grid inline-block space hacks with ability to override when generating grids
+- ADDED: Added sample grid to download
+
 # 1.0.6
 
 2013-10-21
