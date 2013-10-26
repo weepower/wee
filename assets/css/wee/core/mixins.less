@@ -1557,25 +1557,33 @@
 .padded {
 	.padding(horizontal; @bumperPadding);
 }
-.row (@margin: @gridMargin) {
+.wee-row-spacing (@spaceless) when not (@spaceless = true) {
 	.letter-spacing(-.31em);
+}
+.row (@margin: @gridMargin; @spaceless: @gridSpaceless) {
 	.margin(left; (@margin * -1));
 	.max-width((100% + @margin));
+	.wee-row-spacing(@spaceless);
 }
-.grid (@marginLeft: @gridMargin) {
+.grid (@marginLeft: @gridMargin; @spaceless: @gridSpaceless) {
 	.align-top();
 	.inline-block();
-	.letter-spacing(normal);
 	.margin(left; @marginLeft);
-	.word-spacing(normal);
+	.wee-column-reset(@spaceless);
 }
-.column (@share; @columns: @gridColumns) when not (iskeyword(@share)) {
-	.grid(0);
+.wee-column-spacing (@spaceless) when not (@spaceless = true) {
 	.margin(right; -.31em);
-	.width(((100% / @columns) * @share));
 }
-.column (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) {
-	.grid(@margin);
+.wee-column-reset (@spaceless) when not (@gridSpaceless = true) {
+	.letter-spacing(normal);
+}
+.column (@share; @columns: @gridColumns; @spaceless: @gridSpaceless) when not (iskeyword(@share)) {
+	.grid(0);
+	.width(((100% / @columns) * @share));
+	.wee-column-spacing(@spaceless);
+}
+.column (spaced; @share; @columns: @gridColumns; @margin: @gridMargin; @spaceless: @gridSpaceless) {
+	.grid(@margin; @spaceless);
 	.width((((100% / @columns) * @share) - (@margin)));
 }
 .column-modify (@share; @columns: @gridColumns) {

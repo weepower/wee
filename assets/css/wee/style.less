@@ -104,3 +104,44 @@ footer[role='contentinfo'] {
 		.color(@darkerGray);
 	}
 }
+#grid {
+	.spaced();
+	span {
+		.align-center();
+		.background(@lightestGray);
+		.border(@lighterGray);
+		.color(@gray);
+		.line-height(3.2);
+		.margin(bottom; 1);
+	}
+	.row {
+		.row();
+	}
+	.sixth {
+		.column(spaced; 1; 6);
+	}
+	.fifth {
+		.column(spaced; 1; 5);
+	}
+	.fourth {
+		.column(spaced; 1; 4);
+	}
+	.third {
+		.column(spaced; 1; 3);
+	}
+	.half {
+		.column(spaced; 1; 2);
+	}
+	.four-ninths {
+		.column(4; 9);
+	}
+	.five-ninths {
+		.column(5; 9);
+	}
+	.fourth-inset {
+		.offset(spaced; 1; 4);
+	}
+	.fifth-offset {
+		.offset(spaced; 2; 5);
+	}
+}
