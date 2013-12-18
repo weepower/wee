@@ -8,17 +8,25 @@
 	.outline(0);
 	.padding(0);
 }
+html,
+body {
+	.min-width(@minWidth);
+}
 html {
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
-	.font("'1'"; @rootFontSize);
+	font-family: '"1"';
+	.font-size(@rootFontSize);
 }
 body {
-	.background();
 	.color(@baseColor);
 	.font(@baseFont; @baseFontSize; @baseFontWeight);
 	.line-height(@baseLineHeight);
 	.relative();
+	.wee-body-background () when not (@bodyBackground = false) {
+		.background();
+	}
+	.wee-body-background();
 }
 article,
 aside,
@@ -63,8 +71,11 @@ mark {
 canvas {
 	-ms-touch-action: double-tap-zoom;
 }
+iframe {
+	.spaced()
+}
 .wee-figure () {
-	.align-center();
+	.align(center);
 	.padding(@figurePadding);
 	.relative();
 	.spaced();
@@ -78,7 +89,7 @@ canvas {
 	}
 }
 .wee-figure () when not (@figureRounded = 0)
-			and not (@figureRounded = false) {
+		and not (@figureRounded = false) {
 	.rounded(@figureRounded);
 }
 .wee-figure () when not (@figureBorderColor = false) {
@@ -93,7 +104,7 @@ img {
 }
 sub,
 sup {
-	.align-baseline();
+	.align(baseline);
 	.font-size(.6em);
 	.line-height(0);
 	.margin(left; .3em);
@@ -132,7 +143,7 @@ h6,
 	.font(@headingFont);
 	.font-weight(@headingFontWeight);
 	.line-height(@headingLineHeight);
-	.margin(bottom; @headingMarginBottom);
+	.spaced(@headingMarginBottom);
 	small {
 		.font-weight(normal);
 	}
@@ -169,13 +180,11 @@ p {
 	.color(@paragraphColor);
 	.font-weight(@paragraphFontWeight);
 	.line-height(@paragraphLineHeight);
-	.margin(bottom; @paragraphMarginBottom);
+	.spaced(@paragraphMarginBottom);
 }
 small {
 	.font-size(@smallFontSize);
 }
-address,
-cite,
 dfn,
 em,
 i,
@@ -186,23 +195,33 @@ var,
 blockquote,
 q {
 	.color(@quoteColor);
-	.font(@quoteFont; @quoteFontSize; normal; @quoteLineHeight; @quoteFontStyle);
+	.font(@quoteFont; @quoteFontSize; @quoteFontWeight; @quoteLineHeight; @quoteFontStyle);
 	cite {
+		.color(@citeColor);
 		.font(@citeFont; @citeFontSize; @citeFontWeight; @citeLineHeight; @citeFontStyle);
 		.margin(top; @citeMarginTop);
 		&:before {
 			.content(@citeIndicator);
 		}
 	}
+	p {
+		.color(@quoteColor);
+	}
 }
-blockquote,
-.block-quote {
-	.border(left; @quoteBorderColor; @quoteBorderWidth);
+.wee-blockquote () {
 	.padding(@quotePaddingVertical; @quotePaddingHorizontal);
 	.spaced();
 	cite {
 		.block();
 	}
+}
+.wee-blockquote () when not (@quoteBorderWidth = 0)
+		and not (@quoteBorderWidth = false) {
+	.border(left; @quoteBorderColor; @quoteBorderWidth);
+}
+blockquote,
+.blockquote {
+	.wee-blockquote();
 }
 .wee-code () {
 	.background(@codeBackground);
@@ -212,7 +231,7 @@ blockquote,
 	.padding(@codePaddingVertical; @codePaddingHorizontal);
 }
 .wee-code () when not (@codeRounded = 0)
-			and not (@codeRounded = false) {
+		and not (@codeRounded = false) {
 	.rounded(@codeRounded);
 }
 .wee-code () when not (@codeBorderColor = false) {
@@ -270,16 +289,16 @@ ul {
 	list-style-position: inside;
 	.color(@listColor);
 	.line-height(@listLineHeight);
-	.margin(bottom; @listMarginBottom);
+	.spaced(@listMarginBottom);
 	li {
-		.margin(bottom; @liMarginBottom);
+		.spaced(@liMarginBottom);
 	}
 }
 ol,
 ul {
 	ol,
 	ul {
-		.margin(bottom; 0);
+		.spaced(0);
 		.margin(left; @liMarginLeft);
 	}
 }
@@ -301,22 +320,22 @@ nav {
 		.margin(0);
 		.unstyled();
 		li {
-			.margin(bottom; 0);
+			.spaced(0);
 		}
 	}
 }
 dl {
-	.margin(bottom; @dlMarginBottom);
+	.spaced(@dlMarginBottom);
 }
 dt {
 	.color(@dtColor);
 	.font(@dtFont; @dtFontSize);
-	.margin(bottom; @dtMarginBottom);
+	.spaced(@dtMarginBottom);
 }
 dd {
 	.color(@ddColor);
 	.font(@ddFont; @ddFontSize);
-	.margin(bottom; @ddMarginBottom);
+	.spaced(@ddMarginBottom);
 }
 
 ////////////
@@ -335,8 +354,8 @@ dd {
 		.spaced();
 		td,
 		th {
-			.align-left();
-			.align-top();
+			.align(left);
+			.align(top);
 			.border(top; @tableCellBorderColor);
 			.line-height(@tableCellLineHeight);
 			.padding(@tableCellPaddingVertical; @tableCellPaddingHorizontal);
@@ -345,14 +364,17 @@ dd {
 		tfoot {
 			.bold();
 			th {
+				.align(bottom);
 				.color(@darkestGray);
-				.align-bottom();
 			}
 		}
 		caption {
 			.background(@tableCaptionBackground);
 			.font-style(@tableCaptionFontStyle);
 			.padding(@tableCaptionPaddingVertical; @tableCaptionPaddingHorizontal);
+		}
+		img {
+			.align(top);
 		}
 		.wee-table-bordered(@tableBordered);
 		.wee-table-striped(@tableStriped);
@@ -374,14 +396,14 @@ dd {
 		}
 	}
 	.table-striped () when not (@tableStriped = true)
-					and not (@tableStripedBackground = false) {
+			and not (@tableStripedBackground = false) {
 		.table-striped {
 			.wee-table-striped(true);
 		}
 	}
-	.toggle();
 	.table-bordered();
 	.table-striped();
+	.toggle();
 }
 .wee-table-bordered (@output) when (@output = true) {
 	.border(bottom; @tableCellBorderColor);
@@ -420,8 +442,7 @@ dd {
 	input,
 	select,
 	textarea {
-		.font(@inputFont; @inputFontSize);
-		.font-style(normal);
+		.font(@inputFont; @inputFontSize; normal);
 		.margin(0);
 	}
 	button::-moz-focus-inner,
@@ -451,17 +472,14 @@ dd {
 	legend {
 		.border(0);
 		.color(@legendColor);
-		.fill();
-		.font(@legendFont);
+		.font(@legendFont; @legendFontSize);
 		.line-height();
-		.font-size(@legendFontSize);
-		.spaced-block();
+		.spaced-block(@legendMarginBottom);
 	}
 	label {
-		.block();
 		.font-weight(@labelFontWeight);
 		.line-height(@labelLineHeight);
-		.margin(bottom; @labelMarginBottom);
+		.spaced-block(@labelMarginBottom);
 	}
 	input[type='checkbox'],
 	input[type='radio'] {
@@ -474,10 +492,8 @@ dd {
 		.border(@inputBorderColor);
 		.color(@inputColor);
 		.fill();
-		.min-height(@inputMinHeight);
-		.min-width(@inputMinWidth);
 		.padding(@inputPaddingVertical; @inputPaddingHorizontal);
-		.margin(bottom; @inputMarginBottom);
+		.spaced(@inputMarginBottom);
 		&:hover {
 			.border(@inputBorderColorHover);
 		}
@@ -486,8 +502,8 @@ dd {
 			&:required {
 				&:invalid {
 					.background(@inputBackgroundInvalid);
-			.border(@inputBorderColorInvalid);
-			.color(@inputColorInvalid);
+					.border(@inputBorderColorInvalid);
+					.color(@inputColorInvalid);
 				}
 			}
 		}
@@ -495,12 +511,32 @@ dd {
 			.background(@inputBackgroundInvalid);
 			.border(@inputBorderColorInvalid);
 			.color(@inputColorInvalid);
+			&:hover {
+				.border(@inputBorderColorInvalidHover);
+			}
+			&:focus {
+				.border(@inputBorderColorInvalidFocus);
+			}
 		}
 		&:required {
 			.background(@inputBackgroundRequired);
 			.border(@inputBorderColorRequired);
 			.color(@inputColorRequired);
+			&:hover {
+				.border(@inputBorderColorRequiredHover);
+			}
+			&:focus {
+				.border(@inputBorderColorRequiredFocus);
+			}
 		}
+	}
+	.input () when not (@inputMinHeight = 0)
+			and not (@inputMinHeight = false) {
+		.min-height(@inputMinHeight);
+	}
+	.input () when not (@inputMinWidth = 0)
+			and not (@inputMinWidth = false) {
+		.min-width(@inputMinWidth);
 	}
 	.input () when not (@inputRounded = 0)
 			and not (@inputRounded = false) {
@@ -516,6 +552,7 @@ dd {
 	}
 	input[type='email'],
 	input[type='file'],
+	input[type='number'],
 	input[type='password'],
 	input[type='search'],
 	input[type='tel'],
@@ -526,6 +563,7 @@ dd {
 	}
 	input[type='email'],
 	input[type='file'],
+	input[type='number'],
 	input[type='password'],
 	input[type='search'],
 	input[type='tel'],
@@ -547,8 +585,9 @@ dd {
 	select {
 		.cursor();
 		.outline(0);
+		.padding(right; @inputPaddingVertical);
 		&[multiple] {
-			.align-top();
+			.align(top);
 			.min-height(@multiSelectMinHeight);
 			&:after {
 				.content();
@@ -556,7 +595,7 @@ dd {
 		}
 	}
 	textarea {
-		.align-top();
+		.align(top);
 		.line-height(@textareaLineHeight);
 		.min-height(@textareaMinHeight);
 		.padding(@textareaPaddingVertical; @textareaPaddingHorizontal);
@@ -590,14 +629,14 @@ dd {
 .wee-button () when (@buttonEnabled = true) {
 	.rules () {
 		-webkit-tap-highlight-color: @buttonBackgroundHover;
-		.align-center();
+		.align(center);
 		.background(@buttonBackground);
 		.color(@buttonColor);
 		.cursor();
 		.font(@buttonFont; @buttonFontSize; @buttonFontWeight);
 		.inline-block();
 		.line-height(1em);
-		.margin(bottom; @buttonMarginBottom);
+		.spaced(@buttonMarginBottom);
 		.padding(@buttonPaddingVertical; @buttonPaddingHorizontal);
 		.text-shadow(none);
 		&:hover {

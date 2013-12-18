@@ -7,7 +7,7 @@ header[role='banner'] {
 }
 #logo {
 	.left();
-	.padding(1.7; 0);
+	.padding(1.7; 0rem);
 	.position(static);
 }
 nav[role='navigation'] {
@@ -16,26 +16,26 @@ nav[role='navigation'] {
 	ul {
 		.background(none);
 		.inline-list();
-		.padding(top; 0);
+		.padding(top; 0rem);
 	}
 	li {
-		.border(top; 0);
+		.border(top; none);
 	}
 	a {
 		.inline-block();
 		.line-height(6);
 		.padding(horizontal; 1.8);
-		&:last-child {
-			.padding(right; 0);
-		}
 		&:hover {
 			.background(none);
+		}
+		&:last-child {
+			.padding(right; 0rem);
 		}
 	}
 }
 .js {
 	#nav {
-		.margin(top; 0);
+		.margin(top; 0rem);
 	}
 }
 #pull {
@@ -44,6 +44,6 @@ nav[role='navigation'] {
 
 // Index
 
-#top {
+.index-top {
 	.padding(vertical; 2);
 }

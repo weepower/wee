@@ -1,3 +1,23 @@
+# 1.1.0
+
+2013-12-18
+
+- ADDED: Added dns-prefetch example to index files
+- ADDED: Added new core css structure to eliminate upgrade conflicts
+- ADDED: Added foundation for new module functionality
+- ADDED: Added baseline print styling (optionally compiled) and new custom print LESS file
+- ADDED: Added over a dozen new mixins and several new configuration variables
+- UPDATED: The main included css file is now "style.css" and not "screen.css" to account for newly included print options
+- UPDATED: Renamed ie files to legacy
+- UPDATED: Removed px fallback units on all rem-based rules in lieu of a JavaScript polyfill to reduce bloat in modern browsers
+- UPDATED: Updated legacy to utilize new LESS reference for reduced CSS output
+- UPDATED: Updated core logic to utilize new LESS 1.5+ features
+- UPDATED: html5shiv as well we rem and svg polyfills are now included in the new legacy JavaScript file and without jQuery dependency for early execution
+- UPDATED: Removed svg fallback from base.js
+- UPDATED: Updated many mixins with optional parameters to encompass multiple rules
+- UPDATED: Cleaned up and consolidated example styling
+- UPDATED: Embedded table images now are vertically aligned at the top of cells by default
+
 # 1.0.7
 
 2013-10-26

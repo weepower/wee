@@ -8,6 +8,7 @@ Thumbs.db
 mixture.json
 prepros.json
 package.json
+project.json
 Gruntfile.js
 node_modules/
 bower_components/

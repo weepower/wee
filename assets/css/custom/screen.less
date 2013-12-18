@@ -1,13 +1,8 @@
 // Overrides
 
 html {
-	.font-size(55%);
+	.font-size(57.5%);
 }
-
-// Variables
-
-@blue: #006e89;
-@darkBlue: darken(@blue, 5%);
 
 // Header
 
@@ -22,13 +17,16 @@ header[role='banner'] {
 	.top(28px);
 }
 nav[role='navigation'] {
-	.align-center();
+	@blue: #006e89;
+	@lightBlue: mix(@blue, #fff, 20%);
+	@darkBlue: darken(@blue, 5%);
+	.align(center);
 	.font(@headingFont; 1.4);
 	.overflow(auto);
 	.uppercase();
 	ul {
 		.background(@darkBlue);
-		.margin(0);
+		.spaced(0);
 		.padding(top; 8.5);
 	}
 	li {
@@ -36,15 +34,15 @@ nav[role='navigation'] {
 	}
 	a {
 		.block();
-		.color(mix(@blue, #fff, 20%));
+		.color(@lightBlue);
 		.line-height(4.8);
 		&:hover {
 			.background(darken(@darkBlue, 2%));
-			.color(@white);
+			.white();
 		}
 	}
 	.active {
-		.color(@white);
+		.white();
 	}
 }
 .js {
@@ -70,49 +68,47 @@ nav[role='navigation'] {
 // Footer
 
 footer[role='contentinfo'] {
-	.align-center();
+	.align(center);
 	.background(@lightestGray);
-	.color(@gray);
+	.gray();
 	.margin(top; 8);
 	.padding(vertical; 3);
+	small {
+		.spaced-block();
+		.font-size(1.5; 1.8em);
+	}
 }
 
 // Index
 
-#top {
+.index-top {
 	.background-image('hero-bg.jpg'; 50%);
 	.background-size(cover);
-	.margin(bottom; 4);
+	.spaced(4);
 }
-#hero {
-	.align-center();
+.index-hero {
+	.align(center);
 	.padding(vertical; 10; 8);
 	.container {
 		p {
 			.bold();
 			.centered-block(800px);
-			.color(@white);
-			.margin(bottom; 2.8);
+			.spaced(2.8);
+			.white();
 		}
 	}
 	.button {
 		.font(@headingFont; 1.4);
 	}
 }
-#features {
-	h4 {
-		.color(@darkerGray);
-	}
-}
-#grid {
+.index-grid {
 	.spaced();
 	span {
-		.align-center();
-		.background(@lightestGray);
-		.border(@lighterGray);
-		.color(@gray);
+		.align(center);
+		.background(mix(@codeBackground, #fff, 20%));
+		.border(@codeBackground);
 		.line-height(3.2);
-		.margin(bottom; 1);
+		.spaced(1);
 	}
 	.row {
 		.row();
@@ -131,12 +127,6 @@ footer[role='contentinfo'] {
 	}
 	.half {
 		.column(spaced; 1; 2);
-	}
-	.four-ninths {
-		.column(4; 9);
-	}
-	.five-ninths {
-		.column(5; 9);
 	}
 	.fourth-inset {
 		.offset(spaced; 1; 4);

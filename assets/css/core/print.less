@@ -1,0 +1,52 @@
+@media print {
+	* {
+		.background(transparent);
+		.black();
+		.shadow(none);
+		.text-shadow(none);
+	}
+	html {
+		.font-size(80%);
+	}
+	body {
+		.padding(2cm; .5cm);
+	}
+	header[role='banner'],
+	footer[role='contentinfo'],
+	aside,
+	embed,
+	iframe,
+	nav,
+	object {
+		.hide();
+	}
+	main {
+		a {
+			&:link {
+				.color(#0066cc);
+				&:after {
+					content: " [" attr(href) "] ";
+				}
+			}
+		}
+	}
+	blockquote,
+	img,
+	pre,
+	tr {
+		page-break-inside: avoid;
+	}
+	h2,
+	h3 {
+		page-break-after: avoid;
+	}
+	img {
+		.max-width(100%);
+	}
+	p {
+		orphans: 3;
+		widows: 3;
+	}
+
+	@import '../custom/print.less'; // Customizations
+}
