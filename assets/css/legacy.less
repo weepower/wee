@@ -1,13 +1,16 @@
-//////////////////////
-// IE Compatability //
-//////////////////////
+// Wee 1.1.0 (weepower.com)
+// Licensed under the Apache License v2
+// http://www.apache.org/licenses/LICENSE-2.0
 
-@ieMode: true;
+// IE Compatability
 
-@import 'wee/variables.less';       // Base variables
-@import 'wee/core/mixins.less';     // Mixin and CSS library
-@import 'wee/mixins.less';          // Custom mixins
-@import 'wee/core/responsive.less'; // Responsive components
+@legacyMode: true;
+
+@import (reference) 'core/variables.less';   // Core configuration
+@import (reference) 'custom/variables.less'; // Custom configuration
+@import (reference) 'core/mixins.less';      // Mixins
+@import (reference) 'custom/mixins.less';    // Custom mixins
+@import (reference) 'core/responsive.less';  // Responsive components
 
 // Override Component Output
 
@@ -15,7 +18,7 @@
 @formEnabled: false;
 @buttonEnabled: false;
 
-@import 'wee/core/base.less'; // Normalization and helpers
+@import (reference) 'core/base.less'; // Baseline
 
 .responsiveTesting () when (@responsiveTestMode = true) {
 	body {
@@ -53,7 +56,7 @@ textarea {
 ///////////////////
 
 html {
-	.font("'@{ieBreakpoint}'");
+	font-famiy: "'@{ieBreakpoint}'";
 }
 
 .ie-body (@width) {
@@ -89,4 +92,4 @@ html {
 
 .responsive();
 
-@import 'wee/ie.less'; // Custom IE8- styling
+@import 'custom/legacy.less'; // Custom IE8- styling

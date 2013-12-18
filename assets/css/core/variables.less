@@ -16,7 +16,7 @@
 
 @gridMargin: 5%;       // Default margin for spaced columns
 @gridColumns: 10;      // Default number of columns in grid
-@gridSpaceless: false; // Set to true if you are minifying your outputted markup
+@gridSpaceless: false; // Optionally set to true if you are minifying your outputted markup
 
 @blockMarginBottom: 3; // Default bottom margin for lists, form elements, and other block elements
 
@@ -39,17 +39,17 @@
 //////////
 
 @defaultUnit: rem;    // Unitless value default
-@rootFontSize: 62.5%; // Root font size (62.5% = 10px)
+@rootFontSize: 62.5%; // Root font size (62.5% = 10px, 100% = 16px)
 
-// All rem-based units are relative to the root size above (a multiple of 10)
+// All rem-based units are relative to the root size above
 
-@baseColor: @black;                      // Color
+@baseColor: @darkestGray;                // Color
 @baseFont: Arial, Helvetica, sans-serif; // Font family
 @baseFontSize: 1.6;                      // Font size
 @baseFontWeight: normal;                 // Font weight
 @baseLineHeight: 1em;                    // Line height
 
-@bodyBackground: @white; // Body background color
+@bodyBackground: @white; // Body background color or false to disable
 
 ///////////
 // Links //
@@ -74,15 +74,15 @@
 // Headings //
 //////////////
 
-@headingColor: @black;                 // Color
+@headingColor: @linkColorHover;        // Color
 @headingFont: 'Noto Sans', sans-serif; // Font family
-@headingFontWeight: @boldFontWeight;   // Font weight
+@headingFontWeight: 400;               // Font weight
 @headingLineHeight: 1.4em;             // Line height
 
 @headingMarginBottom: 1; // Bottom margin
 
-@h1: 4.4; // Font size
-@h2: 3.6;
+@h1: 3.8; // Font size
+@h2: 3.3;
 @h3: 3.0;
 @h4: 2.6;
 @h5: 2.2;
@@ -91,7 +91,7 @@
 // Subheadings
 
 @subHeadingColor: @darkGray; // Color
-@subHeadingFontWeight: 700;  // Font weight
+@subHeadingFontWeight: 400;  // Font weight
 
 ////////////
 // Images //
@@ -142,7 +142,7 @@
 
 // Definition List Titles
 
-@dtColor: @darkGray;   // Color
+@dtColor: @darkerGray; // Color
 @dtFont: @headingFont; // Font family
 @dtFontSize: 2;        // Font size
 
@@ -164,10 +164,11 @@
 @quoteFont: Georgia, Times; // Font family
 @quoteFontSize: 2;          // Font size
 @quoteFontStyle: italic;    // Font style (normal|italic|oblique)
+@quoteFontWeight: normal;   // Font weight
 @quoteLineHeight: 1.4em;    // Line height
 
-@quoteBorderColor: @lighterGray; // Border color
-@quoteBorderWidth: 3px;          // Border width
+@quoteBorderColor: #c3e0e7; // Border color
+@quoteBorderWidth: 5px;     // Border width (false to disable)
 
 @quotePaddingHorizontal: 2em; // Horizontal padding
 @quotePaddingVertical: 1em;   // Vertical padding
@@ -210,7 +211,8 @@
 ///////////////////
 
 @smallFontSize: .8em;             // Small font size
-@selectionBackground: @lightGray; // Browser selection color
+@selectionColor: @white;          // Selection color
+@selectionBackground: @linkColor; // Selection background color
 @boldFontWeight: bold;            // Bold font weight
 @markColor: @baseColor;           // Mark color
 @markBackground: yellow;          // Mark background color
@@ -285,8 +287,8 @@
 @inputBorderColorFocus: darken(@inputBorderColor, 20%); // Focus border color
 @inputRounded: false;                                   // Border radius or false to disable
 
-@inputMinWidth: 200px; // Minimum width
-@inputMinHeight: 3;    // Minimum height
+@inputMinWidth: 200px; // Minimum width or false for no minimum
+@inputMinHeight: 3;    // Minimum height or false for no minimum
 
 @inputPaddingHorizontal: .8; // Horizontal padding
 @inputPaddingVertical: .4;   // Vertical padding
@@ -301,7 +303,9 @@
 
 @inputBackgroundInvalid: @white; // Background color
 
-@inputBorderColorInvalid: #a41818; // Border color
+@inputBorderColorInvalid: #a41818;                                    // Border color
+@inputBorderColorInvalidHover: darken(@inputBorderColorInvalid, 10%); // Hover border color
+@inputBorderColorInvalidFocus: darken(@inputBorderColorInvalid, 20%); // Focus border color
 
 // Required Inputs
 
@@ -309,7 +313,9 @@
 
 @inputBackgroundRequired: @white; // Background color
 
-@inputBorderColorRequired: #89002a; // Border color
+@inputBorderColorRequired: @darkGray;                                   // Border color
+@inputBorderColorRequiredHover: darken(@inputBorderColorRequired, 10%); // Hover border color
+@inputBorderColorRequiredFocus: darken(@inputBorderColorRequired, 20%); // Focus border color
 
 // Disabled Inputs
 
@@ -340,7 +346,7 @@
 
 @legendColor: @darkerGray; // Color
 @legendFont: @baseFont;    // Font family
-@legendFontSize: 2;        // Font size
+@legendFontSize: 1.8;      // Font size
 
 @legendMarginBottom: 1.4;  // Bottom margin
 
@@ -364,8 +370,8 @@
 @buttonFontSize: @baseFontSize; // Font size
 @buttonFontWeight: normal;      // Font weight
 
-@buttonPaddingHorizontal: 2.5; // Horizontal padding
-@buttonPaddingVertical: 1;   // Vertical padding
+@buttonPaddingHorizontal: 2.6; // Horizontal padding
+@buttonPaddingVertical: 1.2;   // Vertical padding
 
 @buttonMarginBottom: 0; // Bottom margin
 
@@ -373,7 +379,7 @@
 @buttonBevelColor: light;   // Bevel color (dark|light)
 @buttonBevelOpacity: 30%;   // Bevel opacity
 
-@buttonRounded: 3px; // Border radius or false to disable
+@buttonRounded: false; // Border radius or false to disable
 
 @buttonTransitionEnabled: true; // Enable transition
 
@@ -387,7 +393,7 @@
 
 @coloredButtonColor: @white; // Font color
 
-@coloredButtonBackground: #006e89;                                     // Background color
+@coloredButtonBackground: @linkColor;                                  // Background color
 @coloredButtonBackgroundHover: darken(@coloredButtonBackground, 5%);   // Hover background color
 @coloredButtonBackgroundActive: darken(@coloredButtonBackground, 10%); // Active background color
 
@@ -403,12 +409,17 @@
 
 @disabledButtonCursor: not-allowed; // Cursor style
 
+///////////
+// Print //
+///////////
+
+@printEnabled: true; // Enable print styling
+
 ////////////////
 // Responsive //
 ////////////////
 
 @responsiveEnabled: true;  // Enable automated breakpoints
-@responsiveTestMode: true; // Enable breakpoint output hints
 @responsiveOffset: 25px;   // Breakpoint offset, subtracted from breakpoint width
 
 // Breakpoints (set to false to disable)
@@ -430,10 +441,9 @@
 
 // Test mode
 
-@responsiveTestPosition: 'bottom'; // Position (top|bottom)
+@responsiveTestMode: true; // Enable breakpoint output hints
 
-@responsiveTestColor: @baseColor; // Font color
-
-@responsiveBackground: @bodyBackground; // Background color
-
-@responsiveTestBorderColor: @baseColor; // Border color or false to disable
+@responsiveTestPosition: 'bottom';          // Position (top|bottom)
+@responsiveTestColor: @baseColor;           // Font color
+@responsiveTestBackground: @bodyBackground; // Background color
+@responsiveTestBorderColor: @baseColor;     // Border color or false to disable

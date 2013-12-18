@@ -39,10 +39,7 @@ $(function() {
 		});
 	}
 
-	// SVG fallback (remove if unneeded)
-	WEE.svgFallback();
-
-	// Place your custom scripts here
+	// Place your custom code here
 });
 
 var WEE = WEE || {};
@@ -51,12 +48,4 @@ WEE.browserSize = function() {
 	var size = (window.getComputedStyle) ? window.getComputedStyle(document.documentElement, null).getPropertyValue('font-family') :
 		(document.documentElement.currentStyle) ? document.documentElement.currentStyle['fontFamily'] : null;
 	return parseInt(size.replace(/\D/g, ''), 10);
-};
-
-WEE.svgFallback = function() {
-	if (!document.createElementNS || !document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect) {
-		$.map($('img[src$=".svg"'), function(img) {
-			img.src = img.src.slice(0, -3) + 'png';
-		});
-	}
 };

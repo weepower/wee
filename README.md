@@ -1,4 +1,4 @@
-# [Wee 1.0.7](https://github.com/weepower/wee)
+# [Wee 1.1.0](https://github.com/weepower/wee)
 
 Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects. To read more, visit [http://www.weepower.com](http://www.weepower.com).
 
@@ -10,7 +10,7 @@ To get started begin by pulling the latest Wee source:
 * [Download the latest release](https://github.com/weepower/wee/archive/master.zip).
 * Clone the repository from 'git clone git://github.com/weepower/wee.git'.
 
-Grunt fan? Check out our [official Grunt file](https://github.com/weepower/wee-grunt) to compile, optimize, and minify your  source.
+To take advantage of Wee build and module features check out our [official Grunt file](https://github.com/weepower/wee-grunt) to compile, optimize, and minify your source.
 
 
 ## Bugs
@@ -26,7 +26,7 @@ Keep track of development and community news by following [@weecss on Twitter](h
 
 ## License
 
-Copyright 2013 Caddis Interactive, LLC
+Copyright 2013 [Caddis Interactive, LLC](http://www.caddis.co)
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

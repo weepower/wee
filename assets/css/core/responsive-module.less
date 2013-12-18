@@ -1,0 +1,78 @@
+////////////////
+// Responsive //
+////////////////
+
+// Import Mixins
+
+.mobile-landscape () when not (@mobileLandscapeWidth = false) {
+	@import '../../modules/@{module}/css/breakpoints/mobile-landscape.less';
+}
+.tablet-portrait () when not (@tabletPortraitWidth = false) {
+	@import '../../modules/@{module}/css/breakpoints/tablet-portrait.less';
+}
+.desktop-small () when not (@desktopSmallWidth = false) {
+	@import '../../modules/@{module}/css/breakpoints/desktop-small.less';
+}
+.desktop-medium () when not (@desktopMediumWidth = false) {
+	@import '../../modules/@{module}/css/breakpoints/desktop-medium.less';
+}
+.desktop-large () when not (@desktopLargeWidth = false) {
+	@import '../../modules/@{module}/css/breakpoints/desktop-large.less';
+}
+
+// Components
+
+.responsive () when (@responsiveEnabled = true) and not (@legacyMode = true) {
+
+	// Mobile Landscape
+
+	.mobile-landscape-query () when not (@mobileLandscapeWidth = false) {
+		@media (min-width: (@mobileLandscapeWidth - @responsiveOffset)) {
+			.mobile-landscape();
+		}
+	}
+
+	.mobile-landscape-query();
+
+	// Tablet Portrait
+
+	.tablet-portrait-query () when not (@tabletPortraitWidth = false) {
+		@media (min-width: (@tabletPortraitWidth - @responsiveOffset)) {
+			.tablet-portrait();
+		}
+	}
+
+	.tablet-portrait-query();
+
+	// Small Desktop
+
+	.desktop-small-query () when not (@desktopSmallWidth = false) {
+		@media (min-width: (@desktopSmallWidth - @responsiveOffset)) {
+			.desktop-small();
+		}
+	}
+
+	.desktop-small-query();
+
+	// Medium Desktop
+
+	.desktop-medium-query () when not (@desktopMediumWidth = false) {
+		@media (min-width: (@desktopMediumWidth - @responsiveOffset)) {
+			.desktop-medium();
+		}
+	}
+
+	.desktop-medium-query();
+
+	// Large Desktop
+
+	.desktop-large-query () when not (@desktopLargeWidth = false) {
+		@media (min-width: (@desktopLargeWidth - @responsiveOffset)) {
+			.desktop-large();
+		}
+	}
+
+	.desktop-large-query();
+}
+
+.responsive();
