@@ -1,6 +1,6 @@
 $(function() {
 
-	// Remove js class
+	// Toggle js class
 	$('html').removeClass('no-js').addClass('js');
 
 	// Responsive nav

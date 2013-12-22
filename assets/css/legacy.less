@@ -1,4 +1,4 @@
-// Wee 1.1.0 (weepower.com)
+// Wee 1.1.1 (weepower.com)
 // Licensed under the Apache License v2
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -10,7 +10,7 @@
 @import (reference) 'custom/variables.less'; // Custom configuration
 @import (reference) 'core/mixins.less';      // Mixins
 @import (reference) 'custom/mixins.less';    // Custom mixins
-@import (reference) 'core/responsive.less';  // Responsive components
+@import 'core/responsive.less';              // Responsive components
 
 // Override Component Output
 
@@ -42,12 +42,11 @@ select,
 textarea {
 	.align-middle();
 }
-.inline-block {
+.inline-block () {
 	*display: inline;
-	*zoom: 1;
+	zoom: 1;
 }
-.clear,
-.checkbox label {
+.clear () {
 	*zoom: 1;
 }
 
@@ -56,7 +55,7 @@ textarea {
 ///////////////////
 
 html {
-	font-famiy: "'@{ieBreakpoint}'";
+	font-family: "'@{ieBreakpoint}'";
 }
 
 .ie-body (@width) {

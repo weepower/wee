@@ -3,10 +3,14 @@
 //////////
 
 * {
-	.border-box();
-	.margin(0);
-	.outline(0);
-	.padding(0);
+	&,
+	&:before,
+	&:after {
+		.border-box();
+		.margin(0);
+		.outline(0);
+		.padding(0);
+	}
 }
 html,
 body {
@@ -223,26 +227,59 @@ blockquote,
 .blockquote {
 	.wee-blockquote();
 }
-.wee-code () {
-	.background(@codeBackground);
-	.color(@codeColor);
-	.font(@codeFont; @codeFontSize);
-	.line-height(@codeLineHeight);
-	.padding(@codePaddingVertical; @codePaddingHorizontal);
+.wee-code () when (@codeEnabled = true) {
+	.rules () {
+		.background(@codeBackground);
+		.color(@codeColor);
+		.font(@codeFont; @codeFontSize);
+		.line-height(@codeLineHeight);
+		.padding(@codePaddingVertical; @codePaddingHorizontal);
+	}
+	.rules () when not (@codeRounded = 0)
+			and not (@codeRounded = false) {
+		.rounded(@codeRounded);
+	}
+	.rules () when not (@codeBorderColor = false) {
+		.border(@codeBorderColor);
+	}
+	code,
+	kbd,
+	samp {
+		.rules();
+	}
 }
-.wee-code () when not (@codeRounded = 0)
-		and not (@codeRounded = false) {
-	.rounded(@codeRounded);
+.wee-code();
+.wee-code-block () when (@codeBlockEnabled = true) {
+	.rules () {
+		-moz-tab-size: @codeBlockTabSize;
+		tab-size: @codeBlockTabSize;
+		.background(@codeBlockBackground);
+		.padding(@codeBlockPaddingVertical; @codeBlockPaddingHorizontal);
+		.spaced();
+		code {
+			.sub-rules () when not (@codeBorderColor = false) {
+				.border(none);
+			}
+			.background(none);
+			.block();
+			.color(@codeBlockColor);
+			.font(@codeBlockFont; @codeBlockFontSize);
+			.padding(0);
+			.sub-rules();
+		}
+	}
+	.rules () when not (@codeBlockRounded = 0)
+			and not (@codeBlockRounded = false) {
+		.rounded(@codeBlockRounded);
+	}
+	.rules () when not (@codeBlockBorderColor = false) {
+		.border(@codeBlockBorderColor);
+	}
+	pre {
+		.rules();
+	}
 }
-.wee-code () when not (@codeBorderColor = false) {
-	.border(@codeBorderColor);
-}
-code,
-kbd,
-pre,
-samp {
-	.wee-code();
-}
+.wee-code-block();
 del,
 s,
 strike {
