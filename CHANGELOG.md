@@ -1,3 +1,14 @@
+# 1.1.1
+
+2013-12-22
+
+- FIXED: Resolved issue with IE8- fallback font size setting
+- FIXED: Fixed REM polyfill to support cross site CSS requests if the source server allows
+- FIXED: Removed (reference) for responsive.less stylesheet to allow proper IE fallback
+- ADDED: Added border-box rules to before and after elements
+- ADDED: Added new block code variables to style <pre><code>code</code></pre> with the ability to disable styling output
+- ADDED: Added the static mixin to static positioning
+
 # 1.1.0
 
 2013-12-18

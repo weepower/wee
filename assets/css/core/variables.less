@@ -221,6 +221,8 @@
 // Code //
 //////////
 
+@codeEnabled: true; // Toggle code styling output
+
 @codeColor: @darkestGray;                        // Color
 @codeFont: Monaco, 'Andale Mono', 'Courier New'; // Font family
 @codeFontSize: 1.4;                              // Font size
@@ -233,6 +235,22 @@
 
 @codePaddingHorizontal: .5em; // Horizontal padding
 @codePaddingVertical: .1em;  // Vertical padding
+
+@codeBlockEnabled: true; // Toggle code block styling output
+
+@codeBlockColor: @lightestGray; // Color
+@codeBlockFont: @codeFont;      // Font family
+@codeBlockFontSize: 1.3;        // Font size
+@codeBlockLineHeight: 1.6em;    // Line height
+@codeBlockTabSize: 4;           // Tab size
+
+@codeBlockBackground: @darkGray; // Background color
+
+@codeBlockBorderColor: @codeBorderColor; // Border color or false to disable
+@codeBlockRounded: @codeRounded;         // Border radius or false to disable
+
+@codeBlockPaddingHorizontal: 2; // Horizontal padding
+@codeBlockPaddingVertical: 1.4; // Vertical padding
 
 ////////////
 // Tables //

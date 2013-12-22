@@ -31,7 +31,7 @@ WEE.remSupport = function() {
 		var href = sheets[i].href;
 
 		if (href.indexOf('legacy.css') == -1) {
-			WEE.ajax(href, WEE.remConvert);
+			WEE.getResource(href, WEE.remConvert);
 		}
 	}
 };
@@ -93,18 +93,33 @@ WEE.svgSupport = function() {
 
 // Helpers
 
-WEE.ajax = function(href, func) {
+WEE.getResource = function(href, func) {
 	try {
-		var x = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
+		if (WEE.isExternal(href)) {
+			var x = new XDomainRequest();
+			x.onload = function() {
 				func(x.responseText);
-			}
-		};
+			};
+		} else {
+			var x = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+			x.onreadystatechange = function() {
+				if (x.readyState == 4 && x.status == 200) {
+					func(x.responseText);
+				}
+			};
+		}
 		x.open('GET', href, true);
 		x.send(null);
 	} catch(e) {}
 };
+
+WEE.isExternal = function(url) {
+	var domain = function(url) {
+		return url.replace('http://','').replace('https://','').split('/')[0];
+	};
+
+	return domain(location.href) !== domain(url);
+}
 
 window.onload = function() {
 	WEE.remSupport();

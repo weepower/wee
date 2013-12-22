@@ -2,7 +2,7 @@
 // Responsive //
 ////////////////
 
-// Import Mixins
+// Import Breakpoints
 
 .mobile-landscape () when not (@mobileLandscapeWidth = false) {
 	@import '../custom/breakpoints/mobile-landscape.less';
@@ -26,9 +26,9 @@
 	&:before {
 		.absolute();
 		.border(bottom; @mobileNavBorderColor; .15em; solid);
-		.border(top; @mobileNavBorderColor; .45em; double);
+		.border(top; @mobileNavBorderColor; .42em; double);
 		.content();
-		.height(.15em);
+		.height(.7em);
 		.left(@mobileNavLeft);
 		.top(@mobileNavTop);
 		.width(@mobileNavWidth);
@@ -49,7 +49,7 @@
 
 	.wee-responsive-testing () {
 		&:after {
-			.align-center();
+			.align(center);
 			.background(@responsiveTestBackground);
 			.color(@responsiveTestColor);
 			.content('Mobile Portrait');
