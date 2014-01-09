@@ -20,7 +20,7 @@ header[role='banner'] {
 	}
 }
 nav[role='navigation'] {
-	@blue: #006e89;
+	@blue: @linkColor;
 	@lightBlue: mix(@blue, #fff, 20%);
 	@darkBlue: darken(@blue, 5%);
 	.align(center);
@@ -94,9 +94,9 @@ footer[role='contentinfo'] {
 	.padding(vertical; 10; 8);
 	.container {
 		p {
-			.bold();
 			.centered-block(800px);
 			.spaced(2.8);
+			.text-shadow();
 			.white();
 		}
 	}

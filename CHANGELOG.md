@@ -1,3 +1,13 @@
+# 1.1.2
+
+2014-01-09
+
+- FIXED: .background(none); will now compile correctly
+- ADDED: Added comment to empty reponsive files to resolve LESS 1.6 compile issue
+- ADDED: Added new baseColor, resize, and display mixins
+- UPDATED: Slight cosmetic updates to the base index
+- UPDATED: Updated LESS version in lib to 1.6.0
+
 # 1.1.1
 
 2013-12-22

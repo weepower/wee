@@ -1045,7 +1045,10 @@
 .background-color (@color: @bodyBackground) {
 	background-color: @color;
 }
-.background-image (@filename) {
+.background-image (@value) when (iskeyword(@value)) {
+	background-image: @value;
+}
+.background-image (@filename) when not (iskeyword(@filename)) {
 	background-image: url('@{imagePath}@{filename}');
 }
 .background-image (retina; @filename; @width: auto; @height: auto) {
@@ -1153,6 +1156,9 @@
 
 .color (@color) {
 	color: @color;
+}
+.baseColor () {
+	.color(@baseColor);
 }
 .white () {
 	.color(@white);
@@ -1519,9 +1525,12 @@
 
 // Other
 
-.resizable (@value: both) {
+.resize (@value) {
 	resize: @value;
+}
+.resizable (@value: both) {
 	.crop();
+	.resize(@value);
 }
 .hide-text () {
 	.crop();
@@ -1676,8 +1685,8 @@
 	clear: both;
 	&:after
 	&:before {
-		display: table;
 		.content();
+		.display(table);
 	}
 	&:after {
 		clear: both;
@@ -1739,11 +1748,14 @@
 .align (top) {
 	.align-top();
 }
+.display (@value) {
+	display: @value;
+}
 .inline () {
-	display: inline;
+	.display(inline);
 }
 .inline-block () {
-	display: inline-block;
+	.display(inline-block);
 }
 .inline-block (@width) {
 	.inline-block();
@@ -1771,13 +1783,13 @@
 	visibility: visible;
 }
 .hide {
-	display: none;
+	.display(none);
 }
 .show {
-	display: inherit;
+	.display(inherit);
 }
 .block {
-	display: block;
+	.display(block);
 }
 .block (@width) {
 	.block();
