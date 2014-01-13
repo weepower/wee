@@ -1,3 +1,13 @@
+# 1.1.3
+
+2014-01-13
+
+- FIXED: resolved problem with .right() mixin
+- UPDATED: Updated LESS lib to 1.6.1
+- UPDATED: Updated holder.js to 2.3
+- UPDATED: Tweaked gitignore to exclude sourcemap .map files
+- UPDATED: Removed unneeded comment in empty LESS files with fix in LESS 1.6.1
+
 # 1.1.2
 
 2014-01-09
