@@ -7,8 +7,13 @@ Thumbs.db
 .jshintrc
 mixture.json
 prepros.json
+
+# Compile
 package.json
 project.json
 Gruntfile.js
 node_modules/
 bower_components/
+
+# Source Maps
+.map
