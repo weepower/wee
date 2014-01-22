@@ -1,10 +1,4 @@
 ////////////
-// Custom //
-////////////
-
-// Add custom global variables here
-
-////////////
 // Layout //
 ////////////
 
@@ -74,7 +68,7 @@
 // Headings //
 //////////////
 
-@headingColor: @linkColorHover;        // Color
+@headingColor: @linkColor;             // Color
 @headingFont: 'Noto Sans', sans-serif; // Font family
 @headingFontWeight: 400;               // Font weight
 @headingLineHeight: 1.4em;             // Line height
@@ -99,6 +93,8 @@
 
 @imagePath: '../img/';         // Image path (absolute|relative)
 @spriteFilename: 'sprite.png'; // Sprite filename, relative to imagePath
+
+// Margin applied when using img-left and img-right classes
 
 @imageMarginBottom: 2; // Vertical margin
 @imageMarginSide: 2;   // Horizontal margin
@@ -303,6 +299,7 @@
 @inputBorderColor: @lightGray;                          // Border color
 @inputBorderColorHover: darken(@inputBorderColor, 10%); // Hover border color
 @inputBorderColorFocus: darken(@inputBorderColor, 20%); // Focus border color
+@inputBorderWidth: 1px;                                 // Border width (false to disable)
 @inputRounded: false;                                   // Border radius or false to disable
 
 @inputMinWidth: 200px; // Minimum width or false for no minimum
@@ -324,6 +321,7 @@
 @inputBorderColorInvalid: #a41818;                                    // Border color
 @inputBorderColorInvalidHover: darken(@inputBorderColorInvalid, 10%); // Hover border color
 @inputBorderColorInvalidFocus: darken(@inputBorderColorInvalid, 20%); // Focus border color
+@inputBorderWidthInvalid: 1px;                                        // Border width (false to disable)
 
 // Required Inputs
 
@@ -334,12 +332,15 @@
 @inputBorderColorRequired: @darkGray;                                   // Border color
 @inputBorderColorRequiredHover: darken(@inputBorderColorRequired, 10%); // Hover border color
 @inputBorderColorRequiredFocus: darken(@inputBorderColorRequired, 20%); // Focus border color
+@inputBorderWidthRequired: 1px;                                         // Border width (false to disable)
 
 // Disabled Inputs
 
 @inputColorDisabled: @darkGray; // Font color
 
 @inputBackgroundDisabled: @lightestGray; // Background color
+
+@inputBorderWidthDisabled: false; // Border width (false to disable)
 
 @inputCursorDisabled: not-allowed; // Cursor style
 

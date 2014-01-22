@@ -526,16 +526,11 @@ dd {
 	.input () {
 		.background(@inputBackground);
 		.background-clip();
-		.border(@inputBorderColor);
 		.color(@inputColor);
 		.fill();
 		.padding(@inputPaddingVertical; @inputPaddingHorizontal);
 		.spaced(@inputMarginBottom);
-		&:hover {
-			.border(@inputBorderColorHover);
-		}
 		&:focus {
-			.border(@inputBorderColorFocus);
 			&:required {
 				&:invalid {
 					.background(@inputBackgroundInvalid);
@@ -546,26 +541,54 @@ dd {
 		}
 		&:invalid {
 			.background(@inputBackgroundInvalid);
-			.border(@inputBorderColorInvalid);
 			.color(@inputColorInvalid);
-			&:hover {
-				.border(@inputBorderColorInvalidHover);
+			.border () when not (@inputBorderWidthInvalid = 0)
+					and not (@inputBorderWidthInvalid = false) {
+				.border(@inputBorderColorInvalid; @inputBorderWidthInvalid);
+				&:hover {
+					.border(@inputBorderColorInvalidHover);
+				}
+				&:focus {
+					.border(@inputBorderColorInvalidFocus);
+				}
 			}
-			&:focus {
-				.border(@inputBorderColorInvalidFocus);
+			.border () when (@inputBorderWidthInvalid = 0), (@inputBorderWidthInvalid = false) {
+				.border-width(0);
 			}
+			.border();
 		}
 		&:required {
 			.background(@inputBackgroundRequired);
 			.border(@inputBorderColorRequired);
 			.color(@inputColorRequired);
-			&:hover {
-				.border(@inputBorderColorRequiredHover);
+			.border () when not (@inputBorderWidthRequired = 0)
+					and not (@inputBorderWidthRequired = false) {
+				.border(@inputBorderColorRequired; @inputBorderWidthRequired);
+				&:hover {
+					.border(@inputBorderColorRequiredHover);
+				}
+				&:focus {
+					.border(@inputBorderColorRequiredFocus);
+				}
 			}
-			&:focus {
-				.border(@inputBorderColorRequiredFocus);
+			.border () when (@inputBorderWidthRequired = 0), (@inputBorderWidthRequired = false) {
+				.border-width(0);
 			}
+			.border();
 		}
+	}
+	.input () when not (@inputBorderWidth = 0)
+			and not (@inputBorderWidth = false) {
+		.border(@inputBorderColor; @inputBorderWidth);
+		&:hover {
+			.border(@inputBorderColorHover);
+		}
+		&:focus {
+			.border(@inputBorderColorFocus);
+		}
+	}
+	.input () when (@inputBorderWidth = 0), (@inputBorderWidth = false) {
+		.border-width(0);
 	}
 	.input () when not (@inputMinHeight = 0)
 			and not (@inputMinHeight = false) {

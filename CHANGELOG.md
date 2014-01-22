@@ -1,8 +1,17 @@
+# 1.1.4
+
+2014-01-20
+
+- FIXED: Resolved issue with columns wrapping occasionally in some versions of Chrome and Firefox
+- ADDED: Added new options to variables.less for border width or disabled borders on inputs
+- ADDED: Added final touches to the module loading files
+- UPDATED: Full compliance with strictMath option
+
 # 1.1.3
 
 2014-01-13
 
-- FIXED: resolved problem with .right() mixin
+- FIXED: Resolved problem with .right() mixin
 - UPDATED: Updated LESS lib to 1.6.1
 - UPDATED: Updated holder.js to 2.3
 - UPDATED: Tweaked gitignore to exclude sourcemap .map files
