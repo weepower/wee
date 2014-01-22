@@ -1,6 +1,6 @@
 # 1.1.4
 
-2014-01-20
+2014-01-21
 
 - FIXED: Resolved issue with columns wrapping occasionally in some versions of Chrome and Firefox
 - ADDED: Added new options to variables.less for border width or disabled borders on inputs
