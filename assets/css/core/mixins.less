@@ -1594,7 +1594,7 @@
 	.padding(horizontal; @padding);
 }
 .wee-row-spacing (@spaceless) when not (@spaceless = true) {
-	.letter-spacing(-.31em);
+	.letter-spacing(-.32em);
 }
 .row (@margin: @gridMargin; @spaceless: @gridSpaceless) {
 	.margin(left; (@margin * -1));
@@ -1610,7 +1610,7 @@
 	.wee-column-reset(@spaceless);
 }
 .wee-column-spacing (@spaceless) when not (@spaceless = true) {
-	.margin(right; -.31em);
+	.margin(right; -.32em);
 }
 .wee-column-reset (@spaceless) when not (@gridSpaceless = true) {
 	.letter-spacing(normal);
@@ -1651,7 +1651,7 @@
 	.margin(left; ((100% / @columns) * @share));
 }
 .offset (spaced; @share; @columns: @gridColumns; @margin: (@gridMargin / 2)) {
-	.margin(left; ((100% / @columns) * @share) + (@margin * 2));
+	.margin(left; (((100% / @columns) * @share) + (@margin * 2)));
 }
 .pull (@share; @columns: @gridColumns) {
 	.relative();
@@ -1694,10 +1694,10 @@
 }
 .img-left {
 	.left();
-	.margin(.31em; @imageMarginSide; @imageMarginBottom; 0);
+	.margin(.32em; @imageMarginSide; @imageMarginBottom; 0);
 }
 .img-right {
-	.margin(.31em; 0; @imageMarginBottom; @imageMarginSide);
+	.margin(.32em; 0; @imageMarginBottom; @imageMarginSide);
 	.right();
 }
 .align-center {

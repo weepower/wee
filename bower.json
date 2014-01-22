@@ -1,6 +1,6 @@
 {
 	"name": "Wee",
-	"version": "1.1.3",
+	"version": "1.1.4",
 	"homepage": "http://www.weepower.com",
 	"main": [
 		"./assets/css/*",
