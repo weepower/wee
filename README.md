@@ -1,4 +1,4 @@
-# [Wee 1.1.4](https://github.com/weepower/wee)
+# [Wee 1.2.0-beta](https://github.com/weepower/wee)
 
 Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects. To read more, visit [http://www.weepower.com](http://www.weepower.com).
 
@@ -26,7 +26,7 @@ Keep track of development and community news by following [@weecss on Twitter](h
 
 ## License
 
-Copyright 2013 [Caddis Interactive, LLC](http://www.caddis.co)
+Copyright 2014 [Caddis Interactive, LLC](http://www.caddis.co)
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

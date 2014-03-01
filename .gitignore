@@ -1,22 +1,30 @@
 # System
 .DS_Store
 .tmp
+.cache
 Thumbs.db
+*.diff
+*.tmproj
+*.err
+*.orig
+*.swp
+*.out
+*.gem
+*.log
+*.lock
+*.vi
 
 # Tools
 .jshintrc
+.settings
+.bundle
 mixture.json
 prepros.json
 codekit-config.json
 
-# Compile
-package.json
-Gruntfile.js
-node_modules/
-bower_components/
-
 # Wee
 project.json
-
-# Source Maps
-.map
+package.json
+Gruntfile.js
+node_modules
+bower_components

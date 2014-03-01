@@ -1,4 +1,4 @@
-// Wee 1.1.4 (weepower.com)
+// Wee 1.2.0-beta (weepower.com)
 // Licensed under the Apache License v2
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -10,7 +10,11 @@
 @import (reference) 'custom/variables.less'; // Custom configuration
 @import (reference) 'core/mixins.less';      // Mixins
 @import (reference) 'custom/mixins.less';    // Custom mixins
-@import 'core/responsive.less';              // Responsive components
+	
+// Responsive
+
+@responsivePath: 'custom/breakpoints';
+@import 'core/responsive.less';
 
 // Override Component Output
 

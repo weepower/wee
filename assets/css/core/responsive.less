@@ -22,13 +22,13 @@
 
 // Mobile Navigation Indicator
 
-.mobile-nav () {
+.mobile-nav (@height: .67em) {
 	&:before {
 		.absolute();
 		.border(bottom; @mobileNavBorderColor; .15em; solid);
 		.border(top; @mobileNavBorderColor; .42em; double);
 		.content();
-		.height(.67em);
+		.height(@height);
 		.left(@mobileNavLeft);
 		.top(@mobileNavTop);
 		.width(@mobileNavWidth);

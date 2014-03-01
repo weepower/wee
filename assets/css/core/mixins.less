@@ -4,7 +4,7 @@
 
 // Text Shadows
 
-.text-shadow (@value: '1px 1px 0 rgba(0, 0, 0, .2)') when (isstring(@value)), (iskeyword(@value))
+.text-shadow (@value: '1px 1px 0 rgba(0, 0, 0, @{defaultOpacity})') when (isstring(@value)), (iskeyword(@value))
 		and not (@value = dark)
 		and not (@value = light)
 		and not (@value = inner) {
@@ -18,7 +18,7 @@
 	@negY: (@y * -1);
 	.wee-text-shadow(@color; @negX; @negY; @blur);
 }
-.text-shadow (light; @value: .2; @x: 1px; @y: 1px; @blur: 0) {
+.text-shadow (light; @value: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
 	.check () when not (isnumber(@value)) {
 		.text-shadow(@value);
 	}
@@ -43,12 +43,12 @@
 	}
 	.check();
 }
-.text-shadow (inner; light; @opacity: .2; @x: 1px; @y: 1px; @blur: 0) {
+.text-shadow (inner; light; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
 	@negX: (@x * -1);
 	@negY: (@y * -1);
 	.text-shadow(light; @opacity; @negX; @negY; @blur);
 }
-.text-shadow (dark; @value: .2; @x: 1px; @y: 1px; @blur: 0) {
+.text-shadow (dark; @value: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
 	.check () when not (isnumber(@value)) {
 		.text-shadow(@value);
 	}
@@ -73,12 +73,12 @@
 	}
 	.check();
 }
-.text-shadow (inner; @opacity: .2; @x: 1px; @y: 1px; @blur: 0) when (isnumber(@opacity)) {
+.text-shadow (inner; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) when (isnumber(@opacity)) {
 	@negX: (@x * -1);
 	@negY: (@y * -1);
 	.text-shadow(dark; @opacity; @negX; @negY; @blur);
 }
-.text-shadow (inner; dark; @opacity: .2; @x: 1px; @y: 1px; @blur: 0) {
+.text-shadow (inner; dark; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
 	@negX: (@x * -1);
 	@negY: (@y * -1);
 	.text-shadow(dark; @opacity; @negX; @negY; @blur);
@@ -102,7 +102,7 @@
 
 // Box Shadows
 
-.shadow (@value: '1px 1px 0 0 rgba(0, 0, 0, .2)') when (isstring(@value)), (iskeyword(@value))
+.shadow (@value: '1px 1px 0 0 rgba(0, 0, 0, @{defaultOpacity})') when (isstring(@value)), (iskeyword(@value))
 		and not (@value = dark)
 		and not (@value = light)
 		and not (@value = inner) {
@@ -114,7 +114,7 @@
 .shadow (inner; @color; @x: 1px; @y: 1px; @blur: 0; @spread: 0) when (iscolor(@color)) {
 	.wee-shadow(@color; @x; @y; @blur; @spread; 'inset ');
 }
-.shadow (light; @value: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0; @prefix: '') {
+.shadow (light; @value: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0; @spread: 0; @prefix: '') {
 	.check () when not (isnumber(@value)) {
 		.shadow(@value);
 	}
@@ -139,10 +139,10 @@
 	}
 	.check();
 }
-.shadow (inner; light; @opacity: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+.shadow (inner; light; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
 	.shadow(light; @opacity; @x; @y; @blur; @spread; 'inset ');
 }
-.shadow (dark; @value: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0; @prefix: '') {
+.shadow (dark; @value: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0; @spread: 0; @prefix: '') {
 	.check () when not (isnumber(@value)) {
 		.shadow(@value);
 	}
@@ -170,7 +170,7 @@
 .shadow (inner) {
 	.shadow(dark; light);
 }
-.shadow (inner; dark; @opacity: .2; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+.shadow (inner; dark; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
 	.shadow(dark; @opacity; @x; @y; @blur; @spread; 'inset ');
 }
 .wee-shadow (@color; @x; @y; @blur; @spread; @prefix: '') {
@@ -777,11 +777,47 @@
 .border-color (@color) {
 	border-color: @color;
 }
+.border-color (top; @color) {
+	border-top-color: @color;
+}
+.border-color (right; @color) {
+	border-right-color: @color;
+}
+.border-color (bottom; @color) {
+	border-bottom-color: @color;
+}
+.border-color (left; @color) {
+	border-left-color: @color;
+}
 .border-style (@style) {
 	border-style: @style;
 }
+.border-style (top; @style) {
+	border-top-style: @style;
+}
+.border-style (right; @style) {
+	border-top-style: @style;
+}
+.border-style (bottom; @style) {
+	border-top-style: @style;
+}
+.border-style (left; @style) {
+	border-top-style: @style;
+}
 .border-width (@width) {
 	border-width: @width;
+}
+.border-width (top; @width) {
+	border-top-width: @width;
+}
+.border-width (right; @width) {
+	border-right-width: @width;
+}
+.border-width (bottom; @width) {
+	border-bottom-width: @width;
+}
+.border-width (left; @width) {
+	border-left-width: @width;
 }
 
 // Rounded Corners
@@ -982,7 +1018,7 @@
 	-webkit-transition: ~'@{value}';
 	transition: ~'@{value}';
 }
-.transition (@property: all; @duration: .2s; @ease: ease-in-out; @delay: 0s) {
+.transition (@property: all; @duration: @defaultDuration; @ease: ease-in-out; @delay: 0s) {
 	-moz-transition: @arguments;
 	-webkit-transition: @arguments;
 	transition: @arguments;
@@ -991,7 +1027,7 @@
 	-webkit-transition-delay: @delay;
 	transition-delay: @delay;
 }
-.transition-duration (@duration: .2s) {
+.transition-duration (@duration: @defaultDuration) {
 	-webkit-transition-duration: @duration;
 	transition-duration: @duration;
 }
@@ -1016,30 +1052,30 @@
 .background (@color; @filename; @x; @y: 0; @repeat: no-repeat) when (isnumber(@x)) {
 	background: @color url('@{imagePath}@{filename}') @x @y @repeat;
 }
-.background (light; @opacity; @fallback) {
+.background (light; @opacity; @fallback: @white) {
 	.background-color(@fallback);
 }
-.background (light; @opacity) when (@opacity > 1)
+.background (light; @opacity; ...) when (@opacity > 1)
 		and not (ispercentage(@opacity)) {
 	.background-color(rgba(255, 255, 255, (@opacity / 100)));
 }
-.background (light; @opacity) when (@opacity < 1) {
+.background (light; @opacity; ...) when (@opacity < 1) {
 	.background-color(rgba(255, 255, 255, @opacity));
 }
-.background (light; @opacity) when (ispercentage(@opacity)) {
+.background (light; @opacity; ...) when (ispercentage(@opacity)) {
 	.background-color(rgba(255, 255, 255, unit((@opacity / 100))));
 }
-.background (dark; @opacity; @fallback) {
+.background (dark; @opacity; @fallback: @black) {
 	.background-color(@fallback);
 }
-.background (dark; @opacity) when (@opacity > 1)
+.background (dark; @opacity; ...) when (@opacity > 1)
 		and not (ispercentage(@opacity)) {
 	.background-color(rgba(0, 0, 0, (@opacity / 100)));
 }
-.background (dark; @opacity) when (@opacity < 1) {
+.background (dark; @opacity; ...) when (@opacity < 1) {
 	.background-color(rgba(0, 0, 0, @opacity));
 }
-.background (dark; @opacity) when (ispercentage(@opacity)) {
+.background (dark; @opacity; ...) when (ispercentage(@opacity)) {
 	.background-color(rgba(0, 0, 0, unit((@opacity / 100))));
 }
 .background-color (@color: @bodyBackground) {
@@ -1051,6 +1087,10 @@
 .background-image (@filename) when not (iskeyword(@filename)) {
 	background-image: url('@{imagePath}@{filename}');
 }
+.background-image (@filename; @repeat) when not (iskeyword(@filename)) and (iskeyword(@repeat)) {
+	background-image: url('@{imagePath}@{filename}');
+	.background-repeat(@repeat);
+}
 .background-image (retina; @filename; @width: auto; @height: auto) {
 	.background-image(@filename);
 	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
@@ -1059,7 +1099,7 @@
 		.background-size(@width; @height);
 	}
 }
-.background-image (@filename; @x; @y: 0; @repeat: no-repeat) when not (iskeyword(@filename)) {
+.background-image (@filename; @x; @y: 0; @repeat: no-repeat) when not (iskeyword(@filename)) and (isnumber(@x)) {
 	.background-image(@filename);
 	.background-position(@x; @y);
 	.background-repeat(@repeat);
@@ -1072,7 +1112,7 @@
 		.background-size(@width; @height);
 	}
 }
-.background-image (@filename; @x; @y; @repeat; @attachment) when not (iskeyword(@filename)) {
+.background-image (@filename; @x; @y; @repeat; @attachment) when not (iskeyword(@filename)) and (isnumber(@x)) {
 	.background-attachment(@attachment);
 	.background-image(@filename; @x; @y; @repeat);
 }
@@ -1084,11 +1124,11 @@
 		.background-size(@width; @height);
 	}
 }
-.background-image (@filename; @x; @y; @repeat; @attachment; @size) when not (iskeyword(@filename)) {
+.background-image (@filename; @x; @y; @repeat; @attachment; @size) when not (iskeyword(@filename)) and (isnumber(@x)) {
 	.background-image(@filename; @x; @y; @repeat; @attachment);
 	.background-size(@size);
 }
-.background-image (@filename; @x; @y; @repeat; @attachment; @width; @height) {
+.background-image (@filename; @x; @y; @repeat; @attachment; @width; @height) when (isnumber(@x)) {
 	.background-image(@filename; @x; @y; @repeat; @attachment);
 	.background-size(@width; @height);
 }
@@ -1244,16 +1284,16 @@
 .sepia (@value: .5) {
 	.filter('sepia(@{value})');
 }
-.drop-shadow (@value: '1px 1px 0 rgba(0, 0, 0, .2)') when (isstring(@value)), (iskeyword(@value)) {
+.drop-shadow (@value: '1px 1px 0 rgba(0, 0, 0, @{defaultOpacity})') when (isstring(@value)), (iskeyword(@value)) {
 	filter: drop-shadow(@value);
 }
 .drop-shadow (@color; @x: 1px; @y: 1px; @blur: 0) when (iscolor(@color)) {
 	.drop-shadow('@{x} @{y} @{blur} @{color}');
 }
-.drop-shadow (light; @opacity: .2; @x: 1px; @y: 1px; @blur: 0) {
+.drop-shadow (light; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
 	.drop-shadow('@{x} @{y} @{blur} rgba(255, 255, 255, @{opacity})');
 }
-.drop-shadow (dark; @opacity: .2; @x: 1px; @y: 1px; @blur: 0) {
+.drop-shadow (dark; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
 	.drop-shadow('@{x} @{y} @{blur} rgba(0, 0, 0, @{opacity})');
 }
 
@@ -1419,6 +1459,14 @@
 	.width(@width);
 	.height(@height);
 }
+.min-size (@width; @height) {
+	.min-width(@width);
+	.min-height(@height);
+}
+.max-size (@width; @height) {
+	.max-width(@width);
+	.max-height(@height);
+}
 .square (@size) {
 	.size(@size; @size);
 }
@@ -1577,6 +1625,29 @@
 	.fill(horizontal);
 }
 
+// Shapes
+
+.caret (...) {
+	.content();
+	.square(0);
+}
+.caret (up; @color: @darkGray; @size: 5px) {
+	.border(horizontal; transparent; @size);
+	.border(bottom; @color; @size);
+}
+.caret (down; @color: @darkGray; @size: 5px) {
+	.border(horizontal; transparent; @size);
+	.border(top; @color; @size);
+}
+.caret (right; @color: @darkGray; @size: 5px) {
+	.border(vertical; transparent; @size);
+	.border(left; @color; @size);
+}
+.caret (left; @color: @darkGray; @size: 5px) {
+	.border(vertical; transparent; @size);
+	.border(right; @color; @size);
+}
+
 // Layout
 
 .wee-container () {
@@ -1683,7 +1754,7 @@
 }
 .clear () {
 	clear: both;
-	&:after
+	&:after,
 	&:before {
 		.content();
 		.display(table);

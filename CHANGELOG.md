@@ -1,3 +1,30 @@
+# 1.2.0-beta
+
+2014-02-28
+
+- FIXED: Renamed "fonts" folder to "font" for consistency with variables.less
+- FIXED: Resolved external path issues in index.local.html
+- FIXED: Fixed issue with .background(dark) and .background(light) mixins
+- FIXED: Added missing comma in the .clear mixin
+- ADDED: Added new fallback data attribute option for SVG images
+- ADDED: Added new .background-image mixin option for @filename, @repeat
+- ADDED: Added a new variable @responsivePath in legacy.less and screen.less for advanced usage
+- ADDED: Added new defaultDuration and defaultOpacity variables to variables.less
+- ADDED: Added new .border-color() mixin options
+- ADDED: Created new .min-size and .max-size mixins
+- ADDED: Created new .caret mixin
+- UPDATED: Moved placeholder fallback functionality to its own namespaced WEE function
+- UPDATED: Bumped jQuery to version 1.11.0
+- UPDATED: The .mobile-nav mixin can how take a height override value
+- UPDATED: Removed less.js from the lib directory
+- UPDATED: Went ahead and removed the crossdomain.xml file
+- UPDATED: Adjusted .gitignore to ignore additional files
+- UPDATED: Updated .jshintrc doc for more strict default jshinting
+- UPDATED: Configured .htaccess rewrites for specific domain rather than catchall
+- UPDATED: Moved wee.js to the lib folder and removed all WEE function from base.js
+- UPDATED: Made few improvements to legacy handling
+- UPDATED: Removed unnecessary comments from variables.less
+
 # 1.1.4
 
 2014-01-21

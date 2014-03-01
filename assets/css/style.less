@@ -1,4 +1,4 @@
-// Wee 1.1.4 (weepower.com)
+// Wee 1.2.0-beta (weepower.com)
 // Licensed under the Apache License v2
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -11,9 +11,13 @@
 // Module Check
 
 .core() when (@module = false) {
-	@import 'custom/modules.less';  // Modules
-	@import 'custom/screen.less';   // Customizations
-	@import 'core/responsive.less'; // Responsiveness
+	@import 'custom/modules.less'; // Modules
+	@import 'custom/screen.less';  // Customizations
+	
+	// Responsive
+
+	@responsivePath: 'custom/breakpoints';
+	@import 'core/responsive.less';
 }
 
 .core();

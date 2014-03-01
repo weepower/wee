@@ -12,12 +12,12 @@ Options +FollowSymLinks -MultiViews -Indexes
 # --------
 
 # Force www
-#RewriteCond %{HTTP_HOST} !^www\..+$ [NC]
-#RewriteRule ^ http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+#RewriteCond %{HTTP_HOST} !^www\.weepower\.com [NC]
+#RewriteRule ^(.*)$ http://www.weepower.com/$1 [R=301,L]
 
 # Remove www (don't use both force and remove)
-#RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-#RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+#RewriteCond %{HTTP_HOST} ^www\.weepower\.com [NC]
+#RewriteRule ^(.*)$ http://www.weepower.com/$1 [R=301,L]
 
 # Remove root index file
 #RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^/]+/)*index\.html\ HTTP/

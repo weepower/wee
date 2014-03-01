@@ -23,7 +23,7 @@ html {
 	.font-size(@rootFontSize);
 }
 body {
-	.color(@baseColor);
+	.baseColor();
 	.font(@baseFont; @baseFontSize; @baseFontWeight);
 	.line-height(@baseLineHeight);
 	.relative();
@@ -402,8 +402,11 @@ dd {
 			.bold();
 			th {
 				.align(bottom);
-				.color(@darkestGray);
+				.darkestGray();
 			}
+		}
+		tbody {
+			.wee-table-striped(@tableStriped);
 		}
 		caption {
 			.background(@tableCaptionBackground);
@@ -414,7 +417,6 @@ dd {
 			.align(top);
 		}
 		.wee-table-bordered(@tableBordered);
-		.wee-table-striped(@tableStriped);
 	}
 	.toggle () when (@tableStyled = true) {
 		table,
@@ -456,9 +458,20 @@ dd {
 		}
 	}
 }
-.wee-table-striped (@output) when (@output = true) {
+.wee-table-striped (@output) when (@output = true)
+		and (@tableStripedPosition = even) {
 	tr {
 		&:nth-child(even) {
+			td {
+				.background(@tableStripedBackground);
+			}
+		}
+	}
+}
+.wee-table-striped (@output) when (@output = true)
+		and not (@tableStripedPosition = even) {
+	tr {
+		&:nth-child(odd) {
 			td {
 				.background(@tableStripedBackground);
 			}
