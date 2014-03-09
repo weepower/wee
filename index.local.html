@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Responsive Web Framework | Wee Bootstrap</title>
-<meta name="description" content="Wee is a lightweight, extensible bootstrap for rapidly building responsive, semantic web projects.">
+<title>Responsive Web Framework | Wee</title>
+<meta name="description" content="Wee is a wee, extensible bootstrap for rapidly building responsive web projects.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="dns-prefetch" href="http://ajax.googleapis.com">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -18,242 +18,37 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@weecss">
 <meta name="twitter:creator" content="@weecss">
-<meta property="og:title" content="Responsive Web Framework">
-<meta property="og:image" content="http://www.weepower.com/share.png">
 <meta property="og:site_name" content="Wee">
 <meta property="og:url" content="http://www.weepower.com">
+<meta property="og:title" content="Responsive Web Framework">
+<meta property="og:image" content="http://www.weepower.com/share.png">
+<meta property="og:description" content="Wee is a wee, extensible bootstrap for rapidly building responsive web projects.">
 <!--[if lt IE 9]>
 <link rel="stylesheet" href="assets/css/legacy.css">
 <script src="assets/js/legacy.min.js"></script>
 <![endif]-->
 </head>
 <body itemscope itemtype="http://schema.org/WebPage">
-<div class="index-top">
-	<header role="banner">
-		<div class="container">
-			<a href="#" rel="home" id="logo">
-				<img src="assets/img/wee.svg" alt="Wee">
-			</a>
-			<nav role="navigation">
-				<ul id="nav">
-					<li><a href="#" class="active">Home</a></li>
-					<li><a href="#">Two</a></li>
-					<li><a href="#">Three</a></li>
-					<li><a href="#">Four</a></li>
-				</ul>
-			</nav>
-			<span aria-hidden="true" id="pull"></span>
-		</div>
-	</header>
-	<div class="index-hero">
-		<section class="container">
-			<p class="h4">Wee is a wee, extensible bootstrap for rapidly building responsive, semantic web projects.</p>
-			<a href="http://www.weepower.com" class="button button-colored">Wee Documentation</a>
-		</section>
-	</div>
-</div>
-<main role="main">
-	<div class="container">
-		<h1>Welcome to Wee</h1>
-		<p><code>screen.less</code> inside "assets/css/custom" will serve as your primary stylesheet. There you will also find <code>variables.less</code> which sets up your configuration, <code>mixins.less</code> for your custom LESS mixins, and <code>legacy.less</code> for special legacy Internet Explorer rules, should you need them. Last and probably least there is <code>print.less</code> for custom print styling. You should also configure the applicable breakpoint files as needed in the breakpoints directory. Visit <a href="http://www.weepower.com">weepower.com</a> for more examples and documentation.</p>
-		<hr>
-		<div class="index-examples">
-			<div class="index-left">
-				<h3>Grid</h3>
-				<div class="index-grid">
-					<div class="row">
-						<span class="half">1/2</span>
-						<span class="half">1/2</span>
-						<span class="third">1/3</span>
-						<span class="third">1/3</span>
-						<span class="third">1/3</span>
-						<span class="fourth fourth-inset">1/4</span>
-						<span class="fourth">1/4</span>
-						<span class="fourth">1/4</span>
-						<span class="fifth">1/5</span>
-						<span class="fifth">1/5</span>
-						<span class="fifth fifth-offset">1/5</span>
-					</div>
-				</div>
-				<h3>Table</h3>
-				<table itemscope itemtype="http://schema.org/Table">
-					<caption itemprop="about">Caption</caption>
-					<thead>
-						<tr>
-							<th>Heading</th>
-							<th>Heading</th>
-							<th>Heading</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-						</tr>
-						<tr>
-							<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr>
-							<td>Footer</td>
-							<td>Footer</td>
-							<td>Footer</td>
-						</tr>
-					</tfoot>
-				</table>
-				<h3>Form</h3>
-				<form action="#" class="index-form">
-					<div class="index-form-split">
-						<div class="index-form-column">
-							<fieldset>
-								<legend>Text Input</legend>
-								<input type="email" name="name" placeholder="Email Address" required>
-								<div class="inline-field">
-									<label for="name2">Full Name</label>
-									<input type="text" name="name2" value="" placeholder="Your Name" id="name2" disabled>
-								</div>
-								<label for="textarea">Message</label>
-								<textarea name="textarea" id="textarea" rows="3" required></textarea>
-								<div class="inline-field">
-									<label for="textarea2">Inline Message</label>
-									<textarea name="textarea2" id="textarea2" rows="4" placeholder="Short message here..."></textarea>
-								</div>
-							</fieldset>
-						</div>
-						<div class="index-form-column">
-							<fieldset>
-								<legend>Selection</legend>
-								<select name="selection">
-									<option value="1">Lorem</option>
-									<option value="2">Ipsum</option>
-									<option value="3">Dolor</option>
-								</select>
-								<label for="multi-selection">Multiple Selection</label>
-								<select name="multi-selection" id="multi-selection" multiple>
-									<optgroup label="Grouping">
-										<option value="1">Lorem</option>
-										<option value="2">Ipsum</option>
-										<option value="3">Dolor</option>
-									</optgroup>
-								</select>
-								<div class="inline-field">
-									<label for="inline-selection">Inline Selection</label>
-									<select name="inline-selection" id="inline-selection" multiple>
-										<option value="1">Lorem</option>
-										<option value="2">Ipsum</option>
-										<option value="3">Dolor</option>
-									</select>
-								</div>
-								<div class="inline-field">
-									<input type="checkbox" name="checkbox" id="checkbox">
-									<label for="checkbox">Lorem ipsum dolor sit amet</label>
-								</div>
-								<div class="inline-field">
-									<input type="radio" name="radio" id="radio">
-									<label for="radio">Lorem ipsum dolor sit amet</label>
-								</div>
-								<div class="inline-field">
-									<input type="radio" name="radio" id="radio2">
-									<label for="radio2">Lorem ipsum dolor sit amet</label>
-								</div>
-							</fieldset>
-						</div>
-					</div>
-					<input type="submit" value="Submit" class="button-colored">
-					<input type="reset" value="Clear">
-					<input type="submit" value="Disabled" disabled>
-				</form>
-				<h3>Figure</h3>
-				<figure>
-					<img data-src="holder.js/350x175/auto/textmode:exact/#aaaaaa:#ffffff" alt="Figure Image">
-					<figcaption><b>Fig. 3.2 |</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit by <a href="#">eiusmod tempor</a></figcaption>
-				</figure>
-				<h3>Code Block</h3>
-				<pre><code>&lt;pre&gt;
-	&lt;code&gt;test code&lt;/code&gt;
-&lt;/pre&gt;</code></pre>
-			</div>
-			<div class="index-right">
-				<h3>Blockquote</h3>
-				<blockquote>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-					<cite>John Doe</cite>
-				</blockquote>
-				<h3>Lists</h3>
-				<h5 class="subheader">Unordered List</h5>
-				<ul>
-					<li>Lorem ipsum dolor
-						<ul>
-							<li>Lorem ipsum dolor
-								<ul>
-									<li>Lorem ipsum dolor</li>
-									<li>Lorem ipsum dolor</li>
-								</ul>
-							</li>
-							<li>Lorem ipsum dolor
-								<ol>
-									<li>Lorem ipsum dolor</li>
-									<li>Lorem ipsum dolor</li>
-								</ol>
-							</li>
-						</ul>
-					</li>
-					<li>Lorem ipsum dolor</li>
-					<li>Lorem ipsum dolor</li>
-				</ul>
-				<hr>
-				<h5 class="subheader">Ordered List</h5>
-				<ol>
-					<li>Lorem ipsum dolor
-						<ol>
-							<li>Lorem ipsum dolor
-								<ul>
-									<li>Lorem ipsum dolor</li>
-								</ul>
-							</li>
-							<li>Lorem ipsum dolor
-								<ol>
-									<li>Lorem ipsum dolor</li>
-									<li>Lorem ipsum dolor</li>
-								</ol>
-							</li>
-						</ol>
-					</li>
-					<li>Lorem ipsum dolor</li>
-					<li>Lorem ipsum dolor</li>
-				</ol>
-				<hr>
-				<h5 class="subheader">Description List</h5>
-				<dl>
-					<dt>Lorem ipsum dolor</dt>
-					<dd>Lorem ipsum dolor</dd>
-					<dt>Lorem ipsum dolor</dt>
-					<dd>Lorem ipsum dolor</dd>
-				</dl>
-				<hr>
-				<h3>Address</h3>
-				<address>
-					<strong>Lorem ipsum dolor</strong><br>
-					123 Main Street<br>
-					City, ST 12345
-				</address>
-			</div>
-		</div>
-	</div>
+<header role="banner" class="container">
+	<img src="assets/img/wee.svg" alt="Wee" id="logo">
+</header>
+<main class="container">
+	<p class="heading">Wee is a wee, extensible bootstrap for rapidly building responsive, semantic web projects.</p>
+	<a href="http://www.weepower.com/start" class="button">Getting Started</a>
+	<a href="http://www.weepower.com/docs" class="button">Documentation</a>
+	<a href="http://www.weepower.com/examples" class="button">Example Code</a>
 </main>
-<footer role="contentinfo">
-	<div class="container">
-		<small>Built with Wee version 1.2.0. <a href="mailto:hello@weepower.com">hello@weepower.com</a><br>Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2</a>.</small>
-		<a href="https://twitter.com/weecss">Twitter</a> / <a href="https://github.com/weepower/wee">Github</a> / <a href="https://github.com/weepower/wee/issues">Issues</a> / <a href="https://github.com/weepower/wee/blob/master/CHANGELOG.md">Changelog</a>
-	</div>
+<footer role="contentinfo" class="container">
+	<small><a href="http://www.weepower.com">Built with Wee 1.2.0</a>. Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2</a>.</small>
+	<ul>
+		<li><a href="https://twitter.com/weecss">Twitter</a></li>
+		<li><a href="https://github.com/weepower/wee">Github</a></li>
+		<li><a href="https://github.com/weepower/wee/issues">Issues</a></li>
+		<li><a href="https://github.com/weepower/wee/blob/master/CHANGELOG.md">Changelog</a></li>
+	</ul>
 </footer>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="assets/js/lib/jquery-1.11.0.min.js"><\/script>')</script>
-<script src="assets/js/lib/holder.min.js"></script>
-<script src="assets/js/base.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/lib/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="/assets/js/base.min.js"></script>
 </body>
 </html>

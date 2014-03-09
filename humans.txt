@@ -4,10 +4,9 @@ Wee - hello@weepower.com - twitter.com/weecss
 
 # Thanks
 
-weepower.com
 lesscss.org
 
 # Technology
 
 Standards: HTML5, CSS3, ARIA, Schema
-Components: Wee, LessCSS, jQuery, holder.js
+Components: Wee, Less.js, jQuery

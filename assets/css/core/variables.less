@@ -1,3 +1,5 @@
+@import (reference) 'variables-static.less'; // Static variables
+
 ////////////
 // Layout //
 ////////////
@@ -5,14 +7,14 @@
 @minWidth: 260px;  // Minimum container width
 @maxWidth: 1400px; // Maximum container width
 
-@bumperPadding: 5%;  // Bumper padding on containers
+@bumperPadding: 6%;  // Bumper padding on containers
 @padContainer: true; // Enable bumperPadding on containers
 
 @gridMargin: 5%;       // Default margin for spaced columns
 @gridColumns: 4;       // Default number of columns in grid
 @gridSpaceless: false; // Optionally set to true if you are minifying your outputted markup
  
-@blockMarginBottom: 3; // Default bottom margin for lists, form elements, and other block elements
+@blockMarginBottom: 4; // Default bottom margin for lists, form elements, and other block elements
 
 ///////////////
 // Grayscale //
@@ -69,8 +71,8 @@
 //////////////
 
 @headingColor: @linkColor;
-@headingFont: 'Noto Sans', sans-serif;
-@headingFontWeight: 400;
+@headingFont: 'Open Sans', sans-serif;
+@headingFontWeight: 300;
 @headingLineHeight: 1.4em;
 
 @headingMarginBottom: 1;
@@ -307,10 +309,10 @@
 @inputBorderColorHover: darken(@inputBorderColor, 10%);
 @inputBorderColorFocus: darken(@inputBorderColor, 20%);
 @inputBorderWidth: 1px; // False to disable
-@inputRounded: false;   // False to disable
+@inputRounded: 3px; // False to disable
 
 @inputMinWidth: 200px; // False to disable
-@inputMinHeight: 3;    // False to disable
+@inputMinHeight: 3; // False to disable
 
 @inputPaddingHorizontal: .8;
 @inputPaddingVertical: .4;
@@ -396,16 +398,16 @@
 @buttonFontSize: @baseFontSize;
 @buttonFontWeight: normal;
 
-@buttonPaddingHorizontal: 2.6;
-@buttonPaddingVertical: 1.2;
+@buttonPaddingHorizontal: 3;
+@buttonPaddingVertical: 1.4;
 
 @buttonMarginBottom: 0;
 
 @buttonBevelEnabled: false;
-@buttonBevelColor: light;   // dark|light
+@buttonBevelColor: light; // dark|light
 @buttonBevelOpacity: 30%; 
 
-@buttonRounded: false; // False to disable
+@buttonRounded: 3px; // False to disable
 
 @buttonTransitionEnabled: true;
 
@@ -448,7 +450,7 @@
 @responsiveEnabled: true; // Enable automated breakpoints
 @responsiveOffset: 25px;  // Breakpoint offset, subtracted from breakpoint width
 
-// Breakpoints (set to false to disable)
+// Breakpoints (set to False to disable)
 
 @mobileLandscapeWidth: 480px; // JavaScript value = 2
 @tabletPortraitWidth: 768px;  // JavaScript value = 3
@@ -470,6 +472,6 @@
 @responsiveTestMode: true; // Enable breakpoint output bar
 
 @responsiveTestPosition: 'bottom'; // top|bottom
-@responsiveTestColor: @baseColor;
-@responsiveTestBackground: @bodyBackground;
-@responsiveTestBorderColor: @baseColor;
+@responsiveTestColor: @black;
+@responsiveTestBackground: #dfdfdf;
+@responsiveTestBorderColor: false; // False to disable

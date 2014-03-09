@@ -386,6 +386,28 @@
 	user-select: @value;
 }
 
+// Content
+
+.content (@value: ' ') {
+	content: ~"'@{value}'";
+}
+.prefix (@value: '-'; @margin: .5em) {
+	&:before {
+		.content(@value);
+		.margin(right; @margin);
+	}
+}
+.suffix (@value: '-'; @margin: .5em) {
+	&:after {
+		.content(@value);
+		.margin(left; @margin);
+	}
+}
+.bookends (@value: '-') {
+	.prefix(@value);
+	.suffix(@value);
+}
+
 // Margin
 
 .margin (@value) {
@@ -1014,11 +1036,13 @@
 // Transitions
 
 .transition (@value) when (isstring(@value)) {
+	-webkit-backface-visibility: hidden;
 	-moz-transition: ~'@{value}';
 	-webkit-transition: ~'@{value}';
 	transition: ~'@{value}';
 }
 .transition (@property: all; @duration: @defaultDuration; @ease: ease-in-out; @delay: 0s) {
+	-webkit-backface-visibility: hidden;
 	-moz-transition: @arguments;
 	-webkit-transition: @arguments;
 	transition: @arguments;
@@ -1323,6 +1347,10 @@
 	.centered-block();
 	.max-width(@maxWidth);
 }
+.centered-block (@maxWidth; @margin) {
+	.centered-block(@maxWidth);
+	.spaced(@margin);
+}
 
 // Positioning
 
@@ -1401,11 +1429,59 @@
 .position (@value) {
 	position: @value;
 }
+.position (@value; @top) {
+	.position(@value);
+	.top(@top);
+}
+.position (@value; @top; @right) {
+	.position(@value; @top);
+	.right(@right);
+}
+.position (@value; @top; @right; @bottom) {
+	.position(@value; @top; @right);
+	.bottom(@bottom);
+}
+.position (@value; @top; @right; @bottom; @left) {
+	.position(@value; @top; @right; @bottom);
+	.left(@left);
+}
 .absolute () {
 	.position(absolute);
 }
+.absolute (@top) {
+	.absolute();
+	.top(@top);
+}
+.absolute (@top; @right) {
+	.absolute(@top);
+	.right(@right);
+}
+.absolute (@top; @right; @bottom) {
+	.absolute(@top; @right);
+	.bottom(@bottom);
+}
+.absolute (@top; @right; @bottom; @left) {
+	.absolute(@top; @right; @bottom);
+	.left(@left);
+}
 .fixed () {
 	.position(fixed);
+}
+.fixed (@top) {
+	.fixed();
+	.top(@top);
+}
+.fixed (@top; @right) {
+	.fixed(@top);
+	.right(@right);
+}
+.fixed (@top; @right; @bottom) {
+	.fixed(@top; @right);
+	.bottom(@bottom);
+}
+.fixed (@top; @right; @bottom; @left) {
+	.fixed(@top; @right; @bottom);
+	.left(@left);
 }
 .relative () {
 	.position(relative);
@@ -1469,6 +1545,15 @@
 }
 .square (@size) {
 	.size(@size; @size);
+}
+.ratio (@ratio: 1) {
+	.crop();
+	.relative();
+	&:before {
+		.content();
+		.height(0);
+		.padding(top; ((1 / @ratio) * 100%));
+	}
 }
 .circle (@diameter) {
 	.rounded((@diameter / 2));
@@ -1592,9 +1677,6 @@
 }
 .cursor (@value: pointer) {
 	cursor: @value;
-}
-.content (@value: ' ') {
-	content: ~"'@{value}'";
 }
 .overflow (@value) {
 	overflow: @value;
@@ -1839,6 +1921,31 @@
 .inline-list () {
 	li {
 		.inline();
+	}
+}
+.inline-list (@spacing) when (isnumber(@spacing)) {
+	li {
+		.inline();
+		.margin(left; @spacing);
+		&:first-child {
+			.margin(left; 0);
+		}
+	}
+}
+.inline-list (@content; @margin: 0) when (isstring(@content)) {
+	li {
+		.inline();
+		.prefix(@content; @margin);
+		&:first-child {
+			&:before {
+				.hide();
+			}
+		}
+	}
+}
+.floated-list () {
+	li {
+		.left();
 	}
 }
 .list-style (@value) {
