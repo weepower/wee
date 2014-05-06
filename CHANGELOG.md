@@ -1,6 +1,6 @@
-# 1.2.0 beta
+# 2.0.0
 
-2014-03-08
+2014-05-05
 
 - FIXED: Renamed "fonts" folder to "font" for consistency with variables.less
 - FIXED: Resolved external path issues in index.local.html
@@ -14,7 +14,7 @@
 - ADDED: Added new .border-color() mixin options
 - ADDED: Created new .min-size and .max-size mixins
 - ADDED: Created new .caret mixin
-- ADDED: Added back OpenGraph description for propert social sharability
+- ADDED: Added back OpenGraph description for proper social shareability
 - ADDED: Added new prefix, suffix, and bookends mixins for pseudo content placement
 - ADDED: Added new position, absolute, and fixed overrides for position values
 - ADDED: Added new ratio mixins, useful for responsive media embeds
@@ -22,7 +22,7 @@
 - ADDED: Created new variables-static.less file in the core for helper variables
 - UPDATED: Moved placeholder fallback functionality to its own namespaced WEE function
 - UPDATED: Bumped jQuery to version 1.11.0
-- UPDATED: The .mobile-nav mixin can how take a height override value
+- UPDATED: The .mobile-nav mixin can now take a height override value
 - UPDATED: Removed less.js from the lib directory
 - UPDATED: Went ahead and removed the crossdomain.xml file
 - UPDATED: Adjusted .gitignore to ignore additional files
@@ -62,7 +62,7 @@
 2014-01-09
 
 - FIXED: .background(none); will now compile correctly
-- ADDED: Added comment to empty reponsive files to resolve LESS 1.6 compile issue
+- ADDED: Added comment to empty responsive files to resolve LESS 1.6 compile issue
 - ADDED: Added new baseColor, resize, and display mixins
 - UPDATED: Slight cosmetic updates to the base index
 - UPDATED: Updated LESS version in lib to 1.6.0
@@ -102,7 +102,7 @@
 
 2013-10-26
 
-- ADDED: Added spaceless variablr to optionally eliminate grid inline-block space hacks with ability to override when generating grids
+- ADDED: Added spaceless variable to optionally eliminate grid inline-block space hacks with ability to override when generating grids
 - ADDED: Added sample grid to download
 
 # 1.0.6
@@ -139,7 +139,7 @@
 
 2013-10-06
 
-- ADDED: Added Bower compatability
+- ADDED: Added Bower compatibility
 - UPDATED: Added additional files to .gitignore
 - UPDATED: Optimized images with new Wee Grunt script
 

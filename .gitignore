@@ -1,8 +1,24 @@
+# Project
+
+# custom rules here
+
+# Wee
+node_modules
+bower_components
+
+# Tools
+.jshintrc
+.settings
+.bundle
+mixture.json
+prepros.json
+codekit-config.json
+
 # System
+Thumbs.db
 .DS_Store
 .tmp
 .cache
-Thumbs.db
 *.diff
 *.tmproj
 *.err
@@ -13,18 +29,3 @@ Thumbs.db
 *.log
 *.lock
 *.vi
-
-# Tools
-.jshintrc
-.settings
-.bundle
-mixture.json
-prepros.json
-codekit-config.json
-
-# Wee
-project.json
-package.json
-Gruntfile.js
-node_modules
-bower_components

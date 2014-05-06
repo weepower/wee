@@ -1,15 +1,22 @@
 {
 	"name": "Wee",
-	"version": "1.2.0-beta.2",
+	"version": "2.0.0",
 	"homepage": "http://www.weepower.com",
+	"description": "The extensible bootstrap for rapidly building web projects.",
 	"main": [
 		"./assets/css/*",
 		"./assets/js/*"
 	],
-	"dependencies": {
-		"jquery": ">= 1.9.0"
-	},
 	"ignore": [
 		"**/.*"
-	]
+	],
+	"keywords": [
+		"less",
+		"responsive",
+		"css",
+		"javascript",
+		"bootstrap",
+		"framework"
+	],
+	"license": "Apache 2.0"
 }

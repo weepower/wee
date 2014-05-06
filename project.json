@@ -1,0 +1,76 @@
+{
+	"name": "Wee",
+	"description": "The extensible framework for building responsive web experiences.",
+	"paths": {
+		"root": "public",
+		"assets": {
+			"root": "assets",
+			"css": "css",
+			"js": "js",
+			"modules": "modules"
+		}
+	},
+	"style": {
+		"build": [
+			
+		],
+		"compile": {
+			
+		}
+	},
+	"script": {
+		"base": {
+			"enable": true,
+			"features": {
+				"breakpoints": true,
+				"data": true,
+				"events": true,
+				"loader": true,
+				"routes": true
+			},
+			"polyfill": {
+				"placeholder": true,
+				"srcset": true
+			},
+			"testing": {
+				"responsive": true,
+				"placeholders": true
+			},
+			"legacy": {
+				"enable": true,
+				"build": [
+					"lib/vendor/html5shiv.js"
+				]
+			}
+		},
+		"build": [
+			
+		],
+		"compile": {
+			
+		}
+	},
+	"testing": {
+		"server": {
+			"port": 9000
+		},
+		"reload": {
+			"enable": true,
+			"port": 35729,
+			"watch": {
+				"root": true,
+				"paths": [
+
+				]
+			},
+			"extensions": [
+				"html"
+			]
+		},
+		"sourceMaps": {
+			"css": false,
+			"js": true
+		},
+		"host": "http://wee.dev:8080"
+	}
+}
