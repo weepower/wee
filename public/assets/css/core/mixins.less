@@ -2031,6 +2031,9 @@
 	.max-width((100% + @margin));
 	.wee-row-spacing(@spaceless);
 }
+.row-modify (@margin: @gridMargin) {
+	.row(@margin);
+}
 .wee-row-reset () when not (@spaceless = true) {
 	.letter-spacing(normal);
 }
@@ -2079,8 +2082,12 @@
 .column-modify (@share; @columns: @gridColumns) {
 	.width(((100% / @columns) * @share));
 }
-.column-modify (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) {
+.column-modify (spaced; @share; @columns: @gridColumns; @margin: false) {
 	.width((((100% / @columns) * @share) - (@margin)));
+	.toggle () when not (@margin = false) {
+		.margin(left; @margin);
+	}
+	.toggle();
 }
 .column-modify (@width) when (ispercentage(@width)), (ispixel(@width)), (isunit(@width, 'rem')) {
 	.width(@width);

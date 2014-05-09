@@ -30,17 +30,15 @@ JavaScript toolset to build scalable, well-organized browser functionality
 * **Legacy fallback** to patch SVG and REM support in IE8
 
 Structure baseline of markup, icons, and files to serve as a project roadmap
-Optional build process configured through a simple JSON file
+Optional Grunt build process configured through a simple JSON file to compile, optimize, and minify your source
 
 ## Quick Start
 
 Get started with Wee using one of these three methods:
 
-* [Downloading the latest release](https://github.com/weepower/wee/archive/master.zip) or
-* Cloning the repository from `git clone git://github.com/weepower/wee.git` or
-* Running the [Bower](http://bower.io/) command `bower install wee`
-
-You can also take advantage of Wee build and module features with our [official Grunt package](https://github.com/weepower/wee-grunt) to compile, optimize, and minify your source.
+* [Download the latest release](https://github.com/weepower/wee/archive/master.zip) or
+* Clone the repository from `git clone git://github.com/weepower/wee.git` or
+* Execute the [Bower](http://bower.io/) command `bower install wee`
 
 ## Bugs
 

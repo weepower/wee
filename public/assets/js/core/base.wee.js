@@ -77,6 +77,24 @@ var Wee = (function(w, d) {
 				}
 			}
 		},
+		// Get the current environment or detect the current environment against a specified object
+		env: function(obj, def) {
+			if (obj) {
+				this.$set('env', function() {
+					var host = location.host;
+
+					for (var key in obj) {
+						if (obj[key] === host) {
+							return key;
+						}
+					}
+
+					return def || 'local';
+				});
+			}
+
+			return this.$get('env', 'local');
+		},
 		// Add all meta variables to the data store
 		setVars: function() {
 			Wee.$each('[data-var]', function(el) {

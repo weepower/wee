@@ -97,7 +97,7 @@ Wee.controller.create('routes', {
 		}
 
 		// Execute queued init functions
-		if (i >= total && last) {
+		if (i === total || last) {
 			for (x = 0; x < fn.length; x++) {
 				Wee.exec(fn[x], {
 					arguments: params
