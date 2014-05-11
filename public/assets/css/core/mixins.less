@@ -2082,12 +2082,9 @@
 .column-modify (@share; @columns: @gridColumns) {
 	.width(((100% / @columns) * @share));
 }
-.column-modify (spaced; @share; @columns: @gridColumns; @margin: false) {
+.column-modify (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) {
 	.width((((100% / @columns) * @share) - (@margin)));
-	.toggle () when not (@margin = false) {
-		.margin(left; @margin);
-	}
-	.toggle();
+	.margin(left; @margin);
 }
 .column-modify (@width) when (ispercentage(@width)), (ispixel(@width)), (isunit(@width, 'rem')) {
 	.width(@width);

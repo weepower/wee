@@ -43,24 +43,20 @@ Wee.controller.create('events', {
 		// For each element attach the event
 		Wee.$each(sel, function(el) {
 			var obj = Wee.extend({}, conf);
-			obj.arguments = [el];
+			obj.arguments = [0, el];
 
 			if (evt == 'mouseenter' || evt == 'mouseleave') {
-				var mouseFn = function() {
-					console.log('test');
-				}
-
-				obj.arguments.push(mouseFn);
+				obj.arguments.push(fn);
 
 				fn = 'events:mouseEvent';
 				evt = (evt == 'mouseenter') ? 'mouseover' : 'mouseout';
 			}
 
 			el.attachEvent ? el.attachEvent('on' + evt, function(e) {
-				obj.arguments.unshift(e);
+				obj.arguments[0] = e;
 				Wee.exec(fn, obj);
 			}) : el.addEventListener(evt, function(e) {
-				obj.arguments.unshift(e);
+				obj.arguments[0] = e;
 				Wee.exec(fn, obj);
 			}, false);
 		});
@@ -76,14 +72,14 @@ Wee.controller.create('events', {
 		});
 	},
 	// Ensure the mouse has actually entered or left the root element before firing the event
-	mouseEvent: function(e, el, fn) {
+	mouseEvent: function(e, parent, fn) {
 		var child = e.relatedTarget;
 
-		if (el === child || this.checkParent(el, child)) {
+		if (child === parent || this.checkParent(parent, child)) {
 			return;
 		}
 
-		Wee.exec(fn, obj);
+		Wee.exec(fn);
 	},
 	// Compare a parent element to a child element
 	checkParent: function(parent, child) {

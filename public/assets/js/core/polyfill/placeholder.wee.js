@@ -30,7 +30,7 @@ Wee.controller.extend('polyfill', {
 				len = forms.length,
 				i = 0;
 
-			for (i; i < len; i++) {
+			for (; i < len; i++) {
 				Wee.events.on(forms[i], 'submit', function() {
 					Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {
 						if (el.value == el.getAttribute('placeholder')) {
@@ -43,6 +43,4 @@ Wee.controller.extend('polyfill', {
 	}
 })
 
-Wee.ready(function() {
-	Wee.polyfill.placeholder();
-});
+Wee.ready('polyfill:placeholder');

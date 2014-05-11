@@ -23,11 +23,9 @@ Wee.controller.extend('testing', {
 
 		if (matches && matches.length > 1 && matches[1].trim() != 'true') {
 			alert('Placeholders are disabled in the custom variables.less');
-
-			return;
+		} else {
+			this.$call('createPlaceholders');
 		}
-
-		this.$call('createPlaceholders');
 	},
 	// Loop through the placeholders and update the text overlays
 	updatePlaceholders: function() {
@@ -42,12 +40,10 @@ Wee.controller.extend('testing', {
 				pos = this.$call('getPosition', img),
 				width = img.offsetWidth,
 				height = img.offsetHeight;
-				x = pos[0],
-				y = pos[1];
 
 			Wee.css(span, {
-				left: x + 'px',
-				top: y + 'px',
+				left: pos[0] + 'px',
+				top: pos[1] + 'px',
 				width: width + 'px',
 				lineHeight: height + 'px'
 			});
@@ -116,7 +112,7 @@ Wee.controller.extend('testing', {
 			y = el.offsetTop;
 
 		while (el.offsetParent) {
-			if (el == root) {
+			if (el === root) {
 				break;
 			} else {
 				var parent = el.offsetParent;
@@ -127,6 +123,7 @@ Wee.controller.extend('testing', {
 				el = parent;
 			}
 		}
+
 		return [x, y];
 	}
 });

@@ -16,6 +16,7 @@ Wee.controller.create('data', {
 				success: false,
 				failure: false
 			}, opt),
+			data = Wee.serialize(conf.data),
 			x = new XMLHttpRequest();
 
 		x.onreadystatechange = function() {
@@ -29,7 +30,7 @@ Wee.controller.create('data', {
 							resp = JSON.parse(resp);
 						}
 
-						if (conf.bind) {
+						if (conf.template) {
 							resp = Wee.data.bind(conf.template, resp);
 						}
 
@@ -40,8 +41,16 @@ Wee.controller.create('data', {
 							arguments: conf.arguments,
 							scope: conf.scope
 						});
+
+						return true;
 					}
 				} else {
+					if (conf.failure) {
+						Wee.exec(conf.failure, {
+							scope: conf.scope
+						});
+					}
+
 					return false;
 				}
 			}
@@ -49,13 +58,11 @@ Wee.controller.create('data', {
 
 		// Post or get the endpoint based on the specification
 		if (conf.method == 'post') {
-			var data = Wee.serialize(conf.data);
-
 			x.open('POST', conf.url, true);
 			x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 			x.send(data);
 		} else {
-			x.open('GET', conf.url, true);
+			x.open('GET', (conf.url + data), true);
 			x.send(null);
 		}
 	},

@@ -319,10 +319,12 @@ var Wee = (function(w, d) {
 				sel = this.$(sel);
 			}
 
-			var obj = (! this.isObject(a)) ? {a: b} : a;
-
-			for (var key in obj) {
-				sel.style[key] = obj[key];
+			if (this.isObject(a)) {
+				for (var key in a) {
+					sel.style[key] = a[key];
+				}
+			} else {
+				sel.style[a] = b;
 			}
 		},
 		// Append a specified child element to a parent element

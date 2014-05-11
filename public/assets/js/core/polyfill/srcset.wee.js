@@ -24,27 +24,19 @@ Wee.controller.extend('polyfill', {
 			}
 
 			var val = set.split(','),
-				total = val.length,
+				len = val.length,
 				i = 0;
 
-			for (; i < total; i++) {
-				var options = val[i].match(
-						/^\s*([^\s]+)\s*(\s(\d+)w)?\s*(\s(\d+)h)?\s*(\s(\d+)x)?\s*$/
-					);
+			for (; i < len; i++) {
+				var options = val[i].match(/^\s*([^\s]+)\s*(\s(\d+)w)?\s*(\s(\d+)h)?\s*(\s(\d+)x)?\s*$/),
 					filename = options[1],
 					width = options[3] || false,
 					height = options[5] || false,
 					density = options[7] || 1;
 
-				if (width && width < currWidth) {
-					continue;
-				}
-
-				if (height && height < currHeight) {
-					continue;
-				}
-
-				if (density && density < currDensity) {
+				if ((width && width < currWidth) ||
+					(height && height < currHeight) ||
+					(density && density < currDensity)) {
 					continue;
 				}
 
@@ -62,6 +54,4 @@ Wee.controller.extend('polyfill', {
 	}
 });
 
-Wee.ready(function() {
-	Wee.polyfill.srcset();
-});
+Wee.ready('polyfill:srcset');

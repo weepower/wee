@@ -7,7 +7,7 @@ Wee.controller.create('breakpoints', {
 	val: function() {
 		var w = window,
 			d = document,
-			size = (this.$get('size') || w.getComputedStyle) ?
+			size = this.$get('size') || w.getComputedStyle ?
 				w.getComputedStyle(d.documentElement, null).getPropertyValue('font-family') :
 				(d.documentElement.currentStyle ? d.documentElement.currentStyle['fontFamily'] : null);
 
@@ -49,7 +49,7 @@ Wee.controller.create('breakpoints', {
 					});
 				}
 
-				// Check for breakpoint match initially if requested
+				// Check for current breakpoint match if init = true
 				if (settings.init) {
 					this.$call('listen', true);
 				}

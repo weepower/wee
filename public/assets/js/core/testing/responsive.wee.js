@@ -23,16 +23,14 @@ Wee.controller.extend('testing', {
 
 		if (matches && matches.length > 1 && matches[1].trim() != 'true') {
 			alert('Responsive test mode is disabled in the custom variables.less');
+		} else {
+			this.getBreakpoints();
+			this.addToolbar();
+			this.addCues();
 
-			return;
+			// Set browser dimensions
+			Wee.events.on(window, 'resize', 'testing:setDimensions');
 		}
-
-		this.getBreakpoints();
-		this.addToolbar();
-		this.addCues();
-
-		// Set browser dimensions
-		Wee.events.on(window, 'resize', 'testing:setDimensions');
 	},
 	// Parse variables.less for enabled breakpoints
 	getBreakpoints: function() {
@@ -73,41 +71,49 @@ Wee.controller.extend('testing', {
 		}
 	},
 	addToolbar: function() {
-		var bar = document.createElement('div');
+		var d = document,
+			b = d.body,
+			bar = d.createElement('div');
 
-		bar.className = 'js-testing-bar';
-		document.body.appendChild(bar);
+		Wee.addClass(bar, 'js-testing-bar');
+		b.appendChild(bar);
 
 		Wee.testing.bar = bar;
 
 		// Double-click to close
 		Wee.events.on(bar, 'dblclick', function() {
-			document.body.classList.remove('js-testing-enabled');
-			document.body.classList.add('js-testing-disabled');
+			Wee.addClass(b, 'js-testing-disabled');
+			Wee.removeClass(b, 'js-testing-enabled');
 		});
 
 		this.setDimensions();
 	},
 	addCues: function(showCues) {
 		// Create cue wrapper
-		var cues = document.createElement('div');
+		var w = window,
+			d = document,
+			b = d.body,
+			cues = d.createElement('div');
 
-		cues.className = 'js-testing-cues';
+		Wee.addClass(cues, 'js-testing-cues');
 
 		var resetDisplay = function() {
-			cues.style.display = 'none';
+			Wee.css(cues, 'display', 'none');
 			Wee.testing.setDimensions();
 		};
 
 		// Append cues to wrapper
 		for (var width in Wee.testing.breakpoints) {
 			var label = Wee.testing.breakpoints[width],
-				cue = document.createElement('div');
+				cue = d.createElement('div');
 
-			cue.style.width = width + 'px';
-			cue.style.marginLeft = (width * -0.5) + 'px';
-			cue.style.zIndex = 2000 - width;
-			cue.className = 'js-testing-cue';
+			Wee.css(cue, {
+				'width': width + 'px',
+				'marginLeft': (width * -0.5) + 'px',
+				'zIndex': (2000 - width)
+			});
+
+			Wee.addClass(cue, 'js-testing-cue');
 
 			// Bind mouse events
 			(function(label, width) {
@@ -116,38 +122,37 @@ Wee.controller.extend('testing', {
 				});
 
 				Wee.events.on(cue, 'click', function() {
-					document.body.classList.add('js-testing-enabled');
+					Wee.addClass(b, 'js-testing-enabled');
 
 					if (! Wee.testing.active) {
-						var iframe = document.createElement('iframe');
+						var iframe = d.createElement('iframe');
 
-						iframe.src = document.location.href;
-
-						iframe.style.width = width + 'px';
-						iframe.style.height = window.innerHeight + 'px';
-
+						iframe.src = d.location.href;
 						iframe.id = 'testing-frame';
 
-						// Remove document markup
-						var body = document.body;
+						Wee.css(iframe, {
+							'width': width + 'px',
+							'height': w.innerHeight + 'px'
+						});
 
-						body.innerHTML = '';
+						// Remove document markup
+						b.innerHTML = '';
 
 						Wee.testing.addToolbar();
 						Wee.testing.addCues(true);
 
 						// Append iframe
-						body.appendChild(iframe);
+						b.appendChild(iframe);
 
 						Wee.events.on(iframe, 'load', function() {
-							iframe.contentDocument.body.classList.add('js-testing-disabled');
+							Wee.addClass(iframe.contentDocument.body, 'js-testing-disabled');
 						});
 
 						Wee.testing.active = true;
 					} else {
-						var iframe = window.parent.document.getElementById('testing-frame');
+						var iframe = w.parent.document.getElementById('testing-frame');
 
-						iframe.style.width = width + 'px';
+						Wee.css(iframe, 'width', width + 'px');
 					}
 				});
 			})(label, width);
@@ -164,15 +169,14 @@ Wee.controller.extend('testing', {
 		};
 
 		if (showCues) {
-			cues.style.display = 'block';
-
+			Wee.css(cues, 'display', 'block');
 			escCues();
 		}
 
 		// Bind mouse events
 		Wee.events.on(Wee.testing.bar, 'mouseenter', function() {
 			this.timer = setTimeout(function() {
-				cues.style.display = 'block';
+				Wee.css(cues, 'display', 'block');
 
 				if (! showCues) {
 					escCues();
@@ -189,11 +193,12 @@ Wee.controller.extend('testing', {
 		});
 
 		// Append wrapper to the DOM
-		document.body.appendChild(cues);
+		b.appendChild(cues);
 	},
 	setDimensions: function() {
-		var width = window.innerWidth,
-			height = window.innerHeight;
+		var w = window,
+			width = w.innerWidth,
+			height = w.innerHeight;
 
 		Wee.testing.bar.innerHTML = width + 'x' + height;
 	}

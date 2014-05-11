@@ -34,8 +34,11 @@ footer[role='contentinfo'] {
 // Index
 
 #logo {
-	.size(120px; 40px);
-	.spaced();
+	.opacity(70%);
+	.spaced-block(@blockMarginBottom; 120px; 40px);
+	&:hover {
+		.opaque();
+	}
 }
 .heading {
 	.font-size(2.4);
@@ -51,6 +54,7 @@ footer[role='contentinfo'] {
 	.fill();
 	.spaced(12px);
 	&,
+	&:active,
 	&:hover {
 		.background(transparent);
 	}
