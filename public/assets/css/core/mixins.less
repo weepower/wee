@@ -1442,7 +1442,7 @@
 	.background-position(@x; @y);
 	.background-repeat(@repeat);
 }
-.sprite (retina; @x: 0; @y: 0; @width: @retinaSpriteWidth; @retinaSpriteHeight: auto; @repeat: no-repeat; @filename: @spriteFilename) when (isnumber(@x)) {
+.sprite (retina; @x: 0; @y: 0; @width: @retinaSpriteWidth; @height: @retinaSpriteHeight; @repeat: no-repeat; @filename: @spriteFilename) when (isnumber(@x)) {
 	.background-image(@filename);
 	.background-position(@x; @y);
 	.background-repeat(@repeat);
@@ -1502,8 +1502,14 @@
 .scale (@deg: 1) {
 	.transform(scale(@deg));
 }
-.skew (@x: 45; @y: 0) {
-	.transform(skew(@x, @y));
+.skew (@x: 45; @y: 0) when not (iskeyword(@x)) {
+	.transform(skew(unit(@x, deg), unit(@y, deg)));
+}
+.skew (x; @x: 45) {
+	.transform(skewX(unit(@x, deg)));
+}
+.skew (y; @y: 45) {
+	.transform(skewY(unit(@y, deg)));
 }
 .transform-origin (@x; @y: 0) {
 	.transform(transform-origin(@x, @y));
