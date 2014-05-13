@@ -363,15 +363,7 @@ var Wee = (function(w, d) {
 				el = this.$(el);
 			}
 
-			if (val) {
-				if (el.textContent !== undefined) {
-					el.textContent = val;
-				} else {
-					el.innerText = val;
-				}
-			} else {
-				return el.textContent || el.innerText;
-			}
+			el.innerHTML = val;
 		},
 		// Get matches to a specified selector
 		// Return array of DOM objects

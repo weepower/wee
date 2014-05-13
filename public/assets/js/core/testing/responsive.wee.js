@@ -66,9 +66,11 @@ Wee.controller.extend('testing', {
 					Wee.testing.breakpoints[(match - offset)] = variable[1];
 				}
 			} else {
-				Wee.testing.breakpoints[variable[0]] = variable[1];
+				Wee.testing.breakpoints[(variable[0] - offset)] = variable[1];
 			}
 		}
+
+		Wee.testing.breakpoints[320] = 'Mobile Portait';
 	},
 	addToolbar: function() {
 		var d = document,
@@ -118,7 +120,7 @@ Wee.controller.extend('testing', {
 			// Bind mouse events
 			(function(label, width) {
 				Wee.events.on(cue, 'mouseenter', function() {
-					Wee.testing.bar.innerHTML = label;
+					Wee.text(Wee.testing.bar, label + ' / ' + width + 'px');
 				});
 
 				Wee.events.on(cue, 'click', function() {
@@ -136,7 +138,7 @@ Wee.controller.extend('testing', {
 						});
 
 						// Remove document markup
-						b.innerHTML = '';
+						Wee.html(b, '');
 
 						Wee.testing.addToolbar();
 						Wee.testing.addCues(true);
@@ -200,7 +202,7 @@ Wee.controller.extend('testing', {
 			width = w.innerWidth,
 			height = w.innerHeight;
 
-		Wee.testing.bar.innerHTML = width + 'x' + height;
+		Wee.text(Wee.testing.bar, width + 'x' + height);
 	}
 });
 
