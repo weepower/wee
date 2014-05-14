@@ -396,25 +396,42 @@
 
 // Content
 
-.content (@value: ' '; @font: @baseFont) {
+.content (@value: ' '; @font: false) {
 	content: ~"'@{value}'";
-	.font-family(@font);
+	.toggle () when not (@font = false) {
+		.font-family(@font);
+	}
+	.toggle();
 }
-.prefix (@value: '-'; @margin: .5em; @font: @baseFont) {
+.prefix (@value: '-'; @margin: .5em; @font: false; @color: false) {
 	&:before {
 		.content(@value; @font);
 		.margin(right; @margin);
+		.toggle () when not (@font = false) {
+			.font-family(@font);
+		}
+		.toggle () when not (@color = false) {
+			.color(@color);
+		}
+		.toggle();
 	}
 }
-.suffix (@value: '-'; @margin: .5em; @font: @baseFont) {
+.suffix (@value: '-'; @margin: .5em; @font: false; @color: false) {
 	&:after {
 		.content(@value; @font);
 		.margin(left; @margin);
+		.toggle () when not (@font = false) {
+			.font-family(@font);
+		}
+		.toggle () when not (@color = false) {
+			.color(@color);
+		}
+		.toggle();
 	}
 }
-.bookends (@value: '-'; @margin: .5em; @font: @baseFont) {
-	.prefix(@value; @margin; @font);
-	.suffix(@value; @margin; @font);
+.bookends (@value: '-'; @margin: .5em; @font: false; @color: false) {
+	.prefix(@value; @margin; @font; @color);
+	.suffix(@value; @margin; @font; @color);
 }
 
 // Margin
@@ -1286,7 +1303,7 @@
 	background: ~'@{value}';
 }
 .background (@color: @bodyBackground) when (iscolor(@color)) {
-	.background-color(@color);
+	background: @color;
 }
 .background (@color; @filename) when not (iskeyword(@color)) {
 	background: @color url('@{imagePath}@{filename}');

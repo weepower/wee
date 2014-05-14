@@ -14,12 +14,12 @@ Wee.controller.create('events', {
 				if (events.hasOwnProperty(id)) {
 					var obj = events[id];
 
-					for (var evt in obj) {
-						var fn = obj[evt];
+					for (var key in inst) {
+						var fn = inst[key];
 
-						(evt == 'init') ? Wee.exec(fn, {
+						(key == 'init') ? Wee.exec(fn, {
 							arguments: [el]
-						}) : Wee.events.on(el, evt, fn);
+						}) : Wee.events.on(el, key, fn);
 					}
 				}
 			});
