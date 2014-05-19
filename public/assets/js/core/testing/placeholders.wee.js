@@ -19,12 +19,12 @@ Wee.controller.extend('testing', {
 	},
 	// If placeholders are enabled in variables.less create them
 	setupPlaceholders: function(vars) {
-		var matches = new RegExp('@placeholdersEnabled:(.*?);', 'gi').exec(vars);
+		var matches = new RegExp('^@placeholdersEnabled:(.*?);', 'gi').exec(vars);
 
 		if (matches && matches.length > 1 && matches[1].trim() != 'true') {
 			alert('Placeholders are disabled in the custom variables.less');
 		} else {
-			this.$call('createPlaceholders');
+			this.$private('createPlaceholders');
 		}
 	},
 	// Loop through the placeholders and update the text overlays
@@ -37,11 +37,11 @@ Wee.controller.extend('testing', {
 			var placeholder = placeholders[i],
 				img = placeholder[0],
 				span = placeholder[1],
-				pos = this.$call('getPosition', img),
+				pos = this.$private('getPosition', img),
 				width = img.offsetWidth,
 				height = img.offsetHeight;
 
-			Wee.css(span, {
+			Wee.$css(span, {
 				left: pos[0] + 'px',
 				top: pos[1] + 'px',
 				width: width + 'px',
@@ -49,7 +49,7 @@ Wee.controller.extend('testing', {
 			});
 
 			if (! placeholder[2]) {
-				Wee.html(span, width + 'x' + height);
+				Wee.$html(span, width + 'x' + height);
 			}
 		}
 	}
@@ -73,20 +73,20 @@ Wee.controller.extend('testing', {
 
 				// Apply fluid ratio
 				if (fluid == 'no') {
-					Wee.css(el, {
+					Wee.$css(el, {
 						width: x + 'px',
 						height: y + 'px',
 						paddingTop: 0
 					});
 				} else {
-					Wee.css(el, {
+					Wee.$css(el, {
 						'paddingTop': ((y / x) * 100) + '%'
 					});
 
 					Wee.events.on(window, 'resize', 'testing:updatePlaceholders');
 				}
 
-				Wee.addClass(span, 'js-placeholder-text');
+				Wee.$addClass(span, 'js-placeholder-text');
 
 				// Append placeholder text span
 				d.body.appendChild(span);
@@ -97,7 +97,7 @@ Wee.controller.extend('testing', {
 				setTimeout(function() {
 					// Placeholder text
 					if (title != null) {
-						Wee.text(span, title);
+						Wee.$text(span, title);
 					}
 
 					Wee.testing.updatePlaceholders();

@@ -8,43 +8,27 @@ var Wee = (function(w, d) {
 	return {
 		// Create controller specified name, public object, and optional private object
 		controller: {
-			create: function(name, pub, priv) {
+			make: function(name, pub, priv) {
 				Wee[name] = (function() {
 					var data = {
 							// Private getter and setter methods for controllers
-							$get: function(key, def, opt) {
-								if (_store[name].hasOwnProperty(key)) {
-									return _store[name][key]
-								} else if (def !== undefined) {
-									return (Wee.isFunction(def)) ? def() : (opt ? Wee.exec(def, opt) : def);
-								}
-
-								return null;
+							$get: function(key, def, set, opt) {
+								Wee.$get(name + ':' + key, def, set, opt);
 							},
 							$set: function(key, val, opt) {
-								var set = (Wee.isFunction(val)) ? val() : (opt ? Wee.exec(val, opt) : val);
-								_store[name][key] = set;
-
-								return set;
+								Wee.$set(name + ':' + key, val, opt);
 							},
 							$push: function(key, val) {
-								if (! _store[name].hasOwnProperty(key)) {
-									_store[name][key] = [];
-								}
-
-								_store[name][key].push(val);
-							},
-							$pop: function(key, val) {
-								_store[name][key].pop(val);
+								Wee.$push(name + ':' + key, val);
 							}
 						},
 						// Extend defined public and private objects with data functions
-						Public = Wee.extend(pub, data),
-						Private = Wee.extend(priv, data);
+						Public = Wee.$extend(pub, data),
+						Private = Wee.$extend(priv, data);
 
 					// If private object exists expose the $call function for executing private methods
 					if (priv !== undefined) {
-						Public.$call = function(func) {
+						Public.$private = function(func) {
 							var args = Array.prototype.slice.call(arguments);
 
 							// Bind all additional arguments to the private method call
@@ -58,7 +42,7 @@ var Wee = (function(w, d) {
 						};
 					}
 
-					Private.$call = Public;
+					Private.$public = Public;
 
 					_store[name] = {};
 
@@ -69,16 +53,18 @@ var Wee = (function(w, d) {
 			extend: function(name, pub, priv) {
 				// If named controller exists merge the objects else create the controller
 				if (Wee.hasOwnProperty(name)) {
-					this.create('tMod', pub, priv);
-					Wee.extend(Wee[name], Wee.tMod);
+					this.make('tMod', pub, priv);
+					Wee.$extend(Wee[name], Wee.tMod);
 					delete Wee.tMod;
 				} else {
-					this.create(name, pub, priv);
+					this.make(name, pub, priv);
 				}
 			}
 		},
 		// Get the current environment or detect the current environment against a specified object
-		env: function(obj, def) {
+		// Defaults to 'local'
+		// Returns current environment string
+		$env: function(obj, def) {
 			if (obj) {
 				this.$set('env', function() {
 					var host = location.host;
@@ -96,58 +82,92 @@ var Wee = (function(w, d) {
 			return this.$get('env', 'local');
 		},
 		// Add all meta variables to the data store
-		setVars: function() {
-			Wee.$each('[data-var]', function(el) {
-				var key = Wee.$data(el, 'var'),
-					val = el.getAttribute('content');
-
-				Wee.$set(key, val);
+		$setVars: function() {
+			this.$each('[data-var]', function(el) {
+				Wee.$set(Wee.$data(el, 'var'), Wee.$data(el, 'content'));
 			});
 		},
 		// Get a public variable with an optional fallback
 		// Returns mixed
-		$get: function(key, def, opt) {
-			if (_store.hasOwnProperty(key)) {
-				return _store[key]
+		$get: function(key, def, set, opt) {
+			var split = this._storeData(key),
+				root = split[0],
+				key = split[1];
+
+			if (root.hasOwnProperty(key)) {
+				return root[key]
 			} else if (def !== undefined) {
-				return (Wee.isFunction(def)) ? def() : (opt ? Wee.exec(def, opt) : def);
+				def = (this.$isFunction(def)) ?
+					def() :
+					(opt ? this.$exec(def, opt) : def);
+
+				if (set) {
+					this.$set(key, def);
+				}
+
+				return def;
 			}
 
 			return null;
 		},
 		// Set a public variable
+		// Returns set variable
 		$set: function(key, val, opt) {
-			var set = (Wee.isFunction(val)) ? val() : (opt ? Wee.exec(val, opt) : val);
-			_store[key] = set;
+			var split = this._storeData(key),
+				set = (this.$isFunction(val)) ?
+					val() :
+					(opt ? this.$exec(val, opt) : val);
+				split[0][split[1]] = set;
 
 			return set;
 		},
 		// Push specified value to public array
+		// Returns modified array
 		$push: function(key, val) {
-			if (! _store.hasOwnProperty(key)) {
-				_store[key] = [];
+			var split = this._storeData(key),
+				root = split[0],
+				key = split[1];
+
+			if (! root.hasOwnProperty(key)) {
+				root[key] = [];
 			}
 
-			_store[key].push(val);
+			root[key].push(val);
+
+			return root[key];
 		},
-		// Remove specified value from public array
-		$pop: function(key, val) {
-			_store[key].pop(val);
+		// Determine data storage root and key
+		// Returns array
+		_storeData: function(key) {
+			var root = _store;
+
+			if (key.indexOf(':') !== -1) {
+				var segs = key.split(':');
+				key = segs[0];
+
+				if (! _store.hasOwnProperty(key)) {
+					_store[key] = [];
+				}
+
+				return [_store[key], segs[1]];
+			}
+
+			return [_store, key];
 		},
-		// Execute a specified function or controller call
-		exec: function(fn, opt) {
-			var conf = Wee.extend({
+		// Execute a specified function or controller method
+		$exec: function(fn, opt) {
+			var conf = this.$extend({
 					scope: null,
 					arguments: []
 				}, opt),
-				fns = (this.isArray(fn)) ? fn : [fn],
+				fns = this.$toArray(fn),
 				len = fns.length,
 				i = 0;
 
 			for (; i < len; i++) {
 				var fn = fns[i];
 
-				if (typeof fn === 'string') {
+				if (this.$isString(fn)) {
 					var segs = fn.split(':');
 
 					if (segs.length === 2) {
@@ -156,6 +176,8 @@ var Wee = (function(w, d) {
 						if (conf.scope == null) {
 							conf.scope = Wee[segs[0]];
 						}
+					} else {
+						return false;
 					}
 				}
 
@@ -168,16 +190,16 @@ var Wee = (function(w, d) {
 		},
 		// Determine if the specified argument is an array
 		// Returns boolean
-		isArray: function(obj) {
+		$isArray: function(obj) {
 			return (obj !== undefined && (obj.isArray || (Object.prototype.toString.call(obj) == '[object Array]')));
 		},
 		// Determine if the specified element belongs to the specified array
 		// Returns index else false
-		inArray: function(obj, el) {
+		$inArray: function(obj, el) {
 			var len = obj.length,
 				i = 0;
 
-			for (; i < len; i++) {
+			for (var i = 0; i < obj.length; i++) {
 				if (obj[i] === el) {
 					return i;
 				}
@@ -187,27 +209,29 @@ var Wee = (function(w, d) {
 		},
 		// Push an object into a new array if it isn't one already
 		// Returns array
-		toArray: function(obj) {
-			return this.isArray(obj) ? obj : [obj];
+		$toArray: function(obj) {
+			return this.$isArray(obj) ?
+				obj :
+				[obj];
 		},
 		// Determine if the specified argument is a string
 		// Returns boolean
-		isString: function(obj) {
+		$isString: function(obj) {
 			return (typeof obj === 'string');
 		},
 		// Determine if the specified argument is a function
 		// Returns boolean
-		isFunction: function(obj) {
+		$isFunction: function(obj) {
 			return (obj && {}.toString.call(obj) == '[object Function]');
 		},
 		// Determine if the specified argument is an object
 		// Returns boolean
-		isObject: function(obj) {
+		$isObject: function(obj) {
 			return (obj !== null && typeof obj == 'object');
 		},
 		// Get all the keys from an object
 		// Returns array of key strings
-		getKeys: function(obj) {
+		$getKeys: function(obj) {
 			if (Object.keys) {
 				return Object.keys(obj);
 			} else {
@@ -221,7 +245,7 @@ var Wee = (function(w, d) {
 			}
 		},
 		// Serialize a specified object
-		serialize: function(obj) {
+		$serialize: function(obj) {
 			var str = [];
 
 			for (var key in obj) {
@@ -234,14 +258,16 @@ var Wee = (function(w, d) {
 		},
 		// Extend a specified object with a specified source object
 		// Returns object
-		extend: function(obj, src, deep) {
+		$extend: function(obj, src, deep) {
 			obj = obj || {};
 
 			for (var key in src) {
 				// Attempt to deep nest else set the property of the object
 				if (deep) {
 					try {
-						obj[key] = (this.isObject(obj[key])) ? this.extend(obj[key], src[key]) : src[key];
+						obj[key] = (this.$isObject(obj[key]))
+							? this.$extend(obj[key], src[key]) :
+							src[key];
 					} catch(e) {
 						obj[key] = src[key];
 					}
@@ -254,42 +280,20 @@ var Wee = (function(w, d) {
 		},
 		// Clone a specified object
 		// Returns object
-		clone: function(obj) {
-			var copy = obj;
-
-			// Based on the object type attempt to clone
-			if (obj instanceof Date) {
-				copy = new Date();
-
-				copy.setTime(obj.getTime());
-			} else if (this.isArray(obj)) {
-				copy = [];
-				
-				var len = obj.length,
-					i = 0;
-
-				for (; i < len; i++) {
-					copy[i] = clone(obj[i]);
-				}
-			} else if (this.isObject(obj)) {
-				copy = {};
-
-				for (var key in obj) {
-					if (obj.hasOwnProperty(key)) {
-						copy[key] = this.clone(obj[key]);
-					}
-				}
-			}
-
-			return copy;
+		$clone: function(obj) {
+			return this.$isArray(obj) ?
+				obj.slice() :
+				this.$extend({}, obj);
 		},
 		// Determine if the specified element has a specified class name
-		// Return boolean
-		hasClass: function(el, val) {
-			return (el.classList) ? el.classList.contains(val) : new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className);
+		// Returns boolean
+		$hasClass: function(el, val) {
+			return (el.classList) ?
+				el.classList.contains(val) :
+				new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className);
 		},
 		// Add a specified class name to a specified element
-		addClass: function(el, val) {
+		$addClass: function(el, val) {
 			if (el.classList) {
 				el.classList.add(val);
 			} else {
@@ -306,7 +310,7 @@ var Wee = (function(w, d) {
 			}
 		},
 		// Removes a specified class value from a specified element
-		removeClass: function(el, val) {
+		$removeClass: function(el, val) {
 			if (el.classList) {
 				el.classList.remove(val);
 			} else {
@@ -314,12 +318,10 @@ var Wee = (function(w, d) {
 			}
 		},
 		// Add specified css rules
-		css: function(sel, a, b) {
-			if (typeof sel == 'string') {
-				sel = this.$(sel);
-			}
+		$css: function(sel, a, b) {
+			sel = this.$(sel);
 
-			if (this.isObject(a)) {
+			if (this.$isObject(a)) {
 				for (var key in a) {
 					sel.style[key] = a[key];
 				}
@@ -328,23 +330,21 @@ var Wee = (function(w, d) {
 			}
 		},
 		// Append a specified child element to a parent element
-		append: function(el, child) {
+		$append: function(el, child) {
 			el.appendChild(child);
 		},
 		// Insert a specified element before a specified element
-		before: function(el, html) {
+		$before: function(el, html) {
 			el.insertAdjacentHTML('beforebegin', html);
 		},
 		// Insert a specified element after a specified element
-		after: function(el, html) {
+		$after: function(el, html) {
 			el.insertAdjacentHTML('afterend', html);
 		},
 		// Get the text value of a specified element or selector or set the text with a specified value
-		text: function(el, val) {
+		$text: function(el, val) {
 			// If an element selector is specified get the DOM elements
-			if (typeof el == 'string') {
-				el = this.$(el);
-			}
+			el = this.$(el);
 
 			if (val) {
 				if (el.textContent !== undefined) {
@@ -357,17 +357,17 @@ var Wee = (function(w, d) {
 			}
 		},
 		// Get the HTML value of a specified element or selector or set the HTML with a specified value
-		html: function(el, val) {
+		$html: function(el, val) {
 			// If an element selector is specified get the DOM elements
-			if (typeof el == 'string') {
-				el = this.$(el);
-			}
-
-			el.innerHTML = val;
+			this.$(el).innerHTML = val;
 		},
 		// Get matches to a specified selector
-		// Return array of DOM objects
+		// Returns array of DOM objects
 		$: function(sel, context) {
+			if (! this.$isString(sel)) {
+				return sel;
+			}
+
 			var el = null;
 			context = context || document;
 
@@ -397,7 +397,7 @@ var Wee = (function(w, d) {
 				for (; i < len; i++) {
 					var node = el[i];
 
-					if (this.isObject(node)) {
+					if (this.$isObject(node)) {
 						matches.push(node);
 					}
 				}
@@ -408,7 +408,9 @@ var Wee = (function(w, d) {
 		// Execute a specified function for a specified selector
 		$each: function(sel, fn) {
 			// If an element selector is specified get the DOM elements
-			var el = (typeof sel === 'string') ? Wee.toArray(this.$(sel)) : [sel],
+			var el = (this.$isString(sel)) ?
+					this.$toArray(this.$(sel)) :
+					[sel],
 				len = el.length,
 				i = 0;
 
@@ -419,9 +421,7 @@ var Wee = (function(w, d) {
 		// Get the data value of a specified element or selector or set the data with a specified value
 		$data: function(el, key, val) {
 			// If an element selector is specified get the DOM elements
-			if (typeof el == 'string') {
-				el = this.$(el);
-			}
+			el = this.$(el);
 
 			key = 'data-' + key;
 
@@ -435,24 +435,24 @@ var Wee = (function(w, d) {
 		ready: function(fn) {
 			if (d.addEventListener) {
 				d.addEventListener('DOMContentLoaded', function() {
-					Wee.exec(fn);
+					Wee.$exec(fn);
 				});
 			} else {
 				d.attachEvent('onreadystatechange', function() {
 					if (d.readyState == 'interactive') {
-						Wee.exec(fn);
+						Wee.$exec(fn);
 					}
 				});
 			}
 		},
-		// Toggle the HTML js status class name
+		// Toggle the HTML JavaScript status class name
 		init: function() {
 			var html = d.body.parentNode;
 
-			this.removeClass(html, 'no-js');
-			this.addClass(html, 'js');
+			this.$removeClass(html, 'no-js');
+			this.$addClass(html, 'js');
 
-			this.setVars();
+			this.$setVars();
 		}
 	};
 })(window, document);

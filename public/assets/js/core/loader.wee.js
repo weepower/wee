@@ -2,7 +2,7 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.create('loader', {
+Wee.controller.make('loader', {
 	// Get the currently bound resource root or set the root with a specified value
 	// Returns string
 	root: function(val) {
@@ -12,14 +12,14 @@ Wee.controller.create('loader', {
 	},
 	// Load specified assets with a specified set of options
 	load: function(opt) {
-		var conf = Wee.extend({
+		var conf = Wee.$extend({
+				root: false,
 				files: [],
 				group: false,
 				success: false,
-				failure: false,
-				root: false
+				failure: false
 			}, opt),
-			files = Wee.toArray(conf.files),
+			files = Wee.$toArray(conf.files),
 			root = conf.root || this.root(),
 			len = files.length,
 			i = 0;
@@ -43,13 +43,13 @@ Wee.controller.create('loader', {
 	// When specified references are ready execute a callback
 	ready: function(group, opt, recheck) {
 		if (this.$get(group) === 0) {
-			var conf = Wee.extend({
+			var conf = Wee.$extend({
 					success: false,
 					failure: false
 				}, opt);
 
 			if (conf.success) {
-				Wee.exec(conf.success);
+				Wee.$exec(conf.success);
 			}
 		} else {
 			if (recheck !== false) {

@@ -19,7 +19,7 @@ Wee.controller.extend('testing', {
 	},
 	// If responsive test mode is enabled in variables.less start it
 	setupResponsive: function(vars) {
-		var matches = new RegExp('@responsiveTestMode:(.*?);', 'gi').exec(vars);
+		var matches = new RegExp('^@responsiveTestMode:(.*?);', 'gi').exec(vars);
 
 		if (matches && matches.length > 1 && matches[1].trim() != 'true') {
 			alert('Responsive test mode is disabled in the custom variables.less');
@@ -77,15 +77,15 @@ Wee.controller.extend('testing', {
 			b = d.body,
 			bar = d.createElement('div');
 
-		Wee.addClass(bar, 'js-testing-bar');
+		Wee.$addClass(bar, 'js-testing-bar');
 		b.appendChild(bar);
 
 		Wee.testing.bar = bar;
 
 		// Double-click to close
 		Wee.events.on(bar, 'dblclick', function() {
-			Wee.addClass(b, 'js-testing-disabled');
-			Wee.removeClass(b, 'js-testing-enabled');
+			Wee.$addClass(b, 'js-testing-disabled');
+			Wee.$removeClass(b, 'js-testing-enabled');
 		});
 
 		this.setDimensions();
@@ -97,10 +97,10 @@ Wee.controller.extend('testing', {
 			b = d.body,
 			cues = d.createElement('div');
 
-		Wee.addClass(cues, 'js-testing-cues');
+		Wee.$addClass(cues, 'js-testing-cues');
 
 		var resetDisplay = function() {
-			Wee.css(cues, 'display', 'none');
+			Wee.$css(cues, 'display', 'none');
 			Wee.testing.setDimensions();
 		};
 
@@ -109,22 +109,22 @@ Wee.controller.extend('testing', {
 			var label = Wee.testing.breakpoints[width],
 				cue = d.createElement('div');
 
-			Wee.css(cue, {
+			Wee.$css(cue, {
 				'width': width + 'px',
 				'marginLeft': (width * -0.5) + 'px',
 				'zIndex': (2000 - width)
 			});
 
-			Wee.addClass(cue, 'js-testing-cue');
+			Wee.$addClass(cue, 'js-testing-cue');
 
 			// Bind mouse events
 			(function(label, width) {
 				Wee.events.on(cue, 'mouseenter', function() {
-					Wee.text(Wee.testing.bar, label + ' / ' + width + 'px');
+					Wee.$text(Wee.testing.bar, label + ' / ' + width + 'px');
 				});
 
 				Wee.events.on(cue, 'click', function() {
-					Wee.addClass(b, 'js-testing-enabled');
+					Wee.$addClass(b, 'js-testing-enabled');
 
 					if (! Wee.testing.active) {
 						var iframe = d.createElement('iframe');
@@ -132,13 +132,13 @@ Wee.controller.extend('testing', {
 						iframe.src = d.location.href;
 						iframe.id = 'testing-frame';
 
-						Wee.css(iframe, {
+						Wee.$css(iframe, {
 							'width': width + 'px',
 							'height': w.innerHeight + 'px'
 						});
 
 						// Remove document markup
-						Wee.html(b, '');
+						Wee.$html(b, '');
 
 						Wee.testing.addToolbar();
 						Wee.testing.addCues(true);
@@ -147,14 +147,14 @@ Wee.controller.extend('testing', {
 						b.appendChild(iframe);
 
 						Wee.events.on(iframe, 'load', function() {
-							Wee.addClass(iframe.contentDocument.body, 'js-testing-disabled');
+							Wee.$addClass(iframe.contentDocument.body, 'js-testing-disabled');
 						});
 
 						Wee.testing.active = true;
 					} else {
 						var iframe = w.parent.document.getElementById('testing-frame');
 
-						Wee.css(iframe, 'width', width + 'px');
+						Wee.$css(iframe, 'width', width + 'px');
 					}
 				});
 			})(label, width);
@@ -171,14 +171,14 @@ Wee.controller.extend('testing', {
 		};
 
 		if (showCues) {
-			Wee.css(cues, 'display', 'block');
+			Wee.$css(cues, 'display', 'block');
 			escCues();
 		}
 
 		// Bind mouse events
 		Wee.events.on(Wee.testing.bar, 'mouseenter', function() {
 			this.timer = setTimeout(function() {
-				Wee.css(cues, 'display', 'block');
+				Wee.$css(cues, 'display', 'block');
 
 				if (! showCues) {
 					escCues();
@@ -202,7 +202,7 @@ Wee.controller.extend('testing', {
 			width = w.innerWidth,
 			height = w.innerHeight;
 
-		Wee.text(Wee.testing.bar, width + 'x' + height);
+		Wee.$text(Wee.testing.bar, width + 'x' + height);
 	}
 });
 

@@ -4,32 +4,32 @@ The extensible framework for building responsive web experiences. To read more, 
 
 ## What does that mean?
 
-Wee is a carefully crafted framework built to construct complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does this all without a lot of bloat.
+Wee is a carefully crafted framework built to construct complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does this all with a tiny footprint.
 
-#### Wee's features include:
+#### Features include:
 
-Mobile first CSS framework with reset, foundation, and LESS mixin library
+Mobile-first CSS framework with reset, base, and LESS mixin library
 
 * **Central configuration** for setting every component of your brand's baseline
 * **Feature toggling** for major components to keep your output minimal
 * **Baseline print styling** to format printed pages (optional)
 * **Structured breakpoints** for your responsive projects to keep you organized
-* **Legacy handling** for IE8 to make sure it all works, along with a media query fallback
+* **Legacy handling** for IE8 to make sure everything works, along with a media query fallback
 
 JavaScript toolset to build scalable, well-organized browser functionality
 
 * **Foundation** of utilities, helpers, and module structure
-* **Routing library** to flexibly associate paths to functions
+* **Routing library** to flexibly associate paths to actions
 * **Event binding** to attach functionality to elements
 * **Resource loading** for JavaScript, CSS, and images along with callbacks
 * **Data request and binding** functions
 * **Breakpoint watching** system for efficient media query callbacks
-* **Testing helpers** for responsive interfaces and image placeholders
-* **Polyfill support** for input placeholders and retina images using srcset
+* **Testing helpers** for responsive toolbar and image placeholders
+* **Polyfill support** for input placeholders and conditional images using srcset
 * **Sourcemap output** when building your project with Grunt
 * **Legacy fallback** to patch SVG and REM support in IE8
 
-Structure baseline of markup, icons, and files to serve as a project roadmap
+Structure baseline of markup, icons, and files to serve as a frontend roadmap
 Optional Grunt build process configured through a simple JSON file to compile, optimize, and minify your source
 
 ## Quick Start

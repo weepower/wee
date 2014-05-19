@@ -22,19 +22,19 @@
 		"base": {
 			"enable": true,
 			"features": {
-				"breakpoints": true,
 				"data": true,
 				"events": true,
 				"loader": true,
-				"routes": true
+				"routes": true,
+				"screen": true
 			},
 			"polyfill": {
 				"placeholder": true,
 				"srcset": true
 			},
 			"testing": {
-				"responsive": true,
-				"placeholders": true
+				"placeholders": true,
+				"responsive": true
 			},
 			"legacy": {
 				"enable": true,

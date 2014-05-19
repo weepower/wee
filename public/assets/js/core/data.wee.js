@@ -2,13 +2,13 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.create('data', {
+Wee.controller.make('data', {
 	// Make an Ajax request based on the specified options
 	request: function(opt) {
-		var conf = Wee.extend({
+		var conf = Wee.$extend({
 				url: null,
 				method: 'get',
-				parse: false,
+				json: false,
 				data: {},
 				template: false,
 				scope: null,
@@ -16,28 +16,29 @@ Wee.controller.create('data', {
 				success: false,
 				failure: false
 			}, opt),
-			data = Wee.serialize(conf.data),
+			data = Wee.$serialize(conf.data),
 			x = new XMLHttpRequest();
 
 		x.onreadystatechange = function() {
 			if (x.readyState === 4) {
 				if (x.status >= 200 && x.status < 400) {
 					if (conf.success) {
-						var resp = x.responseText;
+						var resp = orig = x.responseText;
 
 						// Parse the JSON response if specified
-						if (conf.parse || conf.bind) {
-							resp = JSON.parse(resp);
+						if (conf.json || conf.template) {
+							resp = JSON.json(resp);
 						}
 
 						if (conf.template) {
-							resp = Wee.data.bind(conf.template, resp);
+							resp = Wee.data.parse(conf.template, resp);
+							conf.arguments.unshift(orig);
 						}
 
 						conf.arguments.unshift(resp);
 
 						// Execute the success callback if specified
-						Wee.exec(conf.success, {
+						Wee.$exec(conf.success, {
 							arguments: conf.arguments,
 							scope: conf.scope
 						});
@@ -46,7 +47,7 @@ Wee.controller.create('data', {
 					}
 				} else {
 					if (conf.failure) {
-						Wee.exec(conf.failure, {
+						Wee.$exec(conf.failure, {
 							scope: conf.scope
 						});
 					}
@@ -66,8 +67,8 @@ Wee.controller.create('data', {
 			x.send(null);
 		}
 	},
-	// Bind specified data to a specified template string
-	bind: function(str, obj) {
+	// Parse specified data to a specified template string
+	parse: function(str, obj) {
 		obj = obj || {};
 
 		return str.replace(/{{([^}]*)}}/g, function(str, match) {

@@ -2,9 +2,9 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.create('breakpoints', {
-	// Get the current breakpoint value
-	val: function() {
+Wee.controller.make('screen', {
+	// Get the current screen value
+	size: function() {
 		var w = window,
 			d = document,
 			size = this.$get('size') || w.getComputedStyle ?
@@ -13,9 +13,9 @@ Wee.controller.create('breakpoints', {
 
 		return parseInt(size.replace(/\D/g, ''), 10);
 	},
-	// Bind a single or set of breakpoint events with specified options
-	watch: function(set) {
-		var sets = Wee.toArray(set),
+	// Bind a single or set of screen events with specified options
+	map: function(set) {
+		var sets = Wee.$toArray(set),
 			len = sets.length,
 			i = 0;
 
@@ -43,28 +43,28 @@ Wee.controller.create('breakpoints', {
 
 					// Watch the widow resize event for breakpoint changes
 					Wee.events.on(window, 'resize', function() {
-						this.$call('listen', false);
+						this.$private('listen', false);
 					}, {
 						scope: this
 					});
 				}
 
-				// Check for current breakpoint match if init = true
+				// Check for current screen match if init = true
 				if (settings.init) {
-					this.$call('listen', true);
+					this.$private('listen', true);
 				}
 			}
 		}
 	}
 }, {
 	listen: function(init) {
-		var size = Wee.breakpoints.val(),
-			prev = Wee.breakpoints.$get('size'),
+		var size = Wee.screen.val(),
+			prev = Wee.screen.$get('size'),
 			init = init || false;
 
 		// If a breakpoint has been hit or resize logic initialized
-		if (size != prev || init) {
-			var events = Wee.breakpoints.$get('events'),
+		if (size !== prev || init) {
+			var events = Wee.screen.$get('events'),
 				events = init ? [(events[events.length - 1])] : events,
 				len = events.length,
 				i = 0;
@@ -77,7 +77,7 @@ Wee.controller.create('breakpoints', {
 					(evt.size && evt.size === size) ||
 					(evt.min !== false && size >= evt.min && (init || prev < evt.min) && (evt.max === false || size <= evt.max)) ||
 					(evt.max !== false && size <= evt.max && (init || prev > evt.max) && (evt.min === false || size >= evt.min))) {
-					Wee.exec(evt.callback, {
+					Wee.$exec(evt.callback, {
 						arguments: [{
 							dir: (size > prev) ? 1 : 0,
 							size: size,
@@ -88,8 +88,8 @@ Wee.controller.create('breakpoints', {
 				}
 			}
 
-			// Cache the updated breakpoint value
-			Wee.breakpoints.$set('size', size);
+			// Cache the updated screen value
+			Wee.screen.$set('size', size);
 		}
 	}
 });

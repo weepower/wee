@@ -2,7 +2,7 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.create('routes', {
+Wee.controller.make('routes', {
 	// Get the currently bound path or set the path with a specified value
 	// Returns string
 	path: function(val) {
@@ -12,13 +12,14 @@ Wee.controller.create('routes', {
 	},
 	// Add route endpoints to the route storage
 	map: function(routes) {
-		this.$set('routes', Wee.extend(this.$get('routes', {}), routes));
+		this.$set('routes', Wee.$extend(this.$get('routes', {}), routes));
 	},
 	// Get the segments from an optionally specified path
 	// Defaults to currently bound path
 	// Returns array of segment strings
-	segments: function(path) {
-		return Wee.toArray((path || this.path()).split('/'));
+	segments: function(path, index) {
+		var segs = Wee.$toArray((path || this.path()).split('/'));
+		return index ? segs[index] : segs;
 	},
 	// Process the stored route options against an optionally specified path
 	// Defaults to current path
@@ -30,13 +31,13 @@ Wee.controller.create('routes', {
 		}
 
 		if (routes) {
-			this.$call('process', routes, 0, (this.$set('segs', 'routes:segments', {})).length, []);
+			this.$private('process', routes, 0, (this.$set('segs', 'routes:segments', {})).length, []);
 
 			// Execute queued init functions on last iteration
 			var inits = this.$get('init');
 
 			for (var i = 0; i < inits.length; i++) {
-				Wee.exec(inits[i], {
+				Wee.$exec(inits[i], {
 					arguments: this.$get('params')
 				});
 			}
@@ -54,7 +55,7 @@ Wee.controller.create('routes', {
 
 		// Execute deepest index function if function exists
 		if (! seg && route.hasOwnProperty('index')) {
-			Wee.exec(route['index'], {
+			Wee.$exec(route['index'], {
 				arguments: this.$get('params')
 			});
 		}
@@ -92,11 +93,11 @@ Wee.controller.create('routes', {
 	exec: function(obj, i, total) {
 		var params = this.$get('params');
 
-		if (Wee.isFunction(obj)) {
+		if (Wee.$isFunction(obj)) {
 			params.length ? obj.apply(null, params) : obj();
 		} else {
-			if (typeof obj === 'string' || Wee.isArray(obj)) {
-				Wee.exec(obj, {
+			if (typeof obj === 'string' || Wee.$isArray(obj)) {
+				Wee.$exec(obj, {
 					arguments: params
 				});
 			} else {
@@ -108,7 +109,7 @@ Wee.controller.create('routes', {
 	// Returns array of pattern strings
 	patterns: function(route) {
 		var arr = [],
-			keys = Wee.getKeys(route),
+			keys = Wee.$getKeys(route),
 			i = 0;
 
 		for (; i < keys.length; i++) {

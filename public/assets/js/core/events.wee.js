@@ -2,7 +2,15 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.create('events', {
+Wee.controller.make('events', {
+	// Add bindings to the bound object
+	map: function(events, init) {
+		this.$set('bound', Wee.$extend(this.$get('bound', {}), events));
+
+		if (init) {
+			this.bind();
+		}
+	},
 	// Traverse the DOM for all available bindings
 	bind: function() {
 		var events = this.$get('bound');
@@ -17,7 +25,7 @@ Wee.controller.create('events', {
 					for (var key in inst) {
 						var fn = inst[key];
 
-						(key == 'init') ? Wee.exec(fn, {
+						(key == 'init') ? Wee.$exec(fn, {
 							arguments: [el]
 						}) : Wee.events.on(el, key, fn);
 					}
@@ -25,24 +33,30 @@ Wee.controller.create('events', {
 			});
 		}
 	},
-	// Add bindings to the bound object
-	map: function(events, init) {
-		this.$set('bound', Wee.extend(this.$get('bound', {}), events));
+	// Remove binding by optional name and trigger
+	// Removes all events if no parameters are set
+	unbind: function(name, evt) {
+		var sel = '[data-bind' + (name ? '="' +  + '"]' : ']');
 
-		if (init) {
-			this.bind();
-		}
+		Wee.$each(sel, function(el) {
+			Wee.events.off(el, evt);
+			// TODO: fix
+		});
+	},
+	// Execute a specific event by name and optional trigger
+	fire: function(name, evt) {
+		// TODO: build
 	},
 	// Bind a specified function to a specified selector and event
 	on: function(sel, evt, fn, opt) {
-		var conf = Wee.extend({
+		var conf = Wee.$extend({
 				scope: null,
 				arguments: []
 			}, opt);
 
 		// For each element attach the event
 		Wee.$each(sel, function(el) {
-			var obj = Wee.extend({}, conf);
+			var obj = Wee.$extend({}, conf);
 			obj.arguments = [0, el];
 
 			if (evt == 'mouseenter' || evt == 'mouseleave') {
@@ -54,10 +68,10 @@ Wee.controller.create('events', {
 
 			el.attachEvent ? el.attachEvent('on' + evt, function(e) {
 				obj.arguments[0] = e;
-				Wee.exec(fn, obj);
+				Wee.$exec(fn, obj);
 			}) : el.addEventListener(evt, function(e) {
 				obj.arguments[0] = e;
-				Wee.exec(fn, obj);
+				Wee.$exec(fn, obj);
 			}, false);
 		});
 	},
@@ -65,9 +79,9 @@ Wee.controller.create('events', {
 	off: function(sel, evt, fn) {
 		Wee.$each(sel, function(el) {
 			el.attachEvent ? el.detachEvent('on' + evt, function() {
-				Wee.exec(fn);
+				Wee.$exec(fn);
 			}) : el.removeEventListener(evt, function() {
-				Wee.exec(fn);
+				Wee.$exec(fn);
 			}, false);
 		});
 	},
@@ -79,7 +93,7 @@ Wee.controller.create('events', {
 			return;
 		}
 
-		Wee.exec(fn);
+		Wee.$exec(fn);
 	},
 	// Compare a parent element to a child element
 	checkParent: function(parent, child) {
