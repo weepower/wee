@@ -20,14 +20,18 @@ Wee.controller.make('events', {
 				var id = Wee.$data(el, 'bind');
 
 				if (events.hasOwnProperty(id)) {
-					var obj = events[id];
+					var inst = events[id];
 
 					for (var key in inst) {
 						var fn = inst[key];
 
-						(key == 'init') ? Wee.$exec(fn, {
-							arguments: [el]
-						}) : Wee.events.on(el, key, fn);
+						(key == 'init') ?
+							Wee.$exec(fn, {
+								arguments: [el]
+							}) :
+							Wee.events.on(el, {
+								key: fn
+							});
 					}
 				}
 			});
@@ -45,44 +49,57 @@ Wee.controller.make('events', {
 	},
 	// Execute a specific event by name and optional trigger
 	fire: function(name, evt) {
-		// TODO: build
+		var events = this.$get('bound');
+
+		if (events.hasOwnProperty(name)) {
+			if (events[name].hasOwnProperty(evt)) {
+				Wee.$exec(events[name][evt]);
+			}
+		}
 	},
 	// Bind a specified function to a specified selector and event
-	on: function(sel, evt, fn, opt) {
-		var conf = Wee.$extend({
-				scope: null,
-				arguments: []
-			}, opt);
+	on: function(sel, evts, opt) {
+		// TODO: Loop each around for
+		for (var evt in evts) {
+			// For each element attach the event
+			Wee.$each(sel, function(el) {
+				var conf = Wee.$extend({
+						scope: null,
+						arguments: []
+					}, opt),
+					fn = evts[evt];
 
-		// For each element attach the event
-		Wee.$each(sel, function(el) {
-			var obj = Wee.$extend({}, conf);
-			obj.arguments = [0, el];
+				if (evt == 'mouseenter' || evt == 'mouseleave') {
+					conf.arguments.unshift(fn);
 
-			if (evt == 'mouseenter' || evt == 'mouseleave') {
-				obj.arguments.push(fn);
+					fn = 'events:mouseEvent';
+					evt = (evt == 'mouseenter') ? 'mouseover' : 'mouseout';
+				}
 
-				fn = 'events:mouseEvent';
-				evt = (evt == 'mouseenter') ? 'mouseover' : 'mouseout';
-			}
+				conf.arguments.unshift(0, el);
 
-			el.attachEvent ? el.attachEvent('on' + evt, function(e) {
-				obj.arguments[0] = e;
-				Wee.$exec(fn, obj);
-			}) : el.addEventListener(evt, function(e) {
-				obj.arguments[0] = e;
-				Wee.$exec(fn, obj);
-			}, false);
-		});
+				el.attachEvent ?
+					el.attachEvent('on' + evt, function(e) {
+						conf.arguments[0] = e;
+						Wee.$exec(fn, conf);
+					}) :
+					el.addEventListener(evt, function(e) {
+						conf.arguments[0] = e;
+						Wee.$exec(fn, conf);
+					}, false);
+			});
+		}
 	},
 	// Remove a bound event function from a specified selector
 	off: function(sel, evt, fn) {
 		Wee.$each(sel, function(el) {
-			el.attachEvent ? el.detachEvent('on' + evt, function() {
-				Wee.$exec(fn);
-			}) : el.removeEventListener(evt, function() {
-				Wee.$exec(fn);
-			}, false);
+			el.attachEvent ?
+				el.detachEvent('on' + evt, function() {
+					Wee.$exec(fn);
+				}) :
+				el.removeEventListener(evt, function() {
+					Wee.$exec(fn);
+				}, false);
 		});
 	},
 	// Ensure the mouse has actually entered or left the root element before firing the event

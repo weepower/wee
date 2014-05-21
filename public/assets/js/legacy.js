@@ -5,7 +5,7 @@
 
 var Wee = Wee || {};
 
-Wee.legacy = (function(d, w) {
+Wee.legacy = (function(w, d) {
 
 	var Utils = {
 		// Get the CSS for parsing
@@ -17,7 +17,9 @@ Wee.legacy = (function(d, w) {
 					fn(x.responseText);
 				};
 			} else {
-				var x = w.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+				var x = w.XMLHttpRequest ?
+					new XMLHttpRequest() :
+					new ActiveXObject('Microsoft.XMLHTTP');
 
 				x.onreadystatechange = function() {
 					if (x.readyState == 4 && x.status == 200) {
@@ -130,7 +132,9 @@ Wee.legacy = (function(d, w) {
 				if (ext == 'svg') {
 					var fallback = img.getAttribute('data-fallback');
 
-					img.src = (fallback != null) ? fallback : img.src.slice(0, -3) + 'png';
+					img.src = (fallback != null) ?
+						fallback :
+						img.src.slice(0, -3) + 'png';
 				}
 			}
 
@@ -162,7 +166,7 @@ Wee.legacy = (function(d, w) {
 	};
 
 	return Public;
-})(document, window);
+})(window, document);
 
 window.attachEvent('onload', function() {
 	Wee.legacy.remSupport();

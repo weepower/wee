@@ -13,13 +13,13 @@ var Wee = (function(w, d) {
 					var data = {
 							// Private getter and setter methods for controllers
 							$get: function(key, def, set, opt) {
-								Wee.$get(name + ':' + key, def, set, opt);
+								return Wee.$get(name + ':' + key, def, set, opt);
 							},
 							$set: function(key, val, opt) {
-								Wee.$set(name + ':' + key, val, opt);
+								return Wee.$set(name + ':' + key, val, opt);
 							},
 							$push: function(key, val) {
-								Wee.$push(name + ':' + key, val);
+								return Wee.$push(name + ':' + key, val);
 							}
 						},
 						// Extend defined public and private objects with data functions
@@ -139,8 +139,6 @@ var Wee = (function(w, d) {
 		// Determine data storage root and key
 		// Returns array
 		_storeData: function(key) {
-			var root = _store;
-
 			if (key.indexOf(':') !== -1) {
 				var segs = key.split(':');
 				key = segs[0];

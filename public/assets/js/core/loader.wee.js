@@ -13,11 +13,11 @@ Wee.controller.make('loader', {
 	// Load specified assets with a specified set of options
 	load: function(opt) {
 		var conf = Wee.$extend({
-				root: false,
+				failure: false,
 				files: [],
 				group: false,
-				success: false,
-				failure: false
+				root: false,
+				success: false
 			}, opt),
 			files = Wee.$toArray(conf.files),
 			root = conf.root || this.root(),

@@ -6,15 +6,15 @@ Wee.controller.make('data', {
 	// Make an Ajax request based on the specified options
 	request: function(opt) {
 		var conf = Wee.$extend({
-				url: null,
-				method: 'get',
-				json: false,
-				data: {},
-				template: false,
-				scope: null,
 				arguments: [],
+				data: {},
+				failure: false,
+				json: false,
+				method: 'get',
+				scope: null,
 				success: false,
-				failure: false
+				template: false,
+				url: null
 			}, opt),
 			data = Wee.$serialize(conf.data),
 			x = new XMLHttpRequest();
@@ -27,7 +27,11 @@ Wee.controller.make('data', {
 
 						// Parse the JSON response if specified
 						if (conf.json || conf.template) {
-							resp = JSON.json(resp);
+							try {
+								resp = JSON.parse(resp);
+							} catch (e) {
+								resp = {};
+							}
 						}
 
 						if (conf.template) {

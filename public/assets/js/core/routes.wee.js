@@ -8,22 +8,26 @@ Wee.controller.make('routes', {
 	path: function(val) {
 		return val ?
 			this.$set('path', val) :
-			this.$get('path', window.location.pathname.replace(/^\/|\/$/g, ''));
+			this.$get('path', window.location.pathname);
 	},
 	// Add route endpoints to the route storage
-	map: function(routes) {
+	map: function(routes, init) {
 		this.$set('routes', Wee.$extend(this.$get('routes', {}), routes));
+
+		if (init) {
+			this.run();
+		}
 	},
 	// Get the segments from an optionally specified path
 	// Defaults to currently bound path
-	// Returns array of segment strings
-	segments: function(path, index) {
-		var segs = Wee.$toArray((path || this.path()).split('/'));
-		return index ? segs[index] : segs;
+	// Returns array of segment strings or string if index specified
+	segments: function(i) {
+		var segs = Wee.$toArray(this.path().replace(/^\/|\/$/g, '').split('/'));
+		return (i !== undefined) ? (segs[i] || '') : segs;
 	},
 	// Process the stored route options against an optionally specified path
 	// Defaults to current path
-	run: function(path) {
+	run: function(path, reverse) {
 		var routes = this.$get('routes');
 
 		if (path) {
@@ -31,15 +35,19 @@ Wee.controller.make('routes', {
 		}
 
 		if (routes) {
-			this.$private('process', routes, 0, (this.$set('segs', 'routes:segments', {})).length, []);
+			this.$private('process', routes, 0, (this.$set('segs', 'routes:segments', {})).length);
 
 			// Execute queued init functions on last iteration
-			var inits = this.$get('init');
+			var any = this.$get('any');
 
-			for (var i = 0; i < inits.length; i++) {
-				Wee.$exec(inits[i], {
-					arguments: this.$get('params')
-				});
+			if (any) {
+				if (reverse) {
+					any.reverse();
+				}
+
+				for (var i = 0; i < any.length; i++) {
+					Wee.$exec(any[i]);
+				}
 			}
 		}
 	}
@@ -47,79 +55,66 @@ Wee.controller.make('routes', {
 	// Recursive method to process routes
 	process: function(route, i, total) {
 		var seg = this.$get('segs')[i],
-			patterns = this.patterns(route),
+			keys = Wee.$getKeys(route),
 			x = 0;
 			i++;
 
-		var last = (i === total);
+		// Match against patterns
+		for (; x < keys.length; x++) {
+			var key = keys[x],
+				opts = key.split('||'),
+				match = false,
+				len = opts.length,
+				k = 0;
 
-		// Execute deepest index function if function exists
-		if (! seg && route.hasOwnProperty('index')) {
-			Wee.$exec(route['index'], {
-				arguments: this.$get('params')
-			});
-		}
+			for (; k < len; k++) {
+				var opt = opts[k],
+					child = route[key];
 
-		// If the segment exists in the route object
-		if (route.hasOwnProperty(seg)) {
-			last = this.exec(route[seg], i, total);
-		}
-
-		// Match against preset patterns :num and :any
-		for (; x < patterns.length; x++) {
-			var pattern = patterns[x],
-				match = false;
-
-			if (pattern == ':num') {
-				if (! isNaN(seg) && seg.trim() !== '') {
+				if (opt == seg) {
 					match = true;
+				} else if (opt.substring(0, 1) == '$') {
+					// If the second character is a / then test regex
+					if (opt.substring(1, 2) == '/') {
+						var reg = new RegExp(opt.substring(2).slice(0,-1));
+
+						if (reg.test(seg)) {
+							match = true;
+						}
+					} else {
+						switch (opt) {
+							case '$any':
+								this.$push('any', child);
+								break;
+							case '$root':
+								if (! seg) {
+									Wee.$exec(child, {
+										arguments: [Wee.routes.segments(i - 2)]
+									});
+								}
+								break;
+							case '$num':
+								if (! isNaN(seg) && seg.trim() != '') {
+									match = true;
+								}
+								break;
+							default:
+								if (seg) {
+									match = true;
+								}
+						}
+					}
 				}
-			} else if (seg) {
-				match = true;
-			}
 
-			if (match) {
-				this.$push('params', seg);
-				this.exec(route[pattern], i, total);
-			}
-		}
-
-		// Add to init queue if function exists
-		if (route.hasOwnProperty('init')) {
-			this.$push('init', route['init']);
-		}
-	},
-	// Execute the endpoint else continue the process recursion
-	exec: function(obj, i, total) {
-		var params = this.$get('params');
-
-		if (Wee.$isFunction(obj)) {
-			params.length ? obj.apply(null, params) : obj();
-		} else {
-			if (typeof obj === 'string' || Wee.$isArray(obj)) {
-				Wee.$exec(obj, {
-					arguments: params
-				});
-			} else {
-				this.process(obj, i, total);
+				// If matched execute or process recursively
+				if (match) {
+					Wee.$isObject(child) ?
+						this.process(child, i, total) :
+						Wee.$exec(child, {
+							arguments: [seg]
+						});
+				}
 			}
 		}
-	},
-	// Check for route pattern matches against a specified route
-	// Returns array of pattern strings
-	patterns: function(route) {
-		var arr = [],
-			keys = Wee.$getKeys(route),
-			i = 0;
-
-		for (; i < keys.length; i++) {
-			var key = keys[i];
-
-			if (key.substring(0, 1) == ':') {
-				arr.push(key);
-			}
-		}
-
-		return arr;
 	}
 });

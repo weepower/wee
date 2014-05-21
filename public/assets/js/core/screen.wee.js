@@ -42,8 +42,10 @@ Wee.controller.make('screen', {
 					this.$set('events', [settings]);
 
 					// Watch the widow resize event for breakpoint changes
-					Wee.events.on(window, 'resize', function() {
-						this.$private('listen', false);
+					Wee.events.on(window, {
+						resize: function() {
+							this.$private('listen', false);
+						}
 					}, {
 						scope: this
 					});
@@ -58,19 +60,19 @@ Wee.controller.make('screen', {
 	}
 }, {
 	listen: function(init) {
-		var size = Wee.screen.val(),
+		var size = Wee.screen.size(),
 			prev = Wee.screen.$get('size'),
 			init = init || false;
 
 		// If a breakpoint has been hit or resize logic initialized
 		if (size !== prev || init) {
-			var events = Wee.screen.$get('events'),
-				events = init ? [(events[events.length - 1])] : events,
-				len = events.length,
+			var evts = Wee.screen.$get('events'),
+				evts = init ? [(evts[evts.length - 1])] : evts,
+				len = evts.length,
 				i = 0;
 
 			for (; i < len; i++) {
-				var evt = events[i];
+				var evt = evts[i];
 
 				// Check for match against settings
 				if ((! evt.size && ! evt.min && ! evt.max) ||
@@ -79,7 +81,7 @@ Wee.controller.make('screen', {
 					(evt.max !== false && size <= evt.max && (init || prev > evt.max) && (evt.min === false || size >= evt.min))) {
 					Wee.$exec(evt.callback, {
 						arguments: [{
-							dir: (size > prev) ? 1 : 0,
+							dir: init ? 0 : ((size > prev) ? 1 : -1),
 							size: size,
 							prev: prev,
 							init: init

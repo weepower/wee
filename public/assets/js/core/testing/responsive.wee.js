@@ -29,7 +29,9 @@ Wee.controller.extend('testing', {
 			this.addCues();
 
 			// Set browser dimensions
-			Wee.events.on(window, 'resize', 'testing:setDimensions');
+			Wee.events.on(window, {
+				resize: 'testing:setDimensions'
+			});
 		}
 	},
 	// Parse variables.less for enabled breakpoints
@@ -83,9 +85,11 @@ Wee.controller.extend('testing', {
 		Wee.testing.bar = bar;
 
 		// Double-click to close
-		Wee.events.on(bar, 'dblclick', function() {
-			Wee.$addClass(b, 'js-testing-disabled');
-			Wee.$removeClass(b, 'js-testing-enabled');
+		Wee.events.on(bar, {
+			dblclick: function() {
+				Wee.$addClass(b, 'js-testing-disabled');
+				Wee.$removeClass(b, 'js-testing-enabled');
+			}
 		});
 
 		this.setDimensions();
@@ -119,42 +123,46 @@ Wee.controller.extend('testing', {
 
 			// Bind mouse events
 			(function(label, width) {
-				Wee.events.on(cue, 'mouseenter', function() {
-					Wee.$text(Wee.testing.bar, label + ' / ' + width + 'px');
+				Wee.events.on(cue, {
+					mouseenter: function() {
+						Wee.$text(Wee.testing.bar, label + ' / ' + width + 'px');
+					}
 				});
 
-				Wee.events.on(cue, 'click', function() {
-					Wee.$addClass(b, 'js-testing-enabled');
+				Wee.events.on(cue, {
+					click: function() {
+						Wee.$addClass(b, 'js-testing-enabled');
 
-					if (! Wee.testing.active) {
-						var iframe = d.createElement('iframe');
+						if (! Wee.testing.active) {
+							var iframe = d.createElement('iframe');
 
-						iframe.src = d.location.href;
-						iframe.id = 'testing-frame';
+							iframe.src = d.location.href;
+							iframe.id = 'testing-frame';
 
-						Wee.$css(iframe, {
-							'width': width + 'px',
-							'height': w.innerHeight + 'px'
-						});
+							Wee.$css(iframe, {
+								'width': width + 'px',
+								'height': w.innerHeight + 'px'
+							});
 
-						// Remove document markup
-						Wee.$html(b, '');
+							// Remove document markup
+							Wee.$html(b, '');
 
-						Wee.testing.addToolbar();
-						Wee.testing.addCues(true);
+							Wee.testing.addToolbar();
+							Wee.testing.addCues(true);
 
-						// Append iframe
-						b.appendChild(iframe);
+							// Append iframe
+							b.appendChild(iframe);
 
-						Wee.events.on(iframe, 'load', function() {
-							Wee.$addClass(iframe.contentDocument.body, 'js-testing-disabled');
-						});
+							Wee.events.on(iframe, 'load', function() {
+								Wee.$addClass(iframe.contentDocument.body, 'js-testing-disabled');
+							});
 
-						Wee.testing.active = true;
-					} else {
-						var iframe = w.parent.document.getElementById('testing-frame');
+							Wee.testing.active = true;
+						} else {
+							var iframe = w.parent.document.getElementById('testing-frame');
 
-						Wee.$css(iframe, 'width', width + 'px');
+							Wee.$css(iframe, 'width', width + 'px');
+						}
 					}
 				});
 			})(label, width);
@@ -163,9 +171,11 @@ Wee.controller.extend('testing', {
 		}
 
 		var escCues = function() {
-			Wee.events.on(document, 'keyup', function(e) {
-				if (e.keyCode == 27) {
-					resetDisplay();
+			Wee.events.on(document, {
+				keyup: function(e) {
+					if (e.keyCode == 27) {
+						resetDisplay();
+					}
 				}
 			});
 		};
@@ -176,22 +186,28 @@ Wee.controller.extend('testing', {
 		}
 
 		// Bind mouse events
-		Wee.events.on(Wee.testing.bar, 'mouseenter', function() {
-			this.timer = setTimeout(function() {
-				Wee.$css(cues, 'display', 'block');
+		Wee.events.on(Wee.testing.bar, {
+			mouseenter: function() {
+				this.timer = setTimeout(function() {
+					Wee.$css(cues, 'display', 'block');
 
-				if (! showCues) {
-					escCues();
-				}
-			}, 500);
+					if (! showCues) {
+						escCues();
+					}
+				}, 500);
+			}
 		});
 
-		Wee.events.on(Wee.testing.bar, 'mouseleave', function() {
-			clearTimeout(this.timer);
+		Wee.events.on(Wee.testing.bar, {
+			mouseleave: function() {
+				clearTimeout(this.timer);
+			}
 		});
 
-		Wee.events.on(cues, 'mouseleave', function() {
-			resetDisplay();
+		Wee.events.on(cues, {
+			mouseleave: function() {
+				resetDisplay();
+			}
 		});
 
 		// Append wrapper to the DOM

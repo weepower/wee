@@ -244,41 +244,49 @@ module.exports = function(grunt) {
 		var buildScripts = [];
 
 		if (config.script.base.enable) {
+			var features = config.script.base.features,
+				polyfill = config.script.base.polyfill,
+				testing = config.script.base.testing;
+
 			buildScripts.push(scriptRoot + '/core/base.wee.js');
 
-			if (config.script.base.features.data) {
+			if (features.data) {
 				buildScripts.push(scriptRoot + '/core/data.wee.js');
 			}
 
-			if (config.script.base.features.events) {
+			if (features.events) {
 				buildScripts.push(scriptRoot + '/core/events.wee.js');
 			}
 
-			if (config.script.base.features.breakpoints) {
-				buildScripts.push(scriptRoot + '/core/breakpoints.wee.js');
+			if (features.screen) {
+				if (! features.events) {
+					grunt.log.error('Event script required for screen functions');
+				}
+
+				buildScripts.push(scriptRoot + '/core/screen.wee.js');
 			}
 
-			if (config.script.base.features.loader) {
+			if (features.loader) {
 				buildScripts.push(scriptRoot + '/core/loader.wee.js');
 			}
 
-			if (config.script.base.features.routes) {
+			if (features.routes) {
 				buildScripts.push(scriptRoot + '/core/routes.wee.js');
 			}
 
-			if (config.script.base.polyfill.placeholder) {
+			if (polyfill.placeholder) {
 				buildScripts.push(scriptRoot + '/core/polyfill/placeholder.wee.js');
 			}
 
-			if (config.script.base.polyfill.srcset) {
+			if (polyfill.srcset) {
 				buildScripts.push(scriptRoot + '/core/polyfill/srcset.wee.js');
 			}
 
-			if (config.script.base.testing.placeholders) {
+			if (testing.placeholders) {
 				buildScripts.push(scriptRoot + '/core/testing/placeholders.wee.js');
 			}
 
-			if (config.script.base.testing.responsive) {
+			if (testing.responsive) {
 				buildScripts.push(scriptRoot + '/core/testing/responsive.wee.js');
 			}
 		}

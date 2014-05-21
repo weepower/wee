@@ -28,6 +28,7 @@ Options +FollowSymLinks -MultiViews -Indexes
 #RewriteRule ^index\.html/(.+) http://%{HTTP_HOST}/$1 [R=301,L,QSA]
 
 # Remove trailing slash
+#RewriteCond %{REQUEST_FILENAME} !-d
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteRule ^(.+)/$ /$1 [R=301,L,QSA]
 
