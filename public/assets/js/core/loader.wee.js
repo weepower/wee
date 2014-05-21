@@ -37,7 +37,7 @@ Wee.controller.make('loader', {
 
 		// Request each specified file
 		for (; i < len; i++) {
-			this.$call('request', (root + files[i]), conf.group, conf.success, conf.failure);
+			this.$private('request', (root + files[i]), conf.group, conf.success, conf.failure);
 		}
 	},
 	// When specified references are ready execute a callback
@@ -84,7 +84,7 @@ Wee.controller.make('loader', {
 				scope.loaded(group);
 
 				if (success) {
-					scope.$call.ready(group, {
+					scope.$public.ready(group, {
 						success: success
 					}, false);
 				}
