@@ -363,9 +363,13 @@ module.exports = function(grunt) {
 
 		// Source map support
 
-		if (config.testing.sourceMaps.css == true)
-		{
-			var relativePath = '/' + config.paths.assets.root + '/' + config.paths.assets.css + '/maps/';
+		if (config.testing.sourceMaps.css == true) {
+			var relativePath = config.stylePath + '/maps/';
+
+			// Clear existing source map files
+			fs.readdirSync(relativePath).forEach(function(file) {
+				fs.unlinkSync(relativePath + file);
+			});
 
 			grunt.config.set('less.options.sourceMap', true);
 			grunt.config.set('less.options.sourceMapFilename', config.stylePath + '/maps/source.css.map');
@@ -375,15 +379,20 @@ module.exports = function(grunt) {
 			});
 		}
 
-		if (config.testing.sourceMaps.js == true)
-		{
-			var path = require('path');
+		if (config.testing.sourceMaps.js == true) {
+			var path = require('path'),
+				relativePath = config.scriptPath + '/maps/';
+
+			// Clear existing source map files
+			fs.readdirSync(relativePath).forEach(function(file) {
+				fs.unlinkSync(relativePath + file);
+			});
 
 			grunt.config.set('uglify.options.sourceMap', true);
 			grunt.config.set('uglify.options.sourceMapName', function(dest) {
 				var filename = path.basename(dest);
 
-				return config.scriptPath + '/maps/' + filename.replace(/.js$/, '.js.map');
+				return relativePath + filename.replace(/.js$/, '.js.map');
 			});
 		}
 
@@ -461,8 +470,8 @@ module.exports = function(grunt) {
 
 											var total = module.style.build.length;
 
-											for (var i = 0; i < total; i++) {
-												moduleBuildStyles.push(styleRoot + '/' + module.style.build[i]);
+											for (var x = 0; x < total; x++) {
+												moduleBuildStyles.push(styleRoot + '/' + module.style.build[x]);
 											}
 
 											// Compile legacy separately

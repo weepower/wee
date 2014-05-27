@@ -2,7 +2,7 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.extend('polyfill', {
+Wee.fn.extend('polyfill', {
 	placeholder: function() {
 		if (! ('placeholder' in document.createElement('input'))) {
 			Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {

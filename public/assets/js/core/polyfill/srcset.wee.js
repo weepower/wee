@@ -3,7 +3,7 @@
 // Based on https://github.com/culshaw/srcset
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.extend('polyfill', {
+Wee.fn.extend('polyfill', {
 	srcset: function() {
 		// Check for srcset support
 		if ('srcset' in document.createElement('img')) {

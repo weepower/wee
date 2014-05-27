@@ -3,11 +3,12 @@
 // DO NOT MODIFY THIS FILE
 
 var Wee = (function(w, d) {
+	'use strict';
 	var _store = {};
 
 	return {
 		// Create controller specified name, public object, and optional private object
-		controller: {
+		fn: {
 			make: function(name, pub, priv) {
 				Wee[name] = (function() {
 					var data = {
@@ -83,8 +84,8 @@ var Wee = (function(w, d) {
 		},
 		// Add all meta variables to the data store
 		$setVars: function() {
-			this.$each('[data-var]', function(el) {
-				Wee.$set(Wee.$data(el, 'var'), Wee.$data(el, 'content'));
+			this.$each('[data-set]', function(el) {
+				Wee.$set(Wee.$data(el, 'set'), Wee.$data(el, 'value'));
 			});
 		},
 		// Get a public variable with an optional fallback

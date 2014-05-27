@@ -2,11 +2,12 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.make('data', {
+Wee.fn.make('data', {
 	// Make an Ajax request based on the specified options
 	request: function(opt) {
 		var conf = Wee.$extend({
 				arguments: [],
+				cache: true,
 				data: {},
 				failure: false,
 				json: false,
@@ -16,7 +17,6 @@ Wee.controller.make('data', {
 				template: false,
 				url: null
 			}, opt),
-			data = Wee.$serialize(conf.data),
 			x = new XMLHttpRequest();
 
 		x.onreadystatechange = function() {
@@ -65,9 +65,13 @@ Wee.controller.make('data', {
 		if (conf.method == 'post') {
 			x.open('POST', conf.url, true);
 			x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-			x.send(data);
+			x.send(Wee.$serialize(conf.data));
 		} else {
-			x.open('GET', (conf.url + data), true);
+			if (conf.cache === false) {
+				conf.data['cache'] = new Date().getTime();
+			}
+
+			x.open('GET', (conf.url + Wee.$serialize(conf.data)), true);
 			x.send(null);
 		}
 	},

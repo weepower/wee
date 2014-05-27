@@ -2,7 +2,7 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.extend('testing', {
+Wee.fn.extend('testing', {
 	placeholders: function() {
 		var vars = this.$get('vars');
 

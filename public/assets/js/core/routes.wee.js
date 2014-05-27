@@ -2,7 +2,7 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.make('routes', {
+Wee.fn.make('routes', {
 	// Get the currently bound path or set the path with a specified value
 	// Returns string
 	path: function(val) {
@@ -99,7 +99,7 @@ Wee.controller.make('routes', {
 								}
 								break;
 							default:
-								if (seg) {
+								if (seg && seg.trim() != '') {
 									match = true;
 								}
 						}
@@ -108,11 +108,13 @@ Wee.controller.make('routes', {
 
 				// If matched execute or process recursively
 				if (match) {
-					Wee.$isObject(child) ?
-						this.process(child, i, total) :
+					if (Wee.$isObject(child)) {
+						this.process(child, i, total);
+					} else if (i === total) {
 						Wee.$exec(child, {
 							arguments: [seg]
 						});
+					}
 				}
 			}
 		}

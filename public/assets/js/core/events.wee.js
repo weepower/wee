@@ -2,36 +2,39 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.controller.make('events', {
+Wee.fn.make('events', {
 	// Add bindings to the bound object
-	map: function(events, init) {
-		this.$set('bound', Wee.$extend(this.$get('bound', {}), events));
+	map: function(evts, init) {
+		this.$set('bound', Wee.$extend(this.$get('bound', {}), evts));
 
 		if (init) {
-			this.bind();
+			this.bind(evts);
 		}
 	},
 	// Traverse the DOM for all available bindings
-	bind: function() {
-		var events = this.$get('bound');
+	bind: function(evts) {
+		evts = evts || this.$get('bound');
 
-		if (events) {
+		if (evts) {
 			Wee.$each('[data-bind]', function(el) {
 				var id = Wee.$data(el, 'bind');
 
-				if (events.hasOwnProperty(id)) {
-					var inst = events[id];
+				if (evts.hasOwnProperty(id)) {
+					var inst = evts[id];
 
 					for (var key in inst) {
 						var fn = inst[key];
 
-						(key == 'init') ?
+						if (key == 'init') {
 							Wee.$exec(fn, {
 								arguments: [el]
-							}) :
-							Wee.events.on(el, {
-								key: fn
 							});
+						} else {
+							var evt = {};
+							evt[key] = fn;
+
+							Wee.events.on(el, evt);
+						}
 					}
 				}
 			});
