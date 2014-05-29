@@ -2,7 +2,7 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.fn.make('loader', {
+Wee.fn.make('assets', {
 	// Get the currently bound resource root or set the root with a specified value
 	// Returns string
 	root: function(val) {
