@@ -266,8 +266,8 @@ module.exports = function(grunt) {
 				buildScripts.push(scriptRoot + '/core/screen.wee.js');
 			}
 
-			if (features.loader) {
-				buildScripts.push(scriptRoot + '/core/loader.wee.js');
+			if (features.assets) {
+				buildScripts.push(scriptRoot + '/core/assets.wee.js');
 			}
 
 			if (features.routes) {

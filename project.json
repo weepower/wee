@@ -24,7 +24,7 @@
 			"features": {
 				"data": true,
 				"events": true,
-				"loader": true,
+				"assets": true,
 				"routes": true,
 				"screen": true
 			},
