@@ -71,7 +71,7 @@ Wee.fn.make('data', {
 				conf.data['cache'] = new Date().getTime();
 			}
 
-			x.open('GET', (conf.url + Wee.$serialize(conf.data)), true);
+			x.open('GET', (conf.url + '?' + Wee.$serialize(conf.data)), true);
 			x.send(null);
 		}
 	},

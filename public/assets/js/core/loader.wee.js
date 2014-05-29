@@ -26,14 +26,12 @@ Wee.fn.make('loader', {
 
 		// Create group name if not specified
 		if (! conf.group) {
-			var id = this.$get('group', 1);
-			conf.group = 'load-' + id;
-
-			this.$set('group', (id + 1));
+			conf.group = 'load-' + new Date().getTime();
 		}
 
 		// Set file array length to check against
 		this.$set(conf.group, len);
+		this.$set(conf.group + '-fail', 0);
 
 		// Request each specified file
 		for (; i < len; i++) {
@@ -48,7 +46,9 @@ Wee.fn.make('loader', {
 					failure: false
 				}, opt);
 
-			if (conf.success) {
+			if (this.$get(group + '-fail') > 0 && conf.failure) {
+				Wee.$exec(conf.failure);
+			} else if (conf.success) {
 				Wee.$exec(conf.success);
 			}
 		} else {
@@ -62,17 +62,17 @@ Wee.fn.make('loader', {
 }, {
 	// Request a specific file
 	request: function(path, group, success, failure) {
-		var scope = this,
-			head = document.getElementsByTagName('head')[0],
-			ext = path.split('.').pop(),
-			root = this.$get('root');
+		var d = document,
+			scope = this,
+			head = d.getElementsByTagName('head')[0],
+			ext = path.split('.').pop();
 
 		// Load the file based on file extension
 		if (ext == 'js') {
-			var el = document.createElement('script');
+			var el = d.createElement('script');
 
 			el.src = path;
-			el.async = 'true';
+			el.async = true;
 
 			el.onload = el.onreadystatechange = function() {
 				var rs = this.readyState;
@@ -81,37 +81,51 @@ Wee.fn.make('loader', {
 					return;
 				}
 
-				scope.loaded(group);
-
-				if (success) {
-					scope.$public.ready(group, {
-						success: success
-					}, false);
-				}
+				scope.done(group, success);
 			};
+
+			el.onerror = function() {
+				scope.fail(group, failure);
+			}
 
 			head.appendChild(el);
 		} else if (ext == 'css') {
-			var el = document.createElement('link');
+			var el = d.createElement('link');
 
 			el.rel = 'stylesheet';
 			el.href = path;
 
-			scope.loaded(group);
+			scope.done(group, success);
 
 			head.appendChild(el);
-		} else if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
+		} else if ((/(gif|jpg|jpeg|png|svg)$/i).test(ext)) {
 			var img = new Image();
 
 			img.onload = function() {
-				scope.loaded(group);
+				scope.done(group, success);
+			}
+
+			img.onerror = function() {
+				scope.fail(group, failure);
 			}
 
 			img.src = path;
 		}
 	},
 	// Decrement the remaining count of assets to be loaded
-	loaded: function(group) {
+	done: function(group, success, failure) {
 		this.$set(group, this.$get(group) - 1);
+
+		this.$public.ready(group, {
+			success: success,
+			failure: failure
+		}, false);
+	},
+	// Track any failed resources
+	fail: function(group, failure) {
+		var key = group + '-fail';
+
+		this.$set(key, this.$get(key) + 1);
+		this.done(group, false, failure);
 	}
 });

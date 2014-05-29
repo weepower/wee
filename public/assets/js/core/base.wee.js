@@ -190,7 +190,7 @@ var Wee = (function(w, d) {
 		// Determine if the specified argument is an array
 		// Returns boolean
 		$isArray: function(obj) {
-			return (obj !== undefined && (obj.isArray || (Object.prototype.toString.call(obj) == '[object Array]')));
+			return (obj && (obj.isArray || Object.prototype.toString.call(obj) == '[object Array]'));
 		},
 		// Determine if the specified element belongs to the specified array
 		// Returns index else false
@@ -226,7 +226,7 @@ var Wee = (function(w, d) {
 		// Determine if the specified argument is an object
 		// Returns boolean
 		$isObject: function(obj) {
-			return (obj !== null && typeof obj == 'object');
+			return (obj && typeof obj == 'object' && ! this.$isArray(obj));
 		},
 		// Get all the keys from an object
 		// Returns array of key strings
