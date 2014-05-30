@@ -1953,12 +1953,6 @@
 .overflow (y; @value) {
 	overflow-y: @value;
 }
-.overflow-x (@value) {
-	overflow-x: @value;
-}
-.overflow-y (@value) {
-	overflow-y: @value;
-}
 .crop (horizontal) {
 	overflow-x: hidden;
 }
@@ -2165,53 +2159,29 @@
 	.margin(.32em; false; @imageMarginBottom; @imageMarginSide);
 	.right();
 }
-.align-center {
+.align (center) {
 	text-align: center;
 }
-.align (center) {
-	.align-center();
-}
-.align-justify {
+.align (justify) {
 	text-align: justify;
 }
-.align (justify) {
-	.align-justify();
-}
-.align-left {
+.align (left) {
 	text-align: left;
 }
-.align (left) {
-	.align-left();
-}
-.align-right {
+.align (right) {
 	text-align: right;
 }
-.align (right) {
-	.align-right();
-}
-.align-baseline () {
+.align (baseline) {
 	vertical-align: baseline;
 }
-.align (baseline) {
-	.align-baseline();
-}
-.align-bottom () {
+.align (bottom) {
 	vertical-align: bottom;
 }
-.align (bottom) {
-	.align-bottom();
-}
-.align-middle () {
+.align (middle) {
 	vertical-align: middle;
 }
-.align (middle) {
-	.align-middle();
-}
-.align-top () {
-	vertical-align: top;
-}
 .align (top) {
-	.align-top();
+	vertical-align: top;
 }
 .display (@value) {
 	display: @value;

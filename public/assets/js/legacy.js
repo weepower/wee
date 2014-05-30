@@ -39,14 +39,15 @@ Wee.legacy = (function(w, d) {
 
 			return host(location.href) !== host(url);
 		}
-	},
-	Public = {
+	};
+
+	return {
 		// Detect body size and get all stylesheets for processing
 		remSupport: function() {
 			var body = d.getElementsByTagName('body')[0],
 				root = 10,
 				sheets = d.styleSheets,
-				total = sheets.length,
+				len = sheets.length,
 				i = 0
 
 			if (body.currentStyle) {
@@ -67,7 +68,7 @@ Wee.legacy = (function(w, d) {
 
 			Wee.root = root;
 
-			for (; i < total; i++) {
+			for (; i < len; i++) {
 				var href = sheets[i].href;
 
 				if (href.indexOf('legacy.css') == -1) {
@@ -84,10 +85,10 @@ Wee.legacy = (function(w, d) {
 			var output = '',
 				regex = /(-?[.\d]+)rem/gi,
 				rules = css.match(/[\w\d\s\-\/\\\[\]:,.'"*()<>+~%#^$_=|@]+\{[\w\d\s\-\/\\%#:;,.'"*()=]+\d*\.?\d+rem[\w\d\s\-\/\\%#:;,.'"*()=]*\}/g),
-				total = rules ? rules.length : 0,
+				len = rules ? rules.length : 0,
 				i = 0;
 
-			for (; i < total; i++) {
+			for (; i < len; i++) {
 				var rule = rules[i],
 					split = rule.split('{'),
 					sel = split[0],
@@ -149,12 +150,12 @@ Wee.legacy = (function(w, d) {
 				if (fallback != null) {
 					var img = d.createElement('img'),
 						attrs = svg.attributes,
-						total = attrs.length,
+						alen = attrs.length,
 						x = 0;
 
 					img.src = fallback;
 
-					for (; x < total; x++) {
+					for (; x < alen; x++) {
 						var attr = attrs.item(x);
 						img.setAttribute(attr.nodeName, attr.nodeValue);
 					}
@@ -164,8 +165,6 @@ Wee.legacy = (function(w, d) {
 			}
 		}
 	};
-
-	return Public;
 })(window, document);
 
 window.attachEvent('onload', function() {

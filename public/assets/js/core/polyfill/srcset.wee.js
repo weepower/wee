@@ -45,10 +45,10 @@ Wee.fn.extend('polyfill', {
 		}
 
 		var imgs = document.getElementsByTagName('img'),
-			total = imgs.length,
+			len = imgs.length,
 			i = 0;
 
-		for (; i < total; i++) {
+		for (; i < len; i++) {
 			srcset(imgs[i]);
 		}
 	}

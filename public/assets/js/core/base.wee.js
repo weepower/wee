@@ -2,8 +2,9 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
+'use strict';
+
 var Wee = (function(w, d) {
-	'use strict';
 	var _store = {};
 
 	return {

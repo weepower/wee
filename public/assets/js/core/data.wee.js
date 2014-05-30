@@ -23,7 +23,8 @@ Wee.fn.make('data', {
 			if (x.readyState === 4) {
 				if (x.status >= 200 && x.status < 400) {
 					if (conf.success) {
-						var resp = orig = x.responseText;
+						var resp = x.responseText,
+							orig = resp
 
 						// Parse the JSON response if specified
 						if (conf.json || conf.template) {

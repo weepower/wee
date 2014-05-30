@@ -1,6 +1,6 @@
 # 2.0.0
 
-2014-05-13
+2014-06-09
 
 - MAJOR: Overhaul of the JavaScript structure and functionality
 - MAJOR: Major cleanup of the LESS library and addition of over two dozen new mixins

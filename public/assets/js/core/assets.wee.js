@@ -13,10 +13,12 @@ Wee.fn.make('assets', {
 	// Load specified assets with a specified set of options
 	load: function(opt) {
 		var conf = Wee.$extend({
+				arguments: [],
 				failure: false,
 				files: [],
 				group: false,
 				root: false,
+				scope: null,
 				success: false
 			}, opt),
 			files = Wee.$toArray(conf.files),
@@ -32,24 +34,26 @@ Wee.fn.make('assets', {
 		// Set file array length to check against
 		this.$set(conf.group, len);
 		this.$set(conf.group + '-fail', 0);
+		this.$set(conf.group + '-conf', conf);
 
 		// Request each specified file
 		for (; i < len; i++) {
-			this.$private('request', (root + files[i]), conf.group, conf.success, conf.failure);
+			this.$private('request', (root + files[i]), conf.group);
 		}
 	},
 	// When specified references are ready execute a callback
-	ready: function(group, opt, recheck) {
+	ready: function(group, recheck) {
 		if (this.$get(group) === 0) {
-			var conf = Wee.$extend({
-					success: false,
-					failure: false
-				}, opt);
+			var conf = this.$get(group + '-conf'),
+				opt = {
+					arguments: conf.arguments,
+					scope: conf.scope
+				};
 
 			if (this.$get(group + '-fail') > 0 && conf.failure) {
-				Wee.$exec(conf.failure);
+				Wee.$exec(conf.failure, opt);
 			} else if (conf.success) {
-				Wee.$exec(conf.success);
+				Wee.$exec(conf.success, opt);
 			}
 		} else {
 			if (recheck !== false) {
@@ -61,7 +65,7 @@ Wee.fn.make('assets', {
 	}
 }, {
 	// Request a specific file
-	request: function(path, group, success, failure) {
+	request: function(path, group) {
 		var d = document,
 			scope = this,
 			head = d.getElementsByTagName('head')[0],
@@ -81,11 +85,11 @@ Wee.fn.make('assets', {
 					return;
 				}
 
-				scope.done(group, success);
+				scope.done(group);
 			};
 
 			el.onerror = function() {
-				scope.fail(group, failure);
+				scope.fail(group);
 			}
 
 			head.appendChild(el);
@@ -95,37 +99,34 @@ Wee.fn.make('assets', {
 			el.rel = 'stylesheet';
 			el.href = path;
 
-			scope.done(group, success);
+			scope.done(group);
 
 			head.appendChild(el);
 		} else if ((/(gif|jpg|jpeg|png|svg)$/i).test(ext)) {
 			var img = new Image();
 
 			img.onload = function() {
-				scope.done(group, success);
+				scope.done(group);
 			}
 
 			img.onerror = function() {
-				scope.fail(group, failure);
+				scope.fail(group);
 			}
 
 			img.src = path;
 		}
 	},
 	// Decrement the remaining count of assets to be loaded
-	done: function(group, success, failure) {
+	done: function(group) {
 		this.$set(group, this.$get(group) - 1);
 
-		this.$public.ready(group, {
-			success: success,
-			failure: failure
-		}, false);
+		this.$public.ready(group, false);
 	},
 	// Track any failed resources
-	fail: function(group, failure) {
+	fail: function(group) {
 		var key = group + '-fail';
 
 		this.$set(key, this.$get(key) + 1);
-		this.done(group, false, failure);
+		this.done(group);
 	}
 });
