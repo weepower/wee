@@ -19,7 +19,7 @@ Wee.fn.make('screen', {
 
 		for (var i = 0; i < sets.length; i++) {
 			var conf = Wee.$extend({
-					arguments: [],
+					args: [],
 					callback: false,
 					init: false,
 					max: false,
@@ -78,12 +78,12 @@ Wee.fn.make('screen', {
 					(evt.min !== false && size >= evt.min && (init || prev < evt.min) && (evt.max === false || size <= evt.max)) ||
 					(evt.max !== false && size <= evt.max && (init || prev > evt.max) && (evt.min === false || size >= evt.min))) {
 					Wee.$exec(evt.callback, {
-						arguments: [{
+						args: [{
 							dir: init ? 0 : ((size > prev) ? 1 : -1),
 							size: size,
 							prev: prev,
 							init: init
-						}].concat(evt.arguments),
+						}].concat(evt.args),
 						scope: evt.scope
 					});
 				}

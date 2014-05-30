@@ -196,12 +196,16 @@ Wee.fn.extend('testing', {
 					}
 				}, 500);
 			}
+		}, {
+			scope: this
 		});
 
 		Wee.events.on(Wee.testing.bar, {
 			mouseleave: function() {
 				clearTimeout(this.timer);
 			}
+		}, {
+			scope: this
 		});
 
 		Wee.events.on(cues, {

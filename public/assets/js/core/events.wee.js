@@ -27,7 +27,7 @@ Wee.fn.make('events', {
 
 						if (key == 'init') {
 							Wee.$exec(fn, {
-								arguments: [el]
+								args: [el]
 							});
 						} else {
 							var evt = {};
@@ -62,36 +62,39 @@ Wee.fn.make('events', {
 	},
 	// Bind a specified function to a specified selector and event
 	on: function(sel, evts, opt) {
-		// TODO: Loop each around for
-		for (var evt in evts) {
-			// For each element attach the event
-			Wee.$each(sel, function(el) {
-				var conf = Wee.$extend({
-						scope: null,
-						arguments: []
-					}, opt),
+		// TODO: fix issue with passing object and wrong event firing
+		// For each element attach the events
+		Wee.$each(sel, function(el) {
+			var conf = Wee.$extend({
+					args: [],
+					scope: el
+				}, opt);
+
+			// Loop through the object events
+			for (var evt in evts) {
+				var econf = Wee.$clone(conf),
 					fn = evts[evt];
 
 				if (evt == 'mouseenter' || evt == 'mouseleave') {
-					conf.arguments.unshift(fn);
+					econf.args.unshift(fn);
 
 					fn = 'events:mouseEvent';
 					evt = (evt == 'mouseenter') ? 'mouseover' : 'mouseout';
 				}
 
-				conf.arguments.unshift(0, el);
+				econf.args.unshift(0, el);
 
 				el.attachEvent ?
 					el.attachEvent('on' + evt, function(e) {
-						conf.arguments[0] = e;
-						Wee.$exec(fn, conf);
+						econf.args[0] = e;
+						Wee.$exec(fn, econf);
 					}) :
 					el.addEventListener(evt, function(e) {
-						conf.arguments[0] = e;
-						Wee.$exec(fn, conf);
+						econf.args[0] = e;
+						Wee.$exec(fn, econf);
 					}, false);
-			});
-		}
+			}
+		});
 	},
 	// Remove a bound event function from a specified selector
 	off: function(sel, evt, fn) {
@@ -109,11 +112,16 @@ Wee.fn.make('events', {
 	mouseEvent: function(e, parent, fn) {
 		var child = e.relatedTarget;
 
-		if (child === parent || this.checkParent(parent, child)) {
+		if (child === parent || Wee.events.checkParent(parent, child)) {
 			return;
 		}
 
-		Wee.$exec(fn);
+		var args = Array.prototype.slice.call(arguments);
+
+		Wee.$exec(fn, {
+			args: args.slice(0, 1).concat(args.slice(3)),
+			scope: this
+		});
 	},
 	// Compare a parent element to a child element
 	checkParent: function(parent, child) {

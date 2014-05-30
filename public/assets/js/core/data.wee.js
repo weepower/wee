@@ -6,7 +6,7 @@ Wee.fn.make('data', {
 	// Make an Ajax request based on the specified options
 	request: function(opt) {
 		var conf = Wee.$extend({
-				arguments: [],
+				args: [],
 				cache: true,
 				data: {},
 				failure: false,
@@ -37,14 +37,14 @@ Wee.fn.make('data', {
 
 						if (conf.template) {
 							resp = Wee.data.parse(conf.template, resp);
-							conf.arguments.unshift(orig);
+							conf.args.unshift(orig);
 						}
 
-						conf.arguments.unshift(resp);
+						conf.args.unshift(resp);
 
 						// Execute the success callback if specified
 						Wee.$exec(conf.success, {
-							arguments: conf.arguments,
+							args: conf.args,
 							scope: conf.scope
 						});
 

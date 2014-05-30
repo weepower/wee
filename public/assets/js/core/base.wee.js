@@ -158,7 +158,7 @@ var Wee = (function(w, d) {
 		$exec: function(fn, opt) {
 			var conf = this.$extend({
 					scope: null,
-					arguments: []
+					args: []
 				}, opt),
 				fns = this.$toArray(fn),
 				len = fns.length,
@@ -181,7 +181,7 @@ var Wee = (function(w, d) {
 					}
 				}
 
-				var response = fn.apply(conf.scope, conf.arguments);
+				var response = fn.apply(conf.scope, conf.args);
 
 				if (len === 1) {
 					return response;
@@ -408,9 +408,7 @@ var Wee = (function(w, d) {
 		// Execute a specified function for a specified selector
 		$each: function(sel, fn) {
 			// If an element selector is specified get the DOM elements
-			var el = (this.$isString(sel)) ?
-					this.$toArray(this.$(sel)) :
-					[sel],
+			var el = (this.$isString(sel)) ? this.$toArray(this.$(sel)) : [sel],
 				len = el.length,
 				i = 0;
 

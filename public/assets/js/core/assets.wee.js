@@ -13,7 +13,7 @@ Wee.fn.make('assets', {
 	// Load specified assets with a specified set of options
 	load: function(opt) {
 		var conf = Wee.$extend({
-				arguments: [],
+				args: [],
 				failure: false,
 				files: [],
 				group: false,
@@ -46,7 +46,7 @@ Wee.fn.make('assets', {
 		if (this.$get(group) === 0) {
 			var conf = this.$get(group + '-conf'),
 				opt = {
-					arguments: conf.arguments,
+					args: conf.args,
 					scope: conf.scope
 				};
 
