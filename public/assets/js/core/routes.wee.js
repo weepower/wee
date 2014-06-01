@@ -89,7 +89,7 @@ Wee.fn.make('routes', {
 							case '$root':
 								if (! seg) {
 									Wee.$exec(child, {
-										args: [Wee.routes.segments(i - 2)]
+										args: Wee.routes.segments(i - 2)
 									});
 								}
 								break;
@@ -112,7 +112,7 @@ Wee.fn.make('routes', {
 						this.process(child, i, total);
 					} else if (i === total) {
 						Wee.$exec(child, {
-							args: [seg]
+							args: seg
 						});
 					}
 				}

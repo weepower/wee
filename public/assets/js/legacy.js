@@ -165,9 +165,9 @@ Wee.legacy = (function(w, d) {
 			}
 		}
 	};
-})(window, document);
+})(this, document);
 
-window.attachEvent('onload', function() {
+this.attachEvent('onload', function() {
 	Wee.legacy.remSupport();
 	Wee.legacy.svgSupport();
 });

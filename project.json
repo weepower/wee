@@ -22,9 +22,9 @@
 		"base": {
 			"enable": true,
 			"features": {
+				"assets": true,
 				"data": true,
 				"events": true,
-				"assets": true,
 				"routes": true,
 				"screen": true
 			},

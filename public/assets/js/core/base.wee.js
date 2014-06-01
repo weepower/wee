@@ -99,9 +99,7 @@ var Wee = (function(w, d) {
 			if (root.hasOwnProperty(key)) {
 				return root[key]
 			} else if (def !== undefined) {
-				def = (this.$isFunction(def)) ?
-					def() :
-					(opt ? this.$exec(def, opt) : def);
+				def = (this.$isFunction(def)) ? def() : (opt ? this.$exec(def, opt) : def);
 
 				if (set) {
 					this.$set(key, def);
@@ -116,9 +114,7 @@ var Wee = (function(w, d) {
 		// Returns set variable
 		$set: function(key, val, opt) {
 			var split = this._storeData(key),
-				set = (this.$isFunction(val)) ?
-					val() :
-					(opt ? this.$exec(val, opt) : val);
+				set = (this.$isFunction(val)) ? val() : (opt ? this.$exec(val, opt) : val);
 				split[0][split[1]] = set;
 
 			return set;
@@ -157,8 +153,8 @@ var Wee = (function(w, d) {
 		// Execute a specified function or controller method
 		$exec: function(fn, opt) {
 			var conf = this.$extend({
-					scope: null,
-					args: []
+					args: [],
+					scope: null
 				}, opt),
 				fns = this.$toArray(fn),
 				len = fns.length,
@@ -181,7 +177,7 @@ var Wee = (function(w, d) {
 					}
 				}
 
-				var response = fn.apply(conf.scope, conf.args);
+				var response = fn.apply(conf.scope, Wee.$toArray(conf.args));
 
 				if (len === 1) {
 					return response;
@@ -196,9 +192,6 @@ var Wee = (function(w, d) {
 		// Determine if the specified element belongs to the specified array
 		// Returns index else false
 		$inArray: function(obj, el) {
-			var len = obj.length,
-				i = 0;
-
 			for (var i = 0; i < obj.length; i++) {
 				if (obj[i] === el) {
 					return i;
@@ -217,7 +210,7 @@ var Wee = (function(w, d) {
 		// Determine if the specified argument is a string
 		// Returns boolean
 		$isString: function(obj) {
-			return (typeof obj === 'string');
+			return (typeof obj == 'string');
 		},
 		// Determine if the specified argument is a function
 		// Returns boolean
@@ -265,8 +258,8 @@ var Wee = (function(w, d) {
 				// Attempt to deep nest else set the property of the object
 				if (deep) {
 					try {
-						obj[key] = (this.$isObject(obj[key]))
-							? this.$extend(obj[key], src[key]) :
+						obj[key] = (this.$isObject(obj[key])) ?
+							this.$extend(obj[key], src[key]) :
 							src[key];
 					} catch(e) {
 						obj[key] = src[key];
@@ -281,9 +274,7 @@ var Wee = (function(w, d) {
 		// Clone a specified object
 		// Returns object
 		$clone: function(obj) {
-			return this.$isArray(obj) ?
-				obj.slice() :
-				this.$extend({}, obj);
+			return this.$isArray(obj) ? obj.slice() : this.$extend({}, obj);
 		},
 		// Determine if the specified element has a specified class name
 		// Returns boolean
@@ -453,6 +444,6 @@ var Wee = (function(w, d) {
 			this.$setVars();
 		}
 	};
-})(window, document);
+})(this, document);
 
 Wee.init();

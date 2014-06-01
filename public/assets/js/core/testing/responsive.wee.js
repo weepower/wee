@@ -126,10 +126,7 @@ Wee.fn.extend('testing', {
 				Wee.events.on(cue, {
 					mouseenter: function() {
 						Wee.$text(Wee.testing.bar, label + ' / ' + width + 'px');
-					}
-				});
-
-				Wee.events.on(cue, {
+					},
 					click: function() {
 						Wee.$addClass(b, 'js-testing-enabled');
 
@@ -195,12 +192,7 @@ Wee.fn.extend('testing', {
 						escCues();
 					}
 				}, 500);
-			}
-		}, {
-			scope: this
-		});
-
-		Wee.events.on(Wee.testing.bar, {
+			},
 			mouseleave: function() {
 				clearTimeout(this.timer);
 			}

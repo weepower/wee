@@ -32,12 +32,12 @@ Wee.fn.make('screen', {
 			if (conf.callback) {
 				// Only bind the resize event if not disbled
 				if (conf.watch) {
-					this.$push('events', conf);
+					this.$push('evts', conf);
 
 					// Only create the event if it isn't already running
-					if (! this.$get('watching')) {
-						this.$set('watching', 1);
-						this.$set('events', [conf]);
+					if (! this.$get('on')) {
+						this.$set('on', 1);
+						this.$set('evts', [conf]);
 
 						// Watch the widow resize event for breakpoint changes
 						Wee.events.on(window, {
@@ -60,12 +60,12 @@ Wee.fn.make('screen', {
 }, {
 	check: function(init, conf) {
 		var size = this.$public.size(),
-			prev = this.$get('size'),
+			prev = this.$get('size');
 			init = init || false;
 
 		// If a breakpoint has been hit or resize logic initialized
 		if (size !== prev || init) {
-			var evts = conf || this.$get('events'),
+			var evts = conf || this.$get('evts'),
 				len = evts.length,
 				i = 0;
 

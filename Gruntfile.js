@@ -283,10 +283,26 @@ module.exports = function(grunt) {
 			}
 
 			if (testing.placeholders) {
+				if (! features.events) {
+					grunt.log.error('Event module required for screen functions');
+				}
+
+				if (! features.data) {
+					grunt.log.error('Data module required for screen functions');
+				}
+
 				buildScripts.push(scriptRoot + '/core/testing/placeholders.wee.js');
 			}
 
 			if (testing.responsive) {
+				if (! features.events) {
+					grunt.log.error('Event module required for responsive functions');
+				}
+
+				if (! features.data) {
+					grunt.log.error('Data module required for responsive functions');
+				}
+
 				buildScripts.push(scriptRoot + '/core/testing/responsive.wee.js');
 			}
 		}

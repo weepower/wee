@@ -24,7 +24,7 @@ Wee.fn.make('data', {
 				if (x.status >= 200 && x.status < 400) {
 					if (conf.success) {
 						var resp = x.responseText,
-							orig = resp
+							orig = resp;
 
 						// Parse the JSON response if specified
 						if (conf.json || conf.template) {
@@ -33,11 +33,11 @@ Wee.fn.make('data', {
 							} catch (e) {
 								resp = {};
 							}
-						}
 
-						if (conf.template) {
-							resp = Wee.data.parse(conf.template, resp);
-							conf.args.unshift(orig);
+							if (conf.template) {
+								resp = Wee.data.parse(conf.template, resp);
+								conf.args.unshift(orig);
+							}
 						}
 
 						conf.args.unshift(resp);
@@ -69,7 +69,8 @@ Wee.fn.make('data', {
 			x.send(Wee.$serialize(conf.data));
 		} else {
 			if (conf.cache === false) {
-				conf.data['cache'] = new Date().getTime();
+				var dt = new Date().getTime();
+				conf.data[dt] = dt;
 			}
 
 			x.open('GET', (conf.url + '?' + Wee.$serialize(conf.data)), true);

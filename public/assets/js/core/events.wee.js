@@ -62,37 +62,36 @@ Wee.fn.make('events', {
 	},
 	// Bind a specified function to a specified selector and event
 	on: function(sel, evts, opt) {
-		// TODO: fix issue with passing object and wrong event firing
 		// For each element attach the events
 		Wee.$each(sel, function(el) {
-			var conf = Wee.$extend({
-					args: [],
-					scope: el
-				}, opt);
-
 			// Loop through the object events
 			for (var evt in evts) {
-				var econf = Wee.$clone(conf),
+				var conf = Wee.$extend({
+						args: [],
+						scope: el
+					}, opt),
 					fn = evts[evt];
 
 				if (evt == 'mouseenter' || evt == 'mouseleave') {
-					econf.args.unshift(fn);
+					conf.args.unshift(fn);
 
 					fn = 'events:mouseEvent';
 					evt = (evt == 'mouseenter') ? 'mouseover' : 'mouseout';
 				}
 
-				econf.args.unshift(0, el);
+				conf.args.unshift(0, el);
 
-				el.attachEvent ?
-					el.attachEvent('on' + evt, function(e) {
-						econf.args[0] = e;
-						Wee.$exec(fn, econf);
-					}) :
-					el.addEventListener(evt, function(e) {
-						econf.args[0] = e;
-						Wee.$exec(fn, econf);
-					}, false);
+				(function(el, evt, fn, conf) {
+					el.attachEvent ?
+						el.attachEvent('on' + evt, function(e) {
+							conf.args[0] = e;
+							Wee.$exec(fn, conf);
+						}) :
+						el.addEventListener(evt, function(e) {
+							conf.args[0] = e;
+							Wee.$exec(fn, conf);
+						}, false);
+				})(el, evt, fn, conf);
 			}
 		});
 	},
