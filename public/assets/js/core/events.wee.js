@@ -40,16 +40,6 @@ Wee.fn.make('events', {
 			});
 		}
 	},
-	// Remove binding by optional name and trigger
-	// Removes all events if no parameters are set
-	unbind: function(name, evt) {
-		var sel = '[data-bind' + (name ? '="' +  + '"]' : ']');
-
-		Wee.$each(sel, function(el) {
-			Wee.events.off(el, evt);
-			// TODO: fix
-		});
-	},
 	// Execute a specific event by name and optional trigger
 	fire: function(name, evt) {
 		var events = this.$get('bound');
@@ -93,18 +83,6 @@ Wee.fn.make('events', {
 						}, false);
 				})(el, evt, fn, conf);
 			}
-		});
-	},
-	// Remove a bound event function from a specified selector
-	off: function(sel, evt, fn) {
-		Wee.$each(sel, function(el) {
-			el.attachEvent ?
-				el.detachEvent('on' + evt, function() {
-					Wee.$exec(fn);
-				}) :
-				el.removeEventListener(evt, function() {
-					Wee.$exec(fn);
-				}, false);
 		});
 	},
 	// Ensure the mouse has actually entered or left the root element before firing the event
