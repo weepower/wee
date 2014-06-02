@@ -3,9 +3,7 @@
 // REM polyfill based on https://github.com/chuckcarpenter/REM-unit-polyfill
 // DO NOT MODIFY THIS FILE
 
-var Wee = Wee || {};
-
-Wee.legacy = (function(w, d) {
+var WeeLegacy = (function(w, d) {
 
 	var Utils = {
 		// Get the CSS for parsing
@@ -71,8 +69,8 @@ Wee.legacy = (function(w, d) {
 			for (; i < len; i++) {
 				var href = sheets[i].href;
 
-				if (href.indexOf('legacy.css') == -1) {
-					Utils.getResource(href, Wee.legacy.remConvert);
+				if (href && href.indexOf('legacy.css') == -1) {
+					Utils.getResource(href, WeeLegacy.remConvert);
 				}
 			}
 		},
@@ -168,6 +166,6 @@ Wee.legacy = (function(w, d) {
 })(this, document);
 
 this.attachEvent('onload', function() {
-	Wee.legacy.remSupport();
-	Wee.legacy.svgSupport();
+	WeeLegacy.remSupport();
+	WeeLegacy.svgSupport();
 });

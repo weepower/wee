@@ -5,42 +5,45 @@
 Wee.fn.extend('polyfill', {
 	placeholder: function() {
 		if (! ('placeholder' in document.createElement('input'))) {
-			Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {
+			Wee.$each('input[placeholder], textarea[placeholder]', function(el) {
 				var val = el.getAttribute('placeholder');
 
 				if (el.value == '') {
 					el.value = val;
 				}
 
-				Wee.events.on(el, 'focus', function() {
-					if (this.value == val) {
-						this.value = '';
+				Wee.events.on(el, {
+					blur: function() {
+						if (this.value.trim() == '') {
+							this.value = val;
+						}
+					},
+					focus: function() {
+						if (this.value == val) {
+							this.value = '';
+						}
 					}
 				});
-
-				Wee.events.on(el, 'blur', function() {
-					if (this.value.trim() == '') {
-						this.value = val;
-					}
-				});
-			}
+			});
 
 			// Clear default placeholder values on form submit
-			var forms = Wee.$tag('form'),
+			var forms = Wee.$('form'),
 				len = forms.length,
 				i = 0;
 
 			for (; i < len; i++) {
-				Wee.events.on(forms[i], 'submit', function() {
-					Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {
-						if (el.value == el.getAttribute('placeholder')) {
-							el.value = '';
+				Wee.events.on(forms[i], {
+					submit: function() {
+						Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {
+							if (el.value == el.getAttribute('placeholder')) {
+								el.value = '';
+							}
 						}
 					}
 				});
 			}
 		}
 	}
-})
+});
 
 Wee.ready('polyfill:placeholder');
