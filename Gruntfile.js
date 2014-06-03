@@ -248,14 +248,28 @@ module.exports = function(grunt) {
 				polyfill = config.script.base.polyfill,
 				testing = config.script.base.testing;
 
+			// Core modules
+
 			buildScripts.push(scriptRoot + '/core/base.wee.js');
+
+			if (features.assets) {
+				buildScripts.push(scriptRoot + '/core/assets.wee.js');
+			}
 
 			if (features.data) {
 				buildScripts.push(scriptRoot + '/core/data.wee.js');
 			}
 
+			if (features.dom) {
+				buildScripts.push(scriptRoot + '/core/dom.wee.js');
+			}
+
 			if (features.events) {
 				buildScripts.push(scriptRoot + '/core/events.wee.js');
+			}
+
+			if (features.routes) {
+				buildScripts.push(scriptRoot + '/core/routes.wee.js');
 			}
 
 			if (features.screen) {
@@ -266,13 +280,7 @@ module.exports = function(grunt) {
 				buildScripts.push(scriptRoot + '/core/screen.wee.js');
 			}
 
-			if (features.assets) {
-				buildScripts.push(scriptRoot + '/core/assets.wee.js');
-			}
-
-			if (features.routes) {
-				buildScripts.push(scriptRoot + '/core/routes.wee.js');
-			}
+			// Polyfills
 
 			if (polyfill.placeholder) {
 				buildScripts.push(scriptRoot + '/core/polyfill/placeholder.wee.js');
@@ -281,6 +289,8 @@ module.exports = function(grunt) {
 			if (polyfill.srcset) {
 				buildScripts.push(scriptRoot + '/core/polyfill/srcset.wee.js');
 			}
+
+			// Testing scripts
 
 			if (testing.placeholders) {
 				if (! features.events) {

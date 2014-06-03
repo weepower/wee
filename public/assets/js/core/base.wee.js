@@ -54,9 +54,9 @@ var Wee = (function(w, d) {
 			// Extend an existing controller
 			extend: function(name, pub, priv) {
 				// If named controller exists merge the objects else create the controller
-				if (Wee.hasOwnProperty(name)) {
+				if (name == '' || Wee.hasOwnProperty(name)) {
 					this.make('tMod', pub, priv);
-					Wee.$extend(Wee[name], Wee.tMod);
+					Wee.$extend((name == '') ? Wee : Wee[name], Wee.tMod);
 					delete Wee.tMod;
 				} else {
 					this.make(name, pub, priv);
@@ -82,12 +82,6 @@ var Wee = (function(w, d) {
 			}
 
 			return this.$get('env', 'local');
-		},
-		// Add all meta variables to the data store
-		$setVars: function() {
-			this.$each('[data-set]', function(el) {
-				Wee.$set(Wee.$data(el, 'set'), Wee.$data(el, 'value'));
-			});
 		},
 		// Get a public variable with an optional fallback
 		// Returns mixed
@@ -276,82 +270,6 @@ var Wee = (function(w, d) {
 		$clone: function(obj) {
 			return this.$isArray(obj) ? obj.slice() : this.$extend({}, obj);
 		},
-		// Determine if the specified element has a specified class name
-		// Returns boolean
-		$hasClass: function(el, val) {
-			return (el.classList) ?
-				el.classList.contains(val) :
-				new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className);
-		},
-		// Add a specified class name to a specified element
-		$addClass: function(el, val) {
-			if (el.classList) {
-				el.classList.add(val);
-			} else {
-				var curr = el.className;
-
-				// If the specified class isn't already bound either set it or append it
-				if (curr.indexOf(val) === -1) {
-					if (curr === '') {
-						el.className = val;
-					} else {
-						el.className.concat(' ' + val);
-					}
-				}
-			}
-		},
-		// Removes a specified class value from a specified element
-		$removeClass: function(el, val) {
-			if (el.classList) {
-				el.classList.remove(val);
-			} else {
-				el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-			}
-		},
-		// Add specified css rules
-		$css: function(sel, a, b) {
-			sel = this.$(sel);
-
-			if (this.$isObject(a)) {
-				for (var key in a) {
-					sel.style[key] = a[key];
-				}
-			} else {
-				sel.style[a] = b;
-			}
-		},
-		// Append a specified child element to a parent element
-		$append: function(el, child) {
-			el.appendChild(child);
-		},
-		// Insert a specified element before a specified element
-		$before: function(el, html) {
-			el.insertAdjacentHTML('beforebegin', html);
-		},
-		// Insert a specified element after a specified element
-		$after: function(el, html) {
-			el.insertAdjacentHTML('afterend', html);
-		},
-		// Get the text value of a specified element or selector or set the text with a specified value
-		$text: function(el, val) {
-			// If an element selector is specified get the DOM elements
-			el = this.$(el);
-
-			if (val) {
-				if (el.textContent !== undefined) {
-					el.textContent = val;
-				} else {
-					el.innerText = val;
-				}
-			} else {
-				return el.textContent || el.innerText;
-			}
-		},
-		// Get the HTML value of a specified element or selector or set the HTML with a specified value
-		$html: function(el, val) {
-			// If an element selector is specified get the DOM elements
-			this.$(el).innerHTML = val;
-		},
 		// Get matches to a specified selector
 		// Returns array of DOM objects
 		$: function(sel, context) {
@@ -407,11 +325,58 @@ var Wee = (function(w, d) {
 				fn(el[i], i);
 			}
 		},
+		// Add all meta variables to the data store
+		$setVars: function() {
+			this.$each('[data-set]', function(el) {
+				Wee.$set(Wee.$data(el, 'set'), Wee.$data(el, 'value'));
+			});
+		},
+		// Add a specified class name to a specified element
+		$addClass: function(el, val) {
+			if (el.classList) {
+				el.classList.add(val);
+			} else {
+				var curr = el.className;
+
+				// If the specified class isn't already bound either set it or append it
+				if (curr.indexOf(val) === -1) {
+					if (curr === '') {
+						el.className = val;
+					} else {
+						el.className.concat(' ' + val);
+					}
+				}
+			}
+		},
+		// Removes a specified class value from a specified element
+		$removeClass: function(el, val) {
+			if (el.classList) {
+				el.classList.remove(val);
+			} else {
+				el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+			}
+		},
+		// Add specified css rules
+		$css: function(sel, a, b) {
+			sel = this.$(sel);
+
+			if (this.$isObject(a)) {
+				for (var key in a) {
+					sel.style[key] = a[key];
+				}
+			} else {
+				sel.style[a] = b;
+			}
+		},
+		// Get the HTML value of a specified element or selector or set the HTML with a specified value
+		$html: function(el, val) {
+			// If an element selector is specified get the DOM elements
+			this.$(el).innerHTML = val;
+		},
 		// Get the data value of a specified element or selector or set the data with a specified value
 		$data: function(el, key, val) {
 			// If an element selector is specified get the DOM elements
 			el = this.$(el);
-
 			key = 'data-' + key;
 
 			if (val) {
@@ -434,7 +399,7 @@ var Wee = (function(w, d) {
 				});
 			}
 		},
-		// Toggle the HTML JavaScript status class name
+		// Toggle the HTML JavaScript status class name and set meta variables
 		init: function() {
 			var html = d.body.parentNode;
 

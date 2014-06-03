@@ -125,7 +125,7 @@ Wee.fn.extend('testing', {
 			(function(label, width) {
 				Wee.events.on(cue, {
 					mouseenter: function() {
-						Wee.$text(Wee.testing.bar, label + ' / ' + width + 'px');
+						Wee.$html(Wee.testing.bar, label + ' / ' + width + 'px');
 					},
 					click: function() {
 						Wee.$addClass(b, 'js-testing-enabled');
@@ -214,7 +214,7 @@ Wee.fn.extend('testing', {
 			width = w.innerWidth,
 			height = w.innerHeight;
 
-		Wee.$text(Wee.testing.bar, width + 'x' + height);
+		Wee.$html(Wee.testing.bar, width + 'x' + height);
 	}
 });
 

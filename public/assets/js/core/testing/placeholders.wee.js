@@ -99,7 +99,7 @@ Wee.fn.extend('testing', {
 				setTimeout(function() {
 					// Placeholder text
 					if (title != null) {
-						Wee.$text(span, title);
+						Wee.$html(span, title);
 					}
 
 					Wee.testing.updatePlaceholders();
