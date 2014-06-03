@@ -53,10 +53,13 @@ var Wee = (function(w, d) {
 			},
 			// Extend an existing controller
 			extend: function(name, pub, priv) {
-				// If named controller exists merge the objects else create the controller
-				if (name == '' || Wee.hasOwnProperty(name)) {
+				if (name == '') {
+					// Merge into the global object
+					Wee.$extend(Wee, pub);
+				} else if (Wee.hasOwnProperty(name)) {
+					// Merge the objects else create the controller
 					this.make('tMod', pub, priv);
-					Wee.$extend((name == '') ? Wee : Wee[name], Wee.tMod);
+					Wee.$extend(Wee[name], Wee.tMod);
 					delete Wee.tMod;
 				} else {
 					this.make(name, pub, priv);
