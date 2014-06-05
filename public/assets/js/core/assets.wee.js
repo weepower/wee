@@ -13,12 +13,10 @@ Wee.fn.make('assets', {
 	// Load specified assets with a specified set of options
 	load: function(opt) {
 		var conf = Wee.$extend({
-				args: [],
 				failure: false,
 				files: [],
 				group: false,
 				root: false,
-				scope: null,
 				success: false
 			}, opt),
 			files = Wee.$toArray(conf.files),

@@ -15,7 +15,7 @@ Wee.fn.make('routes', {
 		this.$set('routes', Wee.$extend(this.$get('routes', {}), routes));
 
 		if (init) {
-			this.run();
+			this.run(false, false, routes);
 		}
 	},
 	// Get the segments from an optionally specified path
@@ -27,8 +27,8 @@ Wee.fn.make('routes', {
 	},
 	// Process the stored route options against an optionally specified path
 	// Defaults to current path
-	run: function(path, reverse) {
-		var routes = this.$get('routes');
+	run: function(path, reverse, routes) {
+		routes = routes || this.$get('routes');
 
 		if (path) {
 			this.path(path);

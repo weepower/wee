@@ -294,7 +294,7 @@ var Wee = (function(w, d) {
 				el = context.querySelectorAll(sel);
 			}
 
-			if (el.nodeType) {
+			if (el === null || el.nodeType) {
 				return el;
 			}
 

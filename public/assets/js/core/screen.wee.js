@@ -19,12 +19,10 @@ Wee.fn.make('screen', {
 
 		for (var i = 0; i < sets.length; i++) {
 			var conf = Wee.$extend({
-					args: [],
 					callback: false,
 					init: false,
 					max: false,
 					min: false,
-					scope: null,
 					size: false,
 					watch: true
 				}, sets[i]);

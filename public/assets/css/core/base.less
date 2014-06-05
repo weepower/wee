@@ -16,8 +16,8 @@
 		.padding(0);
 	}
 }
-.wee-container-min-width () when not (@figureRounded = 0)
-		and not (@figureRounded = false) {
+.wee-container-min-width () when not (@minWidth = 0)
+		and not (@minWidth = false) {
 	html,
 	body {
 		.min-width(@minWidth);

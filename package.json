@@ -5,10 +5,10 @@
 	"homepage": "http://www.weepower.com",
 	"author": "Wee",
 	"keywords": [
-		"less",
-		"responsive",
 		"css",
+		"less",
 		"javascript",
+		"responsive",
 		"bootstrap",
 		"framework"
 	],

@@ -12,7 +12,6 @@ Wee.fn.make('data', {
 				failure: false,
 				json: false,
 				method: 'get',
-				scope: null,
 				success: false,
 				template: false,
 				url: null

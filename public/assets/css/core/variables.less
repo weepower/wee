@@ -9,15 +9,15 @@
 ////////////
 
 @minWidth: 260px;  // min container width, false to disable
-@maxWidth: 1280px; // max container width
+@maxWidth: 1280px; // max container width, false to disable
 
 @bumperPadding: 6%;  // bumper padding on containers, false to disable
 @padContainer: true; // enable bumperPadding on containers
 
 @gridMargin: 5%; // default margin for spaced columns
-@gridColumns: 4; // default number of columns in grid
- 
-@blockMarginBottom: 4; // default bottom margin for lists, form elements, and other block elements
+@gridColumns: 8; // default number of columns in grid
+
+@blockMarginBottom: 4; // default bottom margin for lists, form elements, and other blocks
 
 ///////////////
 // Grayscale //
@@ -76,8 +76,8 @@
 //////////////
 
 @headingColor: @baseColor;
-@headingFont: 'Open Sans', sans-serif;
-@headingFontWeight: 300;
+@headingFont: Tahoma, Geneva, sans-serif;
+@headingFontWeight: @boldFontWeight;
 @headingLineHeight: 1.4em;
 
 @headingMarginBottom: 2;
@@ -92,14 +92,14 @@
 // Subheadings
 
 @subHeadingColor: @baseColor;
-@subHeadingFontWeight: 400;
+@subHeadingFontWeight: @normalFontWeight;
 
 ////////////
 // Images //
 ////////////
 
 @imagePath: '../img/';         // absolute or relative path
-@spriteFilename: 'sprite.png'; // relative to imagePath
+@spriteFilename: 'sprite.png'; // relative to image path above
 
 @retinaSpriteWidth: auto;
 @retinaSpriteHeight: auto;
@@ -178,7 +178,7 @@
 @quoteFontWeight: normal;
 @quoteLineHeight: 1.4em;
 
-@quoteBorderColor: #c3e0e7;
+@quoteBorderColor: @gray;
 @quoteBorderWidth: 5px; // false to disable
 
 @quotePaddingHorizontal: 2em;
@@ -204,7 +204,7 @@
 @ruleColor: @lightGray;
 @ruleHeight: 1px;
 @ruleStyle: solid;
-@ruleMargin: 4;
+@ruleMargin: @blockMarginBottom;
 
 ///////////////
 // Addresses //
@@ -227,6 +227,7 @@
 @selectionBackground: @linkColor;
 
 @boldFontWeight: bold;
+@normalFontWeight: normal;
 
 @markColor: @baseColor;
 @markBackground: yellow;
@@ -236,7 +237,7 @@
 
 @abbrUnderline: dotted; // dotted, solid, none
 
-@gridSpaceless: false; // optionally set to true if you are minifying your outputted markup
+@gridSpaceless: false; // optionally set to true if minifying all markup output
 
 //////////
 // Code //
@@ -422,7 +423,7 @@
 
 @buttonBevelEnabled: false;
 @buttonBevelColor: light; // dark, light
-@buttonBevelOpacity: 30%; 
+@buttonBevelOpacity: 30%;
 
 @buttonRounded: 3px; // false to disable
 
@@ -465,9 +466,9 @@
 ////////////////
 
 @responsiveEnabled: true; // enable automated breakpoints
-@responsiveOffset: 25px;  // breakpoint offset, subtracted from breakpoint width
+@responsiveOffset: 25px;  // breakpoint offset (subtracted from breakpoint width)
 
-// Breakpoints (set to false to disable)
+// Breakpoints (false to disable)
 
 @mobileLandscapeWidth: 480px; // value = 2
 @tabletPortraitWidth: 768px;  // value = 3

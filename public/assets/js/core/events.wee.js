@@ -3,21 +3,24 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.fn.make('events', {
-	// Add bindings to the bound object
-	map: function(evts, init) {
+	// Add bindings to the bound object with an optional exec object and/or init boolean
+	map: function(evts, a, b) {
 		this.$set('bound', Wee.$extend(this.$get('bound', {}), evts));
 
-		if (init) {
-			this.bind(evts);
+		if (a === true || b === true) {
+			this.bind(evts, a);
 		}
 	},
 	// Traverse the DOM for all available bindings
-	bind: function(evts) {
+	bind: function(evts, opt) {
 		evts = evts || this.$get('bound');
 
 		if (evts) {
 			Wee.$each('[data-bind]', function(el) {
-				var id = Wee.$data(el, 'bind');
+				var conf = Wee.$extend({
+						scope: el
+					}, opt),
+					id = Wee.$data(el, 'bind');
 
 				if (evts.hasOwnProperty(id)) {
 					var inst = evts[id];
@@ -26,14 +29,12 @@ Wee.fn.make('events', {
 						var fn = inst[key];
 
 						if (key == 'init') {
-							Wee.$exec(fn, {
-								args: [el]
-							});
+							Wee.$exec(fn, conf);
 						} else {
 							var evt = {};
 							evt[key] = fn;
 
-							Wee.events.on(el, evt);
+							Wee.events.on(el, evt, conf);
 						}
 					}
 				}

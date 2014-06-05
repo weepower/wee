@@ -173,7 +173,7 @@ module.exports = function(grunt) {
 			'Gruntfile.js',
 			configFile
 		]);
-		
+
 		config = require(configFile);
 
 		config.assetPath = config.paths.root != '' ? './' + config.paths.root + '/' + config.paths.assets.root : './' + config.assets;
@@ -274,7 +274,7 @@ module.exports = function(grunt) {
 
 			if (features.screen) {
 				if (! features.events) {
-					grunt.log.error('Event script required for screen functions');
+					grunt.fail.warn('Event module required for screen functions');
 				}
 
 				buildScripts.push(scriptRoot + '/core/screen.wee.js');
@@ -294,11 +294,11 @@ module.exports = function(grunt) {
 
 			if (testing.placeholders) {
 				if (! features.events) {
-					grunt.log.error('Event module required for screen functions');
+					grunt.fail.warn('Event module required for screen functions');
 				}
 
 				if (! features.data) {
-					grunt.log.error('Data module required for screen functions');
+					grunt.fail.warn('Data module required for screen functions');
 				}
 
 				buildScripts.push(scriptRoot + '/core/testing/placeholders.wee.js');
@@ -306,11 +306,11 @@ module.exports = function(grunt) {
 
 			if (testing.responsive) {
 				if (! features.events) {
-					grunt.log.error('Event module required for responsive functions');
+					grunt.fail.warn('Event module required for responsive functions');
 				}
 
 				if (! features.data) {
-					grunt.log.error('Data module required for responsive functions');
+					grunt.fail.warn('Data module required for responsive functions');
 				}
 
 				buildScripts.push(scriptRoot + '/core/testing/responsive.wee.js');
@@ -452,7 +452,7 @@ module.exports = function(grunt) {
 
 										if (typeof(module.assets.css) != 'undefined') {
 											buildStyles.push(path + '/' + module.assets.css + '/style.less');
-										
+
 											// Compile additional module style
 
 											var total = module.style.compile.length;
@@ -491,7 +491,7 @@ module.exports = function(grunt) {
 
 										if (typeof(module.assets.css) != 'undefined') {
 											moduleBuildStyles.push(path + '/' + module.assets.css + '/style.less');
-										
+
 											// Build additional module style
 
 											var total = module.style.build.length;
@@ -514,7 +514,7 @@ module.exports = function(grunt) {
 
 										if (typeof(module.assets.js) != 'undefined') {
 											mobuleBuildScripts.push(path + '/' + module.assets.js + '/script.js');
-										
+
 											// Build additional module script
 
 											var total = module.script.build.length;

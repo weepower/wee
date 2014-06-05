@@ -12,10 +12,10 @@
 	},
 	"style": {
 		"build": [
-			
+
 		],
 		"compile": {
-			
+
 		}
 	},
 	"script": {
@@ -45,10 +45,10 @@
 			}
 		},
 		"build": [
-			
+
 		],
 		"compile": {
-			
+
 		}
 	},
 	"testing": {

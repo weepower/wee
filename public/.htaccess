@@ -41,7 +41,7 @@ RewriteRule ^(.*)$ $1.html
 # Maintenance
 # -----------
 
-#RewriteCond %{REMOTE_ADDR} !^123.123.123.
+#RewriteCond %{REMOTE_ADDR} !^123.456.789.
 #RewriteCond %{REQUEST_URI} !^/maintenance\.html$
 #RewriteCond $1 !^(assets) [NC]
 #RewriteRule ^(.*)$ /maintenance.html [R=307,L]
