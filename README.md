@@ -1,6 +1,6 @@
 # [Wee 2.0.0](https://github.com/weepower/wee)
 
-The extensible framework for building responsive web experiences. To read more, visit [weepower.com](http://www.weepower.com).
+Your blueprint for modern web development. To read more, visit [weepower.com](http://www.weepower.com).
 
 ## What does that mean?
 

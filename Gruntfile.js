@@ -5,9 +5,12 @@
 
 // Setup global project variables
 
-var config,
+var fs = require('fs'),
+	path = require('path'),
+	async = require('async'),
 	styles = [],
-	scripts = [];
+	scripts = [],
+	config;
 
 module.exports = function(grunt) {
 
@@ -17,7 +20,7 @@ module.exports = function(grunt) {
 		config: config,
 		less: {
 			options: {
-				compress: true,
+				cleancss: true,
 				strictMath: true,
 				paths: [
 					'<%= config.stylePath %>'
@@ -87,7 +90,7 @@ module.exports = function(grunt) {
 			},
 			js: {
 				options: {
-					message: 'Javascript uglification complete'
+					message: 'JavaScript uglification complete'
 				}
 			},
 			img: {
@@ -97,7 +100,59 @@ module.exports = function(grunt) {
 			},
 			config: {
 				options: {
-					message: 'Reloading config file'
+					message: 'Config modification complete'
+				}
+			}
+		},
+		newer: {
+			options: {
+				override: function(details, shouldIncludeCallback) {
+					var checkFileForModifiedImports = async.memoize(function(filepath, fileCheckCallback) {
+						fs.readFile(filepath, 'utf8', function(error, data) {
+							var directoryPath = path.dirname(filepath),
+								regex = /@import (?:\([^)]+\) )?'(.+?)(\.less)?'/g,
+								match;
+
+							function checkNextImport() {
+								if ((match = regex.exec(data)) === null) {
+									return fileCheckCallback(false); // All @import files have been checked
+								}
+
+								var importFilePath = path.join(directoryPath, match[1] + '.less');
+
+								fs.exists(importFilePath, function(exists) {
+									if (! exists) { // @import file does not exists
+										return checkNextImport(); // Skip to next
+									}
+
+									fs.stat(importFilePath, function(error, stats) {
+										if (stats.mtime > details.time) { // @import file has been modified so include it
+											fileCheckCallback(true);
+										} else { // @import file hasn't been modified but check the @import's of this file
+											checkFileForModifiedImports(importFilePath, function(hasModifiedImport) {
+												if (hasModifiedImport) {
+													fileCheckCallback(true);
+												} else {
+													checkNextImport();
+												}
+											});
+										}
+									});
+								});
+							};
+
+							checkNextImport();
+						});
+					});
+
+					// Only add override behavior to LESS tasks
+					if (details.task == 'less') {
+						checkFileForModifiedImports(details.path, function(found) {
+							shouldIncludeCallback(found);
+						});
+					} else {
+						shouldIncludeCallback(false);
+					}
 				}
 			}
 		},
@@ -110,7 +165,7 @@ module.exports = function(grunt) {
 					'<%= config.assetPath %>/**/*.less'
 				],
 				tasks: [
-					'less',
+					'newer:less',
 					'notify:css'
 				]
 			},
@@ -146,7 +201,6 @@ module.exports = function(grunt) {
 					reload: true
 				},
 				files: [
-					'Gruntfile.js',
 					'project.json'
 				],
 				tasks: [
@@ -161,8 +215,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('init', function() {
 
-		var fs = require('fs');
-
 		// Load project config
 
 		var configFile = './' + (grunt.option('config') || 'project.json');
@@ -170,7 +222,6 @@ module.exports = function(grunt) {
 		// Set watch config update
 
 		grunt.config.set('watch.configFiles.files', [
-			'Gruntfile.js',
 			configFile
 		]);
 
@@ -245,31 +296,30 @@ module.exports = function(grunt) {
 
 		if (config.script.base.enable) {
 			var features = config.script.base.features,
-				polyfill = config.script.base.polyfill,
-				testing = config.script.base.testing;
+				coreRoot = scriptRoot + '/core/';
 
 			// Core modules
 
-			buildScripts.push(scriptRoot + '/core/base.wee.js');
+			buildScripts.push(coreRoot + 'base.wee.js');
 
 			if (features.assets) {
-				buildScripts.push(scriptRoot + '/core/assets.wee.js');
+				buildScripts.push(coreRoot + 'assets.wee.js');
 			}
 
 			if (features.data) {
-				buildScripts.push(scriptRoot + '/core/data.wee.js');
+				buildScripts.push(coreRoot + 'data.wee.js');
 			}
 
 			if (features.dom) {
-				buildScripts.push(scriptRoot + '/core/dom.wee.js');
+				buildScripts.push(coreRoot + 'dom.wee.js');
 			}
 
 			if (features.events) {
-				buildScripts.push(scriptRoot + '/core/events.wee.js');
+				buildScripts.push(coreRoot + 'events.wee.js');
 			}
 
 			if (features.routes) {
-				buildScripts.push(scriptRoot + '/core/routes.wee.js');
+				buildScripts.push(coreRoot + 'routes.wee.js');
 			}
 
 			if (features.screen) {
@@ -277,20 +327,24 @@ module.exports = function(grunt) {
 					grunt.fail.warn('Event module required for screen functions');
 				}
 
-				buildScripts.push(scriptRoot + '/core/screen.wee.js');
+				buildScripts.push(coreRoot + 'screen.wee.js');
 			}
 
 			// Polyfills
 
+			var polyfill = config.script.base.polyfill;
+
 			if (polyfill.placeholder) {
-				buildScripts.push(scriptRoot + '/core/polyfill/placeholder.wee.js');
+				buildScripts.push(coreRoot + 'polyfill/placeholder.wee.js');
 			}
 
 			if (polyfill.srcset) {
-				buildScripts.push(scriptRoot + '/core/polyfill/srcset.wee.js');
+				buildScripts.push(coreRoot + 'polyfill/srcset.wee.js');
 			}
 
-			// Testing scripts
+			// Testing modules
+
+			var testing = config.script.base.testing;
 
 			if (testing.placeholders) {
 				if (! features.events) {
@@ -301,7 +355,17 @@ module.exports = function(grunt) {
 					grunt.fail.warn('Data module required for screen functions');
 				}
 
-				buildScripts.push(scriptRoot + '/core/testing/placeholders.wee.js');
+				buildScripts.push(coreRoot + 'testing/placeholders.wee.js');
+			} else {
+				grunt.config.merge({
+					less: {
+						options: {
+							modifyVars: {
+								placeholdersEnabled: false
+							}
+						}
+					}
+				});
 			}
 
 			if (testing.responsive) {
@@ -313,7 +377,17 @@ module.exports = function(grunt) {
 					grunt.fail.warn('Data module required for responsive functions');
 				}
 
-				buildScripts.push(scriptRoot + '/core/testing/responsive.wee.js');
+				buildScripts.push(coreRoot + 'testing/responsive.wee.js');
+			} else {
+				grunt.config.merge({
+					less: {
+						options: {
+							modifyVars: {
+								responsiveTestMode: false
+							}
+						}
+					}
+				});
 			}
 		}
 
@@ -393,6 +467,7 @@ module.exports = function(grunt) {
 			var relativePath = config.stylePath + '/maps/';
 
 			// Clear existing source map files
+
 			fs.readdirSync(relativePath).forEach(function(file) {
 				fs.unlinkSync(relativePath + file);
 			});
@@ -406,10 +481,10 @@ module.exports = function(grunt) {
 		}
 
 		if (config.testing.sourceMaps.js == true) {
-			var path = require('path'),
-				relativePath = config.scriptPath + '/maps/';
+			var relativePath = config.scriptPath + '/maps/';
 
 			// Clear existing source map files
+
 			fs.readdirSync(relativePath).forEach(function(file) {
 				fs.unlinkSync(relativePath + file);
 			});
@@ -623,7 +698,7 @@ module.exports = function(grunt) {
 
 	// Load plugins
 
-	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+	require('load-grunt-tasks')(grunt);
 
 	// Build
 

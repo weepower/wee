@@ -1,6 +1,6 @@
 {
 	"name": "Wee",
-	"description": "The extensible framework for building responsive web experiences.",
+	"description": "Your blueprint for modern web development.",
 	"paths": {
 		"root": "public",
 		"assets": {
