@@ -1,0 +1,277 @@
+// Wee 2.0.0 (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY THIS FILE
+
+////////////////
+// Responsive //
+////////////////
+
+// Import Breakpoints
+
+.mobile-landscape () when not (@mobileLandscapeWidth = false) {
+	@import '../@{responsivePath}/mobile-landscape.less';
+}
+.tablet-portrait () when not (@tabletPortraitWidth = false) {
+	@import '../@{responsivePath}/tablet-portrait.less';
+}
+.desktop-small () when not (@desktopSmallWidth = false) {
+	@import '../@{responsivePath}/desktop-small.less';
+}
+.desktop-medium () when not (@desktopMediumWidth = false) {
+	@import '../@{responsivePath}/desktop-medium.less';
+}
+.desktop-large () when not (@desktopLargeWidth = false) {
+	@import '../@{responsivePath}/desktop-large.less';
+}
+
+// Mobile Navigation Indicator
+
+.mobile-nav (@height: .67em) {
+	.cursor();
+	&:before {
+		.absolute();
+		.border(bottom; @mobileNavBorderColor; .15em; solid);
+		.border(top; @mobileNavBorderColor; .42em; double);
+		.content();
+		.height(@height);
+		.left(@mobileNavLeft);
+		.top(@mobileNavTop);
+		.width(@mobileNavWidth);
+	}
+}
+
+// Components
+
+.responsive () when (@responsiveEnabled = true) and not (@legacyMode = true) {
+
+	// IE Metro Compatability
+
+	@-ms-viewport {
+		.width(device-width);
+	}
+
+	// Test Mode
+
+	@value: 1;
+	@width: 320px;
+
+	.wee-responsive-testing () {
+		&:before,
+		&:after {
+			.fill();
+			.fixed();
+			.height(32px);
+			.z-index(3000);
+		}
+		&:before {
+			.background(@responsiveTestBackground);
+			.content();
+			.left(0);
+			.wee-responsive-testing-border();
+		}
+		&:after {
+			.color(@responsiveTestColor);
+			.content('@{value} @{bull}@{space}Mobile Portrait / @{width}');
+			.font('Arial, sans-serif'; 12px);
+			.line-height(33px);
+			.margin(horizontal; auto);
+			.padded(16px);
+			&:hover {
+				.hide();
+			}
+		}
+		.wee-responsive-testing-position();
+	}
+	.wee-responsive-testing-border () when not (@responsiveTestBorderColor = false) and (@responsiveTestPosition = 'top') {
+		.border(bottom; @responsiveTestBorderColor);
+	}
+	.wee-responsive-testing-border () when not (@responsiveTestBorderColor = false) and not (@responsiveTestPosition = 'top') {
+		.border(top; @responsiveTestBorderColor);
+	}
+	.wee-responsive-testing-position () when (@responsiveTestPosition = 'top') {
+		.padding(top; 32px);
+		&:before,
+		&:after {
+			.top();
+		}
+	}
+	.wee-responsive-testing-position () when not (@responsiveTestPosition = 'top') {
+		.padding(bottom; 32px);
+		&:before,
+		&:after {
+			.bottom();
+		}
+	}
+
+	.wee-hint (@breakpoint; @value; @width) when (@responsiveTestMode = true) {
+		body:after,
+		.js-testing-bar {
+			.left(50%);
+			.margin(left; (@width * -.5));
+			.width(@width);
+		}
+		body {
+			&:after {
+				.border(horizontal; darken(@responsiveTestBackground, 10%); 3px);
+				.content('@{value} @{bull}@{space}@{breakpoint} / @{width}');
+			}
+		}
+	}
+
+	.responsive-testing () when (@responsiveTestMode = true) {
+		body {
+			.wee-responsive-testing();
+		}
+	}
+
+	.responsive-testing();
+
+	.wee-testing-tools () when (@responsiveTestMode = true) {
+		.js-testing-bar {
+			.align(right);
+			.color(@responsiveTestColor);
+			.fill();
+			.fixed();
+			.font(@headingFont; 12px);
+			.height(32px);
+			.line-height(33px);
+			.padded(16px);
+			.user-select();
+			.z-index(3001);
+			.rule () when (@responsiveTestPosition = 'top') {
+				.top();
+			}
+			.rule () when not (@responsiveTestPosition = 'top') {
+				.bottom();
+			}
+			.rule();
+		}
+		.js-testing-cues {
+			.fill(both);
+			.fixed();
+			.hide();
+			.left(0);
+			.top(0);
+			.z-index(3000);
+		}
+		.js-testing-cue {
+			.border(horizontal; red; 3px);
+			.fill(vertical);
+			.fixed();
+			.left(50%);
+			.opacity(20%);
+			&:hover {
+				.opacity(40%);
+			}
+		}
+		#testing-frame {
+			.block();
+			.border(0);
+			.margin(horizontal; auto);
+		}
+		body.js-testing-enabled {
+			.background-image(none);
+			.background(@darkGray);
+			.margin(0);
+			.padding(0);
+		}
+		body.js-testing-disabled {
+			&:before,
+			&:after,
+			.js-testing-bar,
+			.js-testing-cues,
+			.js-testing-cue {
+				.hide();
+			}
+		}
+	}
+
+	.wee-testing-tools();
+
+	// Mobile Landscape
+
+	.mobile-landscape-query () when not (@mobileLandscapeWidth = false) {
+		@breakpoint: (@mobileLandscapeWidth - @responsiveOffset);
+		@value: 2;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.mobile-landscape();
+			.wee-hint('Mobile Landscape'; @value; @breakpoint);
+		}
+	}
+
+	.mobile-landscape-query();
+
+	// Tablet Portrait
+
+	.tablet-portrait-query () when not (@tabletPortraitWidth = false) {
+		@breakpoint: (@tabletPortraitWidth - @responsiveOffset);
+		@value: 3;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.tablet-portrait();
+			.wee-hint('Tablet Portrait'; @value; @breakpoint);
+		}
+	}
+
+	.tablet-portrait-query();
+
+	// Small Desktop
+
+	.desktop-small-query () when not (@desktopSmallWidth = false) {
+		@breakpoint: (@desktopSmallWidth - @responsiveOffset);
+		@value: 4;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.desktop-small();
+			.wee-hint('Small Desktop'; @value; @breakpoint);
+		}
+	}
+
+	.desktop-small-query();
+
+	// Medium Desktop
+
+	.desktop-medium-query () when not (@desktopMediumWidth = false) {
+		@breakpoint: (@desktopMediumWidth - @responsiveOffset);
+		@value: 5;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.desktop-medium();
+			.wee-hint('Medium Desktop'; @value; @breakpoint);
+		}
+	}
+
+	.desktop-medium-query();
+
+	// Large Desktop
+
+	.desktop-large-query () when not (@desktopLargeWidth = false) {
+		@breakpoint: (@desktopLargeWidth - @responsiveOffset);
+		@value: 6;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.desktop-large();
+			.wee-hint('Large Desktop'; @value; @breakpoint);
+		}
+	}
+
+	.desktop-large-query();
+}
+
+.responsive();

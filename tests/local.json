@@ -1,0 +1,21 @@
+{
+	"framework": "qunit",
+	"test_page": "index.html",
+	"src_files": [
+		"spec/**/*.js"
+	],
+	"routes": {
+		"/js": "../public/assets/js"
+	},
+	"launchers": {
+		"bs_chrome": {
+			"command": "browserstack launch --attach chrome:24.0 <url>",
+			"protocol": "browser"
+		},
+		"bs_firefox": {
+			"command": "browserstack launch --attach firefox:16.0 <url>",
+			"protocol": "browser"
+		}
+	},
+	"launch_in_dev": []
+}

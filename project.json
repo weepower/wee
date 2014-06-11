@@ -1,0 +1,77 @@
+{
+	"name": "Wee",
+	"description": "Your blueprint for modern web development.",
+	"paths": {
+		"root": "public",
+		"assets": {
+			"root": "assets",
+			"css": "css",
+			"js": "js",
+			"modules": "modules"
+		}
+	},
+	"style": {
+		"build": [
+
+		],
+		"compile": {
+
+		}
+	},
+	"script": {
+		"base": {
+			"enable": true,
+			"features": {
+				"assets": true,
+				"data": true,
+				"dom": true,
+				"events": true,
+				"routes": true,
+				"screen": true
+			},
+			"polyfill": {
+				"placeholder": true,
+				"srcset": true
+			},
+			"testing": {
+				"placeholders": true,
+				"responsive": true
+			},
+			"legacy": {
+				"enable": true,
+				"build": [
+					"lib/vendor/html5shiv.js"
+				]
+			}
+		},
+		"build": [
+
+		],
+		"compile": {
+
+		}
+	},
+	"testing": {
+		"server": {
+			"port": 9000
+		},
+		"reload": {
+			"enable": true,
+			"port": 35729,
+			"watch": {
+				"root": true,
+				"paths": [
+
+				]
+			},
+			"extensions": [
+				"html"
+			]
+		},
+		"sourceMaps": {
+			"css": false,
+			"js": true
+		},
+		"host": "http://wee.dev:8080"
+	}
+}
