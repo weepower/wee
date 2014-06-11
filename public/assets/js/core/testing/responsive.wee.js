@@ -19,7 +19,7 @@ Wee.fn.extend('testing', {
 	},
 	// If responsive test mode is enabled in variables.less start it
 	setupResponsive: function(vars) {
-		var matches = new RegExp('^@responsiveTestMode:(.*?);', 'gi').exec(vars);
+		var matches = new RegExp('^@responsiveTestMode:(.*?);', 'mgi').exec(vars);
 
 		if (matches && matches.length > 1 && matches[1].trim() != 'true') {
 			alert('Responsive test mode is disabled in the custom variables.less');

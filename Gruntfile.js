@@ -118,17 +118,28 @@ module.exports = function(grunt) {
 									return fileCheckCallback(false); // All @import files have been checked
 								}
 
-								var importFilePath = path.join(directoryPath, match[1] + '.less');
+								// Replace the responsivePath variable with path
+								var filename = match[1].replace('@{responsivePath}', 'custom/breakpoints');
+
+								// Compile all module paths by default for now
+								if (/@{(.*)}(.*).less/.test(filename)) {
+									fileCheckCallback(true);
+								}
+
+								var importFilePath = path.join(directoryPath, filename + '.less');
 
 								fs.exists(importFilePath, function(exists) {
-									if (! exists) { // @import file does not exists
+									// @import file does not exists
+									if (! exists) {
 										return checkNextImport(); // Skip to next
 									}
 
 									fs.stat(importFilePath, function(error, stats) {
-										if (stats.mtime > details.time) { // @import file has been modified so include it
+										// @import file has been modified so include it
+										if (stats.mtime > details.time) {
 											fileCheckCallback(true);
-										} else { // @import file hasn't been modified but check the @import's of this file
+										} else {
+											// @import file hasn't been modified but check the @import's of this file
 											checkFileForModifiedImports(importFilePath, function(hasModifiedImport) {
 												if (hasModifiedImport) {
 													fileCheckCallback(true);

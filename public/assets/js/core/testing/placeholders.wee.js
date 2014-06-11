@@ -19,7 +19,7 @@ Wee.fn.extend('testing', {
 	},
 	// If placeholders are enabled in variables.less create them
 	setupPlaceholders: function(vars) {
-		var matches = new RegExp('^@placeholdersEnabled:(.*?);', 'gi').exec(vars);
+		var matches = new RegExp('^@placeholdersEnabled:(.*?);', 'mgi').exec(vars);
 
 		if (matches && matches.length > 1 && matches[1].trim() != 'true') {
 			alert('Placeholders are disabled in the custom variables.less');
