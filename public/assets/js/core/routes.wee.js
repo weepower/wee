@@ -15,7 +15,7 @@ Wee.fn.make('routes', {
 		this.$set('routes', Wee.$extend(this.$get('routes', {}), routes));
 
 		if (init) {
-			this.run(false, false, routes);
+			this.run({routes: routes});
 		}
 	},
 	// Get the segments from an optionally specified path
@@ -25,29 +25,29 @@ Wee.fn.make('routes', {
 		var segs = Wee.$toArray(this.path().replace(/^\/|\/$/g, '').split('/'));
 		return (i !== undefined) ? (segs[i] || '') : segs;
 	},
-	// Process the stored route options against an optionally specified path
+	// Process the stored route options with optional config
 	// Defaults to current path
-	run: function(path, reverse, routes) {
-		routes = routes || this.$get('routes');
+	run: function(opt) {
+		var conf = Wee.$extend({
+				routes: this.$get('routes')
+			}, opt);
 
-		if (path) {
-			this.path(path);
+		if (conf.path) {
+			this.path(conf.path);
 		}
 
-		if (routes) {
-			this.$private('process', routes, 0, (this.$set('segs', 'routes:segments', {})).length);
+		if (conf.routes) {
+			this.$private('process', conf.routes, 0, (this.$set('segs', 'routes:segments', {})).length);
 
 			// Execute queued init functions on last iteration
 			var any = this.$get('any');
 
 			if (any) {
-				if (reverse) {
-					any.reverse();
-				}
-
 				for (var i = 0; i < any.length; i++) {
 					Wee.$exec(any[i]);
 				}
+
+				this.$set('any', []);
 			}
 		}
 	}
@@ -85,6 +85,9 @@ Wee.fn.make('routes', {
 						switch (opt) {
 							case '$any':
 								this.$push('any', child);
+								break;
+							case '$any:fire':
+								Wee.$exec(child);
 								break;
 							case '$root':
 								if (! seg) {
