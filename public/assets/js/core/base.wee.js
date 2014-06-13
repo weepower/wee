@@ -331,7 +331,12 @@ var Wee = (function(w, d) {
 		// Add all meta variables to the data store
 		$setVars: function() {
 			this.$each('[data-set]', function(el) {
-				Wee.$set(Wee.$data(el, 'set'), Wee.$data(el, 'value'));
+				var key = Wee.$data(el, 'set'),
+					val = Wee.$data(el, 'value');
+
+				(key.indexOf('[]') == -1) ?
+					Wee.$set(key, val) :
+					Wee.$push(key.replace('[]', ''), val);
 			});
 		},
 		// Add a specified class name to a specified element
