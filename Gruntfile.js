@@ -487,7 +487,8 @@ module.exports = function(grunt) {
 			grunt.config.set('less.options.sourceMapFilename', config.stylePath + '/maps/source.css.map');
 			grunt.config.set('less.options.sourceMapURL', relativePath + 'source.css.map');
 			grunt.config.set('less.options.sourceMapBasepath', function(dest) {
-					var filename = dest.replace(config.stylePath + '/', '');
+				var filename = dest.replace(config.assetPath + '/', '');
+					filename = filename.replace(config.paths.assets.css + '/', '');
 					filename = filename.replace(/\//g, '-');
 					filename = filename.replace('.css', '');
 
@@ -506,7 +507,8 @@ module.exports = function(grunt) {
 
 			grunt.config.set('uglify.options.sourceMap', true);
 			grunt.config.set('uglify.options.sourceMapName', function(dest) {
-				var filename = dest.replace(config.scriptPath + '/', '');
+				var filename = dest.replace(config.assetPath + '/', '');
+					filename = filename.replace(config.paths.assets.js + '/', '');
 					filename = filename.replace(/\//g, '-');
 					filename = filename.replace('.min.js', '');
 
