@@ -487,7 +487,11 @@ module.exports = function(grunt) {
 			grunt.config.set('less.options.sourceMapFilename', config.stylePath + '/maps/source.css.map');
 			grunt.config.set('less.options.sourceMapURL', relativePath + 'source.css.map');
 			grunt.config.set('less.options.sourceMapBasepath', function(dest) {
-				return relativePath + path.basename(dest);
+					var filename = dest.replace(config.stylePath + '/', '');
+					filename = filename.replace(/\//g, '-');
+					filename = filename.replace('.css', '');
+
+				return relativePath + filename + '.map';
 			});
 		}
 
@@ -502,9 +506,11 @@ module.exports = function(grunt) {
 
 			grunt.config.set('uglify.options.sourceMap', true);
 			grunt.config.set('uglify.options.sourceMapName', function(dest) {
-				var filename = path.basename(dest);
+				var filename = dest.replace(config.scriptPath + '/', '');
+					filename = filename.replace(/\//g, '-');
+					filename = filename.replace('.min.js', '');
 
-				return relativePath + filename.replace(/.js$/, '.js.map');
+				return relativePath + filename + '.map';
 			});
 		}
 
