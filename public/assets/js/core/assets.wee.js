@@ -3,21 +3,17 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.fn.make('assets', {
-	// Get the currently bound resource root or set the root with a specified value
+	// Get currently bound resource root or set root with specified value
 	// Returns string
 	root: function(val) {
 		return val ?
 			this.$set('root', val) :
 			this.$get('root', '');
 	},
-	// Load specified assets with a specified set of options
+	// Load specified assets with specified set of options
 	load: function(opt) {
 		var conf = Wee.$extend({
-				failure: false,
-				files: [],
-				group: false,
-				root: false,
-				success: false
+				files: []
 			}, opt),
 			files = Wee.$toArray(conf.files),
 			root = conf.root || this.root(),
@@ -39,7 +35,7 @@ Wee.fn.make('assets', {
 			this.$private('request', (root + files[i]), conf.group);
 		}
 	},
-	// When specified references are ready execute a callback
+	// When specified references are ready execute callback
 	ready: function(group, recheck) {
 		if (this.$get(group) === 0) {
 			var conf = this.$get(group + '-conf'),
@@ -54,7 +50,7 @@ Wee.fn.make('assets', {
 				Wee.$exec(conf.success, opt);
 			}
 		} else {
-			if (recheck !== false) {
+			if (recheck) {
 				setTimeout(function() {
 					Wee.loader.ready(group, opt);
 				}, 20);
@@ -62,14 +58,14 @@ Wee.fn.make('assets', {
 		}
 	}
 }, {
-	// Request a specific file
+	// Request specific file
 	request: function(path, group) {
 		var d = document,
 			scope = this,
 			head = d.getElementsByTagName('head')[0],
 			ext = path.split('.').pop();
 
-		// Load the file based on file extension
+		// Load file based on extension
 		if (ext == 'js') {
 			var el = d.createElement('script');
 
@@ -114,17 +110,17 @@ Wee.fn.make('assets', {
 			img.src = path;
 		}
 	},
-	// Decrement the remaining count of assets to be loaded
+	// Decrement remaining count of assets to be loaded
 	done: function(group) {
-		this.$set(group, this.$get(group) - 1);
+		this.$set(group, (this.$get(group) - 1));
 
 		this.$public.ready(group, false);
 	},
-	// Track any failed resources
+	// Track failed resources
 	fail: function(group) {
 		var key = group + '-fail';
 
-		this.$set(key, this.$get(key) + 1);
+		this.$set(key, (this.$get(key) + 1));
 		this.done(group);
 	}
 });

@@ -9,7 +9,7 @@ Wee.fn.extend('testing', {
 		(! vars) ?
 			Wee.data.request({
 				scope: this,
-				url: '/assets/css/custom/variables.less',
+				url: Wee.$get('variablesPath', '/assets/css/custom/variables.less'),
 				success: function(vars) {
 					this.$set('vars', vars);
 					this.setupResponsive(vars);

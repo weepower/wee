@@ -3,14 +3,14 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.fn.make('routes', {
-	// Get the currently bound path or set the path with a specified value
+	// Get currently bound path or set path with a specified value
 	// Returns string
 	path: function(val) {
 		return val ?
 			this.$set('path', val) :
 			this.$get('path', window.location.pathname);
 	},
-	// Add route endpoints to the route storage
+	// Add route endpoints to route storage
 	map: function(routes, init) {
 		this.$set('routes', Wee.$extend(this.$get('routes', {}), routes));
 
@@ -18,14 +18,14 @@ Wee.fn.make('routes', {
 			this.run({routes: routes});
 		}
 	},
-	// Get the segments from an optionally specified path
+	// Get segments from an optionally specified path
 	// Defaults to currently bound path
 	// Returns array of segment strings or string if index specified
 	segments: function(i) {
 		var segs = Wee.$toArray(this.path().replace(/^\/|\/$/g, '').split('/'));
 		return (i !== undefined) ? (segs[i] || '') : segs;
 	},
-	// Process the stored route options with optional config
+	// Process stored route options with optional config
 	// Defaults to current path
 	run: function(opt) {
 		var conf = Wee.$extend({
@@ -74,7 +74,7 @@ Wee.fn.make('routes', {
 				if (opt == seg) {
 					match = true;
 				} else if (opt.substring(0, 1) == '$') {
-					// If the second character is a / then test regex
+					// If the second character is / then test regex
 					if (opt.substring(1, 2) == '/') {
 						var reg = new RegExp(opt.substring(2).slice(0,-1));
 

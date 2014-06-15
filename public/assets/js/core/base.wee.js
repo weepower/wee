@@ -8,7 +8,7 @@ var Wee = (function(w, d) {
 	var _store = {};
 
 	return {
-		// Create controller specified name, public object, and optional private object
+		// Create controller with specified name, public object, and optional private object
 		fn: {
 			make: function(name, pub, priv) {
 				Wee[name] = (function() {
@@ -28,17 +28,13 @@ var Wee = (function(w, d) {
 						Public = Wee.$extend(pub, data),
 						Private = Wee.$extend(priv, data);
 
-					// If private object exists expose the $call function for executing private methods
-					if (priv !== undefined) {
+					// If private object exists expose $call function for executing private methods
+					if (priv) {
 						Public.$private = function(func) {
 							var args = Array.prototype.slice.call(arguments);
 
-							// Bind all additional arguments to the private method call
-							if (args.length > 1) {
-								args.shift();
-							} else {
-								args = null;
-							}
+							// Bind all additional arguments to private method call
+							(args.length > 1) ? args.shift() : args = null;
 
 							return Private[func].apply(Private, args);
 						};
@@ -51,7 +47,7 @@ var Wee = (function(w, d) {
 					return Public;
 				})();
 			},
-			// Extend an existing controller
+			// Extend existing controller
 			extend: function(name, pub, priv) {
 				if (name == '') {
 					// Merge into the global object
@@ -66,8 +62,8 @@ var Wee = (function(w, d) {
 				}
 			}
 		},
-		// Get the current environment or detect the current environment against a specified object
-		// Defaults to 'local'
+		// Get current environment or detect current environment against specified object
+		// Defaults to local
 		// Returns current environment string
 		$env: function(obj, def) {
 			if (obj) {
@@ -86,7 +82,7 @@ var Wee = (function(w, d) {
 
 			return this.$get('env', 'local');
 		},
-		// Get a public variable with an optional fallback
+		// Get public variable with optional fallback
 		// Returns mixed
 		$get: function(key, def, set, opt) {
 			var split = this._storeData(key),
@@ -107,7 +103,7 @@ var Wee = (function(w, d) {
 
 			return null;
 		},
-		// Set a public variable
+		// Set public variable
 		// Returns set variable
 		$set: function(key, val, opt) {
 			var split = this._storeData(key),
@@ -147,7 +143,7 @@ var Wee = (function(w, d) {
 
 			return [_store, key];
 		},
-		// Execute a specified function or controller method
+		// Execute specified function or controller method
 		$exec: function(fn, opt) {
 			var conf = this.$extend({
 					args: [],
@@ -181,12 +177,12 @@ var Wee = (function(w, d) {
 				}
 			}
 		},
-		// Determine if the specified argument is an array
+		// Determine if specified argument is array
 		// Returns boolean
 		$isArray: function(obj) {
 			return (obj && (obj.isArray || Object.prototype.toString.call(obj) == '[object Array]'));
 		},
-		// Determine if the specified element belongs to the specified array
+		// Determine if specified element belongs to specified array
 		// Returns index else false
 		$inArray: function(obj, el) {
 			for (var i = 0; i < obj.length; i++) {
@@ -197,29 +193,29 @@ var Wee = (function(w, d) {
 
 			return false;
 		},
-		// Push an object into a new array if it isn't one already
+		// Push object into a new array if it isn't one already
 		// Returns array
 		$toArray: function(obj) {
 			return this.$isArray(obj) ?
 				obj :
 				[obj];
 		},
-		// Determine if the specified argument is a string
+		// Determine if specified argument is a string
 		// Returns boolean
 		$isString: function(obj) {
 			return (typeof obj == 'string');
 		},
-		// Determine if the specified argument is a function
+		// Determine if specified argument is a function
 		// Returns boolean
 		$isFunction: function(obj) {
 			return (obj && {}.toString.call(obj) == '[object Function]');
 		},
-		// Determine if the specified argument is an object
+		// Determine if specified argument is an object
 		// Returns boolean
 		$isObject: function(obj) {
 			return (obj && typeof obj == 'object' && ! this.$isArray(obj));
 		},
-		// Get all the keys from an object
+		// Get keys from an object
 		// Returns array of key strings
 		$getKeys: function(obj) {
 			if (Object.keys) {
@@ -234,7 +230,7 @@ var Wee = (function(w, d) {
 				return keys;
 			}
 		},
-		// Serialize a specified object
+		// Serialize specified object
 		$serialize: function(obj) {
 			var str = [];
 
@@ -246,13 +242,13 @@ var Wee = (function(w, d) {
 
 			return str.join('&');
 		},
-		// Extend a specified object with a specified source object
+		// Extend specified object with specified source object
 		// Returns object
 		$extend: function(obj, src, deep) {
 			obj = obj || {};
 
 			for (var key in src) {
-				// Attempt to deep nest else set the property of the object
+				// Attempt to deep nest else set property of object
 				if (deep) {
 					try {
 						obj[key] = (this.$isObject(obj[key])) ?
@@ -268,12 +264,12 @@ var Wee = (function(w, d) {
 
 			return obj;
 		},
-		// Clone a specified object
+		// Clone specified object
 		// Returns object
 		$clone: function(obj) {
 			return this.$isArray(obj) ? obj.slice() : this.$extend({}, obj);
 		},
-		// Get matches to a specified selector
+		// Get matches to specified selector
 		// Returns array of DOM objects
 		$: function(sel, context) {
 			if (! this.$isString(sel)) {
@@ -283,7 +279,7 @@ var Wee = (function(w, d) {
 			var el = null;
 			context = context || document;
 
-			// If the selector doesn't have a space or start with a [ assume its a simple selection
+			// If selector doesn't have a space or start with [ assume its a simple selection
 			if (sel.indexOf(' ') == -1 && sel[0] != '[') {
 				var type = sel.match(/^(\W)?(.*)/);
 
@@ -317,9 +313,8 @@ var Wee = (function(w, d) {
 				return matches;
 			}
 		},
-		// Execute a specified function for a specified selector
+		// Execute specified function for specified selector
 		$each: function(sel, fn) {
-			// If an element selector is specified get the DOM elements
 			var el = (this.$isString(sel)) ? this.$toArray(this.$(sel)) : [sel],
 				len = el.length,
 				i = 0;
@@ -328,7 +323,7 @@ var Wee = (function(w, d) {
 				fn(el[i], i);
 			}
 		},
-		// Add all meta variables to the data store
+		// Add meta variables to data store
 		$setVars: function() {
 			this.$each('[data-set]', function(el) {
 				var key = Wee.$data(el, 'set'),
@@ -339,24 +334,24 @@ var Wee = (function(w, d) {
 					Wee.$push(key.replace('[]', ''), val);
 			});
 		},
-		// Add a specified class name to a specified element
+		// Add specified class name to specified element
 		$addClass: function(el, val) {
 			if (el.classList) {
 				el.classList.add(val);
 			} else {
 				var curr = el.className;
 
-				// If the specified class isn't already bound either set it or append it
+				// If specified class isn't already bound either set it or append it
 				if (curr.indexOf(val) === -1) {
 					if (curr === '') {
 						el.className = val;
 					} else {
-						el.className.concat(' ' + val);
+						el.className += ' ' + className;
 					}
 				}
 			}
 		},
-		// Removes a specified class value from a specified element
+		// Removes specified class value from specified element
 		$removeClass: function(el, val) {
 			if (el.classList) {
 				el.classList.remove(val);
@@ -364,7 +359,7 @@ var Wee = (function(w, d) {
 				el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
 			}
 		},
-		// Add specified css rules
+		// Add specified CSS rules
 		$css: function(sel, a, b) {
 			sel = this.$(sel);
 
@@ -376,16 +371,13 @@ var Wee = (function(w, d) {
 				sel.style[a] = b;
 			}
 		},
-		// Get the HTML value of a specified element or selector or set the HTML with a specified value
+		// Get HTML value of a specified element or selector or set HTML with specified value
 		$html: function(el, val) {
-			// If an element selector is specified get the DOM elements
 			this.$(el).innerHTML = val;
 		},
-		// Get the data value of a specified element or selector or set the data with a specified value
-		$data: function(el, key, val) {
-			// If an element selector is specified get the DOM elements
+		// Get attribute of specified element or selector or set attribute with specified value
+		$attr: function(el, key, val) {
 			el = this.$(el);
-			key = 'data-' + key;
 
 			if (val) {
 				el.setAttribute(key);
@@ -393,7 +385,13 @@ var Wee = (function(w, d) {
 				return el.getAttribute(key);
 			}
 		},
-		// Execute a specified function once the document is ready
+		// Get data value of specified element or selector or set data with specified value
+		$data: function(el, key, val) {
+			key = 'data-' + key;
+
+			return this.$attr(el, key, val);
+		},
+		// Execute specified function once document is ready
 		ready: function(fn) {
 			if (d.addEventListener) {
 				d.addEventListener('DOMContentLoaded', function() {
@@ -407,7 +405,7 @@ var Wee = (function(w, d) {
 				});
 			}
 		},
-		// Toggle the HTML JavaScript status class name and set meta variables
+		// Toggle HTML JavaScript status class name and set meta variables
 		init: function() {
 			var html = d.body.parentNode;
 

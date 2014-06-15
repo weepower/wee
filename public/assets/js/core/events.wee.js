@@ -3,7 +3,7 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.fn.make('events', {
-	// Add bindings to the bound object with an optional exec object and/or init boolean
+	// Add bindings to bound object with optional exec object and/or init boolean
 	map: function(evts, a, b) {
 		this.$set('bound', Wee.$extend(this.$get('bound', {}), evts));
 
@@ -11,7 +11,7 @@ Wee.fn.make('events', {
 			this.bind(evts, a);
 		}
 	},
-	// Traverse the DOM for all available bindings
+	// Traverse DOM for available bindings
 	bind: function(evts, opt) {
 		evts = evts || this.$get('bound');
 
@@ -41,7 +41,7 @@ Wee.fn.make('events', {
 			});
 		}
 	},
-	// Execute a specific event by name and optional trigger
+	// Execute specific event by name and optional trigger
 	fire: function(name, evt) {
 		var events = this.$get('bound');
 
@@ -51,11 +51,11 @@ Wee.fn.make('events', {
 			}
 		}
 	},
-	// Bind a specified function to a specified selector and event
+	// Bind specified function to specified selector and event
 	on: function(sel, evts, opt) {
-		// For each element attach the events
+		// For each element attach events
 		Wee.$each(sel, function(el) {
-			// Loop through the object events
+			// Loop through object events
 			for (var evt in evts) {
 				var conf = Wee.$extend({
 						args: [],
@@ -73,20 +73,19 @@ Wee.fn.make('events', {
 				conf.args.unshift(0, el);
 
 				(function(el, evt, fn, conf) {
+					var cb = function(e) {
+						conf.args[0] = e;
+						Wee.$exec(fn, conf);
+					};
+
 					el.attachEvent ?
-						el.attachEvent('on' + evt, function(e) {
-							conf.args[0] = e;
-							Wee.$exec(fn, conf);
-						}) :
-						el.addEventListener(evt, function(e) {
-							conf.args[0] = e;
-							Wee.$exec(fn, conf);
-						}, false);
+						el.attachEvent('on' + evt, cb) :
+						el.addEventListener(evt, cb, false);
 				})(el, evt, fn, conf);
 			}
 		});
 	},
-	// Ensure the mouse has actually entered or left the root element before firing the event
+	// Ensure mouse has actually entered or left root element before firing event
 	mouseEvent: function(e, parent, fn) {
 		var child = e.relatedTarget;
 
@@ -101,7 +100,7 @@ Wee.fn.make('events', {
 			scope: this
 		});
 	},
-	// Compare a parent element to a child element
+	// Compare parent element to child element
 	checkParent: function(parent, child) {
 		if (parent === child) {
 			return false;

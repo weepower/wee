@@ -15,16 +15,6 @@ test('settings', function() {
 	strictEqual(Wee.$env(), 'here', 'Default environment is correctly set to "here".');
 });
 
-// $setVars()
-
-module('$setVars');
-
-test('get', function() {
-	Wee.$setVars();
-
-	strictEqual(Wee.$get('test-var'), 'Test Value', 'Meta variable "test-var" was set correctly.');
-});
-
 // $get(key, def, set, opt)
 // $set(key, val, opt)
 // $push(key, val)
@@ -60,7 +50,19 @@ test('get with set default string', function() {
 	strictEqual(Wee.$get('set-var-123'), 'string', 'Variable "set-var-123" is correctly set to "string".');
 });
 
+// $setVars()
+
+module('$setVars');
+
+test('get', function() {
+	Wee.$setVars();
+
+	strictEqual(Wee.$get('test-var'), 'Test Value', 'Meta variable "test-var" was set correctly.');
+});
+
 // $exec(fn, opt)
+
+
 
 // $isArray(obj)
 
@@ -79,6 +81,17 @@ test('check if object is array', function() {
 });
 
 test('check if array is array', function() {
+	ok(Wee.$isArray(['string']), 'Array "[\'string\']" is an array.');
+});
+
+// $isArray(obj)
+
+module('$isArray');
+
+test('check different types against array', function() {
+	strictEqual(Wee.$isArray('string'), false, 'Variable "string" is not an array.');
+	strictEqual(Wee.$isArray(function test() {}), false, 'Function "test()" is not an array.');
+	strictEqual(Wee.$isArray({string: 'string'}), false, 'Object "string" is not an array.');
 	ok(Wee.$isArray(['string']), 'Array "[\'string\']" is an array.');
 });
 
@@ -110,15 +123,6 @@ test('check different types against string', function() {
 	strictEqual(Wee.$isString({string: 'string'}), false, 'Object "string" is not a string.');
 	strictEqual(Wee.$isString(['string']), false, 'Array "[\'string\']" is not a string.');
 	ok(Wee.$isString('string'), 'Variable "string" is a string.');
-});
-
-module('$isArray');
-
-test('check different types against array', function() {
-	strictEqual(Wee.$isArray('string'), false, 'Variable "string" is not an array.');
-	strictEqual(Wee.$isArray(function test() {}), false, 'Function "test()" is not an array.');
-	strictEqual(Wee.$isArray({string: 'string'}), false, 'Object "string" is not an array.');
-	ok(Wee.$isArray(['string']), 'Array "[\'string\']" is an array.');
 });
 
 // $isFunction(obj)
@@ -169,28 +173,43 @@ test('check for properly serialized object', function() {
 
 // $extend(obj, src, deep)
 
+
+
 // $clone(obj)
 
-// $hasClass(el, val)
 
-// $addClass(el, val) 
-
-// $removeClass(el, val) 
-
-// $css(sel, a, b)
-
-// $append(el, child)
-
-// $after: function(el, html)$before(el, html)
-
-// $after(el, html)
-
-// $text(el, val)
-
-// $html(el, val)
 
 // $(sel, context)
 
+
+
 // $each(sel, fn)
 
+
+
+// $setVars()
+
+
+
+// $addClass(el, val)
+
+
+
+// $removeClass(el, val)
+
+
+
+// $css(sel, a, b)
+
+
+
+// $html(el, val)
+
+
+
+// $attr(el, key, val)
+
+
+
 // $data(el, key, val)
+

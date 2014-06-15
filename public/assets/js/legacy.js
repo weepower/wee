@@ -46,7 +46,7 @@ var WeeLegacy = (function(w, d) {
 				root = 10,
 				sheets = d.styleSheets,
 				len = sheets.length,
-				i = 0
+				i = 0;
 
 			if (body.currentStyle) {
 				var val = body.currentStyle.fontSize;

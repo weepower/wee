@@ -3,18 +3,11 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.fn.make('data', {
-	// Make an Ajax request based on the specified options
+	// Make Ajax request based on specified options
 	request: function(opt) {
 		var conf = Wee.$extend({
 				args: [],
-				cache: true,
-				data: {},
-				failure: false,
-				json: false,
-				method: 'get',
-				success: false,
-				template: false,
-				url: null
+				data: {}
 			}, opt),
 			x = new XMLHttpRequest();
 
@@ -25,7 +18,7 @@ Wee.fn.make('data', {
 						var resp = x.responseText,
 							orig = resp;
 
-						// Parse the JSON response if specified
+						// Parse JSON response if specified
 						if (conf.json || conf.template) {
 							try {
 								resp = JSON.parse(resp);
@@ -41,7 +34,7 @@ Wee.fn.make('data', {
 
 						conf.args.unshift(resp);
 
-						// Execute the success callback if specified
+						// Execute success callback if specified
 						Wee.$exec(conf.success, {
 							args: conf.args,
 							scope: conf.scope
@@ -61,7 +54,7 @@ Wee.fn.make('data', {
 			}
 		};
 
-		// Post or get the endpoint based on the specification
+		// Post or get endpoint based on specification
 		if (conf.method == 'post') {
 			x.open('POST', conf.url, true);
 			x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
@@ -76,7 +69,7 @@ Wee.fn.make('data', {
 			x.send(null);
 		}
 	},
-	// Parse specified data to a specified template string
+	// Parse specified data into specified template string
 	parse: function(str, obj) {
 		obj = obj || {};
 

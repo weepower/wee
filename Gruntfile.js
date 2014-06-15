@@ -453,8 +453,8 @@ module.exports = function(grunt) {
 		// Get legacy files: if enabled compile all relevant files into legacy.css and legacy.js
 
 		if (config.script.base.legacy.enable == true) {
-			var legacyStyles = [],
-				legacyScripts = [],
+			var legacyStyles = [styleRoot + '/legacy.less'],
+				legacyScripts = [scriptRoot + '/legacy.js'],
 				legacyCount = config.script.base.legacy.build.length;
 
 			for (var i = 0; i < legacyCount; i++) {
@@ -468,9 +468,6 @@ module.exports = function(grunt) {
 				}
 			}
 		}
-
-		legacyStyles.push(styleRoot + '/legacy.less');
-		legacyScripts.push(scriptRoot + '/legacy.js');
 
 		// Source map support
 

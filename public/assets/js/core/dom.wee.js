@@ -3,36 +3,84 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.fn.extend('', {
-	// Determine if the specified element has a specified class name
+	// Determine if specified element has specified class name
 	// Returns boolean
 	$hasClass: function(el, val) {
-		return (el.classList) ?
+		return el.classList ?
 			el.classList.contains(val) :
 			new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className);
 	},
-	// Append a specified child element to a parent element
+	// Hide specified element
+	$show: function(sel) {
+		this.$each(sel, function(el) {
+			el.style.display = '';
+		})
+	},
+	// Get children of specified element
+	$children: function(el) {
+		el = this.$(el);
+
+		var children = [],
+			len = el.children.length,
+			i = 0;
+
+		for (; i < len; i++) {
+			if (el.children[i].nodeType != 8) {
+				children.push(el.children[i]);
+			}
+		}
+	},
+	// Get siblings of specified element
+	$siblings: function(el) {
+		el = this.$(el);
+
+		var siblings = Array.prototype.slice.call(el.parentNode.children),
+			len = siblings.length,
+			i = 0;
+
+		for (; i < len; i++) {
+			if (siblings[i] === el) {
+				siblings.splice(i, 1);
+				break;
+			}
+		}
+	},
+	// Hide specified element
+	$hide: function(sel) {
+		this.$each(sel, function(el) {
+			el.style.display = 'none';
+		})
+	},
+	// Append specified child element to parent element
 	$append: function(el, child) {
 		el.appendChild(child);
 	},
-	// Insert a specified element before a specified element
+	// Prepend specified child element to parent element
+	$prepend: function(el, child) {
+		el.insertBefore(child, el.firstChild);
+	},
+	// Insert specified element before specified element
 	$before: function(el, html) {
 		el.insertAdjacentHTML('beforebegin', html);
 	},
-	// Insert a specified element after a specified element
+	// Insert specified element after specified element
 	$after: function(el, html) {
 		el.insertAdjacentHTML('afterend', html);
 	},
-	// Get the text value of a specified element or selector or set the text with a specified value
+	// Remove specified element from DOM
+	$remove: function(sel) {
+		this.$each(sel, function(el) {
+			el.parentNode.removeChild(el);
+		})
+	},
+	// Get text value of specified element or selector or set text with specified value
 	$text: function(el, val) {
-		// If an element selector is specified get the DOM elements
 		el = this.$(el);
 
 		if (val) {
-			if (el.textContent !== undefined) {
-				el.textContent = val;
-			} else {
+			(el.textContent !== undefined) ?
+				el.textContent = val:
 				el.innerText = val;
-			}
 		} else {
 			return el.textContent || el.innerText;
 		}
