@@ -64,14 +64,14 @@ var Wee = (function(w, d) {
 		},
 		// Get current environment or detect current environment against specified object
 		// Defaults to local
-		// Returns current environment string
+		// Returns environment string
 		$env: function(obj, def) {
 			if (obj) {
 				this.$set('env', function() {
 					var host = location.host;
 
 					for (var key in obj) {
-						if (obj[key] === host) {
+						if (obj[key] == host) {
 							return key;
 						}
 					}
@@ -82,8 +82,10 @@ var Wee = (function(w, d) {
 
 			return this.$get('env', 'local');
 		},
-		// Get public variable with optional fallback
-		// Returns mixed
+		// Get public variable with optional default
+		// Accepts optional boolean to set default value if variable doesn't exist
+		// Options can be passed if default value being set is a callback
+		// Returns mixed value
 		$get: function(key, def, set, opt) {
 			var split = this._storeData(key),
 				root = split[0],
@@ -92,7 +94,7 @@ var Wee = (function(w, d) {
 			if (root.hasOwnProperty(key)) {
 				return root[key]
 			} else if (def !== undefined) {
-				def = (this.$isFunction(def)) ? def() : (opt ? this.$exec(def, opt) : def);
+				def = this.$isFunction(def) ? def() : (opt ? this.$exec(def, opt) : def);
 
 				if (set) {
 					this.$set(key, def);
@@ -104,7 +106,8 @@ var Wee = (function(w, d) {
 			return null;
 		},
 		// Set public variable
-		// Returns set variable
+		// Options can be passed if value is a callback
+		// Returns mixed value
 		$set: function(key, val, opt) {
 			var split = this._storeData(key),
 				set = (this.$isFunction(val)) ? val() : (opt ? this.$exec(val, opt) : val);
@@ -112,7 +115,7 @@ var Wee = (function(w, d) {
 
 			return set;
 		},
-		// Push specified value to public array
+		// Push specified value into public array
 		// Returns modified array
 		$push: function(key, val) {
 			var split = this._storeData(key),
@@ -144,6 +147,7 @@ var Wee = (function(w, d) {
 			return [_store, key];
 		},
 		// Execute specified function or controller method
+		// Arguments and scope can be set in the options object
 		$exec: function(fn, opt) {
 			var conf = this.$extend({
 					args: [],
@@ -193,12 +197,10 @@ var Wee = (function(w, d) {
 
 			return false;
 		},
-		// Push object into a new array if it isn't one already
+		// Cast object to array if it isn't one
 		// Returns array
 		$toArray: function(obj) {
-			return this.$isArray(obj) ?
-				obj :
-				[obj];
+			return this.$isArray(obj) ? obj : [obj];
 		},
 		// Determine if specified argument is a string
 		// Returns boolean
@@ -216,7 +218,7 @@ var Wee = (function(w, d) {
 			return (obj && typeof obj == 'object' && ! this.$isArray(obj));
 		},
 		// Get keys from an object
-		// Returns array of key strings
+		// Returns array of strings
 		$getKeys: function(obj) {
 			if (Object.keys) {
 				return Object.keys(obj);
@@ -231,6 +233,7 @@ var Wee = (function(w, d) {
 			}
 		},
 		// Serialize specified object
+		// Returns string
 		$serialize: function(obj) {
 			var str = [];
 
@@ -243,6 +246,7 @@ var Wee = (function(w, d) {
 			return str.join('&');
 		},
 		// Extend specified object with specified source object
+		// Optionally nest deep with third argument set to true
 		// Returns object
 		$extend: function(obj, src, deep) {
 			obj = obj || {};
@@ -265,11 +269,12 @@ var Wee = (function(w, d) {
 			return obj;
 		},
 		// Clone specified object
-		// Returns object
+		// Returns new object
 		$clone: function(obj) {
 			return this.$isArray(obj) ? obj.slice() : this.$extend({}, obj);
 		},
 		// Get matches to specified selector
+		// Accepts optional context argument
 		// Returns array of DOM objects
 		$: function(sel, context) {
 			if (! this.$isString(sel)) {
@@ -313,7 +318,14 @@ var Wee = (function(w, d) {
 				return matches;
 			}
 		},
-		// Execute specified function for specified selector
+		// Get first match to specified element|selector
+		// Returns DOM object
+		$first: function(sel) {
+			var el = this.$(sel);
+
+			return Wee.$isArray(el) ? el[0] : el;
+		},
+		// Execute specified function for specified elements|selector
 		$each: function(sel, fn) {
 			var el = (this.$isString(sel)) ? this.$toArray(this.$(sel)) : [sel],
 				len = el.length,
@@ -321,6 +333,58 @@ var Wee = (function(w, d) {
 
 			for (; i < len; i++) {
 				fn(el[i], i);
+			}
+		},
+		// Add specified class name to specified element|selector
+		$addClass: function(sel, val) {
+			this.$each(sel, function(el) {
+				if (el.classList) {
+					el.classList.add(val);
+				} else {
+					var curr = el.className;
+
+					// If specified class isn't already bound either set it or append it
+					if (curr.indexOf(val) === -1) {
+						if (curr === '') {
+							el.className = val;
+						} else {
+							el.className += ' ' + className;
+						}
+					}
+				}
+			});
+		},
+		// Removes specified class from specified element|selector
+		$removeClass: function(sel, val) {
+			this.$each(sel, function(el) {
+				if (el.classList) {
+					el.classList.remove(val);
+				} else {
+					el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+				}
+			});
+		},
+		// Add specified CSS rules to element|selector
+		// Accepts either rule object or rule, value
+		$css: function(sel, a, b) {
+			this.$each(sel, function(el) {
+				if (Wee.$isObject(a)) {
+					for (var key in a) {
+						el.style[key] = a[key];
+					}
+				} else {
+					el.style[a] = b;
+				}
+			});
+		},
+		// Get HTML value of a specified element|selector or set HTML with specified value
+		$html: function(sel, val) {
+			if (val) {
+				this.$each(sel, function(el) {
+					el.innerHTML = val;
+				});
+			} else {
+				return Wee.$first(sel).innerHTML;
 			}
 		},
 		// Add meta variables to data store
@@ -334,64 +398,23 @@ var Wee = (function(w, d) {
 					Wee.$push(key.replace('[]', ''), val);
 			});
 		},
-		// Add specified class name to specified element
-		$addClass: function(el, val) {
-			if (el.classList) {
-				el.classList.add(val);
-			} else {
-				var curr = el.className;
-
-				// If specified class isn't already bound either set it or append it
-				if (curr.indexOf(val) === -1) {
-					if (curr === '') {
-						el.className = val;
-					} else {
-						el.className += ' ' + className;
-					}
-				}
-			}
-		},
-		// Removes specified class value from specified element
-		$removeClass: function(el, val) {
-			if (el.classList) {
-				el.classList.remove(val);
-			} else {
-				el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-			}
-		},
-		// Add specified CSS rules
-		$css: function(sel, a, b) {
-			sel = this.$(sel);
-
-			if (this.$isObject(a)) {
-				for (var key in a) {
-					sel.style[key] = a[key];
-				}
-			} else {
-				sel.style[a] = b;
-			}
-		},
-		// Get HTML value of a specified element or selector or set HTML with specified value
-		$html: function(el, val) {
-			this.$(el).innerHTML = val;
-		},
-		// Get attribute of specified element or selector or set attribute with specified value
-		$attr: function(el, key, val) {
-			el = this.$(el);
-
+		// Get attribute of specified element|selector or set attribute with specified value
+		$attr: function(sel, key, val) {
 			if (val) {
-				el.setAttribute(key);
+				this.$each(sel, function(el) {
+					el.setAttribute(key, val);
+				});
 			} else {
-				return el.getAttribute(key);
+				return this.$first(sel).getAttribute(key);
 			}
 		},
-		// Get data value of specified element or selector or set data with specified value
-		$data: function(el, key, val) {
+		// Get data value of specified element|selector or set data with specified value
+		$data: function(sel, key, val) {
 			key = 'data-' + key;
 
-			return this.$attr(el, key, val);
+			return this.$attr(sel, key, val);
 		},
-		// Execute specified function once document is ready
+		// Execute specified function when document is ready
 		ready: function(fn) {
 			if (d.addEventListener) {
 				d.addEventListener('DOMContentLoaded', function() {

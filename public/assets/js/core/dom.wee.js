@@ -3,86 +3,131 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.fn.extend('', {
-	// Determine if specified element has specified class name
+	// Determine if specified element|selector has specified class name
 	// Returns boolean
-	$hasClass: function(el, val) {
-		return el.classList ?
+	$hasClass: function(sel, val) {
+		var el = this.$first(sel);
+
+		el.classList ?
 			el.classList.contains(val) :
 			new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className);
 	},
-	// Hide specified element
+	// Hide specified selector
 	$show: function(sel) {
-		this.$each(sel, function(el) {
-			el.style.display = '';
-		})
+		this.$css(sel, {
+			display: ''
+		});
 	},
-	// Get children of specified element
-	$children: function(el) {
-		el = this.$(el);
-
-		var children = [],
-			len = el.children.length,
-			i = 0;
-
-		for (; i < len; i++) {
-			if (el.children[i].nodeType != 8) {
-				children.push(el.children[i]);
-			}
-		}
-	},
-	// Get siblings of specified element
-	$siblings: function(el) {
-		el = this.$(el);
-
-		var siblings = Array.prototype.slice.call(el.parentNode.children),
-			len = siblings.length,
-			i = 0;
-
-		for (; i < len; i++) {
-			if (siblings[i] === el) {
-				siblings.splice(i, 1);
-				break;
-			}
-		}
-	},
-	// Hide specified element
+	// Hide specified selector
 	$hide: function(sel) {
+		this.$css(sel, {
+			display: 'none'
+		});
+	},
+	// Get children of specified element|selector
+	// Returns nodeList of children
+	$children: function(sel) {
+		var el = this.$first(sel);
+
+		if (el) {
+			var children = [],
+				len = el.children.length,
+				i = 0;
+
+			for (; i < len; i++) {
+				if (el.children[i].nodeType != 8) {
+					children.push(el.children[i]);
+				}
+			}
+
+			return children;
+		}
+
+		return null;
+	},
+	// Get siblings of specified element|selector
+	// Returns nodeList of siblings
+	$siblings: function(sel) {
+		var el = this.$first(sel);
+
+		if (el) {
+				var siblings = Array.prototype.slice.call(el.parentNode.children),
+					len = siblings.length,
+					i = 0;
+
+			for (; i < len; i++) {
+				if (siblings[i] === el) {
+					siblings.splice(i, 1);
+					break;
+				}
+			}
+
+			return siblings;
+		}
+
+		return null;
+	},
+	// Append specified child element to parent element|selector
+	$append: function(sel, child) {
+		if (this.$isString(child)) {
+			this.$each(sel, function(el) {
+				el.innerHTML = el.innerHTML + child;
+			});
+		} else {
+			this.$each(sel, function(el) {
+				el.appendChild(child);
+			});
+		}
+	},
+	// Prepend specified child element to parent element|selector
+	$prepend: function(sel, child) {
+		if (this.$isString(child)) {
+			this.$each(sel, function(el) {
+				el.innerHTML = child + el.innerHTML;
+			});
+		} else {
+			this.$each(sel, function(el) {
+				el.insertBefore(child, el.firstChild);
+			});
+		}
+	},
+	// Insert specified element before specified element|selector
+	$before: function(sel, html) {
 		this.$each(sel, function(el) {
-			el.style.display = 'none';
-		})
+			el.insertAdjacentHTML('beforebegin', html);
+		});
 	},
-	// Append specified child element to parent element
-	$append: function(el, child) {
-		el.appendChild(child);
+	// Insert specified element after specified element|selector
+	$after: function(sel, html) {
+		this.$each(sel, function(el) {
+			el.insertAdjacentHTML('afterend', html);
+		});
 	},
-	// Prepend specified child element to parent element
-	$prepend: function(el, child) {
-		el.insertBefore(child, el.firstChild);
-	},
-	// Insert specified element before specified element
-	$before: function(el, html) {
-		el.insertAdjacentHTML('beforebegin', html);
-	},
-	// Insert specified element after specified element
-	$after: function(el, html) {
-		el.insertAdjacentHTML('afterend', html);
-	},
-	// Remove specified element from DOM
+	// Remove specified element|selector from DOM
 	$remove: function(sel) {
 		this.$each(sel, function(el) {
 			el.parentNode.removeChild(el);
 		})
 	},
-	// Get text value of specified element or selector or set text with specified value
-	$text: function(el, val) {
-		el = this.$(el);
-
+	// Get text value of specified element|selector or set text with specified value
+	$text: function(sel, val) {
 		if (val) {
-			(el.textContent !== undefined) ?
-				el.textContent = val:
-				el.innerText = val;
+			this.$each(sel, function(el) {
+				(el.textContent !== undefined) ?
+					el.textContent = val:
+					el.innerText = val;
+			});
 		} else {
+			var el = this.$first(sel);
+
 			return el.textContent || el.innerText;
 		}
+	},
+	// Convert HTML string to a DOM object
+	$parseHTML: function(html) {
+		var el = document.createElement('div');
+			el.innerHTML = html;
+
+		return el.children;
 	}
 });
