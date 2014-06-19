@@ -222,15 +222,15 @@ var Wee = (function(w, d) {
 		$getKeys: function(obj) {
 			if (Object.keys) {
 				return Object.keys(obj);
-			} else {
-				var keys = [];
-
-				for (var key in obj) {
-					keys.push(key);
-				}
-
-				return keys;
 			}
+
+			var keys = [];
+
+			for (var key in obj) {
+				keys.push(key);
+			}
+
+			return keys;
 		},
 		// Serialize specified object
 		// Returns string
@@ -321,13 +321,20 @@ var Wee = (function(w, d) {
 		// Get first match to specified element|selector
 		// Returns DOM object
 		$first: function(sel) {
+			if (sel['$']) {
+				return sel[0];
+			}
+
 			var el = this.$(sel);
 
 			return Wee.$isArray(el) ? el[0] : el;
+
 		},
 		// Execute specified function for specified elements|selector
 		$each: function(sel, fn) {
-			var el = (this.$isString(sel)) ? this.$toArray(this.$(sel)) : [sel],
+			var el = sel['$'] ?
+					sel : 
+					this.$isString(sel) ? this.$toArray(this.$(sel)) : (this.$isArray(sel) ? sel : [sel]),
 				len = el.length,
 				i = 0;
 

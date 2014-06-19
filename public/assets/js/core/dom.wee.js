@@ -8,11 +8,11 @@ Wee.fn.extend('', {
 	$hasClass: function(sel, val) {
 		var el = this.$first(sel);
 
-		el.classList ?
+		return el.classList ?
 			el.classList.contains(val) :
 			new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className);
 	},
-	// Hide specified selector
+	// Show specified selector
 	$show: function(sel) {
 		this.$css(sel, {
 			display: ''
@@ -131,3 +131,102 @@ Wee.fn.extend('', {
 		return el.children;
 	}
 });
+
+(function(c, p) {
+	function get(sel) {
+		var el = Wee.$toArray(Wee.$(sel)),
+			len = el.length,
+			i = 0;
+
+		for (; i < len; i++) {
+			c.push.call(this, el[i]);
+		}
+	}
+
+	window.$ = function(sel) {
+		return new get(sel);
+	}
+
+	$[p] = get[p] = {
+		length: 0,
+		$: true,
+		each: function(fn) {
+			Wee.$each(this, fn);
+		},
+		addClass: function(val) {
+			Wee.$addClass(this, val);
+			return this;
+		},
+		removeClass: function(val) {
+			Wee.$removeClass(this, val);
+			return this;
+		},
+		hasClass: function(val) {
+			return Wee.$hasClass(this, val);
+		},
+		css: function(a, b) {
+			Wee.$css(this, a, b);
+			return this;
+		},
+		html: function(val) {
+			var r = Wee.$html(this, val);
+			return val ? this : r;
+		},
+		attr: function(key, val) {
+			var r = Wee.$attr(key, val);
+			return val ? this : r;
+		},
+		data: function(key, val) {
+			var r = Wee.$data(key, val);
+			return val ? this : r;
+		},
+		show: function() {
+			Wee.$show(this);
+			return this;
+		},
+		hide: function() {
+			Wee.$hide(this);
+			return this;
+		},
+		children: function() {
+			return Wee.$children(this);
+		},
+		siblings: function() {
+			return Wee.$siblings(this);
+		},
+		append: function(child) {
+			Wee.$append(this, child);
+			return this;
+		},
+		prepend: function(child) {
+			Wee.$prepend(this, child);
+			return this;
+		},
+		before: function(html) {
+			Wee.$before(this, html);
+			return this;
+		},
+		after: function(html) {
+			Wee.$after(this, html);
+			return this;
+		},
+		remove: function() {
+			Wee.$remove(this);
+			return this;
+		},
+		text: function(val) {
+			var r = Wee.$text(this, val);
+			return val ? this : r;
+		},
+		on: function(evts, opt) {
+			Wee.events.on(this, evts, opt);
+			return this;
+		},
+		parse: function(obj) {
+			var str = Wee.$html(this);
+			str = Wee.data.parse(str, obj);
+			Wee.$html(this, str);
+			return this;
+		}
+	}
+})([], 'prototype');
