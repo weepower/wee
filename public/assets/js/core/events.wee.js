@@ -41,17 +41,19 @@ Wee.fn.make('events', {
 			});
 		}
 	},
-	// Execute specific event by name and optional trigger
-	fire: function(name, evt) {
-		var events = this.$get('bound');
-
-		if (events.hasOwnProperty(name)) {
-			if (events[name].hasOwnProperty(evt)) {
-				Wee.$exec(events[name][evt]);
+	// Execute specific element|slector event by name and optional trigger
+	trigger: function(sel, evt) {
+		Wee.$each(sel, function(el) {
+			if (document.createEvent) {
+				var event = document.createEvent('HTMLEvents');
+				event.initEvent(evt, true, false);
+				el.dispatchEvent(event);
+			} else {
+				el.fireEvent('on' + evt);
 			}
-		}
+		});
 	},
-	// Bind specified function to specified selector and event
+	// Bind specified function to specified element|selector and event
 	on: function(sel, evts, opt) {
 		// For each element attach events
 		Wee.$each(sel, function(el) {
@@ -59,7 +61,8 @@ Wee.fn.make('events', {
 			for (var evt in evts) {
 				var conf = Wee.$extend({
 						args: [],
-						scope: el
+						scope: el,
+						one: false
 					}, opt),
 					fn = evts[evt];
 
@@ -67,7 +70,7 @@ Wee.fn.make('events', {
 					conf.args.unshift(fn);
 
 					fn = 'events:mouseEvent';
-					evt = (evt == 'mouseenter') ? 'mouseover' : 'mouseout';
+					evt = 'mouse' + ((evt == 'mouseenter') ? 'over' : 'out');
 				}
 
 				conf.args.unshift(0, el);
@@ -75,15 +78,49 @@ Wee.fn.make('events', {
 				(function(el, evt, fn, conf) {
 					var cb = function(e) {
 						conf.args[0] = e;
+
 						Wee.$exec(fn, conf);
+
+						if (conf.one) {
+							Wee.events.off(el, evt, fn);
+						}
 					};
+
+					Wee.events.$push(el, evt, {
+						fn: fn,
+						cb: cb
+					});
 
 					el.attachEvent ?
 						el.attachEvent('on' + evt, cb) :
-						el.addEventListener(evt, cb, false);
+						el.addEventListener(evt, cb);
 				})(el, evt, fn, conf);
 			}
 		});
+	},
+	// Remove specified function to specified element|selector and optional event|function
+	off: function(sel, evt, fn) {
+		Wee.$each(sel, function(el) {
+			var evts = Wee.events.$get(el);
+
+			for (var e in evts) {
+				var ev = evts[e];
+
+				if (evt && (evt !== e || (fn && fn !== ev.fn))) {
+					continue;
+				}
+
+				el.detachEvent ?
+					el.detachEvent('on' + e, ev.cb) :
+					el.removeEventListener(e, ev.cb);
+			}
+		});
+	},
+	// Bind specified function to specified element|selector and event for single execution
+	one: function(sel, evts, opt) {
+		this.on(sel, evts, Wee.$extend({
+			one: true
+		}, opt));
 	},
 	// Ensure mouse has actually entered or left root element before firing event
 	mouseEvent: function(e, parent, fn) {

@@ -19,6 +19,7 @@ Mobile-first CSS framework with reset, base, and LESS mixin library
 JavaScript toolset to build scalable, well-organized browser functionality
 
 * **Foundation** of utilities, helpers, and module structure
+* **Chainable DOM** traversal and manipulation library
 * **Routing library** to flexibly associate paths to actions
 * **Event binding** to attach functionality to elements
 * **Resource loading** for JavaScript, CSS, and images along with callbacks

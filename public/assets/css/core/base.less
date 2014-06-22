@@ -614,16 +614,13 @@ dd {
 	.input () when (@inputBorderWidth = 0), (@inputBorderWidth = false) {
 		.border-width(0);
 	}
-	.input () when not (@inputMinHeight = 0)
-			and not (@inputMinHeight = false) {
+	.input () when not (@inputMinHeight = false) {
 		.min-height(@inputMinHeight);
 	}
-	.input () when not (@inputMinWidth = 0)
-			and not (@inputMinWidth = false) {
+	.input () when not (@inputMinWidth = false) {
 		.min-width(@inputMinWidth);
 	}
-	.input () when not (@inputRounded = 0)
-			and not (@inputRounded = false) {
+	.input () when not (@inputRounded = false) {
 		.rounded(@inputRounded);
 	}
 	.input () when (@inputEnableInnerShadow = true) {
@@ -732,8 +729,7 @@ dd {
 			.color(@buttonColor);
 		}
 	}
-	.rules () when not (@buttonRounded = 0)
-			and not (@buttonRounded = false) {
+	.rules () when not (@buttonRounded = false) {
 		.rounded(@buttonRounded);
 	}
 	.rules () when not (@buttonBorderColor = false) {

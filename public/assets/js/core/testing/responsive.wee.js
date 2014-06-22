@@ -6,7 +6,7 @@ Wee.fn.extend('testing', {
 	responsive: function() {
 		var vars = this.$get('vars');
 
-		(! vars) ?
+		! vars ?
 			Wee.data.request({
 				scope: this,
 				url: Wee.$get('variablesPath', '/assets/css/custom/variables.less'),
@@ -22,7 +22,7 @@ Wee.fn.extend('testing', {
 		var matches = new RegExp('^@responsiveTestMode:(.*?);', 'mgi').exec(vars);
 
 		if (matches && matches.length > 1 && matches[1].trim() != 'true') {
-			alert('Responsive test mode is disabled in the custom variables.less');
+			alert('Responsive test mode is disabled in the variables.less');
 		} else {
 			this.getBreakpoints();
 			this.addToolbar();
@@ -36,7 +36,7 @@ Wee.fn.extend('testing', {
 	},
 	// Parse variables.less for enabled breakpoints
 	getBreakpoints: function() {
-		Wee.testing.breakpoints = [];
+		this.breakpoints = [];
 
 		var vars = {
 				'mobileLandscape': [480, 'Mobile Landscape'],
@@ -49,7 +49,7 @@ Wee.fn.extend('testing', {
 			i = 0;
 
 		// Get offset
-		var regexp = new RegExp('@responsiveOffset:(.*?);', 'gi'),
+		var regexp = new RegExp('@responsiveOffset:(.*?);', 'mgi'),
 			matches = regexp.exec(this.$get('vars'));
 
 		if (matches && matches.length > 1) {
@@ -58,21 +58,21 @@ Wee.fn.extend('testing', {
 
 		for (var prop in vars) {
 			var variable = vars[prop],
-				regexp = new RegExp('@' + prop + 'Width:(.*?);', 'gi'),
+				regexp = new RegExp('@' + prop + 'Width:(.*?);', 'mgi'),
 				matches = regexp.exec(this.$get('vars'));
 
 			if (matches && matches.length > 1) {
 				var match = parseInt(matches[1].trim());
 
 				if (match != '') {
-					Wee.testing.breakpoints[(match - offset)] = variable[1];
+					this.breakpoints[(match - offset)] = variable[1];
 				}
 			} else {
-				Wee.testing.breakpoints[(variable[0] - offset)] = variable[1];
+				this.breakpoints[(variable[0] - offset)] = variable[1];
 			}
 		}
 
-		Wee.testing.breakpoints[320] = 'Mobile Portait';
+		this.breakpoints[320] = 'Mobile Portait';
 	},
 	addToolbar: function() {
 		var d = document,
@@ -109,8 +109,8 @@ Wee.fn.extend('testing', {
 		};
 
 		// Append cues to wrapper
-		for (var width in Wee.testing.breakpoints) {
-			var label = Wee.testing.breakpoints[width],
+		for (var width in this.breakpoints) {
+			var label = this.breakpoints[width],
 				cue = d.createElement('div');
 
 			Wee.$css(cue, {
@@ -210,11 +210,9 @@ Wee.fn.extend('testing', {
 		b.appendChild(cues);
 	},
 	setDimensions: function() {
-		var w = window,
-			width = w.innerWidth,
-			height = w.innerHeight;
+		var w = window;
 
-		Wee.$html(Wee.testing.bar, width + 'x' + height);
+		Wee.$html(Wee.testing.bar, w.innerWidth + 'x' + w.innerHeight);
 	}
 });
 

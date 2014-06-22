@@ -27,21 +27,15 @@ Wee.fn.extend('polyfill', {
 			});
 
 			// Clear default placeholder values on form submit
-			var forms = Wee.$('form'),
-				len = forms.length,
-				i = 0;
-
-			for (; i < len; i++) {
-				Wee.events.on(forms[i], {
-					submit: function() {
-						Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {
-							if (el.value == el.getAttribute('placeholder')) {
-								el.value = '';
-							}
+			Wee.events.on('form', {
+				submit: function() {
+					Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {
+						if (el.value == el.getAttribute('placeholder')) {
+							el.value = '';
 						}
 					}
-				});
-			}
+				}
+			});
 		}
 	}
 });

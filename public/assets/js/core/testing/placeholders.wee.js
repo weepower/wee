@@ -6,7 +6,7 @@ Wee.fn.extend('testing', {
 	placeholders: function() {
 		var vars = this.$get('vars');
 
-		(! vars) ?
+		! vars ?
 			Wee.data.request({
 				scope: this,
 				url: Wee.$get('variablesPath', '/assets/css/custom/variables.less'),
@@ -22,7 +22,7 @@ Wee.fn.extend('testing', {
 		var matches = new RegExp('^@placeholdersEnabled:(.*?);', 'mgi').exec(vars);
 
 		if (matches && matches.length > 1 && matches[1].trim() != 'true') {
-			alert('Placeholders are disabled in the custom variables.less');
+			alert('Placeholders are disabled in the variables.less');
 		} else {
 			this.$private('createPlaceholders');
 		}
