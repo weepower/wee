@@ -7,9 +7,9 @@ Wee.fn.make('screen', {
 	size: function() {
 		var w = window,
 			d = document,
-			size = this.$get('size', (w.getComputedStyle ?
+			size = w.getComputedStyle ?
 				w.getComputedStyle(d.documentElement, null).getPropertyValue('font-family') :
-				(d.documentElement.currentStyle ? d.documentElement.currentStyle['fontFamily'] : null)));
+				(d.documentElement.currentStyle ? d.documentElement.currentStyle['fontFamily'] : null);
 
 		return parseInt(size.replace(/\D/g, ''), 10);
 	},
