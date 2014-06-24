@@ -3,6 +3,17 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.fn.extend('', {
+	// Clone specified element|selector
+	// Returns element array
+	$clone: function(sel) {
+		var copy = [];
+
+		this.$each(sel, function(el) {
+			copy.push(el.cloneNode());
+		});
+
+		return copy;
+	},
 	// Determine if specified element|selector has specified class name
 	// Returns boolean
 	$hasClass: function(sel, val) {
@@ -103,15 +114,15 @@ Wee.fn.extend('', {
 	},
 	// Append specified child element to parent element|selector
 	$append: function(sel, child) {
-		if (this.$isString(child)) {
-			this.$each(sel, function(el) {
-				el.innerHTML = el.innerHTML + child;
-			});
-		} else {
-			this.$each(sel, function(el) {
-				el.appendChild(child);
-			});
-		}
+		var str = this.$isString(child);
+
+		this.$each(sel, function(el) {
+			str ?
+				el.innerHTML = el.innerHTML + child :
+				Wee.$each(child, function(cel) {
+					el.appendChild(cel);
+				});
+		});
 	},
 	// Prepend specified child element to parent element|selector
 	$prepend: function(sel, child) {
@@ -133,14 +144,28 @@ Wee.fn.extend('', {
 			}
 		});
 	},
-	// Insert specified element after specified element|selector
-	$after: function(sel, html) {
+	// Insert specified element before specified element|selector
+	$insertBefore: function(prev, sel) {
 		this.$each(sel, function(el) {
-			if (this.$isString(html)) {
-				el.insertAdjacentHTML('afterend', html);
-			} else {
-				el.parentNode.insertAfter(html[0], el);
-			}
+			el.parentNode.insertBefore(prev, el);
+		});
+	},
+	// Insert specified element after specified element|selector
+	$after: function(sel, child) {
+		var str = this.$isString(child);
+
+		this.$each(sel, function(el) {
+			str ?
+				el.insertAdjacentHTML('afterend', child) :
+				Wee.$each(child, function(cel) {
+					el.parentNode.insertBefore(cel, el.nextSibling);
+				});
+		});
+	},
+	// Insert specified element after specified element|selector
+	$insertAfter: function(next, sel) {
+		this.$each(sel, function(el) {
+			el.parentNode.insertBefore(next[0], el.nextSibling);
 		});
 	},
 	// Remove specified element|selector from DOM
@@ -169,7 +194,7 @@ Wee.fn.extend('', {
 	// Wrap HTML around the content of specified element|selector
 	$wrapInner: function(sel, html) {
 		this.$each(sel, function(el) {
-			var wrap = Wee.$parseHTML(html)[0],
+			var wrap = Wee.$parseHTML(html),
 				cont = Wee.$html(el);
 
 			Wee.$html(wrap, cont);
@@ -312,7 +337,7 @@ Wee.fn.extend('', {
 	},
 	// Get the sibling index of a specified element|selector
 	// Returns int
-	$indexOf: function(sel) {
+	$index: function(sel) {
 		var el = this.$first(sel),
 			parent = this.$parent(el),
 			children = this.$children(parent),
@@ -356,11 +381,11 @@ Wee.fn.extend('', {
 		var el = document.createElement('div');
 			el.innerHTML = html;
 
-		return el.children;
+		return el.firstChild;
 	},
 	// Get the position of an element|selector
 	// Returns object
-	$position: function() {
+	$position: function(sel) {
 		var el = this.$first(sel);
 
 		return {
@@ -536,7 +561,7 @@ Wee.fn.extend('', {
 			return this;
 		},
 		insertBefore: function(sel) {
-			Wee.$before(sel, this);
+			Wee.$insertBefore(this, sel);
 			return this;
 		},
 		after: function(html) {
@@ -544,7 +569,7 @@ Wee.fn.extend('', {
 			return this;
 		},
 		insertAfter: function(sel) {
-			Wee.$after(sel, this);
+			Wee.$insertAfter(this, sel);
 			return this;
 		},
 		remove: function() {
@@ -572,7 +597,7 @@ Wee.fn.extend('', {
 			return this;
 		},
 		eq: function(i) {
-			return Wee.$eq(this, i);
+			return $(Wee.$eq(this, i));
 		},
 		first: function() {
 			return Wee.$first(this);
@@ -595,8 +620,8 @@ Wee.fn.extend('', {
 		is: function(filter) {
 			return Wee.$is(this, filter);
 		},
-		indexOf: function() {
-			return Wee.$indexOf(this);
+		index: function() {
+			return Wee.$index(this);
 		},
 		closest: function(filter) {
 			return Wee.$closest(this, filter);

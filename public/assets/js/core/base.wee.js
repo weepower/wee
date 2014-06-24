@@ -31,7 +31,7 @@ var Wee = (function(w, d) {
 					// If private object exists expose $call function for executing private methods
 					if (priv) {
 						Public.$private = function(func) {
-							var args = Array.prototype.slice.call(arguments);
+							var args = [].slice.call(arguments);
 
 							// Bind all additional arguments to private method call
 							(args.length > 1) ? args.shift() : args = null;
@@ -268,11 +268,6 @@ var Wee = (function(w, d) {
 
 			return obj;
 		},
-		// Clone specified object
-		// Returns new object
-		$clone: function(obj) {
-			return this.$isArray(obj) ? obj.slice() : this.$extend({}, obj);
-		},
 		// Get matches to specified selector
 		// Accepts optional context argument
 		// Returns array of DOM objects
@@ -301,7 +296,7 @@ var Wee = (function(w, d) {
 
 			// If slice.call is available use it else loop through matches manually
 			try {
-				return Array.prototype.slice.call(el, 0);
+				return [].slice.call(el, 0);
 			} catch(e) {
 				var matches = [],
 					len = matches.length,
@@ -337,8 +332,10 @@ var Wee = (function(w, d) {
 					scope: null
 				}, opt),
 				el = sel['_$_'] ?
-					sel : 
-					this.$isString(sel) ? this.$toArray(this.$(sel)) : (this.$isArray(sel) ? sel : [sel]),
+					sel :
+					this.$isString(sel) ?
+						this.$toArray(this.$(sel)) :
+						(this.$isArray(sel) ? sel : [sel]),
 				len = el.length,
 				i = 0;
 

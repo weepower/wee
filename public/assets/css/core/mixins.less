@@ -1940,10 +1940,10 @@
 .cursor (@value: pointer) {
 	cursor: @value;
 }
-.overflow (@value) {
+.overflow (@value) when not (@value = x), (@value = y) {
 	overflow: @value;
 }
-.overflow (@x; @y) {
+.overflow (@x; @y) when not (@value = x), (@value = y) {
 	overflow-x: @x;
 	overflow-y: @y;
 }
