@@ -72,7 +72,9 @@ Wee.fn.make('events', {
 						scope: el,
 						one: false
 					}, c),
-					fn = a[evt];
+					fn = a[evt],
+					ev = evt,
+					f = fn;
 
 				if (evt == 'mouseenter' || evt == 'mouseleave') {
 					conf.args.unshift(fn);
@@ -83,28 +85,30 @@ Wee.fn.make('events', {
 
 				conf.args.unshift(0, el);
 
-				(function(el, evt, fn, conf) {
+				(function(el, evt, fn, f, conf) {
 					var cb = function(e) {
 						conf.args[0] = e;
 
 						Wee.$exec(fn, conf);
 
 						if (conf.one) {
-							Wee.events.off(el, evt, fn);
+							Wee.events.off(el, evt, f);
 						}
 					};
 
-					if (Wee.$isString(fn) || Wee.events.bound(el, evt, fn).length < 1) {
+					if (Wee.events.bound(el, ev, f).length < 1) {
 						el.attachEvent ?
 							el.attachEvent('on' + evt, cb) :
 							el.addEventListener(evt, cb);
 
-						Wee.events.$push(el, evt, {
+						Wee.events.$push('bound', {
+							el: el,
+							evt: ev,
 							cb: cb,
-							fn: fn
+							fn: f
 						});
 					}
-				})(el, evt, fn, conf);
+				})(el, evt, fn, f, conf);
 			}
 		});
 	},
@@ -132,25 +136,28 @@ Wee.fn.make('events', {
 	},
 	// Get currently bound events to specified element|selector and optional event|function
 	bound: function(sel, evt, fn) {
-		return Wee.$map(sel, function(el) {
-			var evts = Wee.events.$get(el);
+		var bound = this.$get('bound'),
+			matches = [];
 
-			for (var e in evts) {
-				var ev = evts[e];
+		if (bound) {
+			Wee.$each(sel, function(el) {
+				for (var e in bound) {
+					var ev = bound[e];
 
-				if (evt && (evt !== e || (fn && '' + fn !== '' + ev.fn))) {
-					continue;
+					if (el !== ev.el || (evt && (evt !== ev.evt || (fn && '' + fn !== '' + ev.fn)))) {
+						continue;
+					}
+
+					matches.push({
+						el: el,
+						evt: ev.evt,
+						fn: ev.cb
+					});
 				}
+			});
+		}
 
-				return {
-					el: el,
-					evt: e,
-					fn: ev.cb
-				}
-			}
-
-			return false;
-		});
+		return matches;
 	},
 	// Ensure mouse has actually entered or left root element before firing event
 	mouseEvent: function(e, parent, fn) {

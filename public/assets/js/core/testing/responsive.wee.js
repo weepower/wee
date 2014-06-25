@@ -29,9 +29,7 @@ Wee.fn.extend('testing', {
 			this.addCues();
 
 			// Set browser dimensions
-			Wee.events.on(window, {
-				resize: 'testing:setDimensions'
-			});
+			Wee.events.on(window, 'resize', 'testing:setDimensions');
 		}
 	},
 	// Parse variables.less for enabled breakpoints
@@ -85,11 +83,9 @@ Wee.fn.extend('testing', {
 		Wee.testing.bar = bar;
 
 		// Double-click to close
-		Wee.events.on(bar, {
-			dblclick: function() {
-				Wee.$addClass(b, 'js-testing-disabled');
-				Wee.$removeClass(b, 'js-testing-enabled');
-			}
+		Wee.events.on(bar, 'dblclick', function() {
+			Wee.$addClass(b, 'js-testing-disabled');
+			Wee.$removeClass(b, 'js-testing-enabled');
 		});
 
 		this.setDimensions();
@@ -168,11 +164,9 @@ Wee.fn.extend('testing', {
 		}
 
 		var escCues = function() {
-			Wee.events.on(document, {
-				keyup: function(e) {
-					if (e.keyCode == 27) {
-						resetDisplay();
-					}
+			Wee.events.on(d, 'keyup', function(e) {
+				if (e.keyCode == 27) {
+					resetDisplay();
 				}
 			});
 		};
@@ -200,10 +194,8 @@ Wee.fn.extend('testing', {
 			scope: this
 		});
 
-		Wee.events.on(cues, {
-			mouseleave: function() {
-				resetDisplay();
-			}
+		Wee.events.on(cues, 'mouseleave', function() {
+			resetDisplay();
 		});
 
 		// Append wrapper to the DOM

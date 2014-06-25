@@ -11,23 +11,18 @@ Wee.fn.make('screen', {
 				w.getComputedStyle(d.documentElement, null).getPropertyValue('font-family') :
 				(d.documentElement.currentStyle ? d.documentElement.currentStyle['fontFamily'] : null);
 
-		return parseInt(size.replace(/\D/g, ''), 10);
+		return parseFloat(size.replace(/[^0-9\.]+/g, ''), 10);
 	},
 	// Bind single or set of screen events with specified options
 	map: function(sets) {
 		sets = Wee.$toArray(sets);
 
 		for (var i = 0; i < sets.length; i++) {
-			var conf = Wee.$extend({
-					max: false,
-					min: false,
-					size: false,
-					watch: true
-				}, sets[i]);
+			var conf = sets[i];
 
 			if (conf.callback) {
 				// Only bind resize event if not disabled
-				if (conf.watch) {
+				if (conf.watch !== false) {
 					this.$push('evts', conf);
 
 					// Only create event if not already running
@@ -47,7 +42,7 @@ Wee.fn.make('screen', {
 				}
 
 				// Check current screen match if init = true
-				if (conf.init) {
+				if (conf.init !== false) {
 					this.$private('check', true, [conf]);
 				}
 			}
@@ -66,13 +61,16 @@ Wee.fn.make('screen', {
 				i = 0;
 
 			for (; i < len; i++) {
-				var evt = evts[i];
+				var evt = evts[i],
+					sz = evt.size,
+					mn = evt.min,
+					mx = evt.max;
 
 				// Check match against settings
-				if ((! evt.size && ! evt.min && ! evt.max) ||
-					(evt.size && evt.size === size) ||
-					(evt.min !== false && size >= evt.min && (init || prev < evt.min) && (evt.max === false || size <= evt.max)) ||
-					(evt.max !== false && size <= evt.max && (init || prev > evt.max) && (evt.min === false || size >= evt.min))) {
+				if ((! sz && ! mn && ! mx) ||
+					(sz && sz === size) ||
+					(mn && size >= mn && (init || prev < mn) && (! mx || size <= mx)) ||
+					(mx && size <= mx && (init || prev > mx) && (! mn || size >= mn))) {
 					Wee.$exec(evt.callback, {
 						args: [{
 							dir: init ? 0 : ((size > prev) ? 1 : -1),

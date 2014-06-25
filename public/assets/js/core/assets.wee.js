@@ -11,35 +11,34 @@ Wee.fn.make('assets', {
 			this.$get('root', '');
 	},
 	// Load specified assets with specified set of options
-	load: function(opt) {
-		var conf = Wee.$extend({
-				files: []
-			}, opt),
-			files = Wee.$toArray(conf.files),
-			root = conf.root || this.root(),
-			now = new Date().getTime(),
-			len = files.length,
-			i = 0;
+	load: function(conf) {
+		if (conf.files) {
+			var files = Wee.$toArray(conf.files),
+				root = conf.root || this.root(),
+				now = new Date().getTime(),
+				len = files.length,
+				i = 0;
 
-		// Create group name if not specified
-		if (! conf.group) {
-			conf.group = 'load-' + now;
-		}
-
-		// Set file array length to check against
-		this.$set(conf.group, len);
-		this.$set(conf.group + '-fail', 0);
-		this.$set(conf.group + '-conf', conf);
-
-		// Request each specified file
-		for (; i < len; i++) {
-			var file = root + files[i];
-
-			if (conf.cache === false) {
-				file += (file.indexOf('?') == -1 ? '?' : '&') + now;
+			// Create group name if not specified
+			if (! conf.group) {
+				conf.group = 'load-' + now;
 			}
 
-			this.$private('request', file, conf.group);
+			// Set file array length to check against
+			this.$set(conf.group, len);
+			this.$set(conf.group + '-fail', 0);
+			this.$set(conf.group + '-conf', conf);
+
+			// Request each specified file
+			for (; i < len; i++) {
+				var file = root + files[i];
+
+				if (conf.cache === false) {
+					file += (file.indexOf('?') == -1 ? '?' : '&') + now;
+				}
+
+				this.$private('request', file, conf.group);
+			}
 		}
 	},
 	// When specified references are ready execute callback

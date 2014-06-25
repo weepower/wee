@@ -7,6 +7,7 @@ var WeeLegacy = (function(w, d) {
 
 	var Utils = {
 		// Get the CSS for parsing
+		// Returns string
 		getResource: function(url, fn) {
 			if (Utils.isExternal(url)) {
 				var x = new XDomainRequest();
@@ -30,6 +31,7 @@ var WeeLegacy = (function(w, d) {
 			x.send(null);
 		},
 		// Detect if the CSS resource is local or external
+		// Returns boolean
 		isExternal: function(url) {
 			var host = function(url) {
 				return url.replace('http://', '').replace('https://', '').split('/')[0];

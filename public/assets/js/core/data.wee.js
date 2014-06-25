@@ -70,6 +70,7 @@ Wee.fn.make('data', {
 		}
 	},
 	// Parse specified data into specified template string
+	// Return string
 	parse: function(str, obj) {
 		obj = obj || {};
 
