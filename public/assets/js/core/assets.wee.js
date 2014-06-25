@@ -17,12 +17,13 @@ Wee.fn.make('assets', {
 			}, opt),
 			files = Wee.$toArray(conf.files),
 			root = conf.root || this.root(),
+			now = new Date().getTime(),
 			len = files.length,
 			i = 0;
 
 		// Create group name if not specified
 		if (! conf.group) {
-			conf.group = 'load-' + new Date().getTime();
+			conf.group = 'load-' + now;
 		}
 
 		// Set file array length to check against
@@ -32,7 +33,13 @@ Wee.fn.make('assets', {
 
 		// Request each specified file
 		for (; i < len; i++) {
-			this.$private('request', (root + files[i]), conf.group);
+			var file = root + files[i];
+
+			if (conf.cache === false) {
+				file += (file.indexOf('?') == -1 ? '?' : '&') + now;
+			}
+
+			this.$private('request', file, conf.group);
 		}
 	},
 	// When specified references are ready execute callback
@@ -63,7 +70,7 @@ Wee.fn.make('assets', {
 		var d = document,
 			scope = this,
 			head = d.getElementsByTagName('head')[0],
-			ext = path.split('.').pop();
+			ext = path.split('.').pop().split(/\#|\?/)[0];
 
 		// Load file based on extension
 		if (ext == 'js') {

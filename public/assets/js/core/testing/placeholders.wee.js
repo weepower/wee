@@ -37,7 +37,7 @@ Wee.fn.extend('testing', {
 			var placeholder = placeholders[i],
 				img = placeholder[0],
 				span = placeholder[1],
-				pos = this.$private('getPosition', img),
+				pos = Wee.testing.getPosition(img),
 				width = img.offsetWidth,
 				height = img.offsetHeight;
 
@@ -52,6 +52,27 @@ Wee.fn.extend('testing', {
 				Wee.$html(span, width + 'x' + height);
 			}
 		}
+	},
+	// Get the offset position of the placeholder image
+	getPosition: function(el) {
+		var root = document.getElementsByTagName('body')[0],
+			x = el.offsetLeft,
+			y = el.offsetTop;
+
+		while (el.offsetParent) {
+			if (el === root) {
+				break;
+			} else {
+				var parent = el.offsetParent;
+
+				x += parent.offsetLeft;
+				y += parent.offsetTop;
+
+				el = parent;
+			}
+		}
+
+		return [x, y];
 	}
 }, {
 	// Build the placeholder images and text overlays
@@ -59,7 +80,7 @@ Wee.fn.extend('testing', {
 		Wee.$each('.js-placeholder', function(el) {
 			var size = Wee.$data(el, 'size') || '16:9',
 				parts = size.split(':');
-			
+
 			if (parts.length == 2) {
 				var d = document,
 					x = parts[0],
@@ -106,27 +127,6 @@ Wee.fn.extend('testing', {
 				}, 300);
 			}
 		});
-	},
-	// Get the offset position of the placeholder image
-	getPosition: function(el) {
-		var root = document.getElementsByTagName('body')[0],
-			x = el.offsetLeft,
-			y = el.offsetTop;
-
-		while (el.offsetParent) {
-			if (el === root) {
-				break;
-			} else {
-				var parent = el.offsetParent;
-
-				x += parent.offsetLeft;
-				y += parent.offsetTop;
-
-				el = parent;
-			}
-		}
-
-		return [x, y];
 	}
 });
 

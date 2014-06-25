@@ -53,7 +53,7 @@ Wee.fn.make('routes', {
 	}
 }, {
 	// Recursive method to process routes
-	process: function(route, i, total) {
+	process: function(route, i) {
 		var seg = this.$get('segs')[i],
 			keys = Wee.$getKeys(route),
 			x = 0;
@@ -76,9 +76,7 @@ Wee.fn.make('routes', {
 				} else if (opt.substring(0, 1) == '$') {
 					// If the second character is / then test regex
 					if (opt.substring(1, 2) == '/') {
-						var reg = new RegExp(opt.substring(2).slice(0,-1));
-
-						if (reg.test(seg)) {
+						if (new RegExp(opt.substring(2).slice(0,-1)).test(seg)) {
 							match = true;
 						}
 					} else {
@@ -111,13 +109,11 @@ Wee.fn.make('routes', {
 
 				// If matched execute or process recursively
 				if (match) {
-					if (Wee.$isObject(child)) {
-						this.process(child, i, total);
-					} else if (i === total) {
+					Wee.$isObject(child) ?
+						this.process(child, i) :
 						Wee.$exec(child, {
 							args: seg
 						});
-					}
 				}
 			}
 		}

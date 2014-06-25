@@ -15,7 +15,7 @@ var Wee = (function(w, d) {
 					var data = {
 							// Private getter and setter methods for controllers
 							$get: function(key, def, set, opt) {
-								return Wee.$get(name + ':' + key, def, set, opt);
+								return Wee.$get(name + (key ? ':' + key : ''), def, set, opt);
 							},
 							$set: function(key, val, opt) {
 								return Wee.$set(name + ':' + key, val, opt);
@@ -87,23 +87,27 @@ var Wee = (function(w, d) {
 		// Options can be passed if default value being set is a callback
 		// Returns mixed value
 		$get: function(key, def, set, opt) {
-			var split = this._storeData(key),
-				root = split[0],
-				key = split[1];
+			if (key) {
+				var split = this._storeData(key),
+					root = split[0],
+					key = split[1];
 
-			if (root.hasOwnProperty(key)) {
-				return root[key]
-			} else if (def !== undefined) {
-				def = this.$isFunction(def) ? def() : (opt ? this.$exec(def, opt) : def);
+				if (root.hasOwnProperty(key)) {
+					return root[key]
+				} else if (def !== undefined) {
+					def = this.$isFunction(def) ? def() : (opt ? this.$exec(def, opt) : def);
 
-				if (set) {
-					this.$set(key, def);
+					if (set) {
+						this.$set(key, def);
+					}
+
+					return def;
 				}
 
-				return def;
+				return null;
 			}
 
-			return null;
+			return _store;
 		},
 		// Set public variable
 		// Options can be passed if value is a callback
@@ -346,14 +350,26 @@ var Wee = (function(w, d) {
 				})
 			}
 		},
-		// Translate items in an array to new array
+		// Translate items in an array|selection to new array
 		$map: function(arr, fn) {
+			if (! this.$isArray(arr)) {
+				arr = this.$toArray(arr['_$_'] ? arr[0] : this.$(arr));
+			}
+
 			var res = [],
-				len = arr.len,
+				len = arr.length,
 				i = 0;
 
 			for (; i < len; i++) {
-				res.push(fn(arr[i], i));
+				var el = arr[i],
+					val = this.$exec(fn, {
+						args: [el, i],
+						scope: el
+					});
+
+				if (val) {
+					res.push(val);
+				}
 			}
 
 			return res;
@@ -390,15 +406,23 @@ var Wee = (function(w, d) {
 		// Add specified CSS rules to element|selector
 		// Accepts either rule object or rule, value
 		$css: function(sel, a, b) {
-			this.$each(sel, function(el) {
-				if (Wee.$isObject(a)) {
-					for (var key in a) {
-						el.style[key] = a[key];
+			if (b || this.$isObject(a)) {
+				this.$each(sel, function(el) {
+					if (Wee.$isObject(a)) {
+						for (var key in a) {
+							el.style[key] = a[key];
+						}
+					} else {
+						el.style[a] = b;
 					}
-				} else {
-					el.style[a] = b;
-				}
-			});
+				});
+			} else {
+				var el = this.$first(sel);
+
+				return el.currentStyle ?
+					el.currentStyle[a] :
+					getComputedStyle(el, null)[a];
+			}
 		},
 		// Get HTML value of a specified element|selector or set HTML with specified value
 		$html: function(sel, val) {

@@ -25,11 +25,21 @@ Wee.fn.extend('', {
 	},
 	// Show specified element|selector
 	$show: function(sel) {
-		this.$css(sel, 'display', '');
+		this.$each(sel, function(el) {
+			Wee.$removeClass(el, 'js-hide');
+		});
 	},
 	// Hide specified element|selector
 	$hide: function(sel) {
-		this.$css(sel, 'display', 'none');
+		this.$each(sel, function(el) {
+			Wee.$addClass(el, 'js-hide');
+		});
+	},
+	// Toggle the display of a specified element|selector
+	$toggle: function(sel) {
+		this.$each(sel, function(el) {
+			! Wee.$hasClass(el, 'js-hide') ? Wee.$hide(el) : Wee.$show(el);
+		});
 	},
 	// Get children of specified element|selector with optional filter
 	// Returns element array
@@ -237,20 +247,14 @@ Wee.fn.extend('', {
 	// Get value of specified element|selector or set specified value
 	$val: function(sel, val) {
 		if (val !== undefined) {
-			this.$each(sel, function(el) {
-				el.value = val;
+			this.$each(sel, function() {
+				this.value = val;
 			});
 		} else {
 			var el = this.$first(sel);
 
 			return el.value;
 		}
-	},
-	// Toggle the display of a specified element|selector
-	$toggle: function(sel) {
-		this.$each(sel, function(el) {
-			(el.style.display != 'none') ? Wee.$hide(el) : Wee.$show(el);
-		});
 	},
 	// Get indexed node of specified element|selector
 	// Returns element
@@ -477,6 +481,9 @@ Wee.fn.extend('', {
 		each: function(fn) {
 			Wee.$each(this, fn);
 		},
+		map: function(fn) {
+			return Wee.$map(this, fn);
+		},
 		addClass: function(val) {
 			Wee.$addClass(this, val);
 			return this;
@@ -486,8 +493,8 @@ Wee.fn.extend('', {
 			return this;
 		},
 		css: function(a, b) {
-			Wee.$css(this, a, b);
-			return this;
+			var r = Wee.$css(this, a, b);
+			return b || Wee.$isObject(a) ? this : r;
 		},
 		attr: function(key, val) {
 			var r = Wee.$attr(this, key, val);
@@ -525,6 +532,10 @@ Wee.fn.extend('', {
 			Wee.$hide(this);
 			return this;
 		},
+		toggle: function() {
+			Wee.$toggle(this);
+			return this;
+		},
 		children: function(filter) {
 			return $(Wee.$children(this, filter));
 		},
@@ -545,7 +556,7 @@ Wee.fn.extend('', {
 			return this;
 		},
 		appendTo: function(parent) {
-			Wee.$prepend(parent, this);
+			Wee.$append(parent, this);
 			return this;
 		},
 		prepend: function(child) {
@@ -592,15 +603,11 @@ Wee.fn.extend('', {
 			var r = Wee.$text(this, val);
 			return val !== undefined ? this : r;
 		},
-		toggle: function() {
-			Wee.$toggle(this);
-			return this;
-		},
 		eq: function(i) {
 			return $(Wee.$eq(this, i));
 		},
 		first: function() {
-			return Wee.$first(this);
+			return $(Wee.$eq(this, 0));
 		},
 		last: function() {
 			return Wee.$last(this);
@@ -615,7 +622,7 @@ Wee.fn.extend('', {
 			return Wee.$prev(this);
 		},
 		filter: function(filter) {
-			return Wee.$filter(this, filter);
+			return $(Wee.$filter(this, filter));
 		},
 		is: function(filter) {
 			return Wee.$is(this, filter);
@@ -645,16 +652,16 @@ Wee.fn.extend('', {
 			return (val === undefined || val === true) ? r : this;
 		},
 		// Events
-		on: function(evts, opt) {
-			Wee.events.on(this, evts, opt);
+		on: function(a, b, c) {
+			Wee.events.on(this, a, b, c);
 			return this;
 		},
 		off: function(evts, opt) {
 			Wee.events.off(this, evts, opt);
 			return this;
 		},
-		one: function(evts, opt) {
-			Wee.events.one(this, evts, opt);
+		one: function(a, b, c) {
+			Wee.events.one(this, a, b, c);
 			return this;
 		},
 		trigger: function(evt) {
