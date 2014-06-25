@@ -94,7 +94,7 @@ Wee.fn.make('events', {
 						}
 					};
 
-					if (Wee.events.bound(el, evt, fn).length < 1) {
+					if (Wee.$isString(fn) || Wee.events.bound(el, evt, fn).length < 1) {
 						el.attachEvent ?
 							el.attachEvent('on' + evt, cb) :
 							el.addEventListener(evt, cb);
