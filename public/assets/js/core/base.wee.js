@@ -12,21 +12,26 @@ var Wee = (function(w, d) {
 		fn: {
 			make: function(name, pub, priv) {
 				Wee[name] = (function() {
-					var data = {
-							// Private getter and setter methods for controllers
-							$get: function(key, def, set, opt) {
-								return Wee.$get(name + (key ? ':' + key : ''), def, set, opt);
-							},
-							$set: function(key, val, opt) {
-								return Wee.$set(name + ':' + key, val, opt);
-							},
-							$push: function(key, a, b) {
-								return Wee.$push(name + ':' + key, a, b);
-							}
-						},
-						// Extend defined public and private objects with data functions
-						Public = Wee.$extend(pub, data),
-						Private = Wee.$extend(priv, data);
+					var Public = pub,
+						Private = priv || {};
+
+					if (name != 'tMod') {
+						var data = {
+								// Private getter and setter methods for controllers
+								$get: function(key, def, set, opt) {
+									return Wee.$get(name + (key ? ':' + key : ''), def, set, opt);
+								},
+								$set: function(key, val, opt) {
+									return Wee.$set(name + ':' + key, val, opt);
+								},
+								$push: function(key, a, b) {
+									return Wee.$push(name + ':' + key, a, b);
+								}
+							};
+							// Extend defined public and private objects with data functions
+							Public = Wee.$extend(pub, data);
+							Private = Wee.$extend(priv, data);
+					}
 
 					// If private object exists expose $call function for executing private methods
 					if (priv) {
@@ -281,17 +286,21 @@ var Wee = (function(w, d) {
 			}
 
 			var el = null;
-			context = context ? this.$first(context) : d;
+				context = context ? this.$first(context) : d;
 
 			// If selector doesn't have a space or [ assume its a simple selection
-			if (sel.indexOf(' ') + sel.indexOf('[') == -2) {
+			if (sel == 'window') {
+				return w;
+			} else if (sel == 'document') {
+				return d;
+			} else if (sel.indexOf(' ') > 0 || sel.indexOf('[') > -1 || sel.indexOf(':') > -1 || sel.indexOf('#') > -1 || sel.indexOf('.') > 0) {
+				el = context.querySelectorAll(sel);
+			} else {
 				var type = sel.match(/^(\W)?(.*)/);
 
 				el = (context)[
 					'getElement' + (type[1] ? (type[1] == '#') ? 'ById' : 'sByClassName' : 'sByTagName')
 				](type[2]);
-			} else {
-				el = context.querySelectorAll(sel);
 			}
 
 			if (el === null || el.nodeType) {
@@ -302,19 +311,11 @@ var Wee = (function(w, d) {
 			try {
 				return [].slice.call(el, 0);
 			} catch(e) {
-				var matches = [],
-					len = matches.length,
-					i = 0;
-
-				for (; i < len; i++) {
-					var node = el[i];
-
+				return this.$map(el, function(node) {
 					if (this.$isObject(node)) {
 						matches.push(node);
 					}
-				}
-
-				return matches;
+				});
 			}
 		},
 		// Get first match to specified element|selector
@@ -387,7 +388,7 @@ var Wee = (function(w, d) {
 						if (curr === '') {
 							el.className = val;
 						} else {
-							el.className += ' ' + className;
+							el.className += ' ' + val;
 						}
 					}
 				}

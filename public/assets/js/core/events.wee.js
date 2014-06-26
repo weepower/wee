@@ -130,31 +130,32 @@ Wee.fn.make('events', {
 	off: function(sel, evt, fn) {
 		Wee.$each(this.bound(sel, evt, fn), function(e) {
 			e.el.detachEvent ?
-				e.el.detachEvent('on' + e.evt, e.fn) :
-				e.el.removeEventListener(e.evt, e.fn);
+				e.el.detachEvent('on' + e.evt, e.cb) :
+				e.el.removeEventListener(e.evt, e.cb);
 		});
 	},
-	// Get currently bound events to specified element|selector and optional event|function
+	// Get currently bound events to optional specified element|selector and event|function
+	// Returns array of objects
 	bound: function(sel, evt, fn) {
 		var bound = this.$get('bound'),
 			matches = [];
 
 		if (bound) {
-			Wee.$each(sel, function(el) {
-				for (var e in bound) {
-					var ev = bound[e];
+			if (sel) {
+				Wee.$each(sel, function(el) {
+					for (var e in bound) {
+						var ev = bound[e];
 
-					if (el !== ev.el || (evt && (evt !== ev.evt || (fn && '' + fn !== '' + ev.fn)))) {
-						continue;
+						if (el !== ev.el || (evt && (evt !== ev.evt || (fn && '' + fn !== '' + ev.fn)))) {
+							continue;
+						}
+
+						matches.push(ev);
 					}
-
-					matches.push({
-						el: el,
-						evt: ev.evt,
-						fn: ev.cb
-					});
-				}
-			});
+				});
+			} else {
+				return bound;
+			}
 		}
 
 		return matches;

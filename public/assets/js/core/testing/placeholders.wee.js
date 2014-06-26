@@ -104,9 +104,7 @@ Wee.fn.extend('testing', {
 						'paddingTop': ((y / x) * 100) + '%'
 					});
 
-					Wee.events.on(window, {
-						resize: 'testing:updatePlaceholders'
-					});
+					Wee.events.on(window, 'resize', 'testing:updatePlaceholders');
 				}
 
 				Wee.$addClass(span, 'js-placeholder-text');

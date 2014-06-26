@@ -4,18 +4,20 @@
 
 Wee.fn.extend('testing', {
 	responsive: function() {
-		var vars = this.$get('vars');
+		if (window.self === window.top) {
+			var vars = this.$get('vars');
 
-		! vars ?
-			Wee.data.request({
-				scope: this,
-				url: Wee.$get('variablesPath', '/assets/css/custom/variables.less'),
-				success: function(vars) {
-					this.$set('vars', vars);
-					this.setupResponsive(vars);
-				}
-			}) :
-			this.setupResponsive(vars);
+			! vars ?
+				Wee.data.request({
+					scope: this,
+					url: Wee.$get('variablesPath', '/assets/css/custom/variables.less'),
+					success: function(vars) {
+						this.$set('vars', vars);
+						this.setupResponsive(vars);
+					}
+				}) :
+				this.setupResponsive(vars);
+		}
 	},
 	// If responsive test mode is enabled in variables.less start it
 	setupResponsive: function(vars) {
@@ -75,6 +77,7 @@ Wee.fn.extend('testing', {
 	addToolbar: function() {
 		var d = document,
 			b = d.body,
+			html = b.parentNode,
 			bar = d.createElement('div');
 
 		Wee.$addClass(bar, 'js-testing-bar');
@@ -83,18 +86,21 @@ Wee.fn.extend('testing', {
 		Wee.testing.bar = bar;
 
 		// Double-click to close
-		Wee.events.on(bar, 'dblclick', function() {
-			Wee.$addClass(b, 'js-testing-disabled');
-			Wee.$removeClass(b, 'js-testing-enabled');
-		});
+		Wee.events.on(bar, 'dblclick', 'testing:removeToolbar');
+
+		Wee.$removeClass(html, 'js-testing-disabled');
 
 		this.setDimensions();
+	},
+	removeToolbar: function() {
+		Wee.$addClass(document.body.parentNode, 'js-testing-disabled');
 	},
 	addCues: function(showCues) {
 		// Create cue wrapper
 		var w = window,
 			d = document,
 			b = d.body,
+			html = b.parentNode,
 			cues = d.createElement('div');
 
 		Wee.$addClass(cues, 'js-testing-cues');
@@ -124,7 +130,7 @@ Wee.fn.extend('testing', {
 						Wee.$html(Wee.testing.bar, label + ' / ' + width + 'px');
 					},
 					click: function() {
-						Wee.$addClass(b, 'js-testing-enabled');
+						Wee.$addClass(html, 'js-testing-enabled');
 
 						if (! Wee.testing.active) {
 							var iframe = d.createElement('iframe');
@@ -134,7 +140,7 @@ Wee.fn.extend('testing', {
 
 							Wee.$css(iframe, {
 								'width': width + 'px',
-								'height': w.innerHeight + 'px'
+								'height': (w.innerHeight - 32) + 'px'
 							});
 
 							// Remove document markup
@@ -143,12 +149,12 @@ Wee.fn.extend('testing', {
 							Wee.testing.addToolbar();
 							Wee.testing.addCues(true);
 
+							Wee.events.on(iframe, 'load', function(e, el) {
+								Wee.$addClass(el.contentWindow.document.body.parentNode, 'js-testing-disabled');
+							});
+
 							// Append iframe
 							b.appendChild(iframe);
-
-							Wee.events.on(iframe, 'load', function() {
-								Wee.$addClass(iframe.contentDocument.body, 'js-testing-disabled');
-							});
 
 							Wee.testing.active = true;
 						} else {
@@ -202,9 +208,16 @@ Wee.fn.extend('testing', {
 		b.appendChild(cues);
 	},
 	setDimensions: function() {
-		var w = window;
+		var w = window,
+			iframe = Wee.$('#testing-frame');
 
 		Wee.$html(Wee.testing.bar, w.innerWidth + 'x' + w.innerHeight);
+
+		if (iframe) {
+			Wee.$css(iframe, {
+				'height': (w.innerHeight - 32) + 'px'
+			});
+		}
 	}
 });
 

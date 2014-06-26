@@ -27,12 +27,10 @@ Wee.fn.extend('polyfill', {
 			});
 
 			// Clear default placeholder values on form submit
-			Wee.events.on('form', {
-				submit: function() {
-					Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {
-						if (el.value == el.getAttribute('placeholder')) {
-							el.value = '';
-						}
+			Wee.events.on('form', 'submit', function() {
+				Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {
+					if (el.value == el.getAttribute('placeholder')) {
+						el.value = '';
 					}
 				}
 			});

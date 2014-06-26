@@ -24,8 +24,15 @@
 @import (reference) 'core/base.less'; // Baseline
 
 .responsiveTesting () when (@responsiveTestMode = true) {
-	body {
-		.padding(bottom; 0);
+	html {
+		.toggle () when (@responsiveTestPosition = 'top') {
+			.padding(top; 0);
+		}
+		.toggle () when not (@responsiveTestPosition = 'top') {
+			.padding(bottom; 0);
+		}
+		.toggle();
+		&:before,
 		&:after {
 			.hide();
 		}
