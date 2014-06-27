@@ -17,10 +17,7 @@ Wee.fn.make('events', {
 
 		if (evts) {
 			Wee.$each('[data-bind]', function(el) {
-				var conf = Wee.$extend({
-						scope: el
-					}, opt),
-					id = Wee.$data(el, 'bind');
+				var id = Wee.$data(el, 'bind');
 
 				if (evts.hasOwnProperty(id)) {
 					var inst = evts[id];
@@ -29,12 +26,14 @@ Wee.fn.make('events', {
 						var fn = inst[key];
 
 						if (key == 'init') {
-							Wee.$exec(fn, conf);
+							Wee.$exec(fn, Wee.$extend({
+								scope: el
+							}, opt));
 						} else {
 							var evt = {};
 							evt[key] = fn;
 
-							Wee.events.on(el, evt, conf);
+							Wee.events.on(el, evt, opt);
 						}
 					}
 				}
@@ -45,15 +44,26 @@ Wee.fn.make('events', {
 	trigger: function(sel, evt) {
 		Wee.$each(sel, function(el) {
 			if (document.createEvent) {
-				var event = document.createEvent('HTMLEvents');
-				event.initEvent(evt, true, false);
-				el.dispatchEvent(event);
+				var ev = document.createEvent('HTMLEvents');
+				ev.initEvent(evt, true, false);
+				el.dispatchEvent(ev);
 			} else {
 				el.fireEvent('on' + evt);
 			}
 		});
 	},
+	// Execute specific event by name and event
+	fire: function(name, evt) {
+		var bound = this.$get('bound');
+
+		if (bound.hasOwnProperty(name)) {
+			if (events[name].hasOwnProperty(evt)) {
+				Wee.$exec(events[name][evt]);
+			}
+		}
+	},
 	// Bind specified function to specified element|selector and event
+	// Options include arguments, context, one, scope, and watch
 	on: function(sel, a, b, c) {
 		if (Wee.$isString(a)) {
 			var obj = [];
@@ -69,8 +79,8 @@ Wee.fn.make('events', {
 			for (var evt in a) {
 				var conf = Wee.$extend({
 						args: [],
-						scope: el,
-						one: false
+						one: false,
+						scope: el
 					}, c),
 					fn = a[evt],
 					ev = evt,
@@ -101,9 +111,10 @@ Wee.fn.make('events', {
 							el.attachEvent('on' + evt, cb) :
 							el.addEventListener(evt, cb);
 
-						Wee.events.$push('bound', {
+						Wee.events.$push('evts', {
 							el: el,
-							evt: ev,
+							ev: ev,
+							evt: evt,
 							cb: cb,
 							fn: f
 						});
@@ -132,12 +143,17 @@ Wee.fn.make('events', {
 			e.el.detachEvent ?
 				e.el.detachEvent('on' + e.evt, e.cb) :
 				e.el.removeEventListener(e.evt, e.cb);
+
+			// Remove object from the bound array
+			var bound = Wee.events.$get('evts');
+
+			bound.splice(bound.indexOf(e), 1);
 		});
 	},
 	// Get currently bound events to optional specified element|selector and event|function
 	// Returns array of objects
 	bound: function(sel, evt, fn) {
-		var bound = this.$get('bound'),
+		var bound = this.$get('evts'),
 			matches = [];
 
 		if (bound) {
@@ -146,7 +162,7 @@ Wee.fn.make('events', {
 					for (var e in bound) {
 						var ev = bound[e];
 
-						if (el !== ev.el || (evt && (evt !== ev.evt || (fn && '' + fn !== '' + ev.fn)))) {
+						if (el !== ev.el || (evt && (evt !== ev.ev || (fn && '' + fn !== '' + ev.fn)))) {
 							continue;
 						}
 

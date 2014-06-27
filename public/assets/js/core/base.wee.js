@@ -15,7 +15,7 @@ var Wee = (function(w, d) {
 					var Public = pub,
 						Private = priv || {};
 
-					if (name != 'tMod') {
+					if (name != '_tmp') {
 						var data = {
 								// Private getter and setter methods for controllers
 								$get: function(key, def, set, opt) {
@@ -59,9 +59,9 @@ var Wee = (function(w, d) {
 					Wee.$extend(Wee, pub);
 				} else if (Wee.hasOwnProperty(name)) {
 					// Merge the objects else create the controller
-					this.make('tMod', pub, priv);
-					Wee.$extend(Wee[name], Wee.tMod);
-					delete Wee.tMod;
+					this.make('_tmp', pub, priv);
+					Wee.$extend(Wee[name], Wee._tmp);
+					delete Wee._tmp;
 				} else {
 					this.make(name, pub, priv);
 				}
@@ -244,15 +244,15 @@ var Wee = (function(w, d) {
 		// Serialize specified object
 		// Returns string
 		$serialize: function(obj) {
-			var str = [];
+			var res = [];
 
 			for (var key in obj) {
 				if (obj.hasOwnProperty(key)) {
-					str.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+					res.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
 				}
 			}
 
-			return str.join('&');
+			return res.join('&');
 		},
 		// Extend specified object with specified source object
 		// Optionally nest deep with third argument set to true
@@ -331,44 +331,40 @@ var Wee = (function(w, d) {
 
 		},
 		// Execute specified function for specified elements|selector
+		// Options include arguments, context, and scope
 		$each: function(sel, fn, opt) {
 			var conf = this.$extend({
-					args: [],
-					scope: null
+					args: []
 				}, opt),
-				el = sel['_$_'] ?
-					sel :
-					this.$isString(sel) ?
-						this.$toArray(this.$(sel)) :
-						(this.$isArray(sel) ? sel : [sel]),
+				el = this._selArray(sel, conf),
 				len = el.length,
 				i = 0;
 
 			for (; i < len; i++) {
 				this.$exec(fn, {
-					args: [el[i], i],
-					scope: conf.scope ? conf.scope : el[i]
+					args: [el[i], i].concat(conf.args),
+					scope: conf.scope || el[i]
 				})
 			}
 		},
 		// Translate items in an array|selection to new array
-		$map: function(arr, fn) {
-			if (! this.$isArray(arr)) {
-				arr = this.$toArray(arr['_$_'] ? arr[0] : this.$(arr));
+		$map: function(sel, fn) {
+			if (! this.$isArray(sel)) {
+				sel = this._selArray(sel);
 			}
 
 			var res = [],
-				len = arr.length,
+				len = sel.length,
 				i = 0;
 
 			for (; i < len; i++) {
-				var el = arr[i],
+				var el = sel[i],
 					val = this.$exec(fn, {
 						args: [el, i],
 						scope: el
 					});
 
-				if (val) {
+				if (val !== false) {
 					res.push(val);
 				}
 			}
@@ -385,11 +381,9 @@ var Wee = (function(w, d) {
 
 					// If specified class isn't already bound either set it or append it
 					if (curr.indexOf(val) === -1) {
-						if (curr === '') {
-							el.className = val;
-						} else {
+						curr === '' ?
+							el.className = val :
 							el.className += ' ' + val;
-						}
 					}
 				}
 			});
@@ -397,11 +391,9 @@ var Wee = (function(w, d) {
 		// Removes specified class from specified element|selector
 		$removeClass: function(sel, val) {
 			this.$each(sel, function(el) {
-				if (el.classList) {
-					el.classList.remove(val);
-				} else {
+				el.classList ?
+					el.classList.remove(val) :
 					el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-				}
 			});
 		},
 		// Add specified CSS rules to element|selector
@@ -432,7 +424,7 @@ var Wee = (function(w, d) {
 					el.innerHTML = val;
 				});
 			} else {
-				return Wee.$first(sel).innerHTML;
+				return this.$first(sel).innerHTML;
 			}
 		},
 		// Get attribute of specified element|selector or set attribute with specified value
@@ -447,9 +439,7 @@ var Wee = (function(w, d) {
 		},
 		// Get data value of specified element|selector or set data with specified value
 		$data: function(sel, key, val) {
-			key = 'data-' + key;
-
-			return this.$attr(sel, key, val);
+			return this.$attr(sel, 'data-' + key, val);
 		},
 		// Add meta variables to data store
 		$setVars: function() {
@@ -461,6 +451,16 @@ var Wee = (function(w, d) {
 					Wee.$set(key, val) :
 					Wee.$push(key.replace('[]', ''), val);
 			});
+		},
+		// Convert selector parameter to array
+		_selArray: function(sel, conf) {
+			conf = conf || {};
+
+			return sel['_$_'] ?
+				sel :
+				this.$isString(sel) ?
+					this.$toArray(this.$(sel, conf.context)) :
+					(this.$isArray(sel) ? sel : [sel]);
 		},
 		// Execute specified function when document is ready
 		ready: function(fn) {

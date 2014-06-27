@@ -6,13 +6,9 @@ Wee.fn.extend('', {
 	// Clone specified element|selector
 	// Returns element array
 	$clone: function(sel) {
-		var copy = [];
-
-		this.$each(sel, function(el) {
-			copy.push(el.cloneNode());
+		return this.$map(sel, function(el) {
+			return el.cloneNode();
 		});
-
-		return copy;
 	},
 	// Determine if specified element|selector has specified class name
 	// Returns boolean
@@ -47,15 +43,9 @@ Wee.fn.extend('', {
 		var el = this.$first(sel);
 
 		if (el) {
-			var children = [],
-				len = el.children.length,
-				i = 0;
-
-			for (; i < len; i++) {
-				if (el.children[i].nodeType != 8) {
-					children.push(el.children[i]);
-				}
-			}
+			var children = this.$map(el.children, function(child) {
+				return child;
+			});
 
 			return filter ? this.$filter(children, filter) : children;
 		}
@@ -274,13 +264,9 @@ Wee.fn.extend('', {
 	// Get matching nodes based on a specified filter within a specified element|selector
 	// Returns element array
 	$find: function(sel, filter) {
-		var matches = [];
-
-		this.$each(sel, function(el) {
-			matches.concat(Wee.$(filter, el));
+		return this.$map(sel, function(el) {
+			return Wee.$(filter, el);
 		});
-
-		return matches;
 	},
 	// Get the next sibling of a specified element|selector
 	// Returns element
@@ -307,15 +293,9 @@ Wee.fn.extend('', {
 	// Return a subset of elements based on a specified filter from a specified element|selector
 	// Returns element array
 	$filter: function(sel, filter) {
-		var matches = [];
-
-		this.$each(sel, function(el) {
-			if (Wee.$is(el, filter)) {
-				matches.push(el);
-			}
+		return this.$map(sel, function(el) {
+			return Wee.$is(el, filter) ? el : false;
 		});
-
-		return matches;
 	},
 	// Determines if a particular element|selector matches a specified criteria
 	// Returns boolean
@@ -478,8 +458,8 @@ Wee.fn.extend('', {
 		clone: function() {
 			return Wee.$clone(this);
 		},
-		each: function(fn) {
-			Wee.$each(this, fn);
+		each: function(fn, opt) {
+			Wee.$each(this, fn, opt);
 		},
 		map: function(fn) {
 			return Wee.$map(this, fn);
