@@ -30,7 +30,7 @@ JavaScript toolset to build scalable, well-organized browser functionality
 * **Sourcemap output** when building your project with Grunt
 * **Legacy fallback** to patch SVG and REM support in IE8
 
-Structure baseline of markup, icons, and files to serve as a frontend roadmap
+Structure baseline of markup, icons, and files to serve as a frontend roadmap  
 Optional Grunt build process configured through a simple JSON file to compile, optimize, and minify your source
 
 ## Quick Start
@@ -43,7 +43,7 @@ Get started with Wee using one of these three methods:
 
 ## Bugs
 
-Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).
+Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).  
 To view the working Wee todo list check out our public [Trello board](https://trello.com/b/7KbnQra9/wee).
 
 #### Minimum Browser Support
