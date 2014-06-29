@@ -40,18 +40,6 @@ Wee.fn.make('events', {
 			});
 		}
 	},
-	// Execute specific element|slector event by name and optional trigger
-	trigger: function(sel, evt) {
-		Wee.$each(sel, function(el) {
-			if (document.createEvent) {
-				var ev = document.createEvent('HTMLEvents');
-				ev.initEvent(evt, true, false);
-				el.dispatchEvent(ev);
-			} else {
-				el.fireEvent('on' + evt);
-			}
-		});
-	},
 	// Execute specific event by name and event
 	fire: function(name, evt) {
 		var bound = this.$get('bound');
@@ -176,6 +164,18 @@ Wee.fn.make('events', {
 
 		return matches;
 	},
+	// Execute specific element|slector event by name and optional trigger
+	trigger: function(sel, evt) {
+		Wee.$each(sel, function(el) {
+			if (document.createEvent) {
+				var ev = document.createEvent('HTMLEvents');
+				ev.initEvent(evt, true, false);
+				el.dispatchEvent(ev);
+			} else {
+				el.fireEvent('on' + evt);
+			}
+		});
+	},
 	// Ensure mouse has actually entered or left root element before firing event
 	mouseEvent: function(e, parent, fn) {
 		var child = e.relatedTarget;
@@ -184,7 +184,7 @@ Wee.fn.make('events', {
 			return;
 		}
 
-		var args = Array.prototype.slice.call(arguments);
+		var args = [].slice.call(arguments);
 
 		Wee.$exec(fn, {
 			args: args.slice(0, 1).concat(args.slice(3)),

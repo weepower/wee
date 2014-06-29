@@ -71,7 +71,7 @@ Wee.fn.make('screen', {
 					(mx && size <= mx && (init || prev > mx) && (! mn || size >= mn))) {
 					Wee.$exec(evt.callback, {
 						args: [{
-							dir: init ? 0 : ((size > prev) ? 1 : -1),
+							dir: init ? 0 : (size > prev ? 1 : -1),
 							size: size,
 							prev: prev,
 							init: init

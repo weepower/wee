@@ -43,9 +43,7 @@ Wee.fn.extend('', {
 		var el = this.$first(sel);
 
 		if (el) {
-			var children = this.$map(el.children, function(child) {
-				return child;
-			});
+			var children = [].slice.call(el.children);
 
 			return filter ? this.$filter(children, filter) : children;
 		}
@@ -65,7 +63,7 @@ Wee.fn.extend('', {
 		var el = this.$first(sel);
 
 		if (el) {
-				var siblings = Array.prototype.slice.call(el.parentNode.children),
+				var siblings = [].slice.call(el.parentNode.children),
 					len = siblings.length,
 					i = 0;
 
@@ -90,17 +88,13 @@ Wee.fn.extend('', {
 	// Returns element
 	$last: function(sel) {
 		if (sel['_$_']) {
-			var len = sel.length;
-
-			return sel[len - 1];
+			return sel[sel.length - 1];
 		}
 
 		var el = this.$(sel);
 
 		if (Wee.$isArray(el)) {
-			var len = el.length - 1;
-
-			return el[len];
+			return el[el.length - 1];
 		}
 
 		return el;
@@ -126,22 +120,22 @@ Wee.fn.extend('', {
 	},
 	// Prepend specified child element to parent element|selector
 	$prepend: function(sel, child) {
+		var str = Wee.$isString(child);
+
 		this.$each(sel, function(el) {
-			if (Wee.$isString(child)) {
-				el.innerHTML = child + el.innerHTML;
-			} else {
+			str ?
+				el.innerHTML = child + el.innerHTML :
 				el.insertBefore(child[0], el.firstChild);
-			}
 		});
 	},
 	// Insert specified element before specified element|selector
 	$before: function(sel, html) {
+		var str = Wee.$isString(html);
+
 		this.$each(sel, function(el) {
-			if (Wee.$isString(html)) {
-				el.insertAdjacentHTML('beforebegin', html);
-			} else {
+			str ?
+				el.insertAdjacentHTML('beforebegin', html) :
 				el.parentNode.insertBefore(html[0], el);
-			}
 		});
 	},
 	// Insert specified element before specified element|selector
@@ -224,7 +218,7 @@ Wee.fn.extend('', {
 	$text: function(sel, val) {
 		if (val !== undefined) {
 			this.$each(sel, function(el) {
-				(el.textContent !== undefined) ?
+				el.textContent !== undefined ?
 					el.textContent = val:
 					el.innerText = val;
 			});
@@ -241,9 +235,7 @@ Wee.fn.extend('', {
 				this.value = val;
 			});
 		} else {
-			var el = this.$first(sel);
-
-			return el.value;
+			return this.$first(sel).value;
 		}
 	},
 	// Get indexed node of specified element|selector
@@ -256,7 +248,7 @@ Wee.fn.extend('', {
 		var el = this.$(sel);
 
 		if (Wee.$isArray(el)) {
-			return (i < 0) ? el[el.length + i] : el[i];
+			return i < 0 ? el[el.length + i] : el[i];
 		}
 
 		return null;
@@ -301,7 +293,7 @@ Wee.fn.extend('', {
 	// Returns boolean
 	$is: function(sel, filter) {
 		var el = this.$first(sel),
-			matches = (el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector);
+			matches = el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector;
 
 		if (matches) {
 			return matches.call(el, filter);
@@ -438,7 +430,7 @@ Wee.fn.extend('', {
 
 (function(c, p) {
 	function get(sel, context) {
-		var el = Wee.$toArray(Wee.$(sel, context)),
+		var el = Wee.$isArray(sel) ? sel : Wee.$toArray(Wee.$(sel, context)),
 			len = el.length,
 			i = 0;
 
@@ -590,16 +582,16 @@ Wee.fn.extend('', {
 			return $(Wee.$eq(this, 0));
 		},
 		last: function() {
-			return Wee.$last(this);
+			return $(Wee.$last(this));
 		},
 		find: function(filter) {
-			return Wee.$find(this, filter);
+			return $(Wee.$find(this, filter));
 		},
 		next: function() {
-			return Wee.$next(this);
+			return $(Wee.$next(this));
 		},
 		prev: function() {
-			return Wee.$prev(this);
+			return $(Wee.$prev(this));
 		},
 		filter: function(filter) {
 			return $(Wee.$filter(this, filter));
@@ -611,7 +603,7 @@ Wee.fn.extend('', {
 			return Wee.$index(this);
 		},
 		closest: function(filter) {
-			return Wee.$closest(this, filter);
+			return $(Wee.$closest(this, filter));
 		},
 		toggleClass: function(val) {
 			Wee.$toggleClass(this, val);

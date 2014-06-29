@@ -39,7 +39,7 @@ var Wee = (function(w, d) {
 							var args = [].slice.call(arguments);
 
 							// Bind all additional arguments to private method call
-							(args.length > 1) ? args.shift() : args = null;
+							args.length > 1 ? args.shift() : args = null;
 
 							return Private[func].apply(Private, args);
 						};
@@ -146,25 +146,24 @@ var Wee = (function(w, d) {
 		// Determine data storage root and key
 		// Returns array
 		_storeData: function(key) {
-			if (key.indexOf(':') !== -1) {
-				var segs = key.split(':');
-				key = segs[0];
-
-				if (! _store.hasOwnProperty(key)) {
-					_store[key] = [];
-				}
-
-				return [_store[key], segs[1]];
+			if (key.indexOf(':') == -1) {
+				return [_store, key];
 			}
 
-			return [_store, key];
+			var segs = key.split(':');
+				key = segs[0];
+
+			if (! _store.hasOwnProperty(key)) {
+				_store[key] = [];
+			}
+
+			return [_store[key], segs[1]];
 		},
 		// Execute specified function or controller method
 		// Arguments and scope can be set in the options object
 		$exec: function(fn, opt) {
 			var conf = this.$extend({
-					args: [],
-					scope: null
+					args: []
 				}, opt),
 				fns = this.$toArray(fn),
 				len = fns.length,
@@ -179,7 +178,7 @@ var Wee = (function(w, d) {
 					if (segs.length === 2) {
 						fn = Wee[segs[0]][segs[1]];
 
-						if (conf.scope == null) {
+						if (! conf.scope) {
 							conf.scope = Wee[segs[0]];
 						}
 					} else {
@@ -197,7 +196,7 @@ var Wee = (function(w, d) {
 		// Determine if specified argument is array
 		// Returns boolean
 		$isArray: function(obj) {
-			return (obj && (obj.isArray || Object.prototype.toString.call(obj) == '[object Array]'));
+			return obj && (obj.isArray || Object.prototype.toString.call(obj) == '[object Array]');
 		},
 		// Determine if specified element belongs to specified array
 		// Returns index else false
@@ -381,7 +380,7 @@ var Wee = (function(w, d) {
 
 					// If specified class isn't already bound either set it or append it
 					if (curr.indexOf(val) === -1) {
-						curr === '' ?
+						curr == '' ?
 							el.className = val :
 							el.className += ' ' + val;
 					}
@@ -419,23 +418,23 @@ var Wee = (function(w, d) {
 		},
 		// Get HTML value of a specified element|selector or set HTML with specified value
 		$html: function(sel, val) {
-			if (val !== undefined) {
-				this.$each(sel, function(el) {
-					el.innerHTML = val;
-				});
-			} else {
+			if (val === undefined) {
 				return this.$first(sel).innerHTML;
 			}
+
+			this.$each(sel, function(el) {
+				el.innerHTML = val;
+			});
 		},
 		// Get attribute of specified element|selector or set attribute with specified value
 		$attr: function(sel, key, val) {
-			if (val !== undefined) {
-				this.$each(sel, function(el) {
-					el.setAttribute(key, val);
-				});
-			} else {
+			if (val === undefined) {
 				return this.$first(sel).getAttribute(key);
 			}
+
+			this.$each(sel, function(el) {
+				el.setAttribute(key, val);
+			});
 		},
 		// Get data value of specified element|selector or set data with specified value
 		$data: function(sel, key, val) {
@@ -447,7 +446,7 @@ var Wee = (function(w, d) {
 				var key = Wee.$data(el, 'set'),
 					val = Wee.$data(el, 'value');
 
-				(key.indexOf('[]') == -1) ?
+				key.indexOf('[]') == -1 ?
 					Wee.$set(key, val) :
 					Wee.$push(key.replace('[]', ''), val);
 			});
@@ -464,17 +463,15 @@ var Wee = (function(w, d) {
 		},
 		// Execute specified function when document is ready
 		ready: function(fn) {
-			if (d.addEventListener) {
+			d.addEventListener ?
 				d.addEventListener('DOMContentLoaded', function() {
 					Wee.$exec(fn);
-				});
-			} else {
+				}) :
 				d.attachEvent('onreadystatechange', function() {
 					if (d.readyState == 'interactive') {
 						Wee.$exec(fn);
 					}
 				});
-			}
 		},
 		// Toggle HTML JavaScript status class name and set data variables
 		init: function() {

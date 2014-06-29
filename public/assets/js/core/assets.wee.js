@@ -118,7 +118,7 @@ Wee.fn.make('assets', {
 	},
 	// Decrement remaining count of assets to be loaded
 	done: function(group) {
-		this.$set(group, (this.$get(group) - 1));
+		this.$set(group, this.$get(group) - 1);
 
 		this.$public.ready(group, false);
 	},
@@ -126,7 +126,7 @@ Wee.fn.make('assets', {
 	fail: function(group) {
 		var key = group + '-fail';
 
-		this.$set(key, (this.$get(key) + 1));
+		this.$set(key, this.$get(key) + 1);
 		this.done(group);
 	}
 });

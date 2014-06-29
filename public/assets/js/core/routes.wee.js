@@ -10,7 +10,7 @@ Wee.fn.make('routes', {
 			this.$set('path', val) :
 			this.$get('path', window.location.pathname);
 	},
-	// Add route endpoints to route storage
+	// Add route endpoints to route storage and optionally run the rules
 	map: function(routes, init) {
 		this.$set('routes', Wee.$extend(this.$get('routes', {}), routes));
 
@@ -23,7 +23,7 @@ Wee.fn.make('routes', {
 	// Returns array of segment strings or string if index specified
 	segments: function(i) {
 		var segs = Wee.$toArray(this.path().replace(/^\/|\/$/g, '').split('/'));
-		return (i !== undefined) ? (segs[i] || '') : segs;
+		return i !== undefined ? (segs[i] || '') : segs;
 	},
 	// Process stored route options with optional config
 	// Defaults to current path
@@ -37,7 +37,7 @@ Wee.fn.make('routes', {
 		}
 
 		if (conf.routes) {
-			this.$private('process', conf.routes, 0, (this.$set('segs', 'routes:segments', {})).length);
+			this.$private('process', conf.routes, 0, this.$set('segs', 'routes:segments', {}).length);
 
 			// Execute queued init functions on last iteration
 			var any = this.$get('any');
@@ -53,7 +53,7 @@ Wee.fn.make('routes', {
 	}
 }, {
 	// Recursive method to process routes
-	process: function(route, i) {
+	process: function(route, i, total) {
 		var seg = this.$get('segs')[i],
 			keys = Wee.$getKeys(route),
 			x = 0;
@@ -63,7 +63,7 @@ Wee.fn.make('routes', {
 		for (; x < keys.length; x++) {
 			var key = keys[x],
 				opts = key.split('||'),
-				match = false,
+				match = 0,
 				len = opts.length,
 				k = 0;
 
@@ -72,20 +72,22 @@ Wee.fn.make('routes', {
 					child = route[key];
 
 				if (opt == seg) {
-					match = true;
+					match = 1;
 				} else if (opt.substring(0, 1) == '$') {
 					// If the second character is / then test regex
 					if (opt.substring(1, 2) == '/') {
 						if (new RegExp(opt.substring(2).slice(0,-1)).test(seg)) {
-							match = true;
+							match = 1;
 						}
 					} else {
 						switch (opt) {
 							case '$any':
-								this.$push('any', child);
+								Wee.$isObject(child) ?
+									match = true :
+									this.$push('any', child);
 								break;
 							case '$any:fire':
-								Wee.$exec(child);
+								match = true;
 								break;
 							case '$root':
 								if (! seg) {
@@ -109,11 +111,13 @@ Wee.fn.make('routes', {
 
 				// If matched execute or process recursively
 				if (match) {
-					Wee.$isObject(child) ?
-						this.process(child, i) :
+					if (Wee.$isObject(child)) {
+						this.process(child, i, total);
+					} else if (i === total) {
 						Wee.$exec(child, {
 							args: seg
 						});
+					}
 				}
 			}
 		}

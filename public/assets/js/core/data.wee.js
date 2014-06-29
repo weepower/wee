@@ -76,7 +76,7 @@ Wee.fn.make('data', {
 
 		return str.replace(/{{([^}]*)}}/g, function(str, match) {
 			var el = match.split('.'),
-				len = (el.length - 1),
+				len = el.length - 1,
 				i = 0;
 
 			for (; i <= len; i++) {
