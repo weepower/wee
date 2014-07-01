@@ -2,13 +2,13 @@
 
 Your blueprint for modern web development. To read more, visit [weepower.com](http://www.weepower.com).
 
-## What does that mean?
+## A closer look...
 
 Wee is a carefully crafted framework built to construct complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does this all with a tiny footprint.
 
 #### Features include:
 
-Mobile-first CSS framework with reset, base, and LESS mixin library
+Mobile-first CSS framework with reset, base, and LESS mixin library < 4KB gzipped
 
 * **Central configuration** for setting every component of your brand's baseline
 * **Feature toggling** for major components to keep your output minimal
@@ -16,7 +16,7 @@ Mobile-first CSS framework with reset, base, and LESS mixin library
 * **Structured breakpoints** for your responsive projects to keep you organized
 * **Legacy handling** for IE8 to make sure everything works, along with a media query fallback
 
-JavaScript toolset to build scalable, well-organized browser functionality
+JavaScript toolset to build scalable, well-organized browser functionality < 8KB gzipped
 
 * **Foundation** of utilities, helpers, and module structure
 * **Chainable DOM** traversal and manipulation library
@@ -46,7 +46,7 @@ Get started with Wee using one of these three methods:
 Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).  
 To view the working Wee todo list check out our public [Trello board](https://trello.com/b/7KbnQra9/wee).
 
-#### Minimum Browser Support
+#### Minimum browser support
 
 * Chrome 27
 * Mozilla Firefox 20

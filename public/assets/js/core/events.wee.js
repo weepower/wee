@@ -61,6 +61,12 @@ Wee.fn.make('events', {
 			c = b;
 		}
 
+		// Reset variables when watching target
+		if (c && c.watch) {
+			c.targ = sel;
+			sel = c.watch;
+		}
+
 		// For each element attach events
 		Wee.$each(sel, function(el) {
 			// Loop through object events
@@ -87,13 +93,26 @@ Wee.fn.make('events', {
 					var cb = function(e) {
 						conf.args[0] = e;
 
+						// If watch within parent make sure the target matches the selector
+						if (conf.targ) {
+							var t = conf.targ,
+								sel = t['_$_'] ? t.sel : t;
+								t = Wee.$toArray(Wee.$(sel));
+
+							if (Wee.$inArray(t, e.target) === false) {
+								return false;
+							}
+						}
+
 						Wee.$exec(fn, conf);
 
+						// If the event is to be executed once unbind it immediately
 						if (conf.one) {
 							Wee.events.off(el, evt, f);
 						}
 					};
 
+					// Ensure the speficied element, event, and function combination hasn't already been bound
 					if (Wee.events.bound(el, ev, f).length < 1) {
 						el.attachEvent ?
 							el.attachEvent('on' + evt, cb) :

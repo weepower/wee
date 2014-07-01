@@ -434,13 +434,18 @@ Wee.fn.extend('', {
 			len = el.length,
 			i = 0;
 
+		c.sel = sel;
+
 		for (; i < len; i++) {
 			c.push.call(this, el[i]);
 		}
 	}
 
 	window.$ = function(sel, context) {
-		return new get(sel, context);
+		var o = new get(sel, context);
+			o.sel = sel;
+
+		return o;
 	}
 
 	$[p] = get[p] = {
@@ -638,6 +643,7 @@ Wee.fn.extend('', {
 		},
 		trigger: function(evt) {
 			Wee.events.trigger(this, evt);
+			return this;
 		},
 		// Data
 		parse: function(obj) {

@@ -5,7 +5,7 @@ Options +FollowSymLinks -MultiViews -Indexes
 
 # Character set
 #AddDefaultCharset utf-8
-#AddCharset utf-8 .css .js .json .rss .xml
+#AddCharset utf-8 .css .js .json .map .rss .xml
 
 # --------
 # Rewrites
