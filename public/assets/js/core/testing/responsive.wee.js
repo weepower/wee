@@ -135,7 +135,7 @@ Wee.fn.extend('testing', {
 						if (! Wee.testing.active) {
 							var iframe = d.createElement('iframe');
 
-							iframe.src = d.location.href;
+							iframe.src = d.location.href + (d.location.href.indexOf('?') == -1 ? '?' : '');
 							iframe.id = 'testing-frame';
 
 							Wee.$css(iframe, {

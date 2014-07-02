@@ -51,7 +51,7 @@ Wee.fn.make('events', {
 		}
 	},
 	// Bind specified function to specified element|selector and event
-	// Options include arguments, context, one, scope, and watch
+	// Options include arguments, context, one, scope, and delegate
 	on: function(sel, a, b, c) {
 		if (Wee.$isString(a)) {
 			var obj = [];
@@ -62,9 +62,9 @@ Wee.fn.make('events', {
 		}
 
 		// Reset variables when watching target
-		if (c && c.watch) {
+		if (c && c.delegate) {
 			c.targ = sel;
-			sel = c.watch;
+			sel = c.delegate;
 		}
 
 		// For each element attach events

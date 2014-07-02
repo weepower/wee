@@ -6,50 +6,45 @@
 Wee.fn.extend('polyfill', {
 	srcset: function() {
 		// Check for srcset support
-		if ('srcset' in document.createElement('img')) {
-			return true;
-		}
+		if (! ('srcset' in document.createElement('img'))) {
+			// Set fallback values
+			var w = window,
+				currWidth = w.innerWidth > 0 ? w.innerWidth : screen.width,
+				currHeight = w.innerHeight > 0 ? w.innerHeight : screen.height,
+				currDensity = w.devicePixelRatio || 1;
 
-		// Set fallback values
-		var w = window,
-			currWidth = (w.innerWidth > 0) ? w.innerWidth : screen.width,
-			currHeight = (w.innerHeight > 0) ? w.innerHeight : screen.height,
-			currDensity = w.devicePixelRatio || 1;
+			function srcset(img) {
+				var ss = Wee.$attr(img, 'srcset');
 
-		function srcset(img) {
-			var set = img.getAttribute('srcset');
+				if (ss) {
+					var val = ss.split(','),
+						len = val.length,
+						x = 0;
 
-			if (set === null) {
-				return false;
+					for (; x < len; x++) {
+						var options = val[x].match(/^\s*([^\s]+)\s*(\s(\d+)w)?\s*(\s(\d+)h)?\s*(\s(\d+)x)?\s*$/),
+							width = options[3] || false,
+							height = options[5] || false,
+							density = options[7] || 1;
+
+						if ((width && width < currWidth) ||
+							(height && height < currHeight) ||
+							(density && density < currDensity)) {
+							continue;
+						}
+
+						img.src = options[1];
+					}
+				}
 			}
 
-			var val = set.split(','),
-				len = val.length,
+			var imgs = Wee.$('img'),
+				len = imgs.length,
 				i = 0;
 
 			for (; i < len; i++) {
-				var options = val[i].match(/^\s*([^\s]+)\s*(\s(\d+)w)?\s*(\s(\d+)h)?\s*(\s(\d+)x)?\s*$/),
-					filename = options[1],
-					width = options[3] || false,
-					height = options[5] || false,
-					density = options[7] || 1;
-
-				if ((width && width < currWidth) ||
-					(height && height < currHeight) ||
-					(density && density < currDensity)) {
-					continue;
-				}
-
-				img.src = filename;
+				srcset(imgs[i]);
 			}
-		}
-
-		var imgs = document.getElementsByTagName('img'),
-			len = imgs.length,
-			i = 0;
-
-		for (; i < len; i++) {
-			srcset(imgs[i]);
 		}
 	}
 });
