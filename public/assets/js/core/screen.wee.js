@@ -40,7 +40,7 @@ Wee.fn.make('screen', {
 				}
 
 				// Check current screen match if init = true
-				if (conf.init !== false) {
+				if (conf.init === true) {
 					this.$private('check', true, [conf]);
 				}
 			}
