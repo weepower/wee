@@ -23,7 +23,8 @@
 	},
 	"launch_in_ci": [
 		"bs_chrome",
-		"bs_firefox"
+		"bs_firefox",
+		"bs_safari"
 	],
 	"launch_in_dev": []
 }

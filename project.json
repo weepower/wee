@@ -72,6 +72,6 @@
 			"css": false,
 			"js": true
 		},
-		"host": "http://wee.dev:8080"
+		"host": "http://wee.dev"
 	}
 }

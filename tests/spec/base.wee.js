@@ -33,6 +33,12 @@ test('get with default string', function() {
 	strictEqual(Wee.$get('123 var', 'Testing 123'), 'Testing 123', 'Variable "123 var" is returned as the default "Testing 123".');
 });
 
+test('get with default string returned by callback', function() {
+	strictEqual(Wee.$get('var-123', function() {
+		return 'string';
+	}), 'string', 'Variable "var-123" is returned as the default "string".');
+});
+
 test('set string', function() {
 	strictEqual(Wee.$set('var-123', 'string'), 'string', 'Variable "var-123" was set to "string".');
 	strictEqual(Wee.$set('cont:var-123', 'string'), 'string', 'Variable "var-123" was set to "string" in the "cont" namespace.');
@@ -50,19 +56,46 @@ test('get with set default string', function() {
 	strictEqual(Wee.$get('set-var-123'), 'string', 'Variable "set-var-123" is correctly set to "string".');
 });
 
-// $setVars()
-
-module('$setVars');
-
-test('get', function() {
-	Wee.$setVars();
-
-	strictEqual(Wee.$get('test-var'), 'Test Value', 'Meta variable "test-var" was set correctly.');
-});
+// TODO: Push
 
 // $exec(fn, opt)
 
+module('$exec');
 
+Wee.fn.make('execTest', {
+	withParams: function(val) {
+		return val;
+	},
+	withoutParams: function() {
+		return 'value';
+	}
+});
+
+test('callback', function() {
+	strictEqual(Wee.$exec(function() {
+		return 'value';
+	}), 'value', 'Simple callback was executed correctly.');
+});
+
+test('callback with argument', function() {
+	strictEqual(Wee.$exec(function(val) {
+		return val;
+	}, {
+		args: ['value']
+	}), 'value', 'Simple callback with argument was executed correctly.');
+});
+
+test('module callback', function() {
+	strictEqual(Wee.$exec('execTest:withoutParams'), 'value', 'Module callback was executed correctly.');
+});
+
+test('module callback', function() {
+	strictEqual(Wee.$exec('execTest:withoutParams', {
+		args: ['value']
+	}), 'value', 'Module callback with argument was executed correctly.');
+});
+
+// TODO: Callback array
 
 // $isArray(obj)
 
@@ -175,19 +208,19 @@ test('check for properly serialized object', function() {
 
 
 
-// $clone(obj)
-
-
-
 // $(sel, context)
 
 
 
-// $each(sel, fn)
+// $first(sel)
 
 
 
-// $setVars()
+// $each(sel, fn, opt)
+
+
+
+// $map(sel, fn)
 
 
 
@@ -213,3 +246,14 @@ test('check for properly serialized object', function() {
 
 // $data(el, key, val)
 
+
+
+// $setVars()
+
+module('$setVars');
+
+test('get', function() {
+	Wee.$setVars();
+
+	strictEqual(Wee.$get('test-var'), 'Test Value', 'Meta variable "test-var" was set correctly.');
+});

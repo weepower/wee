@@ -45,8 +45,8 @@ Wee.fn.make('events', {
 		var bound = this.$get('bound');
 
 		if (bound.hasOwnProperty(name)) {
-			if (events[name].hasOwnProperty(evt)) {
-				Wee.$exec(events[name][evt]);
+			if (bound[name].hasOwnProperty(evt)) {
+				Wee.$exec(bound[name][evt]);
 			}
 		}
 	},

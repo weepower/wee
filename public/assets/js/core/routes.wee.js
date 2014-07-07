@@ -4,19 +4,28 @@
 
 Wee.fn.make('routes', {
 	// Get currently bound path or set path with a specified value
+	// Accepts optional options to pass through to get/set
 	// Returns string
-	path: function(val) {
+	path: function(val, opt) {
 		return val ?
-			this.$set('path', val) :
-			this.$get('path', window.location.pathname);
+			this.$set('path', val, opt) :
+			this.$get('path', window.location.pathname, true, opt);
 	},
-	// Add route endpoints to route storage and optionally run the rules
+	// Retrieve or add route endpoints to route storage
+	// Optionally run the rules by setting init to true
+	// Returns 
 	map: function(routes, init) {
-		this.$set('routes', Wee.$extend(this.$get('routes', {}), routes));
+		var curr = this.$get('routes', {});
 
-		if (init) {
-			this.run({routes: routes});
+		if (routes) {
+			this.$set('routes', Wee.$extend(curr, routes));
+
+			if (init) {
+				this.run({routes: routes});
+			}
 		}
+
+		return curr;
 	},
 	// Get segments from an optionally specified path
 	// Defaults to currently bound path
