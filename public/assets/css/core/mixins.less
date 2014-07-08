@@ -1685,7 +1685,7 @@
 	}
 	.check();
 }
-.position (@value; ...) {
+.position (@value; ...) when not (@value = false) {
 	position: @value;
 }
 .position (@value; @top; ...) when not (@top = false) {
