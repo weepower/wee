@@ -280,7 +280,7 @@ var Wee = (function(w, d) {
 		// Accepts optional context argument
 		// Returns array of DOM objects
 		$: function(sel, context) {
-			if (! typeof sel == 'string') {
+			if (typeof sel !== 'string') {
 				return sel;
 			}
 

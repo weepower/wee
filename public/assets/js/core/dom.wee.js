@@ -227,6 +227,7 @@ Wee.fn.extend('', {
 		});
 	},
 	// Get text value of specified element|selector or set text with specified value
+	// Returns string
 	$text: function(sel, val) {
 		if (val !== undefined) {
 			this.$each(sel, function(el) {
@@ -235,12 +236,17 @@ Wee.fn.extend('', {
 					el.innerText = val;
 			});
 		} else {
-			var el = this.$first(sel);
+			var r = '';
 
-			return el.textContent || el.innerText;
+			this.$each(sel, function(el) {
+				r += (el.textContent || el.innerText).trim();
+			});
+
+			return r;
 		}
 	},
 	// Get value of specified element|selector or set specified value
+	// Returns string
 	$val: function(sel, val) {
 		if (val !== undefined) {
 			this.$each(sel, function() {
@@ -303,6 +309,13 @@ Wee.fn.extend('', {
 	$filter: function(sel, filter, opt) {
 		return this.$map(sel, function(el) {
 			return Wee.$is(el, filter, opt) ? el : false;
+		});
+	},
+	// Return a subset of elements based on a specified exclusion filter from a specified element|selector
+	// Returns element array
+	$not: function(sel, filter, opt) {
+		return this.$map(sel, function(el) {
+			return Wee.$is(el, filter, opt) ? false : el;
 		});
 	},
 	// Determines if a particular element|selector matches a specified criteria
@@ -388,8 +401,8 @@ Wee.fn.extend('', {
 		var el = this.$first(sel);
 
 		return {
-			left: el.offsetLeft,
-			top: el.offsetTop
+			top: el.offsetTop,
+			left: el.offsetLeft
 		}
 	},
 	// Get the offset of a specified element|selector
@@ -411,10 +424,9 @@ Wee.fn.extend('', {
 			return sel.innerWidth;
 		}
 
-		var el = this.$first(sel);
-
 		if (val === undefined || val === true) {
-			var width = el.offsetWidth;
+			var el = this.$first(sel),
+				width = el.offsetWidth;
 
 			if (val === true) {
 				var style = el.currentStyle || getComputedStyle(el);
@@ -425,7 +437,7 @@ Wee.fn.extend('', {
 			return width;
 		}
 
-		this.$css(el, 'width', val);
+		this.$css(sel, 'width', val);
 	},
 	// Get or set the height of an element|selector, optionally accounting for margin
 	// Returns int
@@ -437,7 +449,8 @@ Wee.fn.extend('', {
 		var el = this.$first(sel);
 
 		if (val === undefined || val === true) {
-			var height = el.offsetHeight;
+			var el = this.$first(sel),
+				height = el.offsetHeight;
 
 			if (val === true) {
 				var style = el.currentStyle || getComputedStyle(el);
@@ -448,18 +461,16 @@ Wee.fn.extend('', {
 			return height;
 		}
 
-		this.$css(el, 'height', val);
+		this.$css(sel, 'height', val);
 	}
 });
 
 (function(c, p) {
 	function get(sel, context) {
 		if (sel) {
-			var el = sel.isArray || Object.prototype.toString.call(sel) == '[object Array]' ? sel : Wee.$(sel, context),
+			var el = Wee.$isArray(sel) ? sel : Wee.$toArray(Wee.$(sel, context)),
 				len = el.length,
 				i = 0;
-
-			c.sel = sel;
 
 			for (; i < len; i++) {
 				c.push.call(this, el[i]);
@@ -477,6 +488,20 @@ Wee.fn.extend('', {
 	$[p] = get[p] = {
 		length: 0,
 		_$_: true,
+		// Utility
+		reverse: function() {
+			var cp = Wee.$extend({}, this),
+				len = this.length,
+				i = 0,
+				x = len - 1;
+
+			for (; i < len; i++) {
+				this[i] = cp[x];
+				x--;
+			}
+
+			return this;
+		},
 		// Base
 		clone: function() {
 			return $(Wee.$clone(this));
@@ -543,7 +568,7 @@ Wee.fn.extend('', {
 			return $(Wee.$children(this, filter));
 		},
 		contents: function() {
-			return $(Wee.$content(this));
+			return $(Wee.$contents(this));
 		},
 		siblings: function(filter) {
 			return $(Wee.$siblings(this, filter));
@@ -567,7 +592,7 @@ Wee.fn.extend('', {
 			return this;
 		},
 		prependTo: function(parent) {
-			Wee.$prepend(parent, this);
+			Wee.$prepend(parent, this.reverse());
 			return this;
 		},
 		before: function(pos) {
@@ -626,6 +651,9 @@ Wee.fn.extend('', {
 		},
 		filter: function(filter) {
 			return $(Wee.$filter(this, filter));
+		},
+		not: function(filter) {
+			return $(Wee.$not(this, filter));
 		},
 		is: function(filter) {
 			return Wee.$is(this, filter);
