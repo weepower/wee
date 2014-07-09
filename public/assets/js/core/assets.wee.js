@@ -14,7 +14,7 @@ Wee.fn.make('assets', {
 	load: function(conf) {
 		if (conf.files) {
 			var files = Wee.$toArray(conf.files),
-				root = conf.root || this.root(),
+				root = conf.root !== undefined ? conf.root : this.root(),
 				now = new Date().getTime(),
 				len = files.length,
 				i = 0;
