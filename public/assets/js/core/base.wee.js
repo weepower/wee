@@ -280,12 +280,12 @@ var Wee = (function(w, d) {
 		// Accepts optional context argument
 		// Returns array of DOM objects
 		$: function(sel, context) {
-			if (! this.$isString(sel)) {
+			if (! typeof sel == 'string') {
 				return sel;
 			}
 
 			var el = null;
-				context = context ? this.$first(context) : d;
+				context = context !== undefined ? this.$first(context) : d;
 
 			// If selector doesn't have a space or [ assume its a simple selection
 			if (sel == 'window') {
