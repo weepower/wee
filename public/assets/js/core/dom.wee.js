@@ -455,7 +455,7 @@ Wee.fn.extend('', {
 (function(c, p) {
 	function get(sel, context) {
 		if (sel) {
-			var el = sel.isArray || Object.prototype.toString.call(sel) == '[object Array]' ? sel : [sel],
+			var el = sel.isArray || Object.prototype.toString.call(sel) == '[object Array]' ? sel : Wee.$(sel, context),
 				len = el.length,
 				i = 0;
 
