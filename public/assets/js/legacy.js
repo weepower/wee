@@ -66,7 +66,7 @@ var WeeLegacy = (function(w, d) {
 				root = d.defaultView.getComputedStyle(body, null).getPropertyValue('font-size').replace('px', '');
 			}
 
-			Wee.root = root;
+			WeeLegacy.root = root;
 
 			for (; i < len; i++) {
 				var href = sheets[i].href;
@@ -79,7 +79,7 @@ var WeeLegacy = (function(w, d) {
 		// Rewrite REM units to pixels in appended stylesheet
 		remConvert: function(css) {
 			function convert(str, match) {
-				return (match * Wee.root) + 'px';
+				return (match * WeeLegacy.root) + 'px';
 			}
 
 			var output = '',

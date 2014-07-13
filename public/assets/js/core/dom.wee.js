@@ -43,7 +43,7 @@ Wee.fn.extend('', {
 		var el = this.$first(sel);
 
 		if (el) {
-			var children = [].slice.call(el.children);
+			var children = Wee._legacy == true ? Wee._nodeArray(el.children) : Wee._slice.call(el.children);
 
 			return filter ? this.$filter(children, filter) : children;
 		}
@@ -63,7 +63,7 @@ Wee.fn.extend('', {
 		var el = this.$first(sel);
 
 		if (el) {
-				var siblings = [].slice.call(el.parentNode.children),
+				var siblings = Wee._legacy == true ? Wee._nodeArray(el.parentNode.children) : Wee._slice.call(el.parentNode.children),
 					len = siblings.length,
 					i = 0;
 
@@ -130,7 +130,7 @@ Wee.fn.extend('', {
 	$before: function(sel, pos) {
 		var str = Wee.$isString(pos);
 
-		this.$each(sel, function(el) {
+		this.$each(sel, function(el, i) {
 			str ?
 				el.insertAdjacentHTML('beforebegin', pos) :
 				Wee.$each(pos, function(cel) {
@@ -239,7 +239,7 @@ Wee.fn.extend('', {
 			var r = '';
 
 			this.$each(sel, function(el) {
-				r += (el.textContent || el.innerText).trim();
+				r += (el.textContent || el.innerText).replace(/^\s+|\s+$/g, '');
 			});
 
 			return r;
@@ -468,12 +468,12 @@ Wee.fn.extend('', {
 (function(c, p) {
 	function get(sel, context) {
 		if (sel) {
-			var el = Wee.$isArray(sel) ? sel : Wee.$toArray(Wee.$(sel, context)),
+			var el = (Array.isArray ? Array.isArray(sel) : sel.constructor === Array) ? sel : Wee.$toArray(Wee.$(sel, context)),
 				len = el.length,
 				i = 0;
 
 			for (; i < len; i++) {
-				c.push.call(this, el[i]);
+				c.call(this, el[i]);
 			}
 		}
 	}
@@ -707,4 +707,4 @@ Wee.fn.extend('', {
 			return this;
 		}
 	}
-})([], 'prototype');
+})([].push, 'prototype');

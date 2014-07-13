@@ -548,6 +548,8 @@ dd {
 		.padding(0);
 	}
 	.input () {
+		-moz-appearance: none;
+		-webkit-appearance: none;
 		.background(@inputBackground);
 		.background-clip();
 		.color(@inputColor);
@@ -641,17 +643,6 @@ dd {
 	textarea,
 	select {
 		.input();
-	}
-	input[type='email'],
-	input[type='file'],
-	input[type='number'],
-	input[type='password'],
-	input[type='search'],
-	input[type='tel'],
-	input[type='text'],
-	textarea {
-		-moz-appearance: none;
-		-webkit-appearance: none;
 	}
 	input[type='search']::-webkit-search-decoration {
 		.hide();

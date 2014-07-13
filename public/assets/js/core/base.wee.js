@@ -8,6 +8,8 @@ var Wee = (function(w, d) {
 	var _store = {};
 
 	return {
+		_slice: [].slice,
+		_legacy: w.WeeLegacy === undefined ? false : true,
 		// Create controller with specified name, public object, and optional private object
 		fn: {
 			make: function(name, pub, priv) {
@@ -36,7 +38,7 @@ var Wee = (function(w, d) {
 					// If private object exists expose $call function for executing private methods
 					if (priv) {
 						Public.$private = function(func) {
-							var args = [].slice.call(arguments);
+							var args = Wee._slice.call(arguments);
 
 							// Bind all additional arguments to private method call
 							args.length > 1 ? args.shift() : args = null;
@@ -196,7 +198,7 @@ var Wee = (function(w, d) {
 		// Determine if specified argument is array
 		// Returns boolean
 		$isArray: function(obj) {
-			return obj && (obj.isArray || Object.prototype.toString.call(obj) == '[object Array]');
+			return obj && Array.isArray ? Array.isArray(obj) : obj.constructor === Array;
 		},
 		// Determine if specified element belongs to specified array
 		// Returns index else false
@@ -227,7 +229,7 @@ var Wee = (function(w, d) {
 		// Determine if specified argument is an object
 		// Returns boolean
 		$isObject: function(obj) {
-			return obj && typeof obj == 'object' && ! this.$isArray(obj);
+			return obj && obj.constructor === Object;
 		},
 		// Get keys from an object
 		// Returns array of strings
@@ -289,33 +291,30 @@ var Wee = (function(w, d) {
 
 			// If selector doesn't have a space or [ assume its a simple selection
 			if (sel == 'window') {
-				return w;
+				return [w];
 			} else if (sel == 'document') {
-				return d;
+				return [d];
 			} else if (sel.indexOf(' ') > 0 || sel.indexOf('[') > -1 || sel.indexOf(':') > -1 || sel.indexOf('#') > -1 || sel.indexOf('.') > 0) {
 				el = context.querySelectorAll(sel);
 			} else {
-				var type = sel.match(/^(\W)?(.*)/);
+				var c = sel.charAt(0);
 
-				el = (context)[
-					'getElement' + (type[1] ? (type[1] == '#') ? 'ById' : 'sByClassName' : 'sByTagName')
-				](type[2]);
+				if (c == '#') {
+					el = context.getElementById(sel.substr(1));
+				} else if (c == '.') {
+					el = this._legacy == true ?
+						context.querySelectorAll(sel) :
+						context.getElementsByClassName(sel.substr(1));
+				} else {
+					el = context.getElementsByTagName(sel);
+				}
 			}
 
-			if (el === null || el.nodeType) {
+			if (el === null || el.nodeType !== undefined) {
 				return el;
 			}
 
-			// If slice.call is available use it else loop through matches manually
-			try {
-				return [].slice.call(el, 0);
-			} catch(e) {
-				return this.$map(el, function(node) {
-					if (this.$isObject(node)) {
-						matches.push(node);
-					}
-				});
-			}
+			return this._legacy == true ? this._nodeArray(el) : this._slice.call(el, 0);
 		},
 		// Get first match to specified element|selector
 		// Returns DOM object
@@ -460,6 +459,18 @@ var Wee = (function(w, d) {
 				this.$isString(sel) ?
 					this.$toArray(this.$(sel, conf.context)) :
 					(this.$isArray(sel) ? sel : [sel]);
+		},
+		// Convert nodeList to array
+		_nodeArray: function(el) {
+			var arr = [],
+				len = el.length,
+				i = 0;
+
+			for (; i < len; i++) {
+				arr[i] = el[i];
+			}
+
+			return arr;
 		},
 		// Execute specified function when document is ready
 		ready: function(fn) {

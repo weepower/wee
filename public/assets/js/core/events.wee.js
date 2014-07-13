@@ -203,7 +203,7 @@ Wee.fn.make('events', {
 			return;
 		}
 
-		var args = [].slice.call(arguments);
+		var args = Wee._slice.call(arguments);
 
 		Wee.$exec(fn, {
 			args: args.slice(0, 1).concat(args.slice(3)),
