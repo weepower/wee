@@ -41,7 +41,7 @@ var Wee = (function(w, d) {
 							var args = Wee._slice.call(arguments);
 
 							// Bind all additional arguments to private method call
-							args.length > 1 ? args.shift() : args = null;
+							args.length > 1 ? args.shift() : args = [];
 
 							return Private[func].apply(Private, args);
 						};
@@ -236,9 +236,13 @@ var Wee = (function(w, d) {
 				return Object.keys(obj);
 			}
 
-			return this.$map(obj, function(key) {
-				return key
-			});
+			var keys = [];
+
+			for (var key in obj) {
+				keys.push(key);
+			}
+
+			return keys;
 		},
 		// Serialize specified object
 		// Returns string
@@ -480,7 +484,7 @@ var Wee = (function(w, d) {
 		ready: function(fn) {
 			this._legacy ?
 				d.attachEvent('onreadystatechange', function() {
-					if (d.readyState == 'interactive') {
+					if (d.readyState == 'complete') {
 						Wee.$exec(fn);
 					}
 				}) :
