@@ -40,7 +40,8 @@
 			"legacy": {
 				"enable": true,
 				"build": [
-					"lib/vendor/html5shiv.js"
+					"lib/vendor/html5shiv.js",
+					"lib/vendor/sizzle.js"
 				]
 			}
 		},

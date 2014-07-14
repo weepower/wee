@@ -93,7 +93,7 @@ Wee.fn.extend('testing', {
 		this.setDimensions();
 	},
 	removeToolbar: function() {
-		Wee.$addClass(document.body.parentNode, 'js-testing-disabled');
+		Wee.$addClass(document.documentElement, 'js-testing-disabled');
 	},
 	addCues: function(showCues) {
 		// Create cue wrapper
@@ -150,7 +150,7 @@ Wee.fn.extend('testing', {
 							Wee.testing.addCues(true);
 
 							Wee.events.on(iframe, 'load', function(e, el) {
-								Wee.$addClass(el.contentWindow.document.body.parentNode, 'js-testing-disabled');
+								Wee.$addClass(el.contentWindow.document.documentElement, 'js-testing-disabled');
 							});
 
 							// Append iframe

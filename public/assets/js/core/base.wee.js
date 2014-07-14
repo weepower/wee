@@ -9,7 +9,7 @@ var Wee = (function(w, d) {
 
 	return {
 		_slice: [].slice,
-		_legacy: w.WeeLegacy === undefined ? false : true,
+		_legacy: d.getElementsByClassName ? false : true,
 		// Create controller with specified name, public object, and optional private object
 		fn: {
 			make: function(name, pub, priv) {
@@ -121,7 +121,7 @@ var Wee = (function(w, d) {
 		// Returns mixed value
 		$set: function(key, val, opt) {
 			var split = this._storeData(key),
-				set = (this.$isFunction(val)) ? val() : (opt ? this.$exec(val, opt) : val);
+				set = this.$isFunction(val) ? val() : (opt ? this.$exec(val, opt) : val);
 				split[0][split[1]] = set;
 
 			return set;
@@ -137,11 +137,9 @@ var Wee = (function(w, d) {
 				root[key] = b ? {} : [];
 			}
 
-			if (b) {
-				root[key][a] = b;
-			} else {
+			b ?
+				root[key][a] = b :
 				root[key].push(a);
-			}
 
 			return root[key];
 		},
@@ -198,7 +196,7 @@ var Wee = (function(w, d) {
 		// Determine if specified argument is array
 		// Returns boolean
 		$isArray: function(obj) {
-			return obj && Array.isArray ? Array.isArray(obj) : obj.constructor === Array;
+			return obj && (this._legacy ? obj.constructor === Array : Array.isArray(obj));
 		},
 		// Determine if specified element belongs to specified array
 		// Returns index else false
@@ -286,6 +284,11 @@ var Wee = (function(w, d) {
 				return sel;
 			}
 
+			// Use Sizzle if it is available
+			if (w.Sizzle !== undefined) {
+				return Sizzle(sel, context);
+			}
+
 			var el = null;
 				context = context !== undefined ? this.$first(context) : d;
 
@@ -302,7 +305,7 @@ var Wee = (function(w, d) {
 				if (c == '#') {
 					el = context.getElementById(sel.substr(1));
 				} else if (c == '.') {
-					el = this._legacy == true ?
+					el = this._legacy ?
 						context.querySelectorAll(sel) :
 						context.getElementsByClassName(sel.substr(1));
 				} else {
@@ -314,7 +317,7 @@ var Wee = (function(w, d) {
 				return el;
 			}
 
-			return this._legacy == true ? this._nodeArray(el) : this._slice.call(el, 0);
+			return this._legacy ? this._nodeArray(el) : Wee._slice.call(el, 0);
 		},
 		// Get first match to specified element|selector
 		// Returns DOM object
@@ -372,9 +375,7 @@ var Wee = (function(w, d) {
 		// Add specified class name to specified element|selector
 		$addClass: function(sel, val) {
 			this.$each(sel, function(el) {
-				if (el.classList) {
-					el.classList.add(val);
-				} else {
+				if (this._legacy) {
 					var curr = el.className;
 
 					// If specified class isn't already bound either set it or append it
@@ -383,15 +384,19 @@ var Wee = (function(w, d) {
 							el.className = val :
 							el.className += ' ' + val;
 					}
+				} else {
+					Wee._legacy ?
+						el.className = el.className + ' ' + val :
+						el.classList.add(val);
 				}
 			});
 		},
 		// Removes specified class from specified element|selector
 		$removeClass: function(sel, val) {
 			this.$each(sel, function(el) {
-				el.classList ?
-					el.classList.remove(val) :
-					el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+				Wee._legacy ?
+					el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ') :
+					el.classList.remove(val);
 			});
 		},
 		// Add specified CSS rules to element|selector
@@ -410,7 +415,7 @@ var Wee = (function(w, d) {
 			} else {
 				var el = this.$first(sel);
 
-				return el.currentStyle ?
+				return this._legacy ?
 					el.currentStyle[a] :
 					getComputedStyle(el, null)[a];
 			}
@@ -439,7 +444,7 @@ var Wee = (function(w, d) {
 		$data: function(sel, key, val) {
 			return this.$attr(sel, 'data-' + key, val);
 		},
-		// Add meta variables to data store
+		// Add metadata variables to datastore
 		$setVars: function() {
 			this.$each('[data-set]', function(el) {
 				var key = Wee.$data(el, 'set'),
@@ -450,7 +455,7 @@ var Wee = (function(w, d) {
 					Wee.$push(key.replace('[]', ''), val);
 			});
 		},
-		// Convert selector parameter to array
+		// Convert selection to array
 		_selArray: function(sel, conf) {
 			conf = conf || {};
 
@@ -463,10 +468,9 @@ var Wee = (function(w, d) {
 		// Convert nodeList to array
 		_nodeArray: function(el) {
 			var arr = [],
-				len = el.length,
 				i = 0;
 
-			for (; i < len; i++) {
+			for (; i < el.length; i++) {
 				arr[i] = el[i];
 			}
 
@@ -474,23 +478,22 @@ var Wee = (function(w, d) {
 		},
 		// Execute specified function when document is ready
 		ready: function(fn) {
-			d.addEventListener ?
-				d.addEventListener('DOMContentLoaded', function() {
-					Wee.$exec(fn);
-				}) :
+			this._legacy ?
 				d.attachEvent('onreadystatechange', function() {
 					if (d.readyState == 'interactive') {
 						Wee.$exec(fn);
 					}
+				}) :
+				d.addEventListener('DOMContentLoaded', function() {
+					Wee.$exec(fn);
 				});
 		},
-		// Toggle HTML JavaScript status class name and set data variables
+		// Toggle HTML JavaScript status class and set data variables
 		init: function() {
-			var html = d.body.parentNode;
+			var html = d.documentElement;
 
 			this.$removeClass(html, 'no-js');
 			this.$addClass(html, 'js');
-
 			this.$setVars();
 		}
 	};

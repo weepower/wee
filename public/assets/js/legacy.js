@@ -127,15 +127,18 @@ var WeeLegacy = (function(w, d) {
 				i = 0;
 
 			for (; i < len; i++) {
-				var img = arr[i],
-					ext = img.src.split('.').pop();
+				var img = arr[i];
 
-				if (ext == 'svg') {
-					var fallback = img.getAttribute('data-fallback');
+				if (img.hasAttribute('src')) {
+					var ext = img.getAttribute('src').split('.').pop();
 
-					img.src = (fallback != null) ?
-						fallback :
-						img.src.slice(0, -3) + 'png';
+					if (ext == 'svg') {
+						var fallback = img.getAttribute('data-fallback');
+
+						img.src = fallback !== null ?
+							fallback :
+							img.src.slice(0, -3) + 'png';
+					}
 				}
 			}
 

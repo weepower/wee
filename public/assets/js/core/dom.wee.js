@@ -15,9 +15,9 @@ Wee.fn.extend('', {
 	$hasClass: function(sel, val) {
 		var el = this.$first(sel);
 
-		return el.classList ?
-			el.classList.contains(val) :
-			new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className);
+		return Wee._legacy ?
+			new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className) :
+			el.classList.contains(val);
 	},
 	// Show specified element|selector
 	$show: function(sel) {
@@ -43,7 +43,7 @@ Wee.fn.extend('', {
 		var el = this.$first(sel);
 
 		if (el) {
-			var children = Wee._legacy == true ? Wee._nodeArray(el.children) : Wee._slice.call(el.children);
+			var children = Wee._legacy ? Wee._nodeArray(el.children) : Wee._slice.call(el.children);
 
 			return filter ? this.$filter(children, filter) : children;
 		}
@@ -63,7 +63,7 @@ Wee.fn.extend('', {
 		var el = this.$first(sel);
 
 		if (el) {
-				var siblings = Wee._legacy == true ? Wee._nodeArray(el.parentNode.children) : Wee._slice.call(el.parentNode.children),
+				var siblings = Wee._legacy ? Wee._nodeArray(el.parentNode.children) : Wee._slice.call(el.parentNode.children),
 					len = siblings.length,
 					i = 0;
 
@@ -465,10 +465,10 @@ Wee.fn.extend('', {
 	}
 });
 
-(function(c, p) {
+(function(w, c, p) {
 	function get(sel, context) {
 		if (sel) {
-			var el = (Array.isArray ? Array.isArray(sel) : sel.constructor === Array) ? sel : Wee.$toArray(Wee.$(sel, context)),
+			var el = (Wee._legacy ? sel.constructor === Array : Array.isArray(sel)) ? sel : Wee.$toArray(Wee.$(sel, context)),
 				len = el.length,
 				i = 0;
 
@@ -478,7 +478,7 @@ Wee.fn.extend('', {
 		}
 	}
 
-	window.$ = function(sel, context) {
+	w.$ = function(sel, context) {
 		var o = new get(sel, context);
 			o.sel = sel;
 
@@ -707,4 +707,4 @@ Wee.fn.extend('', {
 			return this;
 		}
 	}
-})([].push, 'prototype');
+})(window, [].push, 'prototype');

@@ -114,7 +114,7 @@ Wee.fn.make('events', {
 
 					// Ensure the speficied element, event, and function combination hasn't already been bound
 					if (Wee.events.bound(el, ev, f).length < 1) {
-						el.attachEvent ?
+						Wee._legacy ?
 							el.attachEvent('on' + evt, cb) :
 							el.addEventListener(evt, cb);
 
@@ -147,7 +147,7 @@ Wee.fn.make('events', {
 	// Remove specified function to specified element|selector and optional event|function
 	off: function(sel, evt, fn) {
 		Wee.$each(this.bound(sel, evt, fn), function(e) {
-			e.el.detachEvent ?
+			Wee._legacy ?
 				e.el.detachEvent('on' + e.evt, e.cb) :
 				e.el.removeEventListener(e.evt, e.cb);
 
