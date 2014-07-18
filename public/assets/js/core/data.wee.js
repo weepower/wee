@@ -71,9 +71,43 @@ Wee.fn.make('data', {
 	},
 	// Parse specified data into specified template string
 	// Return string
-	parse: function(str, obj) {
+	parse: function(str, obj, opt) {
+		opt = opt || {};
 		obj = obj || {};
 
+		// Make data-parse replacements
+		var div = Wee._doc.createElement('div'),
+			clean = function(str) {
+				return str
+					.replace(/&amp;/g, '&')
+					.replace(/&/g, '&amp;')
+					.replace(/</g, '&lt;')
+					.replace(/>/g, '&gt;')
+					.replace(/"/g, '&quot;');
+			};
+
+		div.innerHTML = str;
+
+		Wee.$each('[data-parse]', function(el) {
+			var key = Wee.$data(el, 'parse'),
+				resp = obj[key];
+
+			if (! Wee.$isObject(resp)) {
+				if (resp !== undefined) {
+					if (opt.encode === true) {
+						resp = clean(resp);
+					}
+
+					el.innerHTML = resp;
+				}
+			}
+		}, {
+			context: div
+		});
+
+		str = div.innerHTML;
+
+		// Make {{template}} variable replacements
 		return str.replace(/{{([^}]*)}}/g, function(str, match) {
 			var el = match.split('.'),
 				len = el.length - 1,
@@ -85,14 +119,18 @@ Wee.fn.make('data', {
 					fb = '';
 
 				if (segs.length > 1) {
-					key = segs[0].trim();
-					fb = segs[1].trim();
+					key = Wee.$trim(segs[0]);
+					fb = Wee.$trim(segs[1]);
 				}
 
-				obj = obj[key];
+				var resp = obj[key];
+
+				if (opt.encode === true) {
+					resp = clean(resp);
+				}
 
 				if (i === len) {
-					return obj || fb;
+					return resp || fb;
 				}
 			}
 		});

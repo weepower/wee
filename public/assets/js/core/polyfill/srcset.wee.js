@@ -6,12 +6,11 @@
 Wee.fn.extend('polyfill', {
 	srcset: function() {
 		// Check for srcset support
-		if (! ('srcset' in document.createElement('img'))) {
+		if (! ('srcset' in Wee._doc.createElement('img'))) {
 			// Set fallback values
-			var w = window,
-				currWidth = w.innerWidth > 0 ? w.innerWidth : screen.width,
-				currHeight = w.innerHeight > 0 ? w.innerHeight : screen.height,
-				currDensity = w.devicePixelRatio || 1,
+			var currWidth = Wee._win.innerWidth > 0 ? Wee._win.innerWidth : screen.width,
+				currHeight = Wee._win.innerHeight > 0 ? Wee._win.innerHeight : screen.height,
+				currDensity = Wee._win.devicePixelRatio || 1,
 				srcset = function(img) {
 					var ss = Wee.$attr(img, 'srcset');
 

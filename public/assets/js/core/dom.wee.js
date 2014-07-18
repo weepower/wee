@@ -3,41 +3,32 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.fn.extend('', {
-	// Clone specified element|selector
+	// Clone specified element
 	// Returns element array
 	$clone: function(sel) {
 		return this.$map(sel, function(el) {
 			return el.cloneNode(true);
 		});
 	},
-	// Determine if specified element|selector has specified class
-	// Returns boolean
-	$hasClass: function(sel, val) {
-		var el = this.$first(sel);
-
-		return Wee._legacy ?
-			new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className) :
-			el.classList.contains(val);
-	},
-	// Show specified element|selector
+	// Show specified element
 	$show: function(sel) {
 		this.$each(sel, function(el) {
 			Wee.$removeClass(el, 'js-hide');
 		});
 	},
-	// Hide specified element|selector
+	// Hide specified element
 	$hide: function(sel) {
 		this.$each(sel, function(el) {
 			Wee.$addClass(el, 'js-hide');
 		});
 	},
-	// Toggle the display of a specified element|selector
+	// Toggle the display of a specified element
 	$toggle: function(sel) {
 		this.$each(sel, function(el) {
 			! Wee.$hasClass(el, 'js-hide') ? Wee.$hide(el) : Wee.$show(el);
 		});
 	},
-	// Get children of specified element|selector with optional filter
+	// Get children of specified element with optional filter
 	// Returns element array
 	$children: function(sel, filter) {
 		var el = this.$first(sel);
@@ -50,14 +41,14 @@ Wee.fn.extend('', {
 
 		return null;
 	},
-	// Get content of specified element|selector
+	// Get content of specified element
 	// Returns element array
 	$contents: function(sel) {
 		var el = this.$first(sel);
 
 		return el ? el.childNodes : null;
 	},
-	// Get siblings of specified element|selector with optional filter
+	// Get siblings of specified element with optional filter
 	// Returns element array
 	$siblings: function(sel, filter) {
 		var el = this.$first(sel);
@@ -79,12 +70,12 @@ Wee.fn.extend('', {
 
 		return null;
 	},
-	// Get parent of specified element|selector
+	// Get parent of specified element
 	// Returns element
 	$parent: function(sel) {
 		return Wee.$first(sel).parentNode;
 	},
-	// Get last match to specified element|selector
+	// Get last match to specified element
 	// Returns element
 	$last: function(sel) {
 		if (sel['_$_']) {
@@ -95,14 +86,14 @@ Wee.fn.extend('', {
 
 		return Wee.$isArray(el) ? el[el.length - 1] : el;
 	},
-	// Determine if specified parent element|selector contains specified child element|selector
+	// Determine if specified parent element contains specified child element
 	// Returns boolean
 	$contains: function(sel, child) {
 		var el = this.$first(sel);
 
 		return Wee.$(child, el).length ? true : false;
 	},
-	// Append specified child element|selector to parent element|selector
+	// Append specified child element to parent element
 	$append: function(sel, child) {
 		var str = this.$isString(child);
 
@@ -114,7 +105,7 @@ Wee.fn.extend('', {
 				});
 		});
 	},
-	// Prepend specified child element|selector to specified parent element|selector
+	// Prepend specified child element to specified parent element
 	$prepend: function(sel, child) {
 		var str = Wee.$isString(child);
 
@@ -126,7 +117,7 @@ Wee.fn.extend('', {
 				});
 		});
 	},
-	// Insert specified element|selector before specified element|selector
+	// Insert specified element before specified element
 	$before: function(sel, pos) {
 		var str = Wee.$isString(pos);
 
@@ -138,7 +129,7 @@ Wee.fn.extend('', {
 				});
 		});
 	},
-	// Insert specified element|selector before specified element|selector
+	// Insert specified element before specified element
 	$insertBefore: function(prev, sel) {
 		this.$each(sel, function(el) {
 			Wee.$each(prev, function(cel) {
@@ -146,7 +137,7 @@ Wee.fn.extend('', {
 			});
 		});
 	},
-	// Insert specified element|selector after specified element|selector
+	// Insert specified element after specified element
 	$after: function(sel, pos) {
 		var str = this.$isString(pos);
 
@@ -158,7 +149,7 @@ Wee.fn.extend('', {
 				});
 		});
 	},
-	// Insert specified element|selector after specified element|selector
+	// Insert specified element after specified element
 	$insertAfter: function(next, sel) {
 		this.$each(sel, function(el) {
 			Wee.$each(next, function(cel) {
@@ -166,13 +157,13 @@ Wee.fn.extend('', {
 			});
 		});
 	},
-	// Remove specified element|selector from document
+	// Remove specified element from document
 	$remove: function(sel) {
 		this.$each(sel, function(el) {
 			el.parentNode.removeChild(el);
 		})
 	},
-	// Remove child nodes from specified element|selector
+	// Remove child nodes from specified element
 	$empty: function(sel) {
 		this.$each(sel, function(el) {
 			while (el.firstChild) {
@@ -180,7 +171,7 @@ Wee.fn.extend('', {
 			}
 		});
 	},
-	// Wrap HTML around specified element|selector
+	// Wrap HTML around specified element
 	$wrap: function(sel, html) {
 		this.$each(sel, function(el) {
 			var wrap = Wee.$parseHTML(html);
@@ -191,7 +182,7 @@ Wee.fn.extend('', {
 			});
 		});
 	},
-	// Wrap HTML around the content of specified element|selector
+	// Wrap HTML around the content of specified element
 	$wrapInner: function(sel, html) {
 		this.$each(sel, function(el) {
 			var wrap = Wee.$parseHTML(html),
@@ -208,7 +199,7 @@ Wee.fn.extend('', {
 			});
 		});
 	},
-	// Get property of specified element|selector or set property with specified value
+	// Get property of specified element or set property with specified value
 	$prop: function(sel, key, val) {
 		if (val !== undefined) {
 			this.$each(sel, function(el) {
@@ -220,13 +211,13 @@ Wee.fn.extend('', {
 			return el[key];
 		}
 	},
-	// Remove specified attribute of specified element|selector
+	// Remove specified attribute of specified element
 	$removeAttr: function(sel, key) {
 		this.$each(sel, function(el) {
 			el.removeAttribute(key);
 		});
 	},
-	// Get text value of specified element|selector or set text with specified value
+	// Get text value of specified element or set text with specified value
 	// Returns string
 	$text: function(sel, val) {
 		if (val !== undefined) {
@@ -239,13 +230,13 @@ Wee.fn.extend('', {
 			var r = '';
 
 			this.$each(sel, function(el) {
-				r += (el.textContent || el.innerText).replace(/^\s+|\s+$/g, '');
+				r += Wee.$trim(el.textContent || el.innerText);
 			});
 
 			return r;
 		}
 	},
-	// Get value of specified element|selector or set specified value
+	// Get value of specified element or set specified value
 	// Returns string
 	$val: function(sel, val) {
 		if (val !== undefined) {
@@ -256,7 +247,7 @@ Wee.fn.extend('', {
 			return this.$first(sel).value;
 		}
 	},
-	// Get indexed node of specified element|selector
+	// Get indexed node of specified element
 	// Returns element
 	$eq: function(sel, i) {
 		if (sel['_$_']) {
@@ -271,7 +262,7 @@ Wee.fn.extend('', {
 
 		return null;
 	},
-	// Get matching nodes based on a specified filter within a specified element|selector
+	// Get matching nodes based on a specified filter within a specified element
 	// Returns element array
 	$find: function(sel, filter) {
 		var arr = [];
@@ -282,7 +273,7 @@ Wee.fn.extend('', {
 
 		return arr;
 	},
-	// Get the next sibling of a specified element|selector
+	// Get the next sibling of a specified element
 	// Returns element
 	$next: function(sel) {
 		var el = this.$first(sel);
@@ -293,7 +284,7 @@ Wee.fn.extend('', {
 
 		return el;
 	},
-	// Get the previous sibling of a specified element|selector
+	// Get the previous sibling of a specified element
 	// Returns element
 	$prev: function(sel) {
 		var el = this.$first(sel);
@@ -304,21 +295,21 @@ Wee.fn.extend('', {
 
 		return el;
 	},
-	// Return a subset of elements based on a specified filter from a specified element|selector
+	// Return a subset of elements based on a specified filter from a specified element
 	// Returns element array
 	$filter: function(sel, filter, opt) {
 		return this.$map(sel, function(el) {
 			return Wee.$is(el, filter, opt) ? el : false;
 		});
 	},
-	// Return a subset of elements based on a specified exclusion filter from a specified element|selector
+	// Return a subset of elements based on a specified exclusion filter from a specified element
 	// Returns element array
 	$not: function(sel, filter, opt) {
 		return this.$map(sel, function(el) {
 			return Wee.$is(el, filter, opt) ? false : el;
 		});
 	},
-	// Determines if a particular element|selector matches a specified criteria
+	// Determines if a particular element matches a specified criteria
 	// Returns boolean
 	$is: function(sel, filter, opt) {
 		var el = this.$first(sel);
@@ -347,7 +338,7 @@ Wee.fn.extend('', {
 
 		return false;
 	},
-	// Get the sibling index of a specified element|selector
+	// Get the sibling index of a specified element
 	// Returns int
 	$index: function(sel) {
 		var el = this.$first(sel),
@@ -364,7 +355,7 @@ Wee.fn.extend('', {
 
 		return -1;
 	},
-	// Get the closest node of element|selector with specified filter
+	// Get the closest node of element with specified filter
 	// Returns element
 	$closest: function(sel, filter) {
 		var el = this.$first(sel);
@@ -379,7 +370,7 @@ Wee.fn.extend('', {
 
 		return null;
 	},
-	// Toggle the display of a specified element|selector
+	// Toggle the display of a specified element
 	$toggleClass: function(sel, val) {
 		this.$each(sel, function(el) {
 			Wee.$hasClass(el, val) ?
@@ -390,12 +381,14 @@ Wee.fn.extend('', {
 	// Convert specified HTML string to a DOM object and optionally converts it to a Wee DOM object
 	// Returns element
 	$parseHTML: function(html, obj) {
-		var el = document.createElement('div');
+		var el = Wee._doc.createElement('div');
 			el.innerHTML = html;
 
-		return obj ? $(el.firstChild) : el.firstChild;
+		var children = this.$children(el);
+
+		return obj ? $(children) : children;
 	},
-	// Get the position of a specified element|selector
+	// Get the position of a specified element
 	// Returns object
 	$position: function(sel) {
 		var el = this.$first(sel);
@@ -405,22 +398,22 @@ Wee.fn.extend('', {
 			left: el.offsetLeft
 		}
 	},
-	// Get the offset of a specified element|selector
+	// Get the offset of a specified element
 	// Returns object
 	$offset: function(sel) {
 		var el = this.$first(sel),
 			rect = el.getBoundingClientRect(),
-			b = document.body;
+			b = Wee._body;
 
 		return {
 			top: rect.top + b.scrollTop,
 			left: rect.left + b.scrollLeft
 		}
 	},
-	// Get or set the width of a specified element|selector, optionally accounting for margin
+	// Get or set the width of a specified element, optionally accounting for margin
 	// Returns int
 	$width: function(sel, val) {
-		if (sel === window) {
+		if (sel === Wee._win) {
 			return sel.innerWidth;
 		}
 
@@ -439,10 +432,10 @@ Wee.fn.extend('', {
 
 		this.$css(sel, 'width', val);
 	},
-	// Get or set the height of an element|selector, optionally accounting for margin
+	// Get or set the height of an element, optionally accounting for margin
 	// Returns int
 	$height: function(sel, val) {
-		if (sel === window) {
+		if (sel === Wee._win) {
 			return sel.innerHeight;
 		}
 
@@ -464,247 +457,3 @@ Wee.fn.extend('', {
 		this.$css(sel, 'height', val);
 	}
 });
-
-(function(w, c, p) {
-	function get(sel, context) {
-		if (sel) {
-			var el = (Wee._legacy ? sel.constructor === Array : Array.isArray(sel)) ? sel : Wee.$toArray(Wee.$(sel, context)),
-				len = el.length,
-				i = 0;
-
-			for (; i < len; i++) {
-				c.call(this, el[i]);
-			}
-		}
-	}
-
-	w.$ = function(sel, context) {
-		var o = new get(sel, context);
-			o.sel = sel;
-
-		return o;
-	}
-
-	$[p] = get[p] = {
-		length: 0,
-		_$_: true,
-		// Utility
-		reverse: function() {
-			var cp = Wee.$extend({}, this),
-				len = this.length,
-				i = 0,
-				x = len - 1;
-
-			for (; i < len; i++) {
-				this[i] = cp[x];
-				x--;
-			}
-
-			return this;
-		},
-		// Base
-		clone: function() {
-			return $(Wee.$clone(this));
-		},
-		each: function(fn, opt) {
-			Wee.$each(this, fn, opt);
-		},
-		map: function(fn) {
-			return Wee.$map(this, fn);
-		},
-		addClass: function(val) {
-			Wee.$addClass(this, val);
-			return this;
-		},
-		removeClass: function(val) {
-			Wee.$removeClass(this, val);
-			return this;
-		},
-		css: function(a, b) {
-			var r = Wee.$css(this, a, b);
-			return b || Wee.$isObject(a) ? this : r;
-		},
-		attr: function(key, val) {
-			var r = Wee.$attr(this, key, val);
-			return val !== undefined ? this : r;
-		},
-		// DOM
-		hasClass: function(val) {
-			return Wee.$hasClass(this, val);
-		},
-		html: function(val) {
-			var r = Wee.$html(this, val);
-			return val !== undefined ? this : r;
-		},
-		removeAttr: function(key) {
-			Wee.$removeAttr(this, key);
-			return this;
-		},
-		data: function(key, val) {
-			var r = Wee.$data(this, key, val);
-			return val !== undefined ? this : r;
-		},
-		prop: function(key, val) {
-			var r = Wee.$prop(this, key, val);
-			return val !== undefined ? this : r;
-		},
-		val: function(key, val) {
-			var r = Wee.$val(this, key, val);
-			return val !== undefined ? this : r;
-		},
-		show: function() {
-			Wee.$show(this);
-			return this;
-		},
-		hide: function() {
-			Wee.$hide(this);
-			return this;
-		},
-		toggle: function() {
-			Wee.$toggle(this);
-			return this;
-		},
-		children: function(filter) {
-			return $(Wee.$children(this, filter));
-		},
-		contents: function() {
-			return $(Wee.$contents(this));
-		},
-		siblings: function(filter) {
-			return $(Wee.$siblings(this, filter));
-		},
-		parent: function() {
-			return $(Wee.$parent(this));
-		},
-		contains: function(child) {
-			return Wee.$contains(this, child);
-		},
-		append: function(child) {
-			Wee.$append(this, child);
-			return this;
-		},
-		appendTo: function(parent) {
-			Wee.$append(parent, this);
-			return this;
-		},
-		prepend: function(child) {
-			Wee.$prepend(this, child);
-			return this;
-		},
-		prependTo: function(parent) {
-			Wee.$prepend(parent, this.reverse());
-			return this;
-		},
-		before: function(pos) {
-			Wee.$before(this, pos);
-			return this;
-		},
-		insertBefore: function(sel) {
-			Wee.$insertBefore(this, sel);
-			return this;
-		},
-		after: function(pos) {
-			Wee.$after(this, pos);
-			return this;
-		},
-		insertAfter: function(sel) {
-			Wee.$insertAfter(this, sel);
-			return this;
-		},
-		remove: function() {
-			Wee.$remove(this);
-			return this;
-		},
-		empty: function() {
-			Wee.$empty(this);
-			return this;
-		},
-		wrap: function(html) {
-			Wee.$wrap(this, html);
-			return this;
-		},
-		wrapInner: function(html) {
-			Wee.$wrapInner(this, html);
-			return this;
-		},
-		text: function(val) {
-			var r = Wee.$text(this, val);
-			return val !== undefined ? this : r;
-		},
-		eq: function(i) {
-			return $(Wee.$eq(this, i));
-		},
-		first: function() {
-			return $(Wee.$eq(this, 0));
-		},
-		last: function() {
-			return $(Wee.$last(this));
-		},
-		find: function(filter) {
-			return $(Wee.$find(this, filter));
-		},
-		next: function() {
-			return $(Wee.$next(this));
-		},
-		prev: function() {
-			return $(Wee.$prev(this));
-		},
-		filter: function(filter) {
-			return $(Wee.$filter(this, filter));
-		},
-		not: function(filter) {
-			return $(Wee.$not(this, filter));
-		},
-		is: function(filter) {
-			return Wee.$is(this, filter);
-		},
-		index: function() {
-			return Wee.$index(this);
-		},
-		closest: function(filter) {
-			return $(Wee.$closest(this, filter));
-		},
-		toggleClass: function(val) {
-			Wee.$toggleClass(this, val);
-			return this;
-		},
-		position: function() {
-			return Wee.$position(this);
-		},
-		offset: function() {
-			return Wee.$offset(this);
-		},
-		width: function(val) {
-			var r = Wee.$width(this, val);
-			return (val === undefined || val === true) ? r : this;
-		},
-		height: function(val) {
-			var r = Wee.$height(this, val);
-			return (val === undefined || val === true) ? r : this;
-		},
-		// Events
-		on: function(a, b, c) {
-			Wee.events.on(this, a, b, c);
-			return this;
-		},
-		off: function(evts, opt) {
-			Wee.events.off(this, evts, opt);
-			return this;
-		},
-		one: function(a, b, c) {
-			Wee.events.one(this, a, b, c);
-			return this;
-		},
-		trigger: function(evt) {
-			Wee.events.trigger(this, evt);
-			return this;
-		},
-		// Data
-		parse: function(obj) {
-			var str = Wee.$html(this);
-			str = Wee.data.parse(str, obj);
-			Wee.$html(this, str);
-			return this;
-		}
-	}
-})(window, [].push, 'prototype');

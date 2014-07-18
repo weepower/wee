@@ -342,6 +342,10 @@ module.exports = function(grunt) {
 				buildScripts.push(coreRoot + 'screen.wee.js');
 			}
 
+			if (features.chain) {
+				buildScripts.push(coreRoot + 'chain.wee.js');
+			}
+
 			// Polyfills
 
 			var polyfill = config.script.base.polyfill;
@@ -454,8 +458,8 @@ module.exports = function(grunt) {
 		// Get legacy files: if enabled compile all relevant files into legacy.css and legacy.js
 
 		if (config.script.base.legacy.enable == true) {
-			var legacyStyles = [styleRoot + '/legacy.less'],
-				legacyScripts = [scriptRoot + '/legacy.js'],
+			var legacyStyles = [],
+				legacyScripts = [scriptRoot + '/core/legacy.wee.js'],
 				legacyCount = config.script.base.legacy.build.length;
 
 			for (var i = 0; i < legacyCount; i++) {
@@ -468,6 +472,9 @@ module.exports = function(grunt) {
 					legacyStyles.push(styleRoot + '/' + file);
 				}
 			}
+
+			legacyStyles.push(styleRoot + '/legacy.less');
+			legacyScripts.push(scriptRoot + '/legacy.js');
 		}
 
 		// Source map support

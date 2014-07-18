@@ -50,7 +50,7 @@ Wee.fn.make('events', {
 			}
 		}
 	},
-	// Bind specified function to specified element|selector and event
+	// Bind specified function to specified element and event
 	// Options include arguments, context, one, scope, and delegate
 	on: function(sel, a, b, c) {
 		if (Wee.$isString(a)) {
@@ -130,7 +130,7 @@ Wee.fn.make('events', {
 			}
 		});
 	},
-	// Bind specified function to specified element|selector and event for single execution
+	// Bind specified function to specified element and event for single execution
 	one: function(sel, a, b, c) {
 		if (Wee.$isString(a)) {
 			var obj = [];
@@ -144,7 +144,7 @@ Wee.fn.make('events', {
 			one: true
 		}, c));
 	},
-	// Remove specified function to specified element|selector and optional event|function
+	// Remove specified function to specified element and optional event|function
 	off: function(sel, evt, fn) {
 		Wee.$each(this.bound(sel, evt, fn), function(e) {
 			Wee._legacy ?
@@ -157,7 +157,7 @@ Wee.fn.make('events', {
 			bound.splice(bound.indexOf(e), 1);
 		});
 	},
-	// Get currently bound events to optional specified element|selector and event|function
+	// Get currently bound events to optional specified element and event|function
 	// Returns array of objects
 	bound: function(sel, evt, fn) {
 		var bound = this.$get('evts'),
@@ -186,8 +186,8 @@ Wee.fn.make('events', {
 	// Execute specific element|slector event by name and optional trigger
 	trigger: function(sel, evt) {
 		Wee.$each(sel, function(el) {
-			if (document.createEvent) {
-				var ev = document.createEvent('HTMLEvents');
+			if (Wee._win.createEvent) {
+				var ev = Wee._win.createEvent('HTMLEvents');
 				ev.initEvent(evt, true, false);
 				el.dispatchEvent(ev);
 			} else {

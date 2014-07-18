@@ -4,7 +4,7 @@
 
 Wee.fn.extend('testing', {
 	responsive: function() {
-		if (window.self === window.top) {
+		if (window.self === Wee._win) {
 			var vars = this.$get('vars');
 
 			! vars ?
@@ -75,33 +75,26 @@ Wee.fn.extend('testing', {
 		this.breakpoints[320] = 'Mobile Portait';
 	},
 	addToolbar: function() {
-		var d = document,
-			b = d.body,
-			html = b.parentNode,
-			bar = d.createElement('div');
+		var bar = Wee._doc.createElement('div');
 
 		Wee.$addClass(bar, 'js-testing-bar');
-		b.appendChild(bar);
+		Wee._body.appendChild(bar)
 
 		Wee.testing.bar = bar;
 
 		// Double-click to close
 		Wee.events.on(bar, 'dblclick', 'testing:removeToolbar');
 
-		Wee.$removeClass(html, 'js-testing-disabled');
+		Wee.$removeClass(Wee._html, 'js-testing-disabled');
 
 		this.setDimensions();
 	},
 	removeToolbar: function() {
-		Wee.$addClass(document.documentElement, 'js-testing-disabled');
+		Wee.$addClass(Wee._html, 'js-testing-disabled');
 	},
 	addCues: function(showCues) {
 		// Create cue wrapper
-		var w = window,
-			d = document,
-			b = d.body,
-			html = b.parentNode,
-			cues = d.createElement('div');
+		var cues = Wee._doc.createElement('div');
 
 		Wee.$addClass(cues, 'js-testing-cues');
 
@@ -113,7 +106,7 @@ Wee.fn.extend('testing', {
 		// Append cues to wrapper
 		for (var width in this.breakpoints) {
 			var label = this.breakpoints[width],
-				cue = d.createElement('div');
+				cue = Wee._doc.createElement('div');
 
 			Wee.$css(cue, {
 				'width': width + 'px',
@@ -130,21 +123,21 @@ Wee.fn.extend('testing', {
 						Wee.$html(Wee.testing.bar, label + ' / ' + width + 'px');
 					},
 					click: function() {
-						Wee.$addClass(html, 'js-testing-enabled');
+						Wee.$addClass(Wee._html, 'js-testing-enabled');
 
 						if (! Wee.testing.active) {
-							var iframe = d.createElement('iframe');
+							var iframe = Wee._doc.createElement('iframe');
 
-							iframe.src = d.location.href + (d.location.href.indexOf('?') == -1 ? '?' : '');
+							iframe.src = Wee._doc.location.href + (Wee._doc.location.href.indexOf('?') == -1 ? '?' : '');
 							iframe.id = 'testing-frame';
 
 							Wee.$css(iframe, {
 								'width': width + 'px',
-								'height': (w.innerHeight - 32) + 'px'
+								'height': (Wee._win.innerHeight - 32) + 'px'
 							});
 
 							// Remove document markup
-							Wee.$html(b, '');
+							Wee.$html(Wee._body, '');
 
 							Wee.testing.addToolbar();
 							Wee.testing.addCues(true);
@@ -154,11 +147,11 @@ Wee.fn.extend('testing', {
 							});
 
 							// Append iframe
-							b.appendChild(iframe);
+							Wee._body.appendChild(iframe);
 
 							Wee.testing.active = true;
 						} else {
-							var iframe = w.parent.document.getElementById('testing-frame');
+							var iframe = Wee.$('#testing-frame');
 
 							Wee.$css(iframe, 'width', width + 'px');
 						}
@@ -170,7 +163,7 @@ Wee.fn.extend('testing', {
 		}
 
 		var escCues = function() {
-			Wee.events.on(d, 'keyup', function(e) {
+			Wee.events.on(Wee._doc, 'keyup', function(e) {
 				if (e.keyCode == 27) {
 					resetDisplay();
 				}
@@ -205,17 +198,16 @@ Wee.fn.extend('testing', {
 		});
 
 		// Append wrapper to the DOM
-		b.appendChild(cues);
+		Wee._body.appendChild(cues);
 	},
 	setDimensions: function() {
-		var w = window,
-			iframe = Wee.$('#testing-frame');
+		var iframe = Wee.$('#testing-frame');
 
-		Wee.$html(Wee.testing.bar, w.innerWidth + 'x' + w.innerHeight);
+		Wee.$html(Wee.testing.bar, Wee._win.innerWidth + 'x' + Wee._win.innerHeight);
 
 		if (iframe) {
 			Wee.$css(iframe, {
-				'height': (w.innerHeight - 32) + 'px'
+				'height': (Wee._win.innerHeight - 32) + 'px'
 			});
 		}
 	}

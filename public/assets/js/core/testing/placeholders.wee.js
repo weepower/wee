@@ -55,7 +55,7 @@ Wee.fn.extend('testing', {
 	},
 	// Get the offset position of the placeholder image
 	getPosition: function(el) {
-		var root = document.getElementsByTagName('body')[0],
+		var root = Wee._doc.getElementsByTagName('body')[0],
 			x = el.offsetLeft,
 			y = el.offsetTop;
 
@@ -82,12 +82,11 @@ Wee.fn.extend('testing', {
 				parts = size.split(':');
 
 			if (parts.length == 2) {
-				var d = document,
-					x = parts[0],
+				var x = parts[0],
 					y = parts[1],
 					fluid = Wee.$data(el, 'fluid'),
 					title = Wee.$data(el, 'title'),
-					span = d.createElement('span');
+					span = Wee._doc.createElement('span');
 
 				// Transparent background
 				el.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
@@ -104,13 +103,13 @@ Wee.fn.extend('testing', {
 						'paddingTop': ((y / x) * 100) + '%'
 					});
 
-					Wee.events.on(window, 'resize', 'testing:updatePlaceholders');
+					Wee.events.on(Wee._win, 'resize', 'testing:updatePlaceholders');
 				}
 
 				Wee.$addClass(span, 'js-placeholder-text');
 
 				// Append placeholder text span
-				d.body.appendChild(span);
+				Wee._doc.body.appendChild(span);
 
 				// Push to array
 				Wee.testing.$push('placeholders', [el, span, title]);

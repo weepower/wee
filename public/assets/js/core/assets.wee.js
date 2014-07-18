@@ -66,14 +66,13 @@ Wee.fn.make('assets', {
 }, {
 	// Request specific file
 	request: function(path, group) {
-		var d = document,
-			scope = this,
-			head = d.getElementsByTagName('head')[0],
+		var scope = this,
+			head = Wee._doc.getElementsByTagName('head')[0],
 			ext = path.split('.').pop().split(/\#|\?/)[0];
 
 		// Load file based on extension
 		if (ext == 'js') {
-			var el = d.createElement('script');
+			var el = Wee._doc.createElement('script');
 
 			el.src = path;
 			el.async = true;
@@ -94,7 +93,7 @@ Wee.fn.make('assets', {
 
 			head.appendChild(el);
 		} else if (ext == 'css') {
-			var el = d.createElement('link');
+			var el = Wee._doc.createElement('link');
 
 			el.rel = 'stylesheet';
 			el.href = path;

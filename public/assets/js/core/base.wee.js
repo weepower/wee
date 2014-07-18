@@ -5,34 +5,43 @@
 'use strict';
 
 var Wee = (function(w, d) {
-	var _store = {};
+	var _store = {},
+		_undefined;
 
 	return {
-		_slice: [].slice,
+		_body: d.body,
+		_doc: d,
+		_html: d.documentElement,
 		_legacy: d.getElementsByClassName ? false : true,
-		// Create controller with specified name, public object, and optional private object
+		_slice: [].slice,
+		_win: w,
+
+		// Create namespaced controller with specified name, public object, and optional private object
+		// Returns undefined
 		fn: {
 			make: function(name, pub, priv) {
 				Wee[name] = (function() {
 					var Public = pub,
 						Private = priv || {};
 
+					// Ensure the current controller is not being extended
 					if (name != '_tmp') {
 						var data = {
-								// Private getter and setter methods for controllers
-								$get: function(key, def, set, opt) {
-									return Wee.$get(name + (key ? ':' + key : ''), def, set, opt);
-								},
-								$set: function(key, val, opt) {
-									return Wee.$set(name + ':' + key, val, opt);
-								},
-								$push: function(key, a, b) {
-									return Wee.$push(name + ':' + key, a, b);
-								}
-							};
-							// Extend defined public and private objects with data functions
-							Public = Wee.$extend(pub, data);
-							Private = Wee.$extend(priv, data);
+							// Private getter and setter methods for controllers
+							$get: function(key, def, set, opt) {
+								return Wee.$get(name + (key ? ':' + key : ''), def, set, opt);
+							},
+							$set: function(key, val, opt) {
+								return Wee.$set(name + ':' + key, val, opt);
+							},
+							$push: function(key, a, b) {
+								return Wee.$push(name + ':' + key, a, b);
+							}
+						};
+
+						// Extend defined public and private objects with data functions
+						Public = Wee.$extend(pub, data);
+						Private = Wee.$extend(priv, data);
 					}
 
 					// If private object exists expose $call function for executing private methods
@@ -55,6 +64,7 @@ var Wee = (function(w, d) {
 				})();
 			},
 			// Extend existing controller
+			// Returns undefined
 			extend: function(name, pub, priv) {
 				if (name == '') {
 					// Merge into the global object
@@ -71,7 +81,7 @@ var Wee = (function(w, d) {
 		},
 		// Get current environment or detect current environment against specified object
 		// Defaults to local
-		// Returns environment string
+		// Returns string|undefined
 		$env: function(obj, def) {
 			if (obj) {
 				this.$set('env', function() {
@@ -92,7 +102,7 @@ var Wee = (function(w, d) {
 		// Get public variable with optional default
 		// Accepts optional boolean to set default value if variable doesn't exist
 		// Options can be passed if default value being set is a callback
-		// Returns mixed value
+		// Returns mixed
 		$get: function(key, def, set, opt) {
 			if (key) {
 				var split = this._storeData(key),
@@ -101,7 +111,7 @@ var Wee = (function(w, d) {
 
 				if (root.hasOwnProperty(key)) {
 					return root[key]
-				} else if (def !== undefined) {
+				} else if (def !== _undefined) {
 					def = this.$isFunction(def) ? def() : (opt ? this.$exec(def, opt) : def);
 
 					if (set) {
@@ -118,7 +128,7 @@ var Wee = (function(w, d) {
 		},
 		// Set public variable
 		// Options can be passed if value is a callback
-		// Returns mixed value
+		// Returns mixed
 		$set: function(key, val, opt) {
 			var split = this._storeData(key),
 				set = this.$isFunction(val) ? val() : (opt ? this.$exec(val, opt) : val);
@@ -127,7 +137,7 @@ var Wee = (function(w, d) {
 			return set;
 		},
 		// Push specified value into public array
-		// Returns modified array
+		// Returns array
 		$push: function(key, a, b) {
 			var split = this._storeData(key),
 				root = split[0],
@@ -160,7 +170,9 @@ var Wee = (function(w, d) {
 			return [_store[key], segs[1]];
 		},
 		// Execute specified function or controller method
-		// Arguments and scope can be set in the options object
+		// Arguments and scope can be set in the optional options object
+		// Arguments defaults to an empty array and the scope defaults to null
+		// Returns mixed
 		$exec: function(fn, opt) {
 			var conf = this.$extend({
 					args: []
@@ -199,7 +211,7 @@ var Wee = (function(w, d) {
 			return obj && (this._legacy ? obj.constructor === Array : Array.isArray(obj));
 		},
 		// Determine if specified element belongs to specified array
-		// Returns index else false
+		// Returns int|false
 		$inArray: function(obj, el) {
 			for (var i = 0; i < obj.length; i++) {
 				if (obj[i] === el) {
@@ -217,7 +229,7 @@ var Wee = (function(w, d) {
 		// Determine if specified argument is a string
 		// Returns boolean
 		$isString: function(obj) {
-			return typeof obj == 'string';
+			return obj && typeof obj == 'string';
 		},
 		// Determine if specified argument is a function
 		// Returns boolean
@@ -230,7 +242,7 @@ var Wee = (function(w, d) {
 			return obj && obj.constructor === Object;
 		},
 		// Get keys from an object
-		// Returns array of strings
+		// Returns array
 		$getKeys: function(obj) {
 			if (Object.keys) {
 				return Object.keys(obj);
@@ -257,6 +269,11 @@ var Wee = (function(w, d) {
 
 			return res.join('&');
 		},
+		// Remove leading and trailing whitespace
+		// Returns string
+		$trim: function(str) {
+			return this._legacy ? str.replace(/^\s+|\s+$/g, '') : str.trim();
+		},
 		// Extend specified object with specified source object
 		// Optionally nest deep with third argument set to true
 		// Returns object
@@ -281,27 +298,27 @@ var Wee = (function(w, d) {
 			return obj;
 		},
 		// Get matches to specified selector
-		// Accepts optional context argument
-		// Returns array of DOM objects
+		// Accepts optional context
+		// Returns array
 		$: function(sel, context) {
 			if (typeof sel !== 'string') {
 				return sel;
 			}
 
-			// Use Sizzle if it is available
-			if (w.Sizzle !== undefined) {
-				return Sizzle(sel, context);
+			// Use third-party selector engine if defined
+			if (this._win.WeeSelector !== _undefined) {
+				return WeeSelector(sel, context);
 			}
 
 			var el = null;
-				context = context !== undefined ? this.$first(context) : d;
+				context = context !== _undefined ? this.$first(context) : d;
 
 			// If selector doesn't have a space or [ assume its a simple selection
 			if (sel == 'window') {
 				return [w];
 			} else if (sel == 'document') {
 				return [d];
-			} else if (sel.indexOf(' ') > 0 || sel.indexOf('[') > -1 || sel.indexOf(':') > -1 || sel.indexOf('#') > -1 || sel.indexOf('.') > 0) {
+			} else if (sel.indexOf(' ') > 0 || sel.indexOf(':') > -1 || sel.indexOf('[') > -1 || sel.indexOf('#') > -1 || sel.indexOf('.') > 0) {
 				el = context.querySelectorAll(sel);
 			} else {
 				var c = sel.charAt(0);
@@ -317,14 +334,14 @@ var Wee = (function(w, d) {
 				}
 			}
 
-			if (el === null || el.nodeType !== undefined) {
+			if (el === null || el.nodeType !== _undefined) {
 				return el;
 			}
 
 			return this._legacy ? this._nodeArray(el) : Wee._slice.call(el, 0);
 		},
-		// Get first match to specified element|selector
-		// Returns DOM object
+		// Get first match to specified element
+		// Returns element
 		$first: function(sel) {
 			if (sel['_$_']) {
 				return sel[0];
@@ -337,6 +354,7 @@ var Wee = (function(w, d) {
 		},
 		// Execute specified function for specified elements|selector
 		// Options include arguments, context, and scope
+		// Returns undefined
 		$each: function(sel, fn, opt) {
 			var conf = this.$extend({
 					args: []
@@ -349,10 +367,11 @@ var Wee = (function(w, d) {
 				this.$exec(fn, {
 					args: [el[i], i].concat(conf.args),
 					scope: conf.scope || el[i]
-				})
+				});
 			}
 		},
 		// Translate items in an array|selection to new array
+		// Returns array
 		$map: function(sel, fn) {
 			if (! this.$isArray(sel)) {
 				sel = this._selArray(sel);
@@ -376,26 +395,28 @@ var Wee = (function(w, d) {
 
 			return res;
 		},
-		// Add specified class name to specified element|selector
+		// Determine if specified element has specified class
+		// Returns boolean
+		$hasClass: function(sel, val) {
+			var el = this.$first(sel);
+
+			return Wee._legacy ?
+				new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className) :
+				el.classList.contains(val);
+		},
+		// Add specified class name to specified element
+		// Returns undefined
 		$addClass: function(sel, val) {
 			this.$each(sel, function(el) {
-				if (this._legacy) {
-					var curr = el.className;
-
-					// If specified class isn't already bound either set it or append it
-					if (curr.indexOf(val) === -1) {
-						curr == '' ?
-							el.className = val :
-							el.className += ' ' + val;
-					}
-				} else {
+				if (! Wee.$hasClass(el, val)) {
 					Wee._legacy ?
 						el.className = el.className + ' ' + val :
 						el.classList.add(val);
 				}
 			});
 		},
-		// Removes specified class from specified element|selector
+		// Removes specified class from specified element
+		// Returns undefined
 		$removeClass: function(sel, val) {
 			this.$each(sel, function(el) {
 				Wee._legacy ?
@@ -403,8 +424,9 @@ var Wee = (function(w, d) {
 					el.classList.remove(val);
 			});
 		},
-		// Add specified CSS rules to element|selector
+		// Get CSS value of first element or set matched elements CSS property with specified value
 		// Accepts either rule object or rule, value
+		// Returns string|undefined
 		$css: function(sel, a, b) {
 			if (b || this.$isObject(a)) {
 				this.$each(sel, function(el) {
@@ -424,9 +446,10 @@ var Wee = (function(w, d) {
 					getComputedStyle(el, null)[a];
 			}
 		},
-		// Get HTML value of a specified element|selector or set HTML with specified value
+		// Get HTML value of first element or set matched elements HTML with specified value
+		// Returns string|undefined
 		$html: function(sel, val) {
-			if (val === undefined) {
+			if (val === _undefined) {
 				return this.$first(sel).innerHTML;
 			}
 
@@ -434,9 +457,10 @@ var Wee = (function(w, d) {
 				el.innerHTML = val;
 			});
 		},
-		// Get attribute of specified element|selector or set attribute with specified value
+		// Get attribute of first element or set matched elements attribute with specified value
+		// Returns string|undefined
 		$attr: function(sel, key, val) {
-			if (val === undefined) {
+			if (val === _undefined) {
 				return this.$first(sel).getAttribute(key);
 			}
 
@@ -444,11 +468,13 @@ var Wee = (function(w, d) {
 				el.setAttribute(key, val);
 			});
 		},
-		// Get data value of specified element|selector or set data with specified value
+		// Get data value of first element or set matched elements data with specified value
+		// Returns string|undefined
 		$data: function(sel, key, val) {
 			return this.$attr(sel, 'data-' + key, val);
 		},
 		// Add metadata variables to datastore
+		// Returns undefined
 		$setVars: function() {
 			this.$each('[data-set]', function(el) {
 				var key = Wee.$data(el, 'set'),
@@ -460,6 +486,7 @@ var Wee = (function(w, d) {
 			});
 		},
 		// Convert selection to array
+		// Returns array
 		_selArray: function(sel, conf) {
 			conf = conf || {};
 
@@ -470,6 +497,7 @@ var Wee = (function(w, d) {
 					(this.$isArray(sel) ? sel : [sel]);
 		},
 		// Convert nodeList to array
+		// Returns array
 		_nodeArray: function(el) {
 			var arr = [],
 				i = 0;
@@ -481,6 +509,7 @@ var Wee = (function(w, d) {
 			return arr;
 		},
 		// Execute specified function when document is ready
+		// Returns undefined
 		ready: function(fn) {
 			this._legacy ?
 				d.attachEvent('onreadystatechange', function() {
@@ -493,11 +522,10 @@ var Wee = (function(w, d) {
 				});
 		},
 		// Toggle HTML JavaScript status class and set data variables
+		// Returns undefined
 		init: function() {
-			var html = d.documentElement;
-
-			this.$removeClass(html, 'no-js');
-			this.$addClass(html, 'js');
+			this.$removeClass(this._html, 'no-js');
+			this.$addClass(this._html, 'js');
 			this.$setVars();
 		}
 	};

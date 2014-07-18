@@ -4,7 +4,7 @@
 
 Wee.fn.extend('polyfill', {
 	placeholder: function() {
-		if (! ('placeholder' in document.createElement('input'))) {
+		if (! ('placeholder' in Wee._doc.createElement('input'))) {
 			Wee.$each('input[placeholder], textarea[placeholder]', function(el) {
 				var val = el.getAttribute('placeholder');
 
@@ -14,7 +14,7 @@ Wee.fn.extend('polyfill', {
 
 				Wee.events.on(el, {
 					blur: function() {
-						if (this.value.trim() == '') {
+						if (Wee.$trim(this.value) == '') {
 							this.value = val;
 						}
 					},

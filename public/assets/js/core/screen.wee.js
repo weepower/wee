@@ -5,11 +5,9 @@
 Wee.fn.make('screen', {
 	// Get current screen value
 	size: function() {
-		var w = window,
-			d = document,
-			size = Wee._legacy ?
-				(d.documentElement.currentStyle ? d.documentElement.currentStyle['fontFamily'] : null) :
-				w.getComputedStyle(d.documentElement, null).getPropertyValue('font-family');
+		var size = Wee._legacy ?
+				(Wee._html.currentStyle ? Wee._html.currentStyle['fontFamily'] : null) :
+				Wee._win.getComputedStyle(Wee._html, null).getPropertyValue('font-family');
 
 		return parseFloat(size.replace(/[^0-9\.]+/g, ''), 10);
 	},

@@ -11,6 +11,10 @@
 		}
 	},
 	"style": {
+		"guide": {
+			"template": "public/assets/guide/index.html",
+			"patterns": "public/assets/guide/patterns"
+		},
 		"build": [
 
 		],
@@ -23,6 +27,7 @@
 			"enable": true,
 			"features": {
 				"assets": true,
+				"chain": true,
 				"data": true,
 				"dom": true,
 				"events": true,
