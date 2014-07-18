@@ -4,7 +4,7 @@
 
 Wee.fn.extend('testing', {
 	responsive: function() {
-		if (window.self === Wee._win) {
+		if (window.self === window.top) {
 			var vars = this.$get('vars');
 
 			! vars ?
