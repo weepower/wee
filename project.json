@@ -35,8 +35,7 @@
 				"screen": true
 			},
 			"polyfill": {
-				"placeholder": true,
-				"srcset": true
+				"placeholder": true
 			},
 			"testing": {
 				"placeholders": true,
@@ -58,9 +57,7 @@
 		}
 	},
 	"testing": {
-		"server": {
-			"port": 9000
-		},
+		"host": "http://wee.dev",
 		"reload": {
 			"enable": true,
 			"port": 35729,
@@ -68,16 +65,18 @@
 				"root": true,
 				"paths": [
 
+				],
+				"extensions": [
+					"html"
 				]
-			},
-			"extensions": [
-				"html"
-			]
+			}
+		},
+		"server": {
+			"port": 9000
 		},
 		"sourceMaps": {
 			"css": false,
 			"js": true
-		},
-		"host": "http://wee.dev"
+		}
 	}
 }

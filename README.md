@@ -26,7 +26,7 @@ JavaScript toolset to build scalable, well-organized browser functionality < 8KB
 * **Data request and binding** functions
 * **Breakpoint watching** system for efficient media query callbacks
 * **Testing helpers** for responsive toolbar and image placeholders
-* **Polyfill support** for input placeholders and conditional images using srcset
+* **Polyfill support** for input placeholders
 * **Sourcemap output** when building your project with Grunt
 * **Legacy fallback** to patch SVG and REM support in IE8
 

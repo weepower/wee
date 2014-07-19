@@ -549,35 +549,35 @@ module.exports = function(grunt) {
 
 										// Add module css
 
-										if (typeof(module.assets.css) != 'undefined') {
-											buildStyles.push(path + '/' + module.assets.css + '/style.less');
+										if (typeof(module.assets.style) != 'undefined') {
+											buildStyles.push(path + '/css/style.less');
 
 											// Compile additional module style
 
 											var total = module.style.compile.length;
 
 											for (var x = 0; x < total; x++) {
-												buildStyles.push(path + '/' + module.assets.css + '/' + module.style.build[x]);
+												buildStyles.push(path + '/css/' + module.style.build[x]);
 											}
 
 											// Compile legacy into core
 
 											if (config.script.base.legacy.enable == true) {
-												legacyStyles.push(path + '/' + module.assets.css + '/legacy.less');
+												legacyStyles.push(path + '/css/legacy.less');
 											}
 										}
 
 										// Add module js
 
-										if (typeof(module.assets.js) != 'undefined') {
-											buildScripts.push(path + '/' + module.assets.js + '/script.js');
+										if (typeof(module.assets.script) != 'undefined') {
+											buildScripts.push(path + '/js/script.js');
 
 											// Compile additional module scripts
 
 											var total = module.script.compile.length;
 
 											for (var x = 0; x < total; x++) {
-												buildScripts.push(path + '/' + module.assets.js + '/' + module.script.build[x]);
+												buildScripts.push(path + '/js/' + module.script.build[x]);
 											}
 										}
 									} else {
@@ -588,8 +588,8 @@ module.exports = function(grunt) {
 
 										// Add core module files separately
 
-										if (typeof(module.assets.css) != 'undefined') {
-											moduleBuildStyles.push(path + '/' + module.assets.css + '/style.less');
+										if (typeof(module.assets.style) != 'undefined') {
+											moduleBuildStyles.push(path + '/css/style.less');
 
 											// Build additional module style
 
@@ -602,17 +602,17 @@ module.exports = function(grunt) {
 											// Compile legacy separately
 
 											if (config.script.base.legacy.enable == true) {
-												projectStyles[path + '/' + module.assets.css + '/legacy.css'] = path + '/' + module.assets.css + '/legacy.less';
+												projectStyles[path + '/css/legacy.css'] = path + '/css/legacy.less';
 											}
 
 											if (moduleBuildStyles.length > 0)
 											{
-												projectStyles[path + '/' + module.assets.css + '/style.css'] = moduleBuildStyles;
+												projectStyles[path + '/css/style.css'] = moduleBuildStyles;
 											}
 										}
 
-										if (typeof(module.assets.js) != 'undefined') {
-											mobuleBuildScripts.push(path + '/' + module.assets.js + '/script.js');
+										if (typeof(module.assets.script) != 'undefined') {
+											mobuleBuildScripts.push(path + '/js/script.js');
 
 											// Build additional module script
 
@@ -624,7 +624,7 @@ module.exports = function(grunt) {
 
 											if (mobuleBuildScripts.length > 0)
 											{
-												projectScripts[path + '/' + module.assets.js + '/script.min.js'] = mobuleBuildScripts;
+												projectScripts[path + '/js/script.min.js'] = mobuleBuildScripts;
 											}
 										}
 									}
@@ -690,11 +690,11 @@ module.exports = function(grunt) {
 			grunt.config.set('open.dev.path', 'http://localhost:' + config.testing.server.port);
 			grunt.config.set('connect.server.options.livereload', true);
 
-			var reloadExtensions = config.testing.reload.extensions.join(),
+			var reloadExtensions = config.testing.reload.watch.extensions.join(),
 				reloadCount = config.testing.reload.watch.paths.length,
 				reloadPaths = [];
 
-			if (config.testing.reload.extensions.length > 1) {
+			if (config.testing.reload.watch.extensions.length > 1) {
 				reloadExtensions = '{' + reloadExtensions + '}';
 			}
 
