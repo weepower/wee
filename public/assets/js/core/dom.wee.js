@@ -125,7 +125,13 @@ Wee.fn.extend('', {
 			str ?
 				el.insertAdjacentHTML('beforebegin', pos) :
 				Wee.$each(pos, function(cel) {
+					if (i > 0) {
+						cel = Wee.$clone(cel)[0];
+					}
+
 					el.parentNode.insertBefore(cel, el);
+				}, {
+					reverse: true
 				});
 		});
 	},
@@ -141,11 +147,17 @@ Wee.fn.extend('', {
 	$after: function(sel, pos) {
 		var str = this.$isString(pos);
 
-		this.$each(sel, function(el) {
+		this.$each(sel, function(el, i) {
 			str ?
 				el.insertAdjacentHTML('afterend', pos) :
 				Wee.$each(pos, function(cel) {
+					if (i > 0) {
+						cel = Wee.$clone(cel)[0];
+					}
+
 					el.parentNode.insertBefore(cel, el.nextSibling);
+				}, {
+					reverse: true
 				});
 		});
 	},

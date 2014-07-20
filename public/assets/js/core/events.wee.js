@@ -85,9 +85,11 @@ Wee.fn.make('events', {
 
 					fn = 'events:mouseEvent';
 					evt = 'mouse' + ((evt == 'mouseenter') ? 'over' : 'out');
-				}
 
-				conf.args.unshift(0, el);
+					conf.args.unshift(0, c && c.targ ? c.targ : el);
+				} else {
+					conf.args.unshift(0, el);
+				}
 
 				(function(el, evt, fn, f, conf) {
 					var cb = function(e) {

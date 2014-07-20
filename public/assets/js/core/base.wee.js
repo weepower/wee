@@ -99,6 +99,12 @@ var Wee = (function(w, d) {
 
 			return this.$get('env', 'local');
 		},
+		// Determine if the current environment is secured over https
+		// Optional url can be passed for evaluation
+		// Returns boolean
+		$envSecure: function(url) {
+			return (url || this._win.location.protocol) == 'https:';
+		},
 		// Get public variable with optional default
 		// Accepts optional boolean to set default value if variable doesn't exist
 		// Options can be passed if default value being set is a callback
@@ -362,6 +368,10 @@ var Wee = (function(w, d) {
 				el = this._selArray(sel, conf),
 				len = el.length,
 				i = 0;
+
+			if (conf.reverse) {
+				el = el.reverse();
+			}
 
 			for (; i < len; i++) {
 				this.$exec(fn, {

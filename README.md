@@ -27,11 +27,11 @@ JavaScript toolset to build scalable, well-organized browser functionality < 8KB
 * **Breakpoint watching** system for efficient media query callbacks
 * **Testing helpers** for responsive toolbar and image placeholders
 * **Polyfill support** for input placeholders
-* **Sourcemap output** when building your project with Grunt
+* **Sourcemap output** to line match against unminified code
 * **Legacy fallback** to patch SVG and REM support in IE8
 
 Structure baseline of markup, icons, and files to serve as a frontend roadmap  
-Optional Grunt build process configured through a simple JSON file to compile, optimize, and minify your source
+Grunt build process configured through a simple JSON file to compile, optimize, and minify your source
 
 ## Quick Start
 
