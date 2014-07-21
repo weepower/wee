@@ -65,17 +65,17 @@ var Wee = (function(w, d) {
 			},
 			// Extend existing controller
 			// Returns undefined
-			extend: function(name, pub, priv) {
-				if (name == '') {
+			extend: function(a, b, c) {
+				if (Wee.$isObject(a)) {
 					// Merge into the global object
-					Wee.$extend(Wee, pub);
-				} else if (Wee.hasOwnProperty(name)) {
+					Wee.$extend(Wee, a);
+				} else if (Wee.hasOwnProperty(a)) {
 					// Merge the objects else create the controller
-					this.make('_tmp', pub, priv);
-					Wee.$extend(Wee[name], Wee._tmp);
+					this.make('_tmp', b, c);
+					Wee.$extend(Wee[a], Wee._tmp);
 					delete Wee._tmp;
 				} else {
-					this.make(name, pub, priv);
+					this.make(a, b, c);
 				}
 			}
 		},

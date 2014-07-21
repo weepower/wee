@@ -158,6 +158,9 @@ Wee.fn.extend('', {
 			Wee.$insertAfter(this, sel);
 			return this;
 		},
+		replaceWith: function(sel) {
+			return Wee.$replaceWith(this, sel);
+		},
 		remove: function() {
 			Wee.$remove(this);
 			return this;

@@ -2,7 +2,7 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-Wee.fn.extend('', {
+Wee.fn.extend({
 	// Clone specified element
 	// Returns element array
 	$clone: function(sel) {
@@ -144,7 +144,7 @@ Wee.fn.extend('', {
 		});
 	},
 	// Insert specified element after specified element
-	$after: function(sel, pos) {
+	$after: function(sel, pos, rem) {
 		var str = this.$isString(pos);
 
 		this.$each(sel, function(el, i) {
@@ -159,6 +159,10 @@ Wee.fn.extend('', {
 				}, {
 					reverse: true
 				});
+
+			if (rem) {
+				Wee.$remove(el);
+			}
 		});
 	},
 	// Insert specified element after specified element
@@ -168,6 +172,10 @@ Wee.fn.extend('', {
 				el.parentNode.insertBefore(cel, el.nextSibling);
 			});
 		});
+	},
+	// Replace specified element with another specified element
+	$replaceWith: function(sel, pos) {
+		this.$after(sel, pos, true);
 	},
 	// Remove specified element from document
 	$remove: function(sel) {

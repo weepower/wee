@@ -77,30 +77,14 @@ Wee.fn.make('data', {
 
 		// Make data-parse replacements
 		var div = Wee._doc.createElement('div'),
-			clean = function(str) {
-				return str
-					.replace(/&amp;/g, '&')
-					.replace(/&/g, '&amp;')
-					.replace(/</g, '&lt;')
-					.replace(/>/g, '&gt;')
-					.replace(/"/g, '&quot;');
-			};
+			scope = this;
 
 		div.innerHTML = str;
 
 		Wee.$each('[data-parse]', function(el) {
-			var key = Wee.$data(el, 'parse'),
-				resp = obj[key];
+			var key = Wee.$data(el, 'parse');
 
-			if (! Wee.$isObject(resp)) {
-				if (resp !== undefined) {
-					if (opt.encode === true) {
-						resp = clean(resp);
-					}
-
-					el.innerHTML = resp;
-				}
-			}
+			el.innerHTML = scope.$private('replace', obj, key, opt);
 		}, {
 			context: div
 		});
@@ -108,31 +92,36 @@ Wee.fn.make('data', {
 		str = div.innerHTML;
 
 		// Make {{template}} variable replacements
-		return str.replace(/{{([^}]*)}}/g, function(str, match) {
-			var el = match.split('.'),
-				len = el.length - 1,
-				i = 0;
+		return str.replace(/{{([^}]*)}}/g, function(str, key) {
+			return scope.$private('replace', obj, key, opt);
+		});
+	}
+}, {
+	clean: function(str) {
+		return str
+			.replace(/&amp;/g, '&')
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;');
+	},
+	replace: function(obj, key, opt) {
+		var segs = key.split('||'),
+			resp = Wee.$trim(segs[0]).split('.'),
+			len = resp.length - 1,
+			i = 0;
 
-			for (; i <= len; i++) {
-				var key = el[i],
-					segs = key.split('||'),
-					fb = '';
+		for (; i <= len; i++) {
+			key = resp[i];
+			obj = obj[key];
 
-				if (segs.length > 1) {
-					key = Wee.$trim(segs[0]);
-					fb = Wee.$trim(segs[1]);
-				}
-
-				var resp = obj[key];
-
-				if (opt.encode === true) {
-					resp = clean(resp);
-				}
-
-				if (i === len) {
-					return resp || fb;
+			if (i === len) {
+				if (typeof obj == 'string') {
+					return opt.encode === true ? this.clean(obj) : obj;
 				}
 			}
-		});
+		}
+
+		return segs.length > 1 ? Wee.$trim(segs[1]) : '';
 	}
 });
