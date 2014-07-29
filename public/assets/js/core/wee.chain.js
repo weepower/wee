@@ -4,7 +4,7 @@
 
 var WeeAlias = WeeAlias || '$';
 
-Wee.fn.extend('', {
+Wee.fn.extend({
 	$chain: function(obj) {
 		for (var key in obj) {
 			Wee._win[WeeAlias]['prototype'][key] = obj[key];
