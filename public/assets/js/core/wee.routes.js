@@ -32,6 +32,7 @@ Wee.fn.make('routes', {
 	// Returns array of segment strings or string if index specified
 	segments: function(i) {
 		var segs = Wee.$toArray(this.path().replace(/^\/|\/$/g, '').split('/'));
+
 		return i !== undefined ? (segs[i] || '') : segs;
 	},
 	// Process stored route options with optional config
@@ -64,7 +65,7 @@ Wee.fn.make('routes', {
 	// Recursive method to process routes
 	process: function(route, i, total) {
 		var seg = this.$get('segs')[i],
-			keys = Wee.$getKeys(route),
+			keys = Object.keys(route),
 			x = 0;
 			i++;
 

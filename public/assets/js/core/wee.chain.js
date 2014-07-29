@@ -15,7 +15,7 @@ Wee.fn.extend('', {
 (function(c, s) {
 	function get(sel, context) {
 		if (sel) {
-			var el = (Wee._legacy ? sel.constructor === Array : Array.isArray(sel)) ? sel : Wee.$toArray(Wee.$(sel, context)),
+			var el = Array.isArray(sel) ? sel : Wee.$toArray(Wee.$(sel, context)),
 				len = el.length,
 				i = 0;
 

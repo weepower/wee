@@ -107,7 +107,7 @@ Wee.fn.make('data', {
 	},
 	replace: function(obj, key, opt) {
 		var segs = key.split('||'),
-			resp = Wee.$trim(segs[0]).split('.'),
+			resp = segs[0].trim().split('.'),
 			len = resp.length - 1,
 			i = 0;
 
@@ -122,6 +122,6 @@ Wee.fn.make('data', {
 			}
 		}
 
-		return segs.length > 1 ? Wee.$trim(segs[1]) : '';
+		return segs.length > 1 ? segs[1].trim() : '';
 	}
 });

@@ -11,19 +11,18 @@
 		}
 	},
 	"style": {
-		"guide": {
-			"template": "public/assets/guide/index.html",
-			"patterns": "public/assets/guide/patterns"
-		},
 		"build": [
 
 		],
 		"compile": {
-
+			"ie8.css": [
+				"core/legacy.less",
+				"custom/ie8.less"
+			]
 		}
 	},
 	"script": {
-		"base": {
+		"core": {
 			"enable": true,
 			"features": {
 				"assets": true,
@@ -34,26 +33,36 @@
 				"routes": true,
 				"screen": true
 			},
-			"polyfill": {
-				"placeholder": true
-			},
 			"testing": {
 				"placeholders": true,
 				"responsive": true
-			},
-			"legacy": {
-				"enable": true,
-				"build": [
-					"lib/vendor/html5shiv.js",
-					"lib/vendor/sizzle.js"
-				]
 			}
 		},
 		"build": [
-
+			
 		],
 		"compile": {
-
+			"ie8.min.js": [
+				"polyfill/es5-shim.js",
+				"polyfill/html5shiv.js",
+				"polyfill/sizzle.js",
+				"polyfill/wee.rem.js",
+				"polyfill/wee.svg.js",
+				"custom/ie8.js"
+			],
+			"ie9.min.js": [
+				"polyfill/wee.slice.js",
+				"polyfill/wee.placeholder.js",
+				"custom/ie9.js"
+			]
+		}
+	},
+	"guide": {
+		"enable": true,
+		"paths": {
+			"patterns": "public/assets/guide/patterns",
+			"template": "public/assets/guide/template.html",
+			"target": "public/assets/guide/index.html"
 		}
 	},
 	"testing": {

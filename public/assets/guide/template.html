@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Project Styleguide | {{name}}</title>
+<meta name="description" content="{{description}}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300">
+<style>
+body {
+	background: #fff;
+}
+</style>
+<link rel="shortcut icon" sizes="16x16 32x32" href="/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="/touchicon.png">
+<meta name="msapplication-TileColor" content="#006e89">
+<meta name="msapplication-TileImage" content="/tileicon.png">
+<!--[if lt IE 9]>
+<link rel="stylesheet" href="/assets/css/legacy.css">
+<script src="/assets/js/legacy.min.js"></script>
+<![endif]-->
+</head>
+<body itemscope itemtype="http://schema.org/WebPage">
+<header>
+	<h1>{{name}} Project Styleguide</h1>
+	<select>
+		{{\pattern}}
+		<option>{{title}}</option>
+		{{/pattern}}
+	</select>
+</header>
+<main class="container">
+	{{\pattern}}
+	<div class="pattern">
+		<h2>{{title}}</h2>
+		<div class="output">
+			{{output}}
+		</div>
+		<div class="markup">
+			{{markup}}
+		</div>
+	</div>
+	{{/pattern}}
+</main>
+</body>
+</html>

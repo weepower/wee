@@ -71,7 +71,7 @@
 		}
 		&:after {
 			.color(@responsiveTestColor);
-			.content('@{value} @{bull}@{space}Mobile Portrait / @{width}');
+			.content('@{value} \2022\00a0 Mobile Portrait / @{width}');
 			.font('Arial, sans-serif'; 12px);
 			.line-height(33px);
 			.margin(horizontal; auto);
@@ -111,7 +111,7 @@
 		html {
 			&:after {
 				.border(horizontal; darken(@responsiveTestBackground, 10%); 3px);
-				.content('@{value} @{bull}@{space}@{breakpoint} / @{width}');
+				.content('@{value} \2022\00a0 @{breakpoint} / @{width}');
 			}
 		}
 	}

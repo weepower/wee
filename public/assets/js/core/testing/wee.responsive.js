@@ -213,4 +213,6 @@ Wee.fn.extend('testing', {
 	}
 });
 
-Wee.ready('testing:responsive');
+if (! Wee._legacy) {
+	Wee.ready('testing:responsive');
+}

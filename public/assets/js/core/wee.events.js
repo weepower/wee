@@ -101,7 +101,7 @@ Wee.fn.make('events', {
 								sel = t['_$_'] ? t.sel : t;
 								t = Wee.$toArray(Wee.$(sel));
 
-							if (Wee.$inArray(t, e.target) === false) {
+							if (t.indexOf(e.target) < 0) {
 								return false;
 							}
 						}
@@ -114,7 +114,7 @@ Wee.fn.make('events', {
 						}
 					};
 
-					// Ensure the speficied element, event, and function combination hasn't already been bound
+					// Ensure the specified element, event, and function combination hasn't already been bound
 					if (Wee.events.bound(el, ev, f).length < 1) {
 						Wee._legacy ?
 							el.attachEvent('on' + evt, cb) :

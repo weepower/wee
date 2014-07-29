@@ -4,7 +4,7 @@ Your blueprint for modern web development. To read more, visit [weepower.com](ht
 
 ## A closer look...
 
-Wee is a carefully crafted framework built to construct complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does this all with a tiny footprint.
+Wee is an organized framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does this all with a tiny footprint.
 
 #### Features include:
 
@@ -26,9 +26,8 @@ JavaScript toolset to build scalable, well-organized browser functionality < 8KB
 * **Data request and binding** functions
 * **Breakpoint watching** system for efficient media query callbacks
 * **Testing helpers** for responsive toolbar and image placeholders
-* **Polyfill support** for input placeholders
+* **Polyfill support** for input placeholders, SVG images, REMs and more
 * **Sourcemap output** to line match against unminified code
-* **Legacy fallback** to patch SVG and REM support in IE8
 
 Structure baseline of markup, icons, and files to serve as a frontend roadmap  
 Grunt build process configured through a simple JSON file to compile, optimize, and minify your source

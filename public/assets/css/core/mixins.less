@@ -1082,11 +1082,6 @@
 
 // Rounded Corners
 
-.background-clip (@value: border) {
-	-moz-background-clip: @value;
-	-webkit-background-clip: ~'@{value}-box';
-	background-clip: ~'@{value}-box';
-}
 .rounded (...) {
 	.background-clip();
 }
@@ -1442,6 +1437,11 @@
 }
 .background-size (@width; @height) {
 	background-size: @width @height;
+}
+.background-clip (@value: border-box) {
+	-moz-background-clip: @value;
+	-webkit-background-clip: ~'@{value}';
+	background-clip: ~'@{value}';
 }
 .sprite (@color; @x: 0; @y: 0; @repeat: no-repeat; @filename: @spriteFilename) when (iscolor(@color)) {
 	.background(@color; @filename; @x; @y; @repeat);
@@ -1943,7 +1943,7 @@
 .overflow (@value) when not (@value = x), (@value = y) {
 	overflow: @value;
 }
-.overflow (@x; @y) when not (@value = x), (@value = y) {
+.overflow (@x; @y) when not (@x = x), (@x = y) {
 	overflow-x: @x;
 	overflow-y: @y;
 }
@@ -2033,9 +2033,6 @@
 		.padded();
 	}
 	.check();
-}
-.container {
-	.wee-container();
 }
 .padded (@padding: @bumperPadding) when not (@padding = false) {
 	.padding(horizontal; @padding);
@@ -2151,14 +2148,6 @@
 		clear: both;
 	}
 }
-.img-left {
-	.left();
-	.margin(.32em; @imageMarginSide; @imageMarginBottom; false);
-}
-.img-right {
-	.right();
-	.margin(.32em; false; @imageMarginBottom; @imageMarginSide);
-}
 .align (center) {
 	text-align: center;
 }
@@ -2265,18 +2254,6 @@
 }
 .visible () {
 	visibility: visible;
-}
-.hide {
-	.display(none);
-}
-.js-hide {
-	.display(none) !important;
-}
-.show {
-	.display(inherit);
-}
-.block {
-	.display(block);
 }
 .block (@width; ...) {
 	.block();

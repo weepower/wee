@@ -31,32 +31,36 @@ Wee.fn.extend({
 	// Get children of specified element with optional filter
 	// Returns element array
 	$children: function(sel, filter) {
-		var el = this.$first(sel);
+		var arr = [];
 
-		if (el) {
-			var children = Wee._legacy ? Wee._nodeArray(el.children) : Wee._slice.call(el.children);
+		this.$each(sel, function(el) {
+			var children = Wee._slice.call(el.children);
 
-			return filter ? this.$filter(children, filter) : children;
-		}
+			arr = arr.concat(filter ? this.$filter(children, filter) : children);
+		});
 
-		return null;
+		return this.$unique(arr);
 	},
 	// Get content of specified element
 	// Returns element array
 	$contents: function(sel) {
-		var el = this.$first(sel);
+		var arr = [];
 
-		return el ? el.childNodes : null;
+		this.$each(sel, function(el) {
+			arr = arr.concat(Wee._nodeArray(el.childNodes));
+		});
+
+		return this.$unique(arr);
 	},
 	// Get siblings of specified element with optional filter
 	// Returns element array
 	$siblings: function(sel, filter) {
-		var el = this.$first(sel);
+		var arr = [];
 
-		if (el) {
-				var siblings = Wee._legacy ? Wee._nodeArray(el.parentNode.children) : Wee._slice.call(el.parentNode.children),
-					len = siblings.length,
-					i = 0;
+		this.$each(sel, function(el) {
+			var siblings = Wee._slice.call(el.parentNode.children),
+				len = siblings.length,
+				i = 0;
 
 			for (; i < len; i++) {
 				if (siblings[i] === el) {
@@ -65,33 +69,44 @@ Wee.fn.extend({
 				}
 			}
 
-			return filter ? this.$filter(siblings, filter) : siblings;
-		}
+			arr = arr.concat(filter ? this.$filter(siblings, filter) : siblings);
+		});
 
-		return null;
+		return this.$unique(arr);
 	},
 	// Get parent of specified element
 	// Returns element
 	$parent: function(sel) {
-		return Wee.$first(sel).parentNode;
+		return this.$unique(this.$map(sel, function(el) {
+			return el.parentNode;
+		}));
 	},
-	// Get last match to specified element
+	// Get last match of specified element
 	// Returns element
 	$last: function(sel) {
+		var arr = [];
+
 		if (sel['_$_']) {
 			return sel[sel.length - 1];
 		}
 
 		var el = this.$(sel);
 
-		return Wee.$isArray(el) ? el[el.length - 1] : el;
+		return Array.isArray(el) ? el[el.length - 1] : el;
 	},
 	// Determine if specified parent element contains specified child element
 	// Returns boolean
 	$contains: function(sel, child) {
-		var el = this.$first(sel);
+		var b = false;
 
-		return Wee.$(child, el).length ? true : false;
+		this.$each(sel, function(el) {
+			if (Wee.$(child, el).length > 0) {
+				b = true;
+				return;
+			}
+		});
+
+		return b;
 	},
 	// Append specified child element to parent element
 	$append: function(sel, child) {
@@ -250,7 +265,7 @@ Wee.fn.extend({
 			var r = '';
 
 			this.$each(sel, function(el) {
-				r += Wee.$trim(el.textContent || el.innerText);
+				r += (el.textContent || el.innerText).trim();
 			});
 
 			return r;
@@ -276,7 +291,7 @@ Wee.fn.extend({
 
 		var el = this.$(sel);
 
-		if (Wee.$isArray(el)) {
+		if (Array.isArray(el)) {
 			return i < 0 ? el[el.length + i] : el[i];
 		}
 
@@ -296,24 +311,24 @@ Wee.fn.extend({
 	// Get the next sibling of a specified element
 	// Returns element
 	$next: function(sel) {
-		var el = this.$first(sel);
+		return this.$map(sel, function(el) {
+			do {
+				el = el.nextSibling;
+			} while (el && el.nodeType !== 1);
 
-		do {
-			el = el.nextSibling;
-		} while (el && el.nodeType !== 1);
-
-		return el;
+			return el || false;
+		}).reverse();
 	},
 	// Get the previous sibling of a specified element
 	// Returns element
 	$prev: function(sel) {
-		var el = this.$first(sel);
+		return this.$map(sel, function(el) {
+			do {
+				el = el.previousSibling;
+			} while (el && el.nodeType !== 1);
 
-		do {
-			el = el.previousSibling;
-		} while (el && el.nodeType !== 1);
-
-		return el;
+			return el || false;
+		});
 	},
 	// Return a subset of elements based on a specified filter from a specified element
 	// Returns element array
@@ -378,24 +393,28 @@ Wee.fn.extend({
 	// Get the closest node of element with specified filter
 	// Returns element
 	$closest: function(sel, filter) {
-		var el = this.$first(sel);
+		return this.$unique(this.$map(sel, function(el) {
+			while (el !== null) {
+				el = el.parentNode;
 
-		while (el !== null) {
-			el = el.parentNode;
+				if (el === Wee._html) {
+					return false;
+				}
 
-			if (this.$is(el, filter)) {
-				return el;
+				if (Wee.$is(el, filter)) {
+					return el;
+				}
 			}
-		}
-
-		return null;
+		}));
 	},
 	// Toggle the display of a specified element
 	$toggleClass: function(sel, val) {
 		this.$each(sel, function(el) {
-			Wee.$hasClass(el, val) ?
-				Wee.$removeClass(el, val) :
-				Wee.$addClass(el, val);
+			Wee.$each(val.split(' '), function(val) {
+				Wee.$hasClass(el, val) ?
+					Wee.$removeClass(el, val) :
+					Wee.$addClass(el, val);
+			});
 		});
 	},
 	// Convert specified HTML string to a DOM object and optionally converts it to a Wee DOM object

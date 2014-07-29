@@ -88,7 +88,13 @@ var Wee = (function(w, d) {
 					var host = location.host;
 
 					for (var key in obj) {
-						if (obj[key] == host) {
+						var el = obj[key];
+
+						if (Wee.$isString(el) && el.indexOf(':') == -1) {
+							if (el == host) {
+								return key;
+							}
+						} else if (Wee.$exec(el, {args: [host]}) === true) {
 							return key;
 						}
 					}
@@ -103,7 +109,7 @@ var Wee = (function(w, d) {
 		// Optional url can be passed for evaluation
 		// Returns boolean
 		$envSecure: function(url) {
-			return (url || this._win.location.protocol) == 'https:';
+			return (url || w.location.protocol) == 'https:';
 		},
 		// Get public variable with optional default
 		// Accepts optional boolean to set default value if variable doesn't exist
@@ -204,7 +210,9 @@ var Wee = (function(w, d) {
 					}
 				}
 
-				var response = fn.apply(conf.scope, Wee.$toArray(conf.args));
+				if (this.$isFunction(fn)) {
+					var response = fn.apply(conf.scope, Wee.$toArray(conf.args));
+				}
 
 				if (len === 1) {
 					return response;
@@ -214,23 +222,18 @@ var Wee = (function(w, d) {
 		// Determine if specified argument is array
 		// Returns boolean
 		$isArray: function(obj) {
-			return obj && (this._legacy ? obj.constructor === Array : Array.isArray(obj));
+			return Array.isArray(obj);
 		},
 		// Determine if specified element belongs to specified array
 		// Returns int|false
 		$inArray: function(obj, el) {
-			for (var i = 0; i < obj.length; i++) {
-				if (obj[i] === el) {
-					return i;
-				}
-			}
-
-			return false;
+			var i = obj.indexOf(el);
+			return i < 0 ? false : i;
 		},
 		// Cast object to array if it isn't one
 		// Returns array
 		$toArray: function(obj) {
-			return this.$isArray(obj) ? obj : [obj];
+			return Array.isArray(obj) ? obj : [obj];
 		},
 		// Determine if specified argument is a string
 		// Returns boolean
@@ -250,35 +253,14 @@ var Wee = (function(w, d) {
 		// Get keys from an object
 		// Returns array
 		$getKeys: function(obj) {
-			if (Object.keys) {
-				return Object.keys(obj);
-			}
-
-			var keys = [];
-
-			for (var key in obj) {
-				keys.push(key);
-			}
-
-			return keys;
+			return Object.keys(obj);
 		},
 		// Serialize specified object
 		// Returns string
 		$serialize: function(obj) {
-			var res = [];
-
-			for (var key in obj) {
-				if (obj.hasOwnProperty(key)) {
-					res.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
-				}
-			}
-
-			return res.join('&');
-		},
-		// Remove leading and trailing whitespace
-		// Returns string
-		$trim: function(str) {
-			return this._legacy ? str.replace(/^\s+|\s+$/g, '') : str.trim();
+			return Object.keys(obj).map(function(key) {
+				return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]);
+			}).join('&');
 		},
 		// Extend specified object with specified source object
 		// Optionally nest deep with third argument set to true
@@ -303,48 +285,66 @@ var Wee = (function(w, d) {
 
 			return obj;
 		},
+		// Merge specified array with specified source array
+		// Optionally de-duplicate the arrays by passing true
+		// Returns array
+		$merge: function(arr, arr2, dup) {
+			arr = arr.concat(arr2);
+
+			return dup === true ? this.$unique(arr) : arr;
+		},
+		// Create new array with only unique values from specified array
+		// Returns array
+		$unique: function(arr) {
+			return arr.reverse().filter(function(e, i, arr) {
+				return arr.indexOf(e, i + 1) === -1;
+			}).reverse();
+		},
 		// Get matches to specified selector
 		// Accepts optional context
 		// Returns array
 		$: function(sel, context) {
-			if (typeof sel !== 'string') {
-				return sel;
-			}
-
-			// Use third-party selector engine if defined
-			if (this._win.WeeSelector !== _undefined) {
-				return WeeSelector(sel, context);
-			}
-
 			var el = null;
-				context = context !== _undefined ? this.$first(context) : d;
 
-			// If selector doesn't have a space or [ assume its a simple selection
-			if (sel == 'window') {
-				return [w];
-			} else if (sel == 'document') {
-				return [d];
-			} else if (sel.indexOf(' ') > 0 || sel.indexOf(':') > -1 || sel.indexOf('[') > -1 || sel.indexOf('#') > -1 || sel.indexOf('.') > 0) {
-				el = context.querySelectorAll(sel);
+			if (typeof sel !== 'string') {
+				el = sel;
 			} else {
-				var c = sel.charAt(0);
-
-				if (c == '#') {
-					el = context.getElementById(sel.substr(1));
-				} else if (c == '.') {
-					el = this._legacy ?
-						context.querySelectorAll(sel) :
-						context.getElementsByClassName(sel.substr(1));
+				// Use third-party selector engine if defined
+				if (w.WeeSelector !== _undefined) {
+					el = WeeSelector(sel, context);
 				} else {
-					el = context.getElementsByTagName(sel);
+					var context = context !== _undefined ? this.$first(context) : d;
+
+					// If selector doesn't have a space or [ assume its a simple selection
+					if (sel == 'window') {
+						return [w];
+					} else if (sel == 'document') {
+						return [d];
+					} else if (sel.indexOf(' ') > 0 || sel.indexOf(':') > -1 || sel.indexOf('[') > -1 || sel.indexOf('#') > -1 || sel.indexOf('.') > 0) {
+						el = context.querySelectorAll(sel);
+					} else {
+						var c = sel.charAt(0);
+
+						if (c == '#') {
+							el = context.getElementById(sel.substr(1));
+						} else if (c == '.') {
+							el = this._legacy ?
+								context.querySelectorAll(sel) :
+								context.getElementsByClassName(sel.substr(1));
+						} else {
+							el = context.getElementsByTagName(sel);
+						}
+					}
 				}
 			}
 
-			if (el === null || el.nodeType !== _undefined) {
+			if (el === null) {
 				return el;
+			} else if (el.nodeType !== _undefined) {
+				return [el];
 			}
 
-			return this._legacy ? this._nodeArray(el) : Wee._slice.call(el, 0);
+			return Wee._slice.call(el, 0);
 		},
 		// Get first match to specified element
 		// Returns element
@@ -355,7 +355,7 @@ var Wee = (function(w, d) {
 
 			var el = this.$(sel);
 
-			return Wee.$isArray(el) ? el[0] : el;
+			return Array.isArray(el) ? el[0] : el;
 
 		},
 		// Execute specified function for specified elements|selector
@@ -383,7 +383,7 @@ var Wee = (function(w, d) {
 		// Translate items in an array|selection to new array
 		// Returns array
 		$map: function(sel, fn) {
-			if (! this.$isArray(sel)) {
+			if (! Array.isArray(sel)) {
 				sel = this._selArray(sel);
 			}
 
@@ -408,45 +408,41 @@ var Wee = (function(w, d) {
 		// Determine if specified element has specified class
 		// Returns boolean
 		$hasClass: function(sel, val) {
-			var el = this.$first(sel);
-
-			return Wee._legacy ?
-				new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className) :
-				el.classList.contains(val);
+			return this.$(sel).some(function(el) {
+				return new RegExp('\\b' + val + '\\b').test(el.className);
+			});
 		},
 		// Add specified class name to specified element
 		// Returns undefined
 		$addClass: function(sel, val) {
 			this.$each(sel, function(el) {
-				if (! Wee.$hasClass(el, val)) {
-					Wee._legacy ?
-						el.className = el.className + ' ' + val :
-						el.classList.add(val);
-				}
+				el.className += ' ' + val.split(' ').filter(function(val) {
+					return ! Wee.$hasClass(el, val);
+				}).join(' ');
 			});
 		},
 		// Removes specified class from specified element
 		// Returns undefined
 		$removeClass: function(sel, val) {
 			this.$each(sel, function(el) {
-				Wee._legacy ?
-					el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ') :
-					el.classList.remove(val);
+				val.split(' ').forEach(function(val) {
+					el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+				});
 			});
 		},
 		// Get CSS value of first element or set matched elements CSS property with specified value
 		// Accepts either rule object or rule, value
 		// Returns string|undefined
 		$css: function(sel, a, b) {
-			if (b || this.$isObject(a)) {
+			var obj = this.$isObject(a);
+
+			if (b || obj) {
 				this.$each(sel, function(el) {
-					if (Wee.$isObject(a)) {
-						for (var key in a) {
+					obj ?
+						Object.keys(a).forEach(function(key) {
 							el.style[key] = a[key];
-						}
-					} else {
+						}) :
 						el.style[a] = b;
-					}
 				});
 			} else {
 				var el = this.$first(sel);
@@ -502,21 +498,9 @@ var Wee = (function(w, d) {
 
 			return sel['_$_'] ?
 				sel :
-				this.$isString(sel) ?
-					this.$toArray(this.$(sel, conf.context)) :
-					(this.$isArray(sel) ? sel : [sel]);
-		},
-		// Convert nodeList to array
-		// Returns array
-		_nodeArray: function(el) {
-			var arr = [],
-				i = 0;
-
-			for (; i < el.length; i++) {
-				arr[i] = el[i];
-			}
-
-			return arr;
+				this.$toArray(this.$isString(sel) ?
+					this.$(sel, conf.context) :
+					sel);
 		},
 		// Execute specified function when document is ready
 		// Returns undefined
