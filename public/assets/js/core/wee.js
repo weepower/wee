@@ -491,6 +491,8 @@ var Wee = (function(w, d) {
 					Wee.$push(key.replace('[]', ''), val);
 			});
 		},
+		// Fallback for non-existent chaining
+		$chain: function() {},
 		// Convert selection to array
 		// Returns array
 		_selArray: function(sel, conf) {
