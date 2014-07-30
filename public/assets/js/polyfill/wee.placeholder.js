@@ -3,35 +3,54 @@
 // DO NOT MODIFY THIS FILE
 
 this.attachEvent('onload', function() {
-	(function() {
-		Wee.$each('input[placeholder], textarea[placeholder]', function(el) {
-			var val = el.getAttribute('placeholder');
+	(function(d) {
+		var arr = d.querySelectorAll('input[placeholder], textarea[placeholder]'),
+			len = arr.length,
+			i = 0;
+
+		for (; i < len; i++) {
+			var el = arr[i],
+				val = el.getAttribute('placeholder');
 
 			if (el.value == '') {
 				el.value = val;
 			}
 
-			Wee.events.on(el, {
-				blur: function() {
-					if (this.value.trim() == '') {
-						this.value = val;
-					}
-				},
-				focus: function() {
-					if (this.value == val) {
-						this.value = '';
-					}
+			el.onblur = function() {
+				if (this.value.replace(/^\s+|\s+$/g, '') == '') {
+					this.value = val;
 				}
-			});
-		});
+			};
+
+			el.onfocus = function() {
+				if (this.value == val) {
+					console.log('match');
+					this.value = '';
+				}
+			};
+		}
+
+		arr = d.querySelectorAll('form');
+		len = arr.length;
+		i = 0;
 
 		// Clear default placeholder values on form submit
-		Wee.events.on('form', 'submit', function() {
-			Wee.$each('input[placeholder], textarea[placeholder]'), function(el) {
-				if (el.value == el.getAttribute('placeholder')) {
-					el.value = '';
+		for (; i < len; i++) {
+			var el = arr[i];
+
+			el.onsubmit = function() {
+				var inputs = el.querySelectorAll('input[placeholder], textarea[placeholder]'),
+					xlen = inputs.length,
+					x = 0;
+
+				for (; x < xlen; x++) {
+					var xel = inputs[x];
+
+					if (xel.value == xel.getAttribute('placeholder')) {
+						xel.value = '';
+					}
 				}
 			}
-		});
-	})();
+		}
+	})(document);
 });
