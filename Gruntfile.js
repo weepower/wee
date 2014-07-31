@@ -236,13 +236,15 @@ module.exports = function(grunt) {
 
 		config = require(configFile);
 
-		config.assetPath = config.paths.root != '' ? './' + config.paths.root + '/' + config.paths.assets.root : './' + config.assets;
+		config.assetPath = config.paths.root != '' ? './' + config.paths.root + '/' + config.paths.assets : './' + config.assets;
 
 		config.paths.root = './' + config.paths.root;
 
 		// Setup global file arrays
-		var styleRoot = config.assetPath + '/' + config.paths.assets.css,
-			scriptRoot = config.assetPath + '/' + config.paths.assets.js;
+		var styleRoot = config.assetPath + '/css',
+			scriptRoot = config.assetPath + '/js',
+			weeStyleRoot = config.assetPath + '/wee/style/',
+			weeScriptRoot = config.assetPath + '/wee/script/';
 
 		config.stylePath = styleRoot;
 		config.scriptPath = scriptRoot;
@@ -292,36 +294,35 @@ module.exports = function(grunt) {
 			buildStyles.push(styleRoot + '/' + config.style.build[i]);
 		}
 
-		buildStyles.push(styleRoot + '/core/wee.less');
+		buildStyles.push(weeStyleRoot + 'wee.less');
 
 		// Compile configured core files
 		var buildScripts = [];
 
 		if (config.script.core.enable) {
-			var features = config.script.core.features,
-				coreRoot = scriptRoot + '/core/';
+			var features = config.script.core.features;
 
 			// Core modules
-			buildScripts.push(coreRoot + 'wee.js');
+			buildScripts.push(weeScriptRoot + 'wee.js');
 
 			if (features.assets) {
-				buildScripts.push(coreRoot + 'wee.assets.js');
+				buildScripts.push(weeScriptRoot + 'wee.assets.js');
 			}
 
 			if (features.data) {
-				buildScripts.push(coreRoot + 'wee.data.js');
+				buildScripts.push(weeScriptRoot + 'wee.data.js');
 			}
 
 			if (features.dom) {
-				buildScripts.push(coreRoot + 'wee.dom.js');
+				buildScripts.push(weeScriptRoot + 'wee.dom.js');
 			}
 
 			if (features.events) {
-				buildScripts.push(coreRoot + 'wee.events.js');
+				buildScripts.push(weeScriptRoot + 'wee.events.js');
 			}
 
 			if (features.routes) {
-				buildScripts.push(coreRoot + 'wee.routes.js');
+				buildScripts.push(weeScriptRoot + 'wee.routes.js');
 			}
 
 			if (features.screen) {
@@ -329,11 +330,11 @@ module.exports = function(grunt) {
 					grunt.fail.warn('Event module required for screen functions');
 				}
 
-				buildScripts.push(coreRoot + 'wee.screen.js');
+				buildScripts.push(weeScriptRoot + 'wee.screen.js');
 			}
 
 			if (features.chain) {
-				buildScripts.push(coreRoot + 'wee.chain.js');
+				buildScripts.push(weeScriptRoot + 'wee.chain.js');
 			}
 
 			// Testing modules
@@ -348,7 +349,7 @@ module.exports = function(grunt) {
 					grunt.fail.warn('Data module required for screen functions');
 				}
 
-				buildScripts.push(coreRoot + 'testing/wee.placeholders.js');
+				buildScripts.push(weeScriptRoot + 'testing/wee.placeholders.js');
 			} else {
 				grunt.config.merge({
 					less: {
@@ -370,7 +371,7 @@ module.exports = function(grunt) {
 					grunt.fail.warn('Data module required for responsive functions');
 				}
 
-				buildScripts.push(coreRoot + 'testing/wee.responsive.js');
+				buildScripts.push(weeScriptRoot + 'testing/wee.responsive.js');
 			} else {
 				lessVars['responsiveTestMode'] = false;
 			}
@@ -421,49 +422,48 @@ module.exports = function(grunt) {
 		}
 
 		// Source map support
-		if (config.testing.sourceMaps.css == true) {
-			var relativePath = config.stylePath + '/maps/';
+		var maps = config.testing.sourceMaps;
+
+		if (maps.css == true || maps.js == true) {
+			var relativePath = config.assetPath + '/maps/';
 
 			// Clear existing source map files
 			fs.readdirSync(relativePath).forEach(function(file) {
 				fs.unlinkSync(relativePath + file);
-			});
-
-			grunt.config.set('less.options.sourceMap', true);
-			grunt.config.set('less.options.sourceMapFilename', config.stylePath + '/maps/source.css.map');
-			grunt.config.set('less.options.sourceMapURL', relativePath + 'source.css.map');
-			grunt.config.set('less.options.sourceMapBasepath', function(dest) {
-				var filename = dest.replace(config.assetPath + '/', '')
-								   .replace(config.paths.assets.css + '/', '')
-								   .replace(/\//g, '-')
-								   .replace('.css', '');
-
-				return relativePath + filename + '.map';
 			});
 		}
 
-		if (config.testing.sourceMaps.js == true) {
-			var relativePath = config.scriptPath + '/maps/';
+		if (maps.css == true) {
+			var relativePath = config.assetPath + '/maps/';
 
-			// Clear existing source map files
-			fs.readdirSync(relativePath).forEach(function(file) {
-				fs.unlinkSync(relativePath + file);
+			grunt.config.set('less.options.sourceMap', true);
+			grunt.config.set('less.options.sourceMapFilename', relativePath + 'source.css.map');
+			grunt.config.set('less.options.sourceMapURL', relativePath + 'source.css.map');
+			grunt.config.set('less.options.sourceMapBasepath', function(dest) {
+				var filename = dest.replace(config.assetPath + '/', '')
+								   .replace('css/', '')
+								   .replace(/\//g, '-')
+								   .replace('.css', '');
+
+				return relativePath + filename + '.css.map';
 			});
+		}
 
+		if (maps.js == true) {
 			grunt.config.set('uglify.options.sourceMap', true);
 			grunt.config.set('uglify.options.sourceMapName', function(dest) {
 				var filename = dest.replace(config.assetPath + '/', '')
-								   .replace(config.paths.assets.js + '/', '')
+								   .replace('js/', '')
 								   .replace(/\//g, '-')
 								   .replace('.min.js', '');
 
-				return relativePath + filename + '.map';
+				return relativePath + filename + '.js.map';
 			});
 		}
 
 		// Load modules
 		var modules = [],
-			moduleRoot = config.assetPath + '/' + config.paths.assets.modules + '/';
+			moduleRoot = config.assetPath + '/modules/';
 
 		fs.readdir(moduleRoot, function(err, files) {
 
@@ -633,7 +633,7 @@ module.exports = function(grunt) {
 		var guide = config.guide;
 
 		if (guide.enable == true) {
-			var patternPath = './' + guide.paths.patterns + '/';
+			var patternPath = config.assetPath + '/' + guide.paths.patterns + '/';
 
 			fs.readdirSync(patternPath, function(err, files) {
 				console.log('asd');

@@ -2048,7 +2048,7 @@
 .row-modify (@margin: @gridMargin) {
 	.row(@margin);
 }
-.wee-row-reset () when not (@spaceless = true) {
+.wee-row-reset (@spaceless) when not (@spaceless = true) {
 	.letter-spacing(normal);
 }
 .row-reset () {
@@ -2067,7 +2067,7 @@
 .wee-column-spacing (@spaceless) when not (@spaceless = true) {
 	.margin(right; -.32em);
 }
-.wee-column-reset (@spaceless) when not (@gridSpaceless = true) {
+.wee-column-reset (@spaceless) when not (@spaceless = true) {
 	.letter-spacing(normal);
 }
 .column (@width: false) when (@width = false) {

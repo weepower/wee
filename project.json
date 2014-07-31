@@ -3,12 +3,7 @@
 	"description": "Your blueprint for modern web development.",
 	"paths": {
 		"root": "public",
-		"assets": {
-			"root": "assets",
-			"css": "css",
-			"js": "js",
-			"modules": "modules"
-		}
+		"assets": "assets"
 	},
 	"style": {
 		"build": [
@@ -16,7 +11,7 @@
 		],
 		"compile": {
 			"ie8.css": [
-				"core/legacy.less",
+				"../wee/style/legacy.less",
 				"custom/ie8.less"
 			]
 		}
@@ -39,7 +34,7 @@
 			}
 		},
 		"build": [
-			
+
 		],
 		"compile": {
 			"ie8.min.js": [
@@ -60,9 +55,9 @@
 	"guide": {
 		"enable": true,
 		"paths": {
-			"patterns": "public/assets/guide/patterns",
-			"template": "public/assets/guide/template.html",
-			"target": "public/assets/guide/index.html"
+			"patterns": "guide/patterns",
+			"template": "guide/template.html",
+			"target": "guide/index.html"
 		}
 	},
 	"testing": {
