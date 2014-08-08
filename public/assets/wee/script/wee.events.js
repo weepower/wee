@@ -31,7 +31,7 @@ Wee.fn.make('events', {
 							}, opt));
 						} else {
 							var evt = {};
-							evt[key] = fn;
+								evt[key] = fn;
 
 							Wee.events.on(el, evt, opt);
 						}
@@ -40,14 +40,12 @@ Wee.fn.make('events', {
 			});
 		}
 	},
-	// Execute specific event by name and event
+	// Execute specific function by name and event
 	fire: function(name, evt) {
 		var bound = this.$get('bound');
 
-		if (bound.hasOwnProperty(name)) {
-			if (bound[name].hasOwnProperty(evt)) {
-				Wee.$exec(bound[name][evt]);
-			}
+		if (bound.hasOwnProperty(name) && bound[name].hasOwnProperty(evt)) {
+			Wee.$exec(bound[name][evt]);
 		}
 	},
 	// Bind specified function to specified element and event
@@ -190,6 +188,7 @@ Wee.fn.make('events', {
 		Wee.$each(sel, function(el) {
 			if (Wee._win.createEvent) {
 				var ev = Wee._win.createEvent('HTMLEvents');
+
 				ev.initEvent(evt, true, false);
 				el.dispatchEvent(ev);
 			} else {
@@ -214,14 +213,14 @@ Wee.fn.make('events', {
 	},
 	// Compare parent element to child element
 	checkParent: function(parent, child) {
-		if (parent === child) {
-			return false;
+		if (parent !== child) {
+			while (child && child !== parent) {
+				child = child.parentNode;
+			}
+
+			return child === parent;
 		}
 
-		while (child && child !== parent) {
-			child = child.parentNode;
-		}
-
-		return child === parent;
+		return false;
 	}
 });

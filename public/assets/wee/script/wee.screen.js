@@ -16,7 +16,8 @@ Wee.fn.make('screen', {
 		sets = Wee.$toArray(sets);
 
 		for (var i = 0; i < sets.length; i++) {
-			var conf = sets[i];
+			var conf = sets[i],
+				scope = this;
 
 			if (conf.callback) {
 				// Only bind resize event if not disabled
@@ -30,14 +31,12 @@ Wee.fn.make('screen', {
 
 						// Watch widow resize event for breakpoint changes
 						Wee.events.on(window, 'resize', function() {
-							this.$private('check');
-						}, {
-							scope: this
+							scope.$private('check');
 						});
 					}
 				}
 
-				// Check current screen match if init = true
+				// Check current screen match if init is true
 				if (conf.init === true) {
 					this.$private('check', true, [conf]);
 				}
@@ -79,7 +78,7 @@ Wee.fn.make('screen', {
 				}
 			}
 
-			// Cache updated screen value
+			// Set current screen value
 			this.$set('size', size);
 		}
 	}

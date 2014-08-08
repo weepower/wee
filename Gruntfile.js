@@ -100,12 +100,12 @@ module.exports = function(grunt) {
 			},
 			style: {
 				options: {
-					message: 'Style compilation complete'
+					message: 'Style build complete'
 				}
 			},
 			script: {
 				options: {
-					message: 'JavaScript uglification complete'
+					message: 'Script build complete'
 				}
 			},
 			img: {
@@ -115,7 +115,7 @@ module.exports = function(grunt) {
 			},
 			config: {
 				options: {
-					message: 'Config modification complete'
+					message: 'Config update complete'
 				}
 			}
 		},

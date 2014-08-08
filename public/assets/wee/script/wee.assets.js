@@ -6,39 +6,37 @@ Wee.fn.make('assets', {
 	// Get currently bound resource root or set root with specified value
 	// Returns string
 	root: function(val) {
-		return val ?
+		return val !== undefined ?
 			this.$set('root', val) :
 			this.$get('root', '');
 	},
 	// Load specified assets with specified set of options
 	load: function(conf) {
-		if (conf.files) {
-			var files = Wee.$toArray(conf.files),
-				root = conf.root !== undefined ? conf.root : this.root(),
-				now = new Date().getTime(),
-				len = files.length,
-				i = 0;
+		var files = Wee.$toArray(conf.files),
+			root = conf.root !== undefined ? conf.root : this.root(),
+			now = new Date().getTime(),
+			len = files.length,
+			i = 0;
 
-			// Create group name if not specified
-			if (! conf.group) {
-				conf.group = 'load-' + now;
+		// Create group name if not specified
+		if (! conf.group) {
+			conf.group = 'load-' + now;
+		}
+
+		// Set file array length to check against
+		this.$set(conf.group, len);
+		this.$set(conf.group + '-fail', 0);
+		this.$set(conf.group + '-conf', conf);
+
+		// Request each specified file
+		for (; i < len; i++) {
+			var file = root + files[i];
+
+			if (conf.cache === false) {
+				file += (file.indexOf('?') == -1 ? '?' : '&') + now;
 			}
 
-			// Set file array length to check against
-			this.$set(conf.group, len);
-			this.$set(conf.group + '-fail', 0);
-			this.$set(conf.group + '-conf', conf);
-
-			// Request each specified file
-			for (; i < len; i++) {
-				var file = root + files[i];
-
-				if (conf.cache === false) {
-					file += (file.indexOf('?') == -1 ? '?' : '&') + now;
-				}
-
-				this.$private('request', file, conf.group);
-			}
+			this.$private('request', file, conf.group);
 		}
 	},
 	// When specified references are ready execute callback
@@ -55,12 +53,10 @@ Wee.fn.make('assets', {
 			} else if (conf.success) {
 				Wee.$exec(conf.success, opt);
 			}
-		} else {
-			if (recheck) {
-				setTimeout(function() {
-					Wee.loader.ready(group, opt);
-				}, 20);
-			}
+		} else if (recheck) {
+			setTimeout(function() {
+				Wee.loader.ready(group, opt);
+			}, 20);
 		}
 	}
 }, {
@@ -118,7 +114,6 @@ Wee.fn.make('assets', {
 	// Decrement remaining count of assets to be loaded
 	done: function(group) {
 		this.$set(group, this.$get(group) - 1);
-
 		this.$public.ready(group, false);
 	},
 	// Track failed resources

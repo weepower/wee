@@ -92,7 +92,7 @@ Wee.fn.make('data', {
 		str = div.innerHTML;
 
 		// Make {{template}} variable replacements
-		return str.replace(/{{([^}]*)}}/g, function(str, key) {
+		return str.replace(/\${([^}]*)}/g, function(str, key) {
 			return scope.$private('replace', obj, key, opt);
 		});
 	}
@@ -115,10 +115,8 @@ Wee.fn.make('data', {
 			key = resp[i];
 			obj = obj[key];
 
-			if (i === len) {
-				if (typeof obj == 'string') {
-					return opt.encode === true ? this.clean(obj) : obj;
-				}
+			if (i === len && typeof obj == 'string') {
+				return opt.encode === true ? this.clean(obj) : obj;
 			}
 		}
 

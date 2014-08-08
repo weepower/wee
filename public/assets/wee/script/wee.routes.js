@@ -9,7 +9,7 @@ Wee.fn.make('routes', {
 	path: function(val, opt) {
 		return val ?
 			this.$set('path', val, opt) :
-			this.$get('path', window.location.pathname, true, opt);
+			this.$get('path', Wee._win.location.pathname, true, opt);
 	},
 	// Retrieve or add route endpoints to route storage
 	// Optionally run the rules by setting init to true
@@ -57,6 +57,7 @@ Wee.fn.make('routes', {
 					Wee.$exec(any[i]);
 				}
 
+				// Clear array for next iteration
 				this.$set('any', []);
 			}
 		}

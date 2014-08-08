@@ -252,7 +252,7 @@ Wee.fn.extend({
 		// Data
 		parse: function(obj, opt) {
 			var str = Wee.$html(this);
-			str = Wee.data.parse(str, obj, opt);
+				str = Wee.data.parse(str, obj, opt);
 			Wee.$html(this, str);
 			return this;
 		}
