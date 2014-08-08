@@ -2,10 +2,6 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-//////////
-// Base //
-//////////
-
 * {
 	&,
 	&:before,
@@ -830,31 +826,3 @@ dd {
 	}
 }
 .wee-placeholders();
-
-///////////////////
-// Mixin Classes //
-///////////////////
-
-.container {
-	.wee-container();
-}
-.img-left {
-	.left();
-	.margin(.32em; @imageMarginSide; @imageMarginBottom; false);
-}
-.img-right {
-	.right();
-	.margin(.32em; false; @imageMarginBottom; @imageMarginSide);
-}
-.hide {
-	.display(none);
-}
-.js-hide {
-	.display(none) !important;
-}
-.show {
-	.display(inherit);
-}
-.block {
-	.display(block);
-}

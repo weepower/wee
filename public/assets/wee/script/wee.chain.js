@@ -95,8 +95,8 @@ Wee.fn.extend({
 			var r = Wee.$prop(this, key, val);
 			return val !== undefined ? this : r;
 		},
-		val: function(key, val) {
-			var r = Wee.$val(this, key, val);
+		val: function(val) {
+			var r = Wee.$val(this, val);
 			return val !== undefined ? this : r;
 		},
 		show: function() {

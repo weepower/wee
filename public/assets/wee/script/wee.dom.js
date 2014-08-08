@@ -275,11 +275,37 @@ Wee.fn.extend({
 	// Returns string
 	$val: function(sel, val) {
 		if (val !== undefined) {
-			this.$each(sel, function() {
-				this.value = val;
+			this.$each(sel, function(el) {
+				if (el.nodeName == 'SELECT') {
+					var opt = Wee.$find(el, 'option');
+						val = Wee.$toArray(val);
+
+					opt.forEach(function(a) {
+						if (val.indexOf(a.value) > -1) {
+							a.selected = true;
+						}
+					});
+				} else {
+					this.value = val;
+				}
 			});
 		} else {
-			return this.$first(sel).value;
+			var el = Wee.$first(sel);
+
+			if (el.nodeName == 'SELECT') {
+				var opt = this.$find(el, 'option'),
+					val = [];
+
+				opt.forEach(function(a) {
+					if (a.selected) {
+						val.push(a.value);
+					}
+				});
+
+				return el.multiple ? val : val[0];
+			} else {
+				return el.value;
+			}
 		}
 	},
 	// Get indexed node of specified element

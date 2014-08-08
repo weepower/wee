@@ -1,0 +1,18 @@
+// Wee 2.0.0 (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY THIS FILE
+
+@import (reference) 'wee.less';                                                // Wee
+@import (reference) '../../modules/@{moduleName}/module/style/variables.less'; // Core configuration
+@import '../../modules/@{moduleName}/module/style/screen.less';                // Baseline
+
+.wee-responsive () when (@responsive = true) {
+	@import 'wee.module.responsive.less';
+}
+
+.wee-responsive();
+
+// Framework
+
+@legacyMode: false;
+@module: true;

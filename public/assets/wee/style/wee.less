@@ -2,35 +2,35 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-@import (reference) 'variables.less';                  // Core configuration
+@import (reference) 'wee.variables.less';              // Core configuration
 @import (reference) '../../css/custom/variables.less'; // Custom configuration
-@import (reference) 'mixins.less';                     // Mixins
-@import 'base.less';                                   // Baseline
+@import 'wee.mixins.less';                             // Mixins
+@import 'wee.base.less';                               // Baseline
 @import (reference) '../../css/custom/mixins.less';    // Custom mixins
 
 // Module Check
 
-.core() when (@module = false) {
+.wee-core() when (@module = false) {
 	@import '../../css/custom/screen.less'; // Customizations
 
 	// Responsive
 
 	@responsivePath: 'custom/breakpoints';
-	@import 'responsive.less';
+	@import 'wee.responsive.less';
 }
 
-.core();
+.wee-core();
 
 // Print Styling
 
-.print() when (@printEnabled = true) {
+.wee-print() when (@printEnabled = true) {
 	@media print {
-		@import 'print.less';
+		@import 'wee.print.less';
 		@import '../../css/custom/print.less'; // Customizations
 	}
 }
 
-.print();
+.wee-print();
 
 // Framework
 

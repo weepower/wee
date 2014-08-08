@@ -11,7 +11,7 @@
 		],
 		"compile": {
 			"ie8.css": [
-				"../wee/style/legacy.less",
+				"../wee/style/wee.legacy.less",
 				"custom/ie8.less"
 			]
 		}
@@ -47,8 +47,7 @@
 			],
 			"ie9.min.js": [
 				"polyfill/wee.slice.js",
-				"polyfill/wee.placeholder.js",
-				"custom/ie9.js"
+				"polyfill/wee.placeholder.js"
 			]
 		}
 	},
