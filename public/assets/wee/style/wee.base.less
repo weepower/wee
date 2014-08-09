@@ -791,38 +791,3 @@ dd {
 	}
 }
 .wee-button();
-
-/////////////
-// Testing //
-/////////////
-
-.wee-placeholder (@ratio: (16 / 9)) {
-	.background(@placeholderBackground);
-	.fill();
-	.ratio(@ratio);
-	.relative();
-	.rules () when not (@placeholderBorderColor = false) {
-		.border(@placeholderBorderColor);
-	}
-	.rules();
-}
-.wee-placeholder-text () {
-	.absolute();
-	.align(center);
-	.block();
-	.color(@placeholderColor);
-	.fill();
-	.font(@headingFont; 2.3);
-	.line-height(0);
-	.top(50%);
-}
-.wee-placeholders () when (@placeholdersEnabled = true) {
-	.js-placeholder {
-		.wee-placeholder();
-	}
-	.js-placeholder-text,
-	.js-placeholder span {
-		.wee-placeholder-text();
-	}
-}
-.wee-placeholders();

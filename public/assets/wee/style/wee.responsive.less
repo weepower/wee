@@ -46,158 +46,6 @@
 		.width(device-width);
 	}
 
-	// Test Mode
-
-	@value: 1;
-	@width: 320px;
-
-	.wee-responsive-testing () {
-		&:before,
-		&:after {
-			.fill();
-			.fixed();
-			.height(32px);
-			.z-index(3000);
-		}
-		&:before {
-			.background(@responsiveTestBackground);
-			.content();
-			.left(0);
-			.wee-responsive-testing-border();
-		}
-		&:after {
-			.color(@responsiveTestColor);
-			.content('@{value} \2022\00a0 Mobile Portrait / @{width}');
-			.font('Arial, sans-serif'; 12px);
-			.line-height(33px);
-			.margin(horizontal; auto);
-			.padded(16px);
-			&:hover {
-				.hide();
-			}
-		}
-		.wee-responsive-testing-position();
-	}
-	.wee-responsive-testing-border () when not (@responsiveTestBorderColor = false) and (@responsiveTestPosition = 'top') {
-		.border(bottom; @responsiveTestBorderColor);
-	}
-	.wee-responsive-testing-border () when not (@responsiveTestBorderColor = false) and not (@responsiveTestPosition = 'top') {
-		.border(top; @responsiveTestBorderColor);
-	}
-	.wee-responsive-testing-position () when (@responsiveTestPosition = 'top') {
-		&:before,
-		&:after {
-			.top();
-		}
-	}
-	.wee-responsive-testing-position () when not (@responsiveTestPosition = 'top') {
-		&:before,
-		&:after {
-			.bottom();
-		}
-	}
-
-	.wee-hint (@breakpoint; @value; @width) when (@responsiveTestMode = true) {
-		html:after,
-		.js-testing-bar {
-			.left(50%);
-			.margin(left; (@width * -.5));
-			.width(@width);
-		}
-		html {
-			&:after {
-				.border(horizontal; darken(@responsiveTestBackground, 10%); 3px);
-				.content('@{value} \2022\00a0 @{breakpoint} / @{width}');
-			}
-		}
-	}
-
-	.responsive-testing () when (@responsiveTestMode = true) {
-		html {
-			.wee-responsive-testing();
-			.toggle () when (@responsiveTestPosition = 'top') {
-				.padding(top; 32px);
-				&.js-testing-disabled {
-					.padding(top; 0);
-				}
-			}
-			.toggle () when not (@responsiveTestPosition = 'top') {
-				.padding(bottom; 32px);
-				&.js-testing-disabled {
-					.padding(bottom; 0);
-				}
-			}
-			.toggle();
-		}
-	}
-
-	.responsive-testing();
-
-	.wee-testing-tools () when (@responsiveTestMode = true) {
-		.js-testing-bar {
-			.align(right);
-			.color(@responsiveTestColor);
-			.fill();
-			.fixed();
-			.font(@headingFont; 12px);
-			.height(32px);
-			.line-height(33px);
-			.padded(16px);
-			.user-select();
-			.z-index(3001);
-			.rule () when (@responsiveTestPosition = 'top') {
-				.top();
-			}
-			.rule () when not (@responsiveTestPosition = 'top') {
-				.bottom();
-			}
-			.rule();
-		}
-		.js-testing-cues {
-			.fill(both);
-			.fixed();
-			.hide();
-			.left(0);
-			.top(0);
-			.z-index(2000);
-		}
-		.js-testing-cue {
-			.border(horizontal; red; 3px);
-			.fill(vertical);
-			.fixed();
-			.left(50%);
-			.opacity(20%);
-			&:hover {
-				.opacity(40%);
-			}
-		}
-		#testing-frame {
-			.block();
-			.border(0);
-			.margin(horizontal; auto);
-			.spaced(0);
-		}
-		.js-testing-disabled {
-			&:before,
-			&:after,
-			.js-testing-bar,
-			.js-testing-cues,
-			.js-testing-cue {
-				.js-hide();
-			}
-		}
-		.js-testing-enabled {
-			body {
-				.background-image(none);
-				.background(@darkGray);
-				.margin(0);
-				.padding(0);
-			}
-		}
-	}
-
-	.wee-testing-tools();
-
 	// Mobile Landscape
 
 	.mobile-landscape-query () when not (@mobileLandscapeWidth = false) {
@@ -209,7 +57,6 @@
 				font-family: '"@{value}"';
 			}
 			.mobile-landscape();
-			.wee-hint('Mobile Landscape'; @value; @breakpoint);
 		}
 	}
 
@@ -226,7 +73,6 @@
 				font-family: '"@{value}"';
 			}
 			.tablet-portrait();
-			.wee-hint('Tablet Portrait'; @value; @breakpoint);
 		}
 	}
 
@@ -243,7 +89,6 @@
 				font-family: '"@{value}"';
 			}
 			.desktop-small();
-			.wee-hint('Small Desktop'; @value; @breakpoint);
 		}
 	}
 
@@ -260,7 +105,6 @@
 				font-family: '"@{value}"';
 			}
 			.desktop-medium();
-			.wee-hint('Medium Desktop'; @value; @breakpoint);
 		}
 	}
 
@@ -277,7 +121,6 @@
 				font-family: '"@{value}"';
 			}
 			.desktop-large();
-			.wee-hint('Large Desktop'; @value; @breakpoint);
 		}
 	}
 
