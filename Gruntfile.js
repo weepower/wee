@@ -291,45 +291,6 @@ module.exports = function(grunt) {
 			if (features.chain) {
 				buildScripts.push(weeScriptRoot + 'wee.chain.js');
 			}
-
-			// Testing modules
-			var testing = config.script.core.testing;
-
-			if (testing.placeholders) {
-				if (! features.events) {
-					grunt.fail.warn('Event module required for screen functions');
-				}
-
-				if (! features.data) {
-					grunt.fail.warn('Data module required for screen functions');
-				}
-
-				buildScripts.push(weeScriptRoot + 'testing/wee.placeholders.js');
-			} else {
-				grunt.config.merge({
-					less: {
-						options: {
-							modifyVars: {
-								'placeholdersEnabled': false
-							}
-						}
-					}
-				});
-			}
-
-			if (testing.responsive) {
-				if (! features.events) {
-					grunt.fail.warn('Event module required for responsive functions');
-				}
-
-				if (! features.data) {
-					grunt.fail.warn('Data module required for responsive functions');
-				}
-
-				buildScripts.push(weeScriptRoot + 'testing/wee.responsive.js');
-			} else {
-				styleVars['responsiveTestMode'] = false;
-			}
 		}
 
 		// Compile build directory scripts

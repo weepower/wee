@@ -25,7 +25,6 @@ JavaScript toolset to build scalable, well-organized browser functionality < 8KB
 * **Resource loading** for JavaScript, CSS, and images along with callbacks
 * **Data request and binding** functions
 * **Breakpoint watching** system for efficient media query callbacks
-* **Testing helpers** for responsive toolbar and image placeholders
 * **Polyfill support** for input placeholders, SVG images, REMs and more
 * **Sourcemap output** to line match against unminified code
 

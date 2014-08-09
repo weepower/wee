@@ -254,8 +254,6 @@
 @codePaddingHorizontal: .5em;
 @codePaddingVertical: .1em;
 
-@codeBlockEnabled: true; // toggle code block styling output
-
 @codeBlockColor: @lightestGray;
 @codeBlockFont: @codeFont;
 @codeBlockFontSize: 1.3;
@@ -269,38 +267,6 @@
 
 @codeBlockPaddingHorizontal: 2;
 @codeBlockPaddingVertical: 1.4;
-
-////////////
-// Tables //
-////////////
-
-@tableEnabled: true;  // toggle table styling output
-@tableStyled: true;   // apply base styling by default
-@tableBordered: true; // apply outer border by default
-@tableStriped: true;  // apply striping by default
-
-// Table Cells
-
-@tableCellLineHeight: @paragraphLineHeight;
-
-@tableCellBorderColor: @lightGray;
-
-@tableCellPaddingHorizontal: .8;
-@tableCellPaddingVertical: .6;
-
-// Table Captions
-
-@tableCaptionFontStyle: italic;
-
-@tableCaptionBackground: @lightestGray;
-
-@tableCaptionPaddingVertical: 1.2;
-@tableCaptionPaddingHorizontal: @tableCellPaddingHorizontal;
-
-// Striping
-
-@tableStripedBackground: @lightestGray;
-@tableStripedPosition: odd; // even, odd
 
 ///////////
 // Forms //
@@ -450,6 +416,38 @@
 @disabledButtonBorderColor: darken(@disabledButtonBackground, 5%);
 
 @disabledButtonCursor: not-allowed;
+
+////////////
+// Tables //
+////////////
+
+@tableEnabled: true;  // toggle table styling output
+@tableStyled: true;   // apply base styling by default
+@tableBordered: true; // apply outer border by default
+@tableStriped: true;  // apply striping by default
+
+// Table Cells
+
+@tableCellLineHeight: @paragraphLineHeight;
+
+@tableCellBorderColor: @lightGray;
+
+@tableCellPaddingHorizontal: .8;
+@tableCellPaddingVertical: .6;
+
+// Table Captions
+
+@tableCaptionFontStyle: italic;
+
+@tableCaptionBackground: @lightestGray;
+
+@tableCaptionPaddingVertical: 1.2;
+@tableCaptionPaddingHorizontal: @tableCellPaddingHorizontal;
+
+// Striping
+
+@tableStripedBackground: @lightestGray;
+@tableStripedPosition: odd; // even, odd
 
 ///////////
 // Print //
