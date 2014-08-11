@@ -2,25 +2,16 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-@legacyMode: true;
-
 @import (reference) 'wee.variables.less';              // Core configuration
 @import (reference) '../../css/custom/variables.less'; // Custom configuration
 @import (reference) 'wee.mixins.less';                 // Mixins
+@import (reference) 'wee.base.less';                   // Baseline
 @import (reference) '../../css/custom/mixins.less';    // Custom mixins
 	
 // Responsive
 
 @responsivePath: 'custom/breakpoints';
 @import 'wee.responsive.less';
-
-// Override Component Output
-
-@tableEnabled: false;
-@formEnabled: false;
-@buttonEnabled: false;
-
-@import (reference) 'wee.base.less'; // Baseline
 
 // Normalization
 
@@ -81,3 +72,7 @@ html {
 }
 
 .responsive();
+
+// Framework
+
+@legacyMode: true;

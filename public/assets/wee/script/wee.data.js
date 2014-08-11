@@ -92,7 +92,7 @@ Wee.fn.make('data', {
 		str = div.innerHTML;
 
 		// Make {{template}} variable replacements
-		return str.replace(/\${([^}]*)}/g, function(str, key) {
+		return str.replace(/{{([^}]*)}}/g, function(str, key) {
 			return scope.$private('replace', obj, key, opt);
 		});
 	}

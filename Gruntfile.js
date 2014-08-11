@@ -5,7 +5,6 @@
 
 // Setup global project variables
 var fs = require('fs'),
-	path = require('path'),
 	styles = [],
 	scripts = [],
 	config = {};
@@ -23,8 +22,6 @@ var Wee = {
 };
 
 module.exports = function(grunt) {
-
-	// Project configuration
 	grunt.initConfig({
 		config: config,
 		less: {
@@ -40,64 +37,35 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify: {
-			my_target: {
+			core: {
 				files: '<%= config.scripts %>'
 			}
 		},
-		concat: {
-			core: {
-				files: {}
-			}
-		},
 		imagemin: {
-			dynamic: {
-				files: [{
-					expand: true,
-					cwd: '<%= config.assetPath %>',
-					dest: '<%= config.assetPath %>',
-					src: [
-						'**/*.{gif,png,jpg}'
-					]
-				}]
-			}
-		},
-		svgmin: {
 			options: {
 				plugins: [
 					{removeViewBox: false},
 					{convertPathData: false}
 				]
 			},
-			dist: {
+			core: {
 				files: [{
 					expand: true,
 					cwd: '<%= config.assetPath %>',
 					dest: '<%= config.assetPath %>',
 					src: [
-						'**/*.svg'
+						'**/*.{gif,png,jpg,svg}'
 					]
 				}]
 			}
 		},
-		connect: {
-			server: {
-				options: {
-					port: '<%= config.testing.server.port %>',
-					base: '<%= config.paths.root %>'
-				}
-			}
-		},
-		open: {
-			dev: {
-				path: '<%= config.testing.host %>'
+		browserSync: {
+			options: {
+				notify: false,
+				watchTask: true
 			}
 		},
 		notify: {
-			server: {
-				options: {
-					message: 'Testing server ready'
-				}
-			},
 			style: {
 				options: {
 					message: 'Style build complete'
@@ -123,12 +91,13 @@ module.exports = function(grunt) {
 			options: {
 				spawn: false
 			},
-			less: {
+			img: {
 				files: [
-					'<%= config.assetPath %>/**/*.less'
+					'<%= config.assetPath %>/**/*.{gif,jpg,png,svg}'
 				],
 				tasks: [
-					'buildStyle'
+					'newer:imagemin',
+					'notify:img'
 				]
 			},
 			js: {
@@ -140,22 +109,12 @@ module.exports = function(grunt) {
 					'notify:script'
 				]
 			},
-			img: {
+			less: {
 				files: [
-					'<%= config.assetPath %>/**/*.{gif,jpg,png}'
+					'<%= config.assetPath %>/**/*.less'
 				],
 				tasks: [
-					'newer:imagemin',
-					'notify:img'
-				]
-			},
-			svg: {
-				files: [
-					'<%= config.assetPath %>/**/*.svg'
-				],
-				tasks: [
-					'newer:svgmin',
-					'notify:img'
+					'less'
 				]
 			},
 			configFiles: {
@@ -173,40 +132,109 @@ module.exports = function(grunt) {
 		}
 	});
 
-	// Initialization task: build compile object and load modules
+	// Build compile object and load modules
 	grunt.registerTask('init', function() {
 
-		// Begin async operations
-		var done = this.async();
-
-		var styleVars = {},
-			styleTasks = [],
-			styleConcat = [];
-
-		// Load project config
+		// Load config
 		var configFile = './' + (grunt.option('config') || 'project.json');
 
-		// Set watch config update
+		// Watch config update
 		grunt.config.set('watch.configFiles.files', [
 			configFile
 		]);
 
 		config = require(configFile);
 
-		config.assetPath = config.paths.root != '' ? './' + config.paths.root + '/' + config.paths.assets : './' + config.assets;
+		config.assetPath = './' + (
+			config.paths.root !== '' ?
+				config.paths.root + '/' + config.paths.assets :
+				config.assets
+			);
 
 		config.paths.root = './' + config.paths.root;
 
-		// Setup global file arrays
+		///////////
+		// Style //
+		///////////
+
 		var styleRoot = config.assetPath + '/css',
-			scriptRoot = config.assetPath + '/js',
 			weeStyleRoot = config.assetPath + '/wee/style/',
-			weeScriptRoot = config.assetPath + '/wee/script/';
+			projectStyle = {},
+			styleVars = {},
+			styleTasks = [],
+			styleConcat = [];
 
 		config.stylePath = styleRoot;
 		config.scriptPath = scriptRoot;
 
-		// Minify all lib scripts
+		// Minify lib
+		styles.push({
+			expand: true,
+			cwd: styleRoot + '/lib',
+			dest: styleRoot + '/lib',
+			src: [
+				'**/*.less'
+			],
+			ext: '.css'
+		});
+
+		// Build
+		var buildStyles = [];
+
+		// Core
+		buildStyles.push(weeStyleRoot + 'wee.less');
+
+		buildStyles.push(styleRoot + '/build/**/*.{css,less}');
+
+		// Build configured
+		var total = config.style.build.length;
+
+		for (var i = 0; i < total; i++) {
+			buildStyles.push(Wee.buildPath(config.style.build[i], styleRoot));
+		}
+
+		// Compile custom
+		for (var target in config.style.compile) {
+			var sources = config.style.compile[target],
+				from = [];
+
+			if (sources instanceof Array) {
+				for (var source in sources) {
+					from.push(Wee.buildPath(sources[source], styleRoot));
+				}
+			} else {
+				from = Wee.buildPath(sources, styleRoot);
+			}
+
+			projectStyle[Wee.buildPath(target, styleRoot)] = from;
+		}
+
+		// Source maps
+		if (config.style.sourceMaps == true) {
+			var relativePath = config.assetPath + '/wee/maps/';
+
+			grunt.config.set('less.options.sourceMap', true);
+			grunt.config.set('less.options.sourceMapFilename', relativePath + 'source.css.map');
+			grunt.config.set('less.options.sourceMapURL', relativePath + 'source.css.map');
+			grunt.config.set('less.options.sourceMapBasepath', function(dest) {
+				var filename = dest.replace(config.assetPath + '/', '')
+					.replace('css/', '')
+					.replace(/\//g, '-')
+					.replace('.css', '');
+
+				return relativePath + filename + '.css.map';
+			});
+		}
+
+		////////////
+		// Script //
+		////////////
+
+		var scriptRoot = config.assetPath + '/js',
+			weeScriptRoot = config.assetPath + '/wee/script/',
+			projectScript = {};
+
+		// Minify lib
 		scripts.push({
 			expand: true,
 			cwd: scriptRoot + '/lib',
@@ -218,46 +246,18 @@ module.exports = function(grunt) {
 			rename: function(dest, src) {
 				var dir = src.substring(0, src.lastIndexOf('/')),
 					filename = src.substring(src.lastIndexOf('/'), src.length);
-				filename = filename.substring(0, filename.lastIndexOf('.'));
+					filename = filename.substring(0, filename.lastIndexOf('.'));
+
 				return dest + '/' + dir + filename + '.min.js';
 			}
 		});
 
-		var projectStyles = {},
-			projectScripts = {};
-
-		// Minify all lib less
-		styles.push({
-			expand: true,
-			cwd: styleRoot + '/lib',
-			dest: styleRoot + '/lib',
-			src: [
-				'**/*.less'
-			],
-			ext: '.css'
-		});
-
-		// Compile build directory stylesheets
-		var buildStyles = [];
-
-		buildStyles.push(styleRoot + '/build/**/*.{css,less}');
-
-		// Compile configured build stylesheets
-		var total = config.style.build.length;
-
-		for (var i = 0; i < total; i++) {
-			buildStyles.push(Wee.buildPath(config.style.build[i], styleRoot));
-		}
-
-		buildStyles.push(weeStyleRoot + 'wee.less');
-
-		// Compile configured core files
+		// Core files
 		var buildScripts = [];
 
 		if (config.script.core.enable) {
 			var features = config.script.core.features;
 
-			// Core modules
 			buildScripts.push(weeScriptRoot + 'wee.js');
 
 			if (features.assets) {
@@ -293,10 +293,10 @@ module.exports = function(grunt) {
 			}
 		}
 
-		// Compile build directory scripts
+		// Build
 		buildScripts.push(scriptRoot + '/build/**/*.js');
 
-		// Compile configured scripts
+		// Build configured
 		var total = config.script.build.length;
 
 		for (var i = 0; i < total; i++) {
@@ -305,23 +305,7 @@ module.exports = function(grunt) {
 
 		buildScripts.push(scriptRoot + '/custom/script.js');
 
-		// Get style compile files: compile custom files added to the project's compile object
-		for (var target in config.style.compile) {
-			var sources = config.style.compile[target],
-				from = [];
-
-			if (sources instanceof Array) {
-				for (var source in sources) {
-					from.push(Wee.buildPath(sources[source], styleRoot));
-				}
-			} else {
-				from = Wee.buildPath(sources, styleRoot);
-			}
-
-			projectStyles[Wee.buildPath(target, styleRoot)] = from;
-		}
-
-		// Get script compile files: compile custom files added to the project's compile object
+		// Compile custom
 		for (var target in config.script.compile) {
 			var sources = config.script.compile[target],
 				from = [];
@@ -334,48 +318,38 @@ module.exports = function(grunt) {
 				from = Wee.buildPath(sources, scriptRoot);
 			}
 
-			projectScripts[Wee.buildPath(target, scriptRoot)] = from;
+			projectScript[Wee.buildPath(target, scriptRoot)] = from;
 		}
 
-		// Source map support
-		var maps = config.testing.sourceMaps;
+		// Source maps
+		if (config.script.sourceMaps == true) {
+			grunt.config.set('uglify.options.sourceMap', true);
+			grunt.config.set('uglify.options.sourceMapName', function(dest) {
+				var filename = dest.replace(config.assetPath + '/', '')
+					.replace('js/', '')
+					.replace(/\//g, '-')
+					.replace('.min.js', '');
 
-		if (maps.css == true || maps.js == true) {
+				return relativePath + filename + '.js.map';
+			});
+		}
+
+		/////////////
+		// Cleanup //
+		/////////////
+
+		// Source maps
+		if (config.style.sourceMaps == true || config.script.sourceMaps == true) {
 			var relativePath = config.assetPath + '/wee/maps/';
 
-			// Clear existing source map files
 			fs.readdirSync(relativePath).forEach(function(file) {
 				fs.unlinkSync(relativePath + file);
 			});
 		}
 
-		if (maps.css == true) {
-			var relativePath = config.assetPath + '/wee/maps/';
-
-			grunt.config.set('less.options.sourceMap', true);
-			grunt.config.set('less.options.sourceMapFilename', relativePath + 'source.css.map');
-			grunt.config.set('less.options.sourceMapURL', relativePath + 'source.css.map');
-			grunt.config.set('less.options.sourceMapBasepath', function(dest) {
-				var filename = dest.replace(config.assetPath + '/', '')
-								   .replace('css/', '')
-								   .replace(/\//g, '-')
-								   .replace('.css', '');
-
-				return relativePath + filename + '.css.map';
-			});
-		}
-
-		if (maps.js == true) {
-			grunt.config.set('uglify.options.sourceMap', true);
-			grunt.config.set('uglify.options.sourceMapName', function(dest) {
-				var filename = dest.replace(config.assetPath + '/', '')
-								   .replace('js/', '')
-								   .replace(/\//g, '-')
-								   .replace('.min.js', '');
-
-				return relativePath + filename + '.js.map';
-			});
-		}
+		/////////////
+		// Modules //
+		/////////////
 
 		var modules = {},
 			modulePaths = [],
@@ -390,6 +364,9 @@ module.exports = function(grunt) {
 				}
 			});
 		});
+
+		// Begin async operations
+		var done = this.async();
 
 		// Load modules
 		fs.readdir(moduleRoot, function(err, files) {
@@ -432,22 +409,25 @@ module.exports = function(grunt) {
 								config.assetPath + '/wee/temp/' + name + '.css' :
 								path + '/screen.css',
 							moduleStyle = [
-								path + '/module/style/*.less',
+								path + '/module/style/screen.less',
 								path + '/css/build/*.less'
 							],
 							moduleScript = [
 								path + '/module/script/*.js',
 								path + '/js/build/*.js'
 							],
-							banner = "@import '" + weeStyleRoot + "wee.module.less';",
+							banner = "@import '../../../../wee/style/wee.module.less';",
 							moduleVars = {
-								moduleName: name
+								moduleName: name,
+								responsive: false
 							},
 							obj = {};
 
 						// Build additional style
 						if (module.style && module.style.build) {
-							moduleStyle.push(Wee.concatPaths(path, module.style.build));
+							module.style.build.forEach(function(path) {
+								banner += "@import '../../" + path + "';";
+							});
 						}
 
 						// Build additional script
@@ -526,7 +506,7 @@ module.exports = function(grunt) {
 							buildScripts.push(moduleScript);
 						} else {
 							// Compile script into module root
-							projectScripts[path + '/script.min.js'] = moduleScript;
+							projectScript[path + '/script.min.js'] = moduleScript;
 						}
 					});
 
@@ -544,14 +524,25 @@ module.exports = function(grunt) {
 								}
 							}
 						});
+
+						grunt.config.merge({
+							watch: {
+								concat: {
+									files: styleConcat,
+									tasks: [
+										'concat:style'
+									]
+								}
+							}
+						});
 					}
 
 					// Make config available to tasks
-					projectStyles[styleRoot + '/style.css'] = buildStyles;
-					projectScripts[scriptRoot + '/script.min.js'] = buildScripts;
+					projectStyle[styleRoot + '/style.css'] = buildStyles;
+					projectScript[scriptRoot + '/script.min.js'] = buildScripts;
 
-					styles.push(projectStyles);
-					scripts.push(projectScripts);
+					styles.push(projectStyle);
+					scripts.push(projectScript);
 
 					grunt.config.merge({
 						less: {
@@ -586,7 +577,7 @@ module.exports = function(grunt) {
 	});
 
 	// Build project style
-	grunt.registerTask('buildStyle', function() {
+	grunt.registerTask('style', function() {
 		grunt.task.run('less:core');
 
 		config.styleTasks.forEach(function(task) {
@@ -603,10 +594,6 @@ module.exports = function(grunt) {
 	// Configure reloading
 	grunt.registerTask('reload', function() {
 		if (config.testing.reload.enable == true) {
-			grunt.config.set('watch.options.livereload', config.testing.reload.port);
-			grunt.config.set('open.dev.path', 'http://localhost:' + config.testing.server.port);
-			grunt.config.set('connect.server.options.livereload', true);
-
 			var reloadExtensions = config.testing.reload.watch.extensions.join(),
 				reloadCount = config.testing.reload.watch.paths.length,
 				reloadPaths = [];
@@ -625,13 +612,37 @@ module.exports = function(grunt) {
 				reloadPaths.push(config.paths.root + '/**/*.' + reloadExtensions);
 			}
 
-			// Bind configuration
+			// Watch static file updates
 			grunt.config.set('watch.html.files', reloadPaths);
+
+			// Bind BrowserSync watchlist
+			reloadPaths.push(config.assetPath + '/**/*.{gif,jpg,png,css,min.js,svg}');
+
+			grunt.config.set('browserSync.bsFiles.src', reloadPaths);
 		}
 	});
 
-	// Build living style guide
-	grunt.registerTask('styleGuide', function() {
+	// Configure and launch testing server
+	grunt.registerTask('server', function() {
+		grunt.config.set('browserSync.options.server', {
+			baseDir: config.paths.root,
+		});
+		grunt.config.set('browserSync.options.port', config.testing.server.port);
+
+		grunt.task.run('browserSync');
+	});
+
+	// Proxy and launch from local server
+	grunt.registerTask('proxy', function() {
+		if (config.testing.proxy !== false) {
+			grunt.config.set('browserSync.options.proxy', reloadPaths);
+
+			grunt.task.run('browserSync');
+		}
+	});
+
+	// Build style guide
+	grunt.registerTask('guide', function() {
 		var guide = config.guide;
 
 		if (guide.enable == true) {
@@ -657,60 +668,43 @@ module.exports = function(grunt) {
 		}
 	});
 
-	// Load package.json
-	pkg: grunt.file.readJSON('package.json'),
-
 	// Load plugins
-	require('load-grunt-tasks')(grunt);
+	grunt.loadNpmTasks('grunt-browser-sync');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-imagemin');
+	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-newer');
+	grunt.loadNpmTasks('grunt-notify');
 
 	// Build
 	grunt.registerTask('default', [
 		'init',
-		'buildStyle',
-		'uglify',
 		'imagemin',
-		'svgmin'
+		'style',
+		'uglify'
+	]);
+
+	// Build & Watch
+	grunt.registerTask('dev', [
+		'default',
+		'reload',
+		'proxy',
+		'watch'
+	]);
+
+	// Build, Server, Open & Watch
+	grunt.registerTask('test', [
+		'default',
+		'reload',
+		'server',
+		'watch'
 	]);
 
 	// Guide
 	grunt.registerTask('guide', [
 		'init',
-		'styleGuide'
-	]);
-
-	// Build + Watch
-	grunt.registerTask('dev', [
-		'init',
-		'reload',
-		'buildStyle',
-		'uglify',
-		'imagemin',
-		'svgmin',
-		'watch'
-	]);
-
-	// Build + Watch + Open
-	grunt.registerTask('launch', [
-		'init',
-		'buildStyle',
-		'uglify',
-		'imagemin',
-		'svgmin',
-		'open',
-		'watch'
-	]);
-
-	// Build + Server + Open + Watch
-	grunt.registerTask('test', [
-		'init',
-		'reload',
-		'buildStyle',
-		'uglify',
-		'imagemin',
-		'svgmin',
-		'connect',
-		'notify:server',
-		'open',
-		'watch'
+		'guide'
 	]);
 };

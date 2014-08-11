@@ -35,7 +35,7 @@ var WeeRem = (function(w, d) {
 				var href = sheets[i].href;
 
 				if (href && href.indexOf('ie8.css') == -1) {
-					this.processResource(href);
+					this.process(href);
 				}
 			}
 		},

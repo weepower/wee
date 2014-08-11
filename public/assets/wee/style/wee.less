@@ -8,18 +8,14 @@
 @import 'wee.base.less';                               // Baseline
 @import (reference) '../../css/custom/mixins.less';    // Custom mixins
 
-// Module Check
+// Core
 
-.wee-core() when (@module = false) {
-	@import '../../css/custom/screen.less'; // Customizations
+@import '../../css/custom/screen.less'; // Customizations
 
-	// Responsive
+// Responsive
 
-	@responsivePath: 'custom/breakpoints';
-	@import 'wee.responsive.less';
-}
-
-.wee-core();
+@responsivePath: 'custom/breakpoints';
+@import 'wee.responsive.less';
 
 // Print Styling
 
@@ -34,5 +30,4 @@
 
 // Framework
 
-@module: false;
 @legacyMode: false;

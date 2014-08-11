@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en" itemscope itemtype="http://schema.org/WebPage" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,22 +7,26 @@
 <meta name="description" content="{{description}}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/assets/css/style.css">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300">
 <style>
 body {
 	background: #fff;
+	color: #000;
 }
 </style>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300">
 <link rel="shortcut icon" sizes="16x16 32x32" href="/favicon.ico">
 <link rel="apple-touch-icon-precomposed" href="/touchicon.png">
 <meta name="msapplication-TileColor" content="#006e89">
 <meta name="msapplication-TileImage" content="/tileicon.png">
 <!--[if lt IE 9]>
-<link rel="stylesheet" href="/assets/css/legacy.css">
-<script src="/assets/js/legacy.min.js"></script>
+<link rel="stylesheet" href="/assets/css/ie8.css">
+<script src="/assets/js/ie8.min.js"></script>
+<![endif]-->
+<!--[if lte IE 9]>
+<script src="/assets/js/ie9.min.js"></script>
 <![endif]-->
 </head>
-<body itemscope itemtype="http://schema.org/WebPage">
+<body>
 <header>
 	<h1>{{name}} Project Styleguide</h1>
 	<select>
@@ -32,6 +36,186 @@ body {
 	</select>
 </header>
 <main class="container">
+	<div class="pattern">
+		<h2>Table</h2>
+		<div class="output">
+			<table itemscope itemtype="http://schema.org/Table">
+				<caption itemprop="about">Caption</caption>
+				<thead>
+					<tr>
+						<th>Heading</th>
+						<th>Heading</th>
+						<th>Heading</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+						<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+						<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+					</tr>
+					<tr>
+						<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+						<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+						<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>Footer</td>
+						<td>Footer</td>
+						<td>Footer</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+		<div class="markup">
+			{{markup}}
+		</div>
+	</div>
+	<div class="pattern">
+		<h2>Forms</h2>
+		<div class="output">
+			<form action="#" class="index-form">
+				<fieldset>
+					<legend>Text Input</legend>
+					<input type="email" name="name" placeholder="Email Address" required>
+					<div class="inline-field">
+						<label for="name2">Full Name</label>
+						<input type="text" name="name2" value="" placeholder="Your Name" id="name2" disabled>
+					</div>
+					<label for="textarea">Message</label>
+					<textarea name="textarea" id="textarea" rows="3" required></textarea>
+					<div class="inline-field">
+						<label for="textarea2">Inline Message</label>
+						<textarea name="textarea2" id="textarea2" rows="4" placeholder="Short message here..."></textarea>
+					</div>
+				</fieldset>
+				<fieldset>
+					<legend>Selection</legend>
+					<select name="selection">
+						<option value="1">Lorem</option>
+						<option value="2">Ipsum</option>
+						<option value="3">Dolor</option>
+					</select>
+					<label for="multi-selection">Multiple Selection</label>
+					<select name="multi-selection" id="multi-selection" multiple>
+						<optgroup label="Grouping">
+							<option value="1">Lorem</option>
+							<option value="2">Ipsum</option>
+							<option value="3">Dolor</option>
+						</optgroup>
+					</select>
+					<div class="inline-field">
+						<label for="inline-selection">Inline Selection</label>
+						<select name="inline-selection" id="inline-selection" multiple>
+							<option value="1">Lorem</option>
+							<option value="2">Ipsum</option>
+							<option value="3">Dolor</option>
+						</select>
+					</div>
+					<div class="inline-field">
+						<input type="checkbox" name="checkbox" id="checkbox">
+						<label for="checkbox">Lorem ipsum dolor sit amet</label>
+					</div>
+					<div class="inline-field">
+						<input type="radio" name="radio" id="radio">
+						<label for="radio">Lorem ipsum dolor sit amet</label>
+					</div>
+					<div class="inline-field">
+						<input type="radio" name="radio" id="radio2">
+						<label for="radio2">Lorem ipsum dolor sit amet</label>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="markup">
+			{{markup}}
+		</div>
+	</div>
+	<div class="pattern">
+		<h2>Buttons</h2>
+		<div class="output">
+			<input type="submit" value="Submit" class="button-colored">
+			<input type="reset" value="Clear">
+			<input type="submit" value="Disabled" disabled>
+		</div>
+		<div class="markup">
+			{{markup}}
+		</div>
+	</div>
+
+			<h3>Figure</h3>
+			<figure>
+				<img data-src="holder.js/350x175/auto/textmode:exact/#aaaaaa:#ffffff" alt="Figure Image">
+				<figcaption><b>Fig. 3.2 |</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit by <a href="#">eiusmod tempor</a></figcaption>
+			</figure>
+		</div>
+		<div class="index-right">
+			<h3>Blockquote</h3>
+			<blockquote>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+				<cite>John Doe</cite>
+			</blockquote>
+			<h3>Lists</h3>
+			<h5 class="subheader">Unordered List</h5>
+			<ul>
+				<li>Lorem ipsum dolor
+					<ul>
+						<li>Lorem ipsum dolor
+							<ul>
+								<li>Lorem ipsum dolor</li>
+								<li>Lorem ipsum dolor</li>
+							</ul>
+						</li>
+						<li>Lorem ipsum dolor
+							<ol>
+								<li>Lorem ipsum dolor</li>
+								<li>Lorem ipsum dolor</li>
+							</ol>
+						</li>
+					</ul>
+				</li>
+				<li>Lorem ipsum dolor</li>
+				<li>Lorem ipsum dolor</li>
+			</ul>
+			<hr>
+			<h5 class="subheader">Ordered List</h5>
+			<ol>
+				<li>Lorem ipsum dolor
+					<ol>
+						<li>Lorem ipsum dolor
+							<ul>
+								<li>Lorem ipsum dolor</li>
+							</ul>
+						</li>
+						<li>Lorem ipsum dolor
+							<ol>
+								<li>Lorem ipsum dolor</li>
+								<li>Lorem ipsum dolor</li>
+							</ol>
+						</li>
+					</ol>
+				</li>
+				<li>Lorem ipsum dolor</li>
+				<li>Lorem ipsum dolor</li>
+			</ol>
+			<hr>
+			<h5 class="subheader">Description List</h5>
+			<dl>
+				<dt>Lorem ipsum dolor</dt>
+				<dd>Lorem ipsum dolor</dd>
+				<dt>Lorem ipsum dolor</dt>
+				<dd>Lorem ipsum dolor</dd>
+			</dl>
+			<hr>
+			<h3>Address</h3>
+			<address>
+				<strong>Lorem ipsum dolor</strong><br>
+				123 Main Street<br>
+				City, ST 12345
+			</address>
+
 	{{\pattern}}
 	<div class="pattern">
 		<h2>{{title}}</h2>
@@ -44,5 +228,6 @@ body {
 	</div>
 	{{/pattern}}
 </main>
+<script src="/assets/js/script.min.js"></script>
 </body>
 </html>

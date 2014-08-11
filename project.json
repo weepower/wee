@@ -14,7 +14,8 @@
 				"../wee/style/wee.legacy.less",
 				"custom/ie8.less"
 			]
-		}
+		},
+		"sourceMaps": false
 	},
 	"script": {
 		"core": {
@@ -27,10 +28,6 @@
 				"events": true,
 				"routes": true,
 				"screen": true
-			},
-			"testing": {
-				"placeholders": true,
-				"responsive": true
 			}
 		},
 		"build": [
@@ -49,7 +46,8 @@
 				"polyfill/wee.slice.js",
 				"polyfill/wee.placeholder.js"
 			]
-		}
+		},
+		"sourceMaps": true
 	},
 	"guide": {
 		"enable": true,
@@ -60,10 +58,12 @@
 		}
 	},
 	"testing": {
-		"host": "http://wee.dev",
+		"proxy": "wee.dev",
+		"server": {
+			"port": 9000
+		},
 		"reload": {
 			"enable": true,
-			"port": 35729,
 			"watch": {
 				"root": true,
 				"paths": [
@@ -73,13 +73,6 @@
 					"html"
 				]
 			}
-		},
-		"server": {
-			"port": 9000
-		},
-		"sourceMaps": {
-			"css": false,
-			"js": true
 		}
 	}
 }
