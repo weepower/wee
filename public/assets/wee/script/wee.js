@@ -418,7 +418,7 @@ var Wee = (function(w, d) {
 			this.$each(sel, function(el) {
 				el.className += ' ' + val.split(' ').filter(function(val) {
 					return ! Wee.$hasClass(el, val);
-				}).join(' ');
+				}).join(' ').trim();
 			});
 		},
 		// Removes specified class from specified element
@@ -426,7 +426,7 @@ var Wee = (function(w, d) {
 		$removeClass: function(sel, val) {
 			this.$each(sel, function(el) {
 				val.split(' ').forEach(function(val) {
-					el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+					el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ').trim();
 				});
 			});
 		},

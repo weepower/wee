@@ -36,7 +36,7 @@ Wee.fn.extend({
 		this.$each(sel, function(el) {
 			var children = Wee._slice.call(el.children);
 
-			arr = arr.concat(filter ? this.$filter(children, filter) : children);
+			arr = arr.concat(filter ? Wee.$filter(children, filter) : children);
 		});
 
 		return this.$unique(arr);
@@ -69,7 +69,7 @@ Wee.fn.extend({
 				}
 			}
 
-			arr = arr.concat(filter ? this.$filter(siblings, filter) : siblings);
+			arr = arr.concat(filter ? Wee.$filter(siblings, filter) : siblings);
 		});
 
 		return this.$unique(arr);
