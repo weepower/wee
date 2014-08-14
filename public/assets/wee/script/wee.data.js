@@ -62,10 +62,14 @@ Wee.fn.make('data', {
 		} else {
 			if (conf.cache === false) {
 				var dt = new Date().getTime();
-				conf.data[dt] = dt;
+				conf.data.dt = dt;
 			}
 
-			x.open('GET', (conf.url + '?' + Wee.$serialize(conf.data)), true);
+			if (Object.keys(conf.data).length > 0) {
+				conf.url += '?' + Wee.$serialize(conf.data);
+			}
+
+			x.open('GET', conf.url, true);
 			x.send(null);
 		}
 	},

@@ -416,9 +416,9 @@ var Wee = (function(w, d) {
 		// Returns undefined
 		$addClass: function(sel, val) {
 			this.$each(sel, function(el) {
-				el.className += ' ' + val.split(' ').filter(function(val) {
+				el.className += (' ' + val.split(' ').filter(function(val) {
 					return ! Wee.$hasClass(el, val);
-				}).join(' ').trim();
+				}).join(' ')).trim();
 			});
 		},
 		// Removes specified class from specified element
