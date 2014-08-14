@@ -62,6 +62,7 @@ module.exports = function(grunt) {
 		browserSync: {
 			options: {
 				notify: false,
+				open: 'external',
 				watchTask: true
 			}
 		},
@@ -79,11 +80,6 @@ module.exports = function(grunt) {
 			img: {
 				options: {
 					message: 'Image minification complete'
-				}
-			},
-			config: {
-				options: {
-					message: 'Config update complete'
 				}
 			}
 		},
@@ -117,16 +113,17 @@ module.exports = function(grunt) {
 					'less'
 				]
 			},
-			configFiles: {
+			project: {
 				options: {
 					reload: true
 				},
 				files: [
+					'<%= config.modulePath %>/*module.json',
+					'<%= config.modulePath %>/*',
 					'project.json'
 				],
 				tasks: [
-					'dev',
-					'notify:config'
+					'default'
 				]
 			}
 		}
@@ -139,9 +136,15 @@ module.exports = function(grunt) {
 		var configFile = './' + (grunt.option('config') || 'project.json');
 
 		// Watch config update
-		grunt.config.set('watch.configFiles.files', [
-			configFile
-		]);
+		grunt.config.merge({
+			watch: {
+				project: {
+					files: [
+						configFile
+					]
+				}
+			}
+		});
 
 		config = require(configFile);
 
@@ -356,6 +359,8 @@ module.exports = function(grunt) {
 			moduleRoot = config.assetPath + '/modules/',
 			moduleTempRoot = config.assetPath + '/wee/temp/'
 
+		config.modulePath = moduleRoot;
+
 		// Remove temporary module files
 		fs.readdir(moduleTempRoot, function(err, files) {
 			files.forEach(function(file) {
@@ -410,7 +415,7 @@ module.exports = function(grunt) {
 								path + '/screen.css',
 							moduleStyle = [
 								path + '/module/style/screen.less',
-								path + '/css/build/*.less'
+								path + '/css/build/*'
 							],
 							moduleScript = [
 								path + '/module/script/*.js',
