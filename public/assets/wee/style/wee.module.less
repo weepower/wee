@@ -11,8 +11,57 @@
 
 // Responsive
 
-.wee-responsive () when (@responsive = true) {
-	@import 'wee.module.responsive.less';
+.wee-responsive () when (@responsive = true) and (@responsiveEnabled = true) and not (@legacyMode = true) {
+
+	// Mobile Landscape
+
+	.mobile-landscape-query () when not (@mobileLandscapeWidth = false) {
+		@media (min-width: (@mobileLandscapeWidth - @responsiveOffset)) {
+			.mobile-landscape();
+		}
+	}
+
+	.mobile-landscape-query();
+
+	// Tablet Portrait
+
+	.tablet-portrait-query () when not (@tabletPortraitWidth = false) {
+		@media (min-width: (@tabletPortraitWidth - @responsiveOffset)) {
+			.tablet-portrait();
+		}
+	}
+
+	.tablet-portrait-query();
+
+	// Small Desktop
+
+	.desktop-small-query () when not (@desktopSmallWidth = false) {
+		@media (min-width: (@desktopSmallWidth - @responsiveOffset)) {
+			.desktop-small();
+		}
+	}
+
+	.desktop-small-query();
+
+	// Medium Desktop
+
+	.desktop-medium-query () when not (@desktopMediumWidth = false) {
+		@media (min-width: (@desktopMediumWidth - @responsiveOffset)) {
+			.desktop-medium();
+		}
+	}
+
+	.desktop-medium-query();
+
+	// Large Desktop
+
+	.desktop-large-query () when not (@desktopLargeWidth = false) {
+		@media (min-width: (@desktopLargeWidth - @responsiveOffset)) {
+			.desktop-large();
+		}
+	}
+
+	.desktop-large-query();
 }
 
 .wee-responsive();
