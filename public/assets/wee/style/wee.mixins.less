@@ -1630,7 +1630,7 @@
 	}
 	.check();
 }
-.right (@value) when (isnumber(@value)) {
+.right (@value) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		right: @value;
 	}
@@ -1666,7 +1666,7 @@
 	}
 	.check();
 }
-.left (@value) when (isnumber(@value)) {
+.left (@value) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		left: @value;
 	}

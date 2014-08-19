@@ -186,7 +186,8 @@ var Wee = (function(w, d) {
 		// Arguments defaults to an empty array and the scope defaults to null
 		// Returns mixed
 		$exec: function(fn, opt) {
-			var conf = this.$extend({
+			var opt = opt || {},
+				conf = this.$extend({
 					args: []
 				}, opt),
 				fns = this.$toArray(fn),
@@ -202,7 +203,7 @@ var Wee = (function(w, d) {
 					if (segs.length === 2) {
 						fn = Wee[segs[0]][segs[1]];
 
-						if (! conf.scope) {
+						if (! opt.scope) {
 							conf.scope = Wee[segs[0]];
 						}
 					} else {
