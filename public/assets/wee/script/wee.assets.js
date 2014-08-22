@@ -36,7 +36,7 @@ Wee.fn.make('assets', {
 				file += (file.indexOf('?') == -1 ? '?' : '&') + now;
 			}
 
-			this.$private('request', file, conf.group);
+			this.$private('request', file, conf);
 		}
 	},
 	// When specified references are ready execute callback
@@ -61,17 +61,21 @@ Wee.fn.make('assets', {
 	}
 }, {
 	// Request specific file
-	request: function(path, group) {
+	request: function(path, conf) {
 		var scope = this,
 			head = Wee._doc.getElementsByTagName('head')[0],
-			ext = path.split('.').pop().split(/\#|\?/)[0];
+			ext = path.split('.').pop().split(/\#|\?/)[0],
+			group = conf.group;
 
 		// Load file based on extension
 		if (ext == 'js') {
 			var el = Wee._doc.createElement('script');
 
 			el.src = path;
-			el.async = true;
+
+			if (conf.async !== false) {
+				el.async = true;
+			}
 
 			el.onload = el.onreadystatechange = function() {
 				var rs = this.readyState;
