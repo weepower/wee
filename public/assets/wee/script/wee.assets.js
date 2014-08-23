@@ -73,8 +73,8 @@ Wee.fn.make('assets', {
 
 			el.src = path;
 
-			if (conf.async !== false) {
-				el.async = true;
+			if (conf.async === false) {
+				el.async = false;
 			}
 
 			el.onload = el.onreadystatechange = function() {

@@ -617,9 +617,6 @@ module.exports = function(grunt) {
 				reloadPaths.push(config.paths.root + '/**/*.' + reloadExtensions);
 			}
 
-			// Watch static file updates
-			grunt.config.set('watch.html.files', reloadPaths);
-
 			// Bind BrowserSync watchlist
 			reloadPaths.push(config.assetPath + '/**/*.{gif,jpg,png,css,min.js,svg}');
 
