@@ -110,7 +110,8 @@ module.exports = function(grunt) {
 					'<%= config.assetPath %>/**/*.less'
 				],
 				tasks: [
-					'less'
+					'less',
+					'notify:style'
 				]
 			},
 			project: {
