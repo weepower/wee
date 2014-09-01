@@ -98,14 +98,14 @@
 
 .load-font (@name; @file: @name; @weight: normal; @style: normal) {
 	@font-face {
-		.font-family('@{name}');
+		font-family: @name;
 		src: url('@{fontPath}@{file}.eot');
-		src: url('@{fontPath}@{file}.eot?iefix') format('embedded-opentype'),
+		src: url('@{fontPath}@{file}.eot?#iefix') format('embedded-opentype'),
 			 url('@{fontPath}@{file}.woff') format('woff'),
 			 url('@{fontPath}@{file}.ttf') format('truetype'),
 			 url('@{fontPath}@{file}.svg#@{name}') format('svg');
-		.font-style(@style);
-		.font-weight(@weight);
+		font-style: @style;
+		font-weight: @weight;
 	}
 }
 
@@ -1920,20 +1920,20 @@
 	.content();
 	.square(0);
 }
-.caret (up; @color: @darkGray; @size: 5px) {
-	.border(horizontal; transparent; @size);
+.caret (up; @color: @darkGray; @size: 5px; @horizontalSize: @size) {
+	.border(horizontal; transparent; @horizontalSize);
 	.border(bottom; @color; @size);
 }
-.caret (down; @color: @darkGray; @size: 5px) {
-	.border(horizontal; transparent; @size);
+.caret (down; @color: @darkGray; @size: 5px; @horizontalSize: @size) {
+	.border(horizontal; transparent; @horizontalSize);
 	.border(top; @color; @size);
 }
-.caret (right; @color: @darkGray; @size: 5px) {
-	.border(vertical; transparent; @size);
+.caret (right; @color: @darkGray; @size: 5px; @verticalSize: @size) {
+	.border(vertical; transparent; @verticalSize);
 	.border(left; @color; @size);
 }
-.caret (left; @color: @darkGray; @size: 5px) {
-	.border(vertical; transparent; @size);
+.caret (left; @color: @darkGray; @size: 5px; @verticalSize: @size) {
+	.border(vertical; transparent; @verticalSize);
 	.border(right; @color; @size);
 }
 

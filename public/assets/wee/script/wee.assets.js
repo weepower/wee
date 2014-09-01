@@ -72,10 +72,7 @@ Wee.fn.make('assets', {
 			var el = Wee._doc.createElement('script');
 
 			el.src = path;
-
-			if (conf.async === false) {
-				el.async = false;
-			}
+			el.async = conf.async === false ? false : true;
 
 			el.onload = el.onreadystatechange = function() {
 				var rs = this.readyState;
