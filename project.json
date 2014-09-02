@@ -57,8 +57,12 @@
 			"target": "guide/index.html"
 		}
 	},
+	"dev": {
+		"server": {
+			"proxy": "wee.dev"
+		}
+	},
 	"testing": {
-		"proxy": "wee.dev",
 		"server": {
 			"port": 9000
 		},

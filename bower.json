@@ -4,6 +4,7 @@
 	"homepage": "http://www.weepower.com",
 	"description": "Your blueprint for modern web development.",
 	"main": [
+		"./public/assets/wee/*",
 		"./public/assets/css/*",
 		"./public/assets/js/*"
 	],

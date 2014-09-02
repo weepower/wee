@@ -17,11 +17,11 @@
 @responsivePath: 'custom/breakpoints';
 @import 'wee.responsive.less';
 
-// Print Styling
+// Print
 
 .wee-print() when (@printEnabled = true) {
 	@media print {
-		@import 'wee.print.less';
+		@import (inline) 'wee.print.less';
 		@import '../../css/custom/print.less'; // Customizations
 	}
 }

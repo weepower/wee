@@ -3,16 +3,16 @@
 // DO NOT MODIFY THIS FILE
 
 * {
-	.background(transparent);
-	.black();
-	.shadow(none);
-	.text-shadow(none);
+	background: transparent;
+	box-shadow: none;
+	color: #000;
+	text-shadow: none;
 }
 html {
-	.font-size(80%);
+	font-size: 80%;
 }
 body {
-	.padding(2cm; .5cm);
+	padding: 2cm .5cm;
 }
 header[role='banner'],
 footer[role='contentinfo'],
@@ -21,17 +21,13 @@ embed,
 iframe,
 nav,
 object {
-	.hide();
+	display: none;
 }
-main {
-	a {
-		&:link {
-			.color(#0066cc);
-			&:after {
-				content: " [" attr(href) "] ";
-			}
-		}
-	}
+main a:link {
+	color: #0066cc;
+}
+main a:link:after {
+	content: " [" attr(href) "] ";
 }
 blockquote,
 img,
@@ -45,7 +41,7 @@ h3 {
 	page-break-after: avoid;
 }
 img {
-	.max-width(100%);
+	max-width: 100%;
 }
 p {
 	orphans: 3;

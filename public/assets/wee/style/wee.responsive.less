@@ -23,16 +23,16 @@
 // Mobile Navigation Indicator
 
 .mobile-nav (@height: .67em) {
-	.cursor();
+	cursor: pointer;
 	&:before {
-		.absolute();
+		height: @height;
+		left: @mobileNavLeft;
+		position: absolute;
+		top: @mobileNavTop;
+		width: @mobileNavWidth;
 		.border(bottom; @mobileNavBorderColor; .15em; solid);
 		.border(top; @mobileNavBorderColor; .42em; double);
 		.content();
-		.height(@height);
-		.left(@mobileNavLeft);
-		.top(@mobileNavTop);
-		.width(@mobileNavWidth);
 	}
 }
 
@@ -43,7 +43,7 @@
 	// IE Metro Compatability
 
 	@-ms-viewport {
-		.width(device-width);
+		width: device-width;
 	}
 
 	// Mobile Landscape

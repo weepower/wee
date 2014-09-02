@@ -22,7 +22,7 @@
 	}
 	.check () when (isnumber(@value))
 			and (@value =< 0) {
-		.shadow(none);
+		box-shadow: 0;
 	}
 	.check () when not (ispercentage(@value))
 			and (@value < 1)
@@ -50,7 +50,7 @@
 	}
 	.check () when (isnumber(@value))
 			and (@value =< 0) {
-		.shadow(none);
+		box-shadow: 0;
 	}
 	.check () when not (ispercentage(@value))
 			and (@value < 1)
@@ -131,7 +131,7 @@
 	}
 	.check () when (isnumber(@value))
 			and (@value =< 0) {
-		.text-shadow(none);
+		text-shadow: none;
 	}
 	.check () when not (ispercentage(@value))
 			and (@value < 1)
@@ -161,7 +161,7 @@
 	}
 	.check () when (isnumber(@value))
 			and (@value =< 0) {
-		.text-shadow(none);
+		text-shadow: none;
 	}
 	.check () when not (ispercentage(@value))
 			and (@value < 1)
@@ -210,10 +210,10 @@
 // Font Selection
 
 .font (@family) {
-	.font-family(@family);
+	font-family: @family;
 }
 .font (@family; @size) {
-	.font(@family);
+	font-family: @family;
 	.font-size(@size);
 }
 .font (@family; @size; @weight) {
@@ -247,14 +247,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			font-size: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			font-size: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -284,14 +284,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			line-height: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			line-height: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -303,13 +303,13 @@
 	-webkit-font-smoothing: antialiased;
 }
 .capitalize () {
-	.text-transform(capitalize);
+	text-transform: capitalize;
 }
 .lowercase () {
-	.text-transform(lowercase);
+	text-transform: lowercase;
 }
 .uppercase () {
-	.text-transform(uppercase);
+	text-transform: uppercase;
 }
 .text-transform (@value: none) {
 	text-transform: @value;
@@ -318,18 +318,18 @@
 	white-space: nowrap;
 }
 .ellipsis () {
+	overflow: hidden;
 	text-overflow: ellipsis;
-	.crop();
-	.no-wrap();
+	white-space: nowrap;
 }
 .underline () {
-	.text-decoration();
+	text-decoration: underline;
 }
 .underline (@style; @color: inherit) {
 	.text-decoration(underline; @style; @color);
 }
 .line-through () {
-	.text-decoration(line-through);
+	text-decoration: line-through;
 }
 .text-decoration (@value: underline) {
 	text-decoration: @value;
@@ -351,14 +351,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			letter-spacing: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			letter-spacing: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -369,14 +369,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			word-spacing: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			word-spacing: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -385,8 +385,8 @@
 }
 .user-select (@value: none) {
 	-moz-user-select: @value;
-	-webkit-user-select: @value;
 	-ms-user-select: @value;
+	-webkit-user-select: @value;
 	user-select: @value;
 }
 
@@ -394,35 +394,35 @@
 
 .content (@value: ' '; @font: false) {
 	content: ~"'@{value}'";
-	.toggle () when not (@font = false) {
-		.font-family(@font);
+	.check () when not (@font = false) {
+		font-family: @font;
 	}
-	.toggle();
+	.check();
 }
 .prefix (@value: '-'; @margin: .5em; @font: false; @color: false) {
 	&:before {
 		.content(@value; @font);
 		.margin(right; @margin);
-		.toggle () when not (@font = false) {
-			.font-family(@font);
+		.check () when not (@font = false) {
+			font-family: @font;
 		}
-		.toggle () when not (@color = false) {
-			.color(@color);
+		.check () when not (@color = false) {
+			color: @color;
 		}
-		.toggle();
+		.check();
 	}
 }
 .suffix (@value: '-'; @margin: .5em; @font: false; @color: false) {
 	&:after {
 		.content(@value; @font);
 		.margin(left; @margin);
-		.toggle () when not (@font = false) {
-			.font-family(@font);
+		.check () when not (@font = false) {
+			font-family: @font;
 		}
-		.toggle () when not (@color = false) {
-			.color(@color);
+		.check () when not (@color = false) {
+			color: @color;
 		}
-		.toggle();
+		.check();
 	}
 }
 .bookends (@value: '-'; @margin: .5em; @font: false; @color: false) {
@@ -439,14 +439,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			margin: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			margin: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -457,14 +457,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			margin-top: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			margin-top: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -475,14 +475,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			margin-right: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			margin-right: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -493,14 +493,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			margin-bottom: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			margin-bottom: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -511,14 +511,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			margin-left: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			margin-left: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -557,14 +557,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			padding: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			padding: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -575,14 +575,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			padding-top: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			padding-top: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -593,14 +593,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			padding-right: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			padding-right: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -611,14 +611,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			padding-bottom: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			padding-bottom: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -629,14 +629,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			padding-left: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			padding-left: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -687,14 +687,14 @@
 			and not (@color = 0)
 			and not (iskeyword(@color)) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border: unit(@temp, rem) @style @color;
 		}
-		.toggle() when not (isunit(@temp, rem))
+		.check() when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border: @temp @style @color;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -739,14 +739,14 @@
 			and not (@color = 0)
 			and not (iskeyword(@color)) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-top: unit(@temp, rem) @style @color;
 		}
-		.toggle() when not (isunit(@temp, rem))
+		.check() when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-top: @temp @style @color;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -791,14 +791,14 @@
 			and not (@color = 0)
 			and not (iskeyword(@color)) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-right: unit(@temp, rem) @style @color;
 		}
-		.toggle() when not (isunit(@temp, rem))
+		.check() when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-right: @temp @style @color;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -843,14 +843,14 @@
 			and not (@color = 0)
 			and not (iskeyword(@color)) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-bottom: unit(@temp, rem) @style @color;
 		}
-		.toggle() when not (isunit(@temp, rem))
+		.check() when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-bottom: @temp @style @color;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -895,14 +895,14 @@
 			and not (@color = 0)
 			and not (iskeyword(@color)) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-left: unit(@temp, rem) @style @color;
 		}
-		.toggle() when not (isunit(@temp, rem))
+		.check() when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-left: @temp @style @color;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1091,14 +1091,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-radius: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-radius: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1110,16 +1110,16 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-top-left-radius: unit(@temp, rem);
 			border-top-right-radius: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-top-left-radius: @temp;
 			border-top-right-radius: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1130,14 +1130,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-top-right-radius: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-top-right-radius: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1148,14 +1148,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-top-left-radius: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-top-left-radius: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1167,16 +1167,16 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-top-right-radius: unit(@temp, rem);
 			border-bottom-right-radius: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-top-right-radius: @temp;
 			border-bottom-right-radius: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1188,16 +1188,16 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-bottom-right-radius: unit(@temp, rem);
 			border-bottom-left-radius: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-bottom-right-radius: @temp;
 			border-bottom-left-radius: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1208,14 +1208,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-bottom-right-radius: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-bottom-right-radius: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1226,14 +1226,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-bottom-left-radius: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-bottom-left-radius: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1245,16 +1245,16 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			border-top-right-radius: unit(@temp, rem);
 			border-bottom-left-radius: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			border-top-left-radius: @temp;
 			border-bottom-left-radius: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1268,14 +1268,14 @@
 // Transitions
 
 .transition (@value) when (isstring(@value)) {
-	-webkit-backface-visibility: hidden;
 	-moz-transition: ~'@{value}';
+	-webkit-backface-visibility: hidden;
 	-webkit-transition: ~'@{value}';
 	transition: ~'@{value}';
 }
 .transition (@property: all; @duration: @defaultDuration; @ease: ease-in-out; @delay: 0s) {
-	-webkit-backface-visibility: hidden;
 	-moz-transition: @arguments;
+	-webkit-backface-visibility: hidden;
 	-webkit-transition: @arguments;
 	transition: @arguments;
 }
@@ -1309,30 +1309,30 @@
 	background: @color url('@{imagePath}@{filename}') @x @y @repeat;
 }
 .background (light; @opacity; @fallback: @white) {
-	.background-color(@fallback);
+	background-color: @fallback;
 }
 .background (light; @opacity; ...) when (@opacity > 1)
 		and not (ispercentage(@opacity)) {
-	.background-color(rgba(255, 255, 255, (@opacity / 100)));
+	background-color: rgba(255, 255, 255, (@opacity / 100));
 }
 .background (light; @opacity; ...) when (@opacity < 1) {
-	.background-color(rgba(255, 255, 255, @opacity));
+	background-color: rgba(255, 255, 255, @opacity);
 }
 .background (light; @opacity; ...) when (ispercentage(@opacity)) {
-	.background-color(rgba(255, 255, 255, unit((@opacity / 100))));
+	background-color: rgba(255, 255, 255, unit((@opacity / 100)));
 }
 .background (dark; @opacity; @fallback: @black) {
-	.background-color(@fallback);
+	background-color: @fallback;
 }
 .background (dark; @opacity; ...) when (@opacity > 1)
 		and not (ispercentage(@opacity)) {
-	.background-color(rgba(0, 0, 0, (@opacity / 100)));
+	background-color: rgba(0, 0, 0, (@opacity / 100));
 }
 .background (dark; @opacity; ...) when (@opacity < 1) {
-	.background-color(rgba(0, 0, 0, @opacity));
+	background-color: rgba(0, 0, 0, @opacity);
 }
 .background (dark; @opacity; ...) when (ispercentage(@opacity)) {
-	.background-color(rgba(0, 0, 0, unit((@opacity / 100))));
+	background-color: rgba(0, 0, 0, unit((@opacity / 100)));
 }
 .background-color (@color: @bodyBackground) {
 	background-color: @color;
@@ -1389,8 +1389,8 @@
 	.background-size(@width; @height);
 }
 .background-gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2)) {
-	.background-color(@color);
-	.background-color(@start);
+	background-color: @color;
+	background-color: @start;
 	.background('-moz-linear-gradient(top, @{start} 0%, @{end} 100%)');
 	.background('-webkit-gradient(linear, left top, left bottom, from(@{start}), to(@{end}))');
 	.background('-webkit-linear-gradient(top, @{start}, @{end})');
@@ -1399,7 +1399,7 @@
 .background-gradient (@color: @gray; @spread) when (ispercentage(@spread)) {
 	@lighter: lighten(@color, @spread);
 	@darker: darken(@color, @spread);
-	.background(@color);
+	background-color: @color;
 	.background('-moz-linear-gradient(top, @{lighter} 0%, @{darker} 100%)');
 	.background('-webkit-gradient(linear, left top, left bottom, color-stop(0%, @{lighter}), color-stop(100%, @{darker}))');
 	.background('-webkit-linear-gradient(top, @{lighter} 0%, @{darker} 100%)');
@@ -1475,34 +1475,34 @@
 	color: @color;
 }
 .baseColor () {
-	.color(@baseColor);
+	color: @baseColor;
 }
 .white () {
-	.color(@white);
+	color: @white;
 }
 .lightestGray () {
-	.color(@lightestGray);
+	color: @lightestGray;
 }
 .lighterGray () {
-	.color(@lighterGray);
+	color: @lighterGray;
 }
 .lightGray () {
-	.color(@lightGray);
+	color: @lightGray;
 }
 .gray () {
-	.color(@gray);
+	color: @gray;
 }
 .darkGray () {
-	.color(@darkGray);
+	color: @darkGray;
 }
 .darkerGray () {
-	.color(@darkerGray);
+	color: @darkerGray;
 }
 .darkestGray () {
-	.color(@darkestGray);
+	color: @darkestGray;
 }
 .black () {
-	.color(@black);
+	color: @black;
 }
 
 // Transforms
@@ -1591,16 +1591,19 @@
 // Blocks
 
 .block-row () {
-	.block(auto);
-	.margin(left; 0);
+	display: block;
+	margin-left: 0;
+	width: auto;
 }
 .block-column () {
-	.block(auto);
-	.margin(left; 0);
+	display: block;
+	margin-left: 0;
+	width: auto;
 }
 .centered-block () {
-	.block();
-	.margin(horizontal; auto);
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 .centered-block (@maxWidth; ...) {
 	.centered-block();
@@ -1619,14 +1622,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			top: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			top: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1637,14 +1640,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			right: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			right: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1655,14 +1658,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			bottom: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			bottom: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1673,14 +1676,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			left: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			left: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1700,7 +1703,7 @@
 	.left(@left);
 }
 .absolute (...) {
-	.position(absolute);
+	position: absolute;
 }
 .absolute (@top; ...) when not (@top = false) {
 	.top(@top);
@@ -1715,7 +1718,7 @@
 	.left(@left);
 }
 .fixed (...) {
-	.position(fixed);
+	position: fixed;
 }
 .fixed (@top; ...) when not (@top = false) {
 	.top(@top);
@@ -1730,10 +1733,10 @@
 	.left(@left);
 }
 .relative () {
-	.position(relative);
+	position: relative;
 }
 .static () {
-	.position(static);
+	position: static;
 }
 .z-index (@index: 1) {
 	z-index: @index;
@@ -1748,14 +1751,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			width: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			width: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1770,14 +1773,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			height: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			height: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1801,13 +1804,13 @@
 	.size(@size; @size);
 }
 .ratio (@ratio: (16 / 9)) {
-	.block();
-	.height(0);
+	display: block;
+	height: 0;
 	.padding(top; ((1 / @ratio) * 100%));
 }
 .ratio (embed; @ratio: (16 / 9)) {
-	.crop();
-	.relative();
+	overflow: hidden;
+	position: relative;
 	&:before {
 		.content();
 		.ratio(@ratio);
@@ -1824,14 +1827,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			min-width: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			min-width: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1842,14 +1845,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			max-width: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			max-width: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1860,14 +1863,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			min-height: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			min-height: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1878,14 +1881,14 @@
 	.check () when (isnumber(@value))
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
-		.toggle () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
 			max-height: unit(@temp, rem);
 		}
-		.toggle () when not (isunit(@temp, rem))
+		.check () when not (isunit(@temp, rem))
 				and not (isunit(@value, rem)) {
 			max-height: @temp;
 		}
-		.toggle();
+		.check();
 	}
 	.check();
 }
@@ -1917,8 +1920,9 @@
 // Shapes
 
 .caret (...) {
+	height: 0;
+	width: 0;
 	.content();
-	.square(0);
 }
 .caret (up; @color: @darkGray; @size: 5px; @horizontalSize: @size) {
 	.border(horizontal; transparent; @horizontalSize);
@@ -1952,59 +1956,59 @@
 	.max-width((100% + @margin));
 }
 .row-reset () {
-	.margin(left; 0);
-	.max-width(none);
+	margin-left: 0;
+	max-width: none;
 }
 
 // Columns
 
 .column (@width: false) when (ispercentage(@width)), (ispixel(@width)), (isunit(@width, 'rem')) and not (@width = false) {
-	.left();
+	float: left;
 	.width(@width);
 }
 .column (@share; @columns: @gridColumns) when not (iskeyword(@share))
 		and not (ispercentage(@share))
 		and not (ispixel(@share))
 		and not (isunit(@share, 'rem')) {
-	.left();
-	.width(((100% / @columns) * @share));
+	float: left;
+	width: ((100% / @columns) * @share);
 }
 .column (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) {
-	.left();
+	float: left;
+	width: (((100% / @columns) * @share) - (@margin));
 	.margin(left; @margin);
-	.width((((100% / @columns) * @share) - (@margin)));
 }
 .column-modify (@share; @columns: @gridColumns) {
-	.width(((100% / @columns) * @share));
+	width: ((100% / @columns) * @share);
 }
 .column-modify (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) {
-	.width((((100% / @columns) * @share) - (@margin)));
+	width: (((100% / @columns) * @share) - (@margin));
 	.margin(left; @margin);
 }
 .column-modify (@width) when (ispercentage(@width)), (ispixel(@width)), (isunit(@width, 'rem')) {
 	.width(@width);
 }
 .column-reset (@resetMargin: false) {
-	.float(none);
-	.width(auto);
+	float: none;
+	width: auto;
 	.check () when (@resetMargin = true) {
-		.margin(left; 0);
+		margin-left: 0;
 	}
 	.check();
 }
 .column-pull (@share; @columns: @gridColumns) {
-	.relative();
-	.right(((100% / @columns) * @share));
+	position: relative;
+	right: ((100% / @columns) * @share);
 }
 .column-push (@share; @columns: @gridColumns) {
-	.left(((100% / @columns) * @share));
-	.relative();
+	left: ((100% / @columns) * @share);
+	position: relative;
 }
 .column-offset (@share; @columns: @gridColumns) {
-	.margin(left; ((100% / @columns) * @share));
+	margin-left: ((100% / @columns) * @share);
 }
 .column-offset (spaced; @share; @columns: @gridColumns; @margin: (@gridMargin / 2)) {
-	.margin(left; (((100% / @columns) * @share) + (@margin * 2)));
+	margin-left: (((100% / @columns) * @share) + (@margin * 2));
 }
 
 // Alignment
@@ -2023,24 +2027,24 @@
 	float: @value;
 }
 .float (left; @value) {
-	.float(left);
-	.width(@value);
+	float: left;
+	width: @value;
 }
 .float (right; @value) {
-	.float(right);
-	.width(@value);
+	float: right;
+	width: @value;
 }
 .left () {
-	.float(left);
+	float: left;
 }
 .right () {
-	.float(right);
+	float: right;
 }
 .clear () {
 	&:after {
 		clear: both;
+		display: table;
 		.content();
-		.display(table);
 	}
 }
 .clear (none) {
@@ -2076,68 +2080,69 @@
 	display: @value;
 }
 .centered () {
-	.centered(horizontal)
+	.centered(horizontal);
 }
 .centered (horizontal) {
-	.display(table);
-	.margin(0; auto);
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
 }
 .centered (vertical) {
-	.absolute();
+	position: absolute;
 	&:before {
-		.align(middle);
+		display: inline-block;
+		height: 100%;
+		vertical-align: middle;
 		.content();
-		.fill(vertical);
-		.inline-block();
 	}
 }
 .centered (both) {
 	.centered();
 }
 .inline () {
-	.display(inline);
+	display: inline;
 }
 .inline-block () {
-	.display(inline-block);
+	display: inline-block;
 }
 .inline-block (@width; ...) {
-	.inline-block();
-	.width(@width);
+	display: inline-block;
+	width: @width;
 }
 .inline-block (@width; @height) {
-	.height(@height);
+	height: @height;
 }
 
 // Lists
 
 .inline-list () {
 	li {
-		.inline();
+		display: inline;
 	}
 }
 .inline-list (@spacing) when (isnumber(@spacing)) {
 	li {
-		.inline();
+		display: inline;
 		.margin(left; @spacing);
 		&:first-child {
-			.margin(left; 0);
+			margin-left: 0;
 		}
 	}
 }
 .inline-list (@content; @margin: 0) when (isstring(@content)) {
 	li {
-		.inline();
+		display: inline;
 		.prefix(@content; @margin);
 		&:first-child {
 			&:before {
-				.hide();
+				display: none;
 			}
 		}
 	}
 }
 .floated-list () {
 	li {
-		.left();
+		float: left;
 	}
 }
 .list-style (@value) {
@@ -2147,10 +2152,10 @@
 	list-style-position: @value;
 }
 .list-position (@value: outside) {
-	.list-style-position(@value);
+	list-style-position: @value;
 }
 .unstyled () {
-	.list-style(none);
+	list-style: none;
 }
 
 // Display
@@ -2162,24 +2167,24 @@
 	visibility: visible;
 }
 .block (@width; ...) {
-	.block();
-	.width(@width);
+	display: block;
+	width: @width;
 }
 .block (@width; @height) {
-	.height(@height);
+	height: @height;
 }
-.spaced (@margin: @blockMarginBottom) {
+.spaced (@margin: @blockMarginBottom) when not (@margin = false) {
 	.margin(bottom; @margin);
 }
 .spaced-block (@margin: @blockMarginBottom; ...) {
-	.block();
+	display: block;
 	.spaced(@margin);
 }
 .spaced-block (@margin; @width; ...) {
-	.width(@width);
+	width: @width;
 }
 .spaced-block (@margin; @width; @height) {
-	.height(@height);
+	height: @height;
 }
 .box-sizing (@val: border-box) {
 	-moz-box-sizing: @val;
@@ -2197,16 +2202,16 @@
 
 .input-placeholder (@color: @inputPlaceholderColor) {
 	:-moz-placeholder {
-		.color(@color);
+		color: @color;
 	}
 	::-moz-placeholder {
-		.color(@color);
+		color: @color;
 	}
 	:-ms-input-placeholder {
-		.color(@color);
+		color: @color;
 	}
 	::-webkit-input-placeholder {
-		.color(@color);
+		color: @color;
 	}
 }
 
@@ -2216,21 +2221,21 @@
 	resize: @value;
 }
 .resizable (@value: both) {
-	.crop();
-	.resize(@value);
+	overflow: hidden;
+	resize: @value;
 }
 .hide-text () {
-	.crop();
-	.no-wrap();
-	.text-indent(100%);
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
 }
 .hide (text) {
 	.hide-text();
 }
 .selection () {
+	color: @selectionColor;
+	text-shadow: none;
 	.background(@selectionBackground);
-	.color(@selectionColor);
-	.text-shadow(none);
 }
 .cursor (@value: pointer) {
 	cursor: @value;
@@ -2255,10 +2260,10 @@
 	overflow-y: hidden;
 }
 .crop () {
-	.overflow(hidden);
+	overflow: hidden;
 }
 .crop (both) {
-	.crop();
+	overflow: hidden;
 }
 .scroll (horizontal) {
 	overflow-x: scroll;
@@ -2270,24 +2275,24 @@
 	overflow: scroll;
 }
 .scroll (both) {
-	.scroll();
+	overflow: scroll;
 }
 .fill (horizontal) {
-	.width(100%);
+	width: 100%;
 }
 .fill (vertical) {
-	.height(100%);
+	height: 100%;
 }
 .fill (both) {
-	.fill(horizontal);
-	.fill(vertical);
+	height: 100%;
+	width: 100%;
 }
 .fill () {
-	.fill(horizontal);
+	width: 100%;
 }
 .no-clear () {
 	&::-ms-clear {
-		.hide();
+		display: none;
 	}
 	&::-webkit-search-cancel-button {
 		-webkit-appearance: none;
@@ -2302,22 +2307,22 @@
 	.wee-container();
 }
 .img-left {
-	.left();
+	float: left;
 	.margin(.32em; @imageMarginSide; @imageMarginBottom; false);
 }
 .img-right {
-	.right();
+	float: right;
 	.margin(.32em; false; @imageMarginBottom; @imageMarginSide);
 }
 .hide {
-	.display(none);
+	display: none;
 }
 .js-hide {
-	.display(none) !important;
+	display: none !important;
 }
 .show {
-	.display(inherit);
+	display: inherit;
 }
 .block {
-	.display(block);
+	display: block;
 }

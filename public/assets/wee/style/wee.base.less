@@ -6,10 +6,10 @@
 	&,
 	&:before,
 	&:after {
+		margin: 0;
+		outline: 0;
+		padding: 0;
 		.border-box();
-		.margin(0);
-		.outline(0);
-		.padding(0);
 	}
 }
 .wee-container-min-width () when not (@minWidth = 0)
@@ -27,10 +27,10 @@ html {
 	.font-size(@rootFontSize);
 }
 body {
-	.baseColor();
+	color: @baseColor;
+	position: relative;
 	.font(@baseFont; @baseFontSize; @baseFontWeight);
 	.line-height(@baseLineHeight);
-	.relative();
 	.wee-body-background () when not (@bodyBackground = false) {
 		.background();
 	}
@@ -48,37 +48,37 @@ main,
 nav,
 section,
 summary {
-	.block();
+	display: block;
 }
 embed,
 img,
 object {
-	.max-width(100%);
+	max-width: 100%;
 }
 embed,
 object {
-	.height(100%);
+	height: 100%;
 }
 audio,
 canvas,
 video {
-	.inline-block();
+	display: inline-block;
 }
 .wee-abbr () when not (@abbrUnderline = none) {
 	.border(bottom; @baseColor; 1px; @abbrUnderline);
 }
 abbr[title] {
-	.cursor(help);
+	cursor: help;
 	.wee-abbr();
 }
 b,
 strong,
 .bold {
-	.font-weight(@boldFontWeight);
+	font-weight: @boldFontWeight;
 }
 mark {
+	color: @markColor;
 	.background(@markBackground);
-	.color(@markColor);
 }
 canvas {
 	-ms-touch-action: double-tap-zoom;
@@ -87,16 +87,16 @@ iframe {
 	.spaced()
 }
 .wee-figure () {
-	.align(center);
+	text-align: center;
+	position: relative;
 	.padding(@figurePadding);
-	.relative();
 	.spaced();
 	img {
 		.spaced();
 	}
 	figcaption {
-		.color(@figCaptionColor);
-		.font-style(@figCaptionFontStyle);
+		color: @figCaptionColor;
+		font-style: @figCaptionFontStyle;
 		.line-height(@figCaptionLineHeight);
 	}
 }
@@ -112,21 +112,21 @@ figure {
 }
 img {
 	-ms-interpolation-mode: bicubic;
-	.inline-block();
+	display: inline-block;
 }
 sub,
 sup {
-	.align(baseline);
-	.font-size(.6em);
-	.line-height(0);
-	.margin(left; .3em);
-	.relative();
+	font-size: .6em;
+	line-height: 0;
+	margin-left: .3em;
+	position: relative;
+	vertical-align: baseline;
 }
 sub {
-	.bottom(-.25em);
+	bottom: -.25em;
 }
 sup {
-	.top(-1em);
+	top: -1em;
 }
 ::-moz-selection {
 	.selection();
@@ -152,13 +152,13 @@ h6,
 .h5,
 .h6,
 .heading {
-	.color(@headingColor);
-	.font(@headingFont);
-	.font-weight(@headingFontWeight);
+	color: @headingColor;
+	font-family: @headingFont;
+	font-weight: @headingFontWeight;
 	.line-height(@headingLineHeight);
 	.spaced(@headingMarginBottom);
 	small {
-		.font-weight(normal);
+		font-weight: normal;
 	}
 }
 h1,
@@ -186,12 +186,12 @@ h6,
 	.font-size(@h6);
 }
 .subheading {
-	.color(@subHeadingColor);
-	.font-weight(@subHeadingFontWeight);
+	color: @subHeadingColor;
+	font-weight: @subHeadingFontWeight;
 }
 p {
-	.color(@paragraphColor);
-	.font-weight(@paragraphFontWeight);
+	color: @paragraphColor;
+	font-weight: @paragraphFontWeight;
 	.line-height(@paragraphLineHeight);
 	.spaced(@paragraphMarginBottom);
 }
@@ -207,10 +207,10 @@ var,
 }
 blockquote,
 q {
-	.color(@quoteColor);
+	color: @quoteColor;
 	.font(@quoteFont; @quoteFontSize; @quoteFontWeight; @quoteLineHeight; @quoteFontStyle);
 	cite {
-		.color(@citeColor);
+		color: @citeColor;
 		.font(@citeFont; @citeFontSize; @citeFontWeight; @citeLineHeight; @citeFontStyle);
 		.margin(top; @citeMarginTop);
 		&:before {
@@ -218,14 +218,14 @@ q {
 		}
 	}
 	p {
-		.color(@quoteColor);
+		color: @quoteColor;
 	}
 }
 .wee-blockquote () {
 	.padding(@quotePaddingVertical; @quotePaddingHorizontal);
 	.spaced();
 	cite {
-		.block();
+		display: block;
 	}
 }
 .wee-blockquote () when not (@quoteBorderWidth = 0)
@@ -238,8 +238,8 @@ blockquote,
 }
 .wee-code () when (@codeEnabled = true) {
 	.rules () {
+		color: @codeColor;
 		.background(@codeBackground);
-		.color(@codeColor);
 		.font(@codeFont; @codeFontSize);
 		.line-height(@codeLineHeight);
 		.padding(@codePaddingVertical; @codePaddingHorizontal);
@@ -267,13 +267,13 @@ blockquote,
 		.spaced();
 		code {
 			.sub-rules () when not (@codeBorderColor = false) {
-				.border(none);
+				border: none;
 			}
-			.background(none);
-			.block();
-			.color(@codeBlockColor);
+			background: none;
+			color: @codeBlockColor;
+			display: block;
+			padding: 0;
 			.font(@codeBlockFont; @codeBlockFontSize);
-			.padding(0);
 			.sub-rules();
 		}
 	}
@@ -292,39 +292,39 @@ blockquote,
 del,
 s,
 strike {
-	.line-through();
+	text-decoration: line-through;
 }
 a {
-	.color(@linkColor);
-	.outline(0);
-	.text-decoration(@linkDecoration);
+	color: @linkColor;
+	outline: 0;
+	text-decoration: @linkDecoration;
 	&:focus {
-		.outline();
+		outline: thin dotted;
 	}
 	&:hover {
-		.color(@linkColorHover);
-		.toggle () when not (@linkDecorationHover = false) {
-			.text-decoration(@linkDecorationHover);
+		color: @linkColorHover;
+		.check () when not (@linkDecorationHover = false) {
+			text-decoration: @linkDecorationHover;
 		}
-		.toggle();
+		.check();
 	}
 	&:active {
-		.color(@linkColorActive);
+		color: @linkColorActive;
 	}
 	img {
-		.border(0);
+		border: 0;
 	}
 }
 hr,
 .hr {
-	.block();
-	.border(0);
+	border: 0;
+	display: block;
+	height: 1px;
 	.border(top; @ruleColor; @ruleHeight; @ruleStyle);
-	.height(1px);
 	.margin(vertical; @ruleMargin);
 }
 address {
-	.color(@addressColor);
+	color: @addressColor;
 	.font(@addressFont; @addressFontSize; @addressFontWeight; @addressLineHeight; @addressFontStyle);
 	.spaced();
 }
@@ -336,16 +336,16 @@ address {
 dl,
 ol,
 ul {
+	color: @listColor;
 	list-style-position: @listBulletPosition;
-	.color(@listColor);
 	.line-height(@listLineHeight);
 	.spaced(@listMarginBottom);
-	.toggle () when not (@liMarginBottom = false) {
+	.check () when not (@liMarginBottom = false) {
 		li {
 			.spaced(@liMarginBottom);
 		}
 	}
-	.toggle();
+	.check();
 }
 .wee-list-margin () when not (@listMarginLeft = 0)
 		and not (@listMarginLeft = false) {
@@ -356,7 +356,7 @@ ul {
 	.wee-list-margin();
 	ol,
 	ul {
-		.spaced(0);
+		margin-bottom: 0;
 		.margin(left; @nestedListMarginLeft);
 	}
 }
@@ -375,10 +375,10 @@ ol {
 nav {
 	ol,
 	ul {
-		.margin(0);
-		.unstyled();
+		margin: 0;
+		list-style: none;
 		li {
-			.spaced(0);
+			margin-bottom: 0;
 		}
 	}
 }
@@ -386,12 +386,12 @@ dl {
 	.spaced(@dlMarginBottom);
 }
 dt {
-	.color(@dtColor);
+	color: @dtColor;
 	.font(@dtFont; @dtFontSize);
 	.spaced(@dtMarginBottom);
 }
 dd {
-	.color(@ddColor);
+	color: @ddColor;
 	.font(@ddFont; @ddFontSize);
 	.spaced(@ddMarginBottom);
 }
@@ -402,18 +402,18 @@ dd {
 
 .wee-table () when (@tableEnabled = true) {
 	.rules () {
+		-ms-word-wrap: break-word;
 		border-collapse: collapse;
 		border-spacing: 0;
 		empty-cells: show;
 		table-layout: fixed;
+		width: 100%;
 		word-wrap: break-word;
-		-ms-word-wrap: break-word;
-		.fill();
 		.spaced();
 		td,
 		th {
-			.align(left);
-			.align(top);
+			text-align: left;
+			vertical-align: top;
 			.border(top; @tableCellBorderColor);
 			.line-height(@tableCellLineHeight);
 			.padding(@tableCellPaddingVertical; @tableCellPaddingHorizontal);
@@ -422,7 +422,7 @@ dd {
 		tfoot {
 			.bold();
 			th {
-				.align(bottom);
+				vertical-align: bottom;
 				.darkestGray();
 			}
 		}
@@ -435,17 +435,17 @@ dd {
 			.padding(@tableCaptionPaddingVertical; @tableCaptionPaddingHorizontal);
 		}
 		img {
-			.align(top);
+			vertical-align: top;
 		}
 		.wee-table-bordered(@tableBordered);
 	}
-	.toggle () when (@tableStyled = true) {
+	.check () when (@tableStyled = true) {
 		table,
 		.table {
 			.rules();
 		}
 	}
-	.toggle () when not (@tableStyled = true) {
+	.check () when not (@tableStyled = true) {
 		.table {
 			.rules();
 		}
@@ -463,13 +463,13 @@ dd {
 	}
 	.table-bordered();
 	.table-striped();
-	.toggle();
+	.check();
 }
 .wee-table-bordered (@output) when (@output = true) {
 	.border(bottom; @tableCellBorderColor);
 	caption {
 		.border(@tableCellBorderColor);
-		.border(bottom; 0);
+		border-bottom: 0; 
 	}
 	td,
 	th {
@@ -513,57 +513,57 @@ dd {
 	input,
 	select,
 	textarea {
+		margin: 0;
 		.font(@inputFont; @inputFontSize; normal);
-		.margin(0);
 	}
 	button::-moz-focus-inner,
 	input::-moz-focus-inner {
-		.border(0);
-		.padding(0);
+		border: 0;
+		padding: 0;
 	}
 	.input-placeholder();
 	fieldset {
-		.border(0);
+		border: 0;
 		.spaced();
 	}
 	legend {
-		.border(0);
-		.color(@legendColor);
+		border: 0;
+		color: @legendColor;
 		.font(@legendFont; @legendFontSize);
 		.line-height();
 		.spaced-block(@legendMarginBottom);
 	}
 	label {
-		.font-weight(@labelFontWeight);
-		.line-height(@labelLineHeight);
+		font-weight: @labelFontWeight;
+		line-height: @labelLineHeight;
 		.spaced-block(@labelMarginBottom);
 	}
 	input[type='checkbox'],
 	input[type='radio'] {
+		padding: 0;
 		.margin(right; @checkboxMarginRight);
-		.padding(0);
 	}
 	.input () {
 		-moz-appearance: none;
 		-webkit-appearance: none;
+		color: @inputColor;
+		width: 100%;
 		.background(@inputBackground);
 		.background-clip();
-		.color(@inputColor);
-		.fill();
 		.padding(@inputPaddingVertical; @inputPaddingHorizontal);
 		.spaced(@inputMarginBottom);
 		&:focus {
 			&:required {
 				&:invalid {
+					color: @inputColorInvalid;
 					.background(@inputBackgroundInvalid);
 					.border(@inputBorderColorInvalid);
-					.color(@inputColorInvalid);
 				}
 			}
 		}
 		&:invalid {
+			color: @inputColorInvalid;
 			.background(@inputBackgroundInvalid);
-			.color(@inputColorInvalid);
 			.border () when not (@inputBorderWidthInvalid = 0)
 					and not (@inputBorderWidthInvalid = false) {
 				.border(@inputBorderColorInvalid; @inputBorderWidthInvalid);
@@ -575,14 +575,14 @@ dd {
 				}
 			}
 			.border () when (@inputBorderWidthInvalid = 0), (@inputBorderWidthInvalid = false) {
-				.border-width(0);
+				border-width: 0;
 			}
 			.border();
 		}
 		&:required {
+			color: @inputColorRequired;
 			.background(@inputBackgroundRequired);
 			.border(@inputBorderColorRequired);
-			.color(@inputColorRequired);
 			.border () when not (@inputBorderWidthRequired = 0)
 					and not (@inputBorderWidthRequired = false) {
 				.border(@inputBorderColorRequired; @inputBorderWidthRequired);
@@ -594,7 +594,7 @@ dd {
 				}
 			}
 			.border () when (@inputBorderWidthRequired = 0), (@inputBorderWidthRequired = false) {
-				.border-width(0);
+				border-width: 0;
 			}
 			.border();
 		}
@@ -610,7 +610,7 @@ dd {
 		}
 	}
 	.input () when (@inputBorderWidth = 0), (@inputBorderWidth = false) {
-		.border-width(0);
+		border-width: 0;
 	}
 	.input () when not (@inputMinHeight = false) {
 		.min-height(@inputMinHeight);
@@ -641,21 +641,21 @@ dd {
 		.input();
 	}
 	input[type='search']::-webkit-search-decoration {
-		.hide();
+		display: none;
 	}
 	input[type='button'],
 	input[type='reset'],
 	input[type='submit'] {
 		-moz-appearance: none;
 		-webkit-appearance: none;
-		.cursor();
+		cursor: pointer;
 	}
 	select {
-		.cursor();
-		.outline(0);
+		cursor: pointer;
+		outline: 0;
 		.padding(right; @inputPaddingVertical);
 		&[multiple] {
-			.align(top);
+			vertical-align: top;
 			.min-height(@multiSelectMinHeight);
 			&:after {
 				.content();
@@ -663,27 +663,27 @@ dd {
 		}
 	}
 	textarea {
-		.align(top);
+		vertical-align: top;
 		.line-height(@textareaLineHeight);
 		.min-height(@textareaMinHeight);
 		.padding(@textareaPaddingVertical; @textareaPaddingHorizontal);
 		.resizable(@textareaResize);
 	}
 	input[disabled] {
+		color: @inputColorDisabled;
+		cursor: @inputCursorDisabled;
 		.background-color(@inputBackgroundDisabled);
-		.color(@inputColorDisabled);
-		.cursor(@inputCursorDisabled);
 	}
 	.inline-field {
 		button,
 		input,
 		select,
 		textarea {
-			.inline-block();
-			.width(auto);
+			display: inline-block;
+			width: auto;
 		}
 		label {
-			.inline-block();
+			display: inline-block;
 			.margin(right; @labelMarginRight);
 		}
 	}
@@ -697,23 +697,23 @@ dd {
 .wee-button () when (@buttonEnabled = true) {
 	.rules () {
 		-webkit-tap-highlight-color: @buttonBackgroundHover;
-		.align(center);
+		color: @buttonColor;
+		cursor: pointer;
+		display: inline-block;
+		line-height: 1em;
+		text-align: center;
+		text-shadow: none;
 		.background(@buttonBackground);
-		.color(@buttonColor);
-		.cursor();
 		.font(@buttonFont; @buttonFontSize; @buttonFontWeight);
-		.inline-block();
-		.line-height(1em);
 		.spaced(@buttonMarginBottom);
 		.padding(@buttonPaddingVertical; @buttonPaddingHorizontal);
-		.text-shadow(none);
 		&:hover {
+			color: @buttonColor;
 			.background-color(@buttonBackgroundHover);
-			.color(@buttonColor);
 		}
 		&:active {
+			color: @buttonColor;
 			.background-color(@buttonBackgroundActive);
-			.color(@buttonColor);
 		}
 	}
 	.rules () when not (@buttonRounded = false) {
@@ -732,32 +732,32 @@ dd {
 		.transition(background-color);
 	}
 	.colored-rules () {
-		border-color: @coloredButtonBorderColor;
 		-webkit-tap-highlight-color: @coloredButtonBackgroundHover;
+		border-color: @coloredButtonBorderColor;
+		color: @coloredButtonColor;
 		.background(@coloredButtonBackground);
-		.color(@coloredButtonColor);
 		&:hover {
+			color: @coloredButtonColor;
 			.background-color(@coloredButtonBackgroundHover);
-			.color(@coloredButtonColor);
 		}
 		&:active {
+			color: @coloredButtonColor;
 			.background-color(@coloredButtonBackgroundActive);
-			.color(@coloredButtonColor);
 		}
 	}
 	.disabled-rules () {
-		.cursor(@disabledButtonCursor);
+		cursor: @disabledButtonCursor;
 		&,
 		&:active,
 		&:hover {
+			color: @disabledButtonColor;
 			.background(@disabledButtonBackground);
-			.color(@disabledButtonColor);
 		}
 	}
 	.disabled-rules () when not (@buttonBorderColor = false) {
 		.border(@disabledButtonBorderColor);
 	}
-	.toggle () when (@buttonStyled = true) {
+	.check () when (@buttonStyled = true) {
 		button,
 		input[type='button'],
 		input[type='reset'],
@@ -773,7 +773,7 @@ dd {
 			}
 		}
 	}
-	.toggle () when not (@buttonStyled = true) {
+	.check () when not (@buttonStyled = true) {
 		.button {
 			.rules();
 		}
@@ -785,9 +785,9 @@ dd {
 			.disabled-rules();
 		}
 	}
-	.toggle();
+	.check();
 	button[disabled] {
-		.cursor(@disabledButtonCursor);
+		cursor: @disabledButtonCursor;
 	}
 }
 .wee-button();

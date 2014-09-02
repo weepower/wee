@@ -599,22 +599,22 @@ module.exports = function(grunt) {
 
 	// Configure reloading
 	grunt.registerTask('reload', function() {
-		if (config.testing.reload.enable == true) {
-			var reloadExtensions = config.testing.reload.watch.extensions.join(),
-				reloadCount = config.testing.reload.watch.paths.length,
+		if (config.reload.enable == true) {
+			var reloadExtensions = config.reload.watch.extensions.join(),
+				reloadCount = config.reload.watch.paths.length,
 				reloadPaths = [];
 
-			if (config.testing.reload.watch.extensions.length > 1) {
+			if (config.reload.watch.extensions.length > 1) {
 				reloadExtensions = '{' + reloadExtensions + '}';
 			}
 
 			// Add user-defined watch paths
 			for (var i = 0; i < reloadCount; i++) {
-				reloadPaths.push(config.testing.reload.watch.paths[i] + '/**/*.' + reloadExtensions);
+				reloadPaths.push(config.reload.watch.paths[i] + '/**/*.' + reloadExtensions);
 			}
 
 			// Add root to reload watchlist
-			if (config.testing.reload.watch.root == true) {
+			if (config.reload.watch.root == true) {
 				reloadPaths.push(config.paths.root + '/**/*.' + reloadExtensions);
 			}
 
@@ -630,6 +630,7 @@ module.exports = function(grunt) {
 		grunt.config.set('browserSync.options.server', {
 			baseDir: config.paths.root,
 		});
+
 		grunt.config.set('browserSync.options.port', config.testing.server.port);
 
 		grunt.task.run('browserSync');
@@ -637,8 +638,8 @@ module.exports = function(grunt) {
 
 	// Proxy and launch from local server
 	grunt.registerTask('proxy', function() {
-		if (config.testing.proxy !== false) {
-			grunt.config.set('browserSync.options.proxy', config.testing.proxy);
+		if (config.server.proxy !== false) {
+			grunt.config.set('browserSync.options.proxy', config.dev.server.proxy);
 
 			grunt.task.run('browserSync');
 		}
@@ -698,7 +699,7 @@ module.exports = function(grunt) {
 	]);
 
 	// Build, Server, Open & Watch
-	grunt.registerTask('test', [
+	grunt.registerTask('testing', [
 		'default',
 		'reload',
 		'server',
