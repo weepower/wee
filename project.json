@@ -49,14 +49,6 @@
 		},
 		"sourceMaps": true
 	},
-	"guide": {
-		"enable": true,
-		"paths": {
-			"patterns": "guide/patterns",
-			"template": "guide/template.html",
-			"target": "guide/index.html"
-		}
-	},
 	"dev": {
 		"server": {
 			"proxy": "wee.dev"

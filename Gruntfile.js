@@ -645,33 +645,6 @@ module.exports = function(grunt) {
 		}
 	});
 
-	// Build style guide
-	grunt.registerTask('guide', function() {
-		var guide = config.guide;
-
-		if (guide.enable == true) {
-			var patternPath = Wee.buildPath(guide.paths.patterns, config.assetPath);
-
-			fs.readdirSync(patternPath, function(err, files) {
-				if (err) {
-					throw err;
-				}
-
-				var templatePath = Wee.buildPath(guide.paths.template, config.assetPath),
-					targetPath = Wee.buildPath(guide.paths.target, config.assetPath),
-					output = '';
-
-				files.map(function(file) {
-					console.log(path.join(p, file));
-				}).filter(function(file) {
-					console.log(fs.statSync(file).isFile());
-				}).forEach(function(file) {
-					console.log("%s (%s)", file, path.extname(file));
-				});
-			});
-		}
-	});
-
 	// Load plugins
 	grunt.loadNpmTasks('grunt-browser-sync');
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -704,11 +677,5 @@ module.exports = function(grunt) {
 		'reload',
 		'server',
 		'watch'
-	]);
-
-	// Guide
-	grunt.registerTask('guide', [
-		'init',
-		'guide'
 	]);
 };
