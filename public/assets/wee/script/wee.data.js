@@ -58,7 +58,7 @@ Wee.fn.make('data', {
 		if (conf.method == 'post') {
 			x.open('POST', conf.url, true);
 			x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-			x.send(Wee.$serialize(conf.data));
+			x.send(Wee.$isObject(conf.data) ? Wee.$serialize(conf.data) : conf.data);
 		} else {
 			if (conf.cache === false) {
 				var dt = new Date().getTime();
