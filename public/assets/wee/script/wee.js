@@ -437,7 +437,7 @@ var Wee = (function(w, d) {
 		$css: function(sel, a, b) {
 			var obj = this.$isObject(a);
 
-			if (b || obj) {
+			if (b !== undefined || obj) {
 				this.$each(sel, function(el) {
 					obj ?
 						Object.keys(a).forEach(function(key) {

@@ -640,9 +640,9 @@ module.exports = function(grunt) {
 	grunt.registerTask('proxy', function() {
 		if (config.dev.server.proxy !== false) {
 			grunt.config.set('browserSync.options.proxy', config.dev.server.proxy);
-
-			grunt.task.run('browserSync');
 		}
+
+		grunt.task.run('browserSync');
 	});
 
 	// Load plugins
