@@ -2107,10 +2107,10 @@
 }
 .inline-block (@width; ...) {
 	display: inline-block;
-	width: @width;
+	.width(@width);
 }
 .inline-block (@width; @height) {
-	height: @height;
+	.height(@height);
 }
 
 // Lists
@@ -2168,10 +2168,10 @@
 }
 .block (@width; ...) {
 	display: block;
-	width: @width;
+	.width(@width);
 }
 .block (@width; @height) {
-	height: @height;
+	.height(@height);
 }
 .spaced (@margin: @blockMarginBottom) when not (@margin = false) {
 	.margin(bottom; @margin);
@@ -2181,10 +2181,10 @@
 	.spaced(@margin);
 }
 .spaced-block (@margin; @width; ...) {
-	width: @width;
+	.width(@width);
 }
 .spaced-block (@margin; @width; @height) {
-	height: @height;
+	.height(@height);
 }
 .box-sizing (@val: border-box) {
 	-moz-box-sizing: @val;
