@@ -341,7 +341,7 @@ var Wee = (function(w, d) {
 
 			if (el === null) {
 				return el;
-			} else if (el.nodeType !== _undefined) {
+			} else if (el.nodeType !== _undefined || el === this._win) {
 				return [el];
 			}
 

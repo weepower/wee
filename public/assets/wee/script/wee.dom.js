@@ -500,15 +500,14 @@ Wee.fn.extend({
 	// Get or set the height of an element, optionally accounting for margin
 	// Returns int
 	$height: function(sel, val) {
-		if (sel === Wee._win) {
-			return sel.innerHeight;
-		}
-
-		var el = this.$first(sel);
-
 		if (val === undefined || val === true) {
-			var el = this.$first(sel),
-				height = el.offsetHeight;
+			var el = this.$first(sel);
+
+			if (el === Wee._win) {
+				return el.innerHeight;
+			}
+
+			var height = el.offsetHeight;
 
 			if (val === true) {
 				var style = el.currentStyle || getComputedStyle(el);

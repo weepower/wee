@@ -414,7 +414,6 @@ dd {
 		th {
 			text-align: left;
 			vertical-align: top;
-			.border(top; @tableCellBorderColor);
 			.line-height(@tableCellLineHeight);
 			.padding(@tableCellPaddingVertical; @tableCellPaddingHorizontal);
 		}
@@ -474,6 +473,7 @@ dd {
 	td,
 	th {
 		.border(right; @tableCellBorderColor);
+		.border(top; @tableCellBorderColor);
 		&:first-child {
 			.border(left; @tableCellBorderColor);
 		}
