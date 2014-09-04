@@ -232,6 +232,10 @@ Wee.fn.extend({
 			var r = Wee.$height(this, val);
 			return (val === undefined || val === true) ? r : this;
 		},
+		scrollTop: function(val) {
+			var r = Wee.$scrollTop(this, val);
+			return (val === undefined || val === true) ? r : this;
+		},
 		// Events
 		on: function(a, b, c) {
 			Wee.events.on(this, a, b, c);

@@ -126,6 +126,10 @@ Wee.fn.make('events', {
 							fn: f
 						});
 					}
+
+					if (conf.init === true) {
+						cb();
+					}
 				})(el, evt, fn, f, conf);
 			}
 		});

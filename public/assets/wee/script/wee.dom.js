@@ -503,21 +503,38 @@ Wee.fn.extend({
 		if (val === undefined || val === true) {
 			var el = this.$first(sel);
 
-			if (el === Wee._win) {
-				return el.innerHeight;
+			switch (el) {
+				case Wee._win:
+					return el.innerHeight;
+				case Wee._doc:
+					return Math.max(Wee._body.scrollHeight, Wee._body.offsetHeight, 
+					Wee._html.clientHeight, Wee._html.scrollHeight, Wee._html.offsetHeight);
+				default:
+					var height = el.offsetHeight;
+
+					if (val === true) {
+						var style = el.currentStyle || getComputedStyle(el);
+
+						height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+					}
+
+					return height;
 			}
-
-			var height = el.offsetHeight;
-
-			if (val === true) {
-				var style = el.currentStyle || getComputedStyle(el);
-
-				height += parseInt(style.marginTop) + parseInt(style.marginBottom);
-			}
-
-			return height;
 		}
 
 		this.$css(sel, 'height', val);
+	},
+	// Get or set the top scroll position of an element
+	// Returns int
+	$scrollTop: function(sel, val) {
+		if (val === undefined) {
+			var el = this.$first(sel);
+
+			return el.pageYOffset !== undefined ?
+				Wee._win.pageYOffset :
+				(Wee._html || Wee._body).scrollTop;
+		}
+
+
 	}
 });
