@@ -188,8 +188,6 @@ module.exports = function(grunt) {
 		// Core
 		buildStyles.push(weeStyleRoot + 'wee.less');
 
-		buildStyles.push(styleRoot + '/build/**/*.{css,less}');
-
 		// Build configured
 		var total = config.style.build.length;
 
@@ -583,7 +581,7 @@ module.exports = function(grunt) {
 	});
 
 	// Build project style
-	grunt.registerTask('style', function() {
+	grunt.registerTask('buildStyle', function() {
 		grunt.task.run('less:core');
 
 		config.styleTasks.forEach(function(task) {
@@ -659,7 +657,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', [
 		'init',
 		'imagemin',
-		'style',
+		'buildStyle',
 		'uglify'
 	]);
 

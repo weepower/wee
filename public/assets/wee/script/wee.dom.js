@@ -535,6 +535,8 @@ Wee.fn.extend({
 				(Wee._html || Wee._body).scrollTop;
 		}
 
-
+		this.$each(sel, function(el) {
+			el.scrollTo(0, val);
+		});
 	}
 });

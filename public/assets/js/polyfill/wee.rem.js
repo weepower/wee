@@ -76,7 +76,7 @@ var WeeRem = (function(w, d) {
 		convert: function(css) {
 			var output = '',
 				regex = /(-?[.\d]+)rem/gi,
-				rules = css.match(/[\w\d\s\-\/\\\[\]:,.'"*()<>+~%#^$_=|@]+\{[\w\d\s\-\/\\%#:;,.'"*()=]+\d*\.?\d+rem[\w\d\s\-\/\\%#:;,.'"*()=]*\}/g),
+				rules = css.match(/[\w\d\s\-\/\\\[\]:,.'"*()<>+~%#^$_=|@ ]+\{[\w\d\s\-\/\\%#:;,.'"*()=]+\d*(\.?\d+rem|auto)[\w\d\s\-\/\\%#:;,.'"*()=]*\}/g),
 				len = rules ? rules.length : 0,
 				i = 0;
 
@@ -85,7 +85,7 @@ var WeeRem = (function(w, d) {
 					split = rule.split('{'),
 					sel = split[0],
 					val = split[1],
-					props = val.match(/[\w\d\s\-\/\\%#:,.'"*()]+\d*\.?\d+rem[\w\d\s\-\/\\%#:,.'"*()]*[;}]/g),
+					props = val.match(/[\w\d\s\-\/\\\[\]:,.'"*()<>+~%#^$_=|@ ]+\d*(\.?\d+rem|auto)[\w\d\s\-\/\\%#:,.'"*()]*[;}]/g),
 					propsTotal = props ? props.length : 0,
 					x = 0;
 
@@ -93,7 +93,7 @@ var WeeRem = (function(w, d) {
 
 				for (; x < propsTotal; x++) {
 					var prop = props[x].replace(regex, function(str, match) {
-						return (match * WeeRem.root) + 'px';
+						return isNaN(match) ? match : (match * WeeRem.root) + 'px';
 					});
 
 					output += prop.substring(0, prop.length - 1) + ';';
