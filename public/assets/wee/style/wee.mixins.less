@@ -1820,6 +1820,9 @@
 	.rounded((@diameter / 2));
 	.square(@diameter);
 }
+.circle (@diameter; @crop) when (@crop = true) {
+	.crop();
+}
 .min-width (@value: @minWidth) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		min-width: @value;
