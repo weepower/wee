@@ -20,24 +20,6 @@
 	@import '../../css/@{responsivePath}/desktop-large.less';
 }
 
-// Mobile Navigation Indicator
-
-.mobile-nav (@height: .67em; @size: 2) {
-	cursor: pointer;
-	position: relative;
-	&:before {
-		content: ' ';
-		height: @height;
-		left: @mobileNavLeft;
-		position: absolute;
-		top: @mobileNavTop;
-		width: @mobileNavWidth;
-		.border(bottom; @mobileNavBorderColor; .15em; solid);
-		.border(top; @mobileNavBorderColor; .42em; double);
-		.font-size(@size);
-	}
-}
-
 // Components
 
 .responsive () when (@responsiveEnabled = true) and not (@legacyMode = true) {

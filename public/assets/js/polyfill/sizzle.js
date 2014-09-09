@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2014-07-01
+ * Date: 2014-09-04
  */
 (function( window ) {
 
@@ -48,7 +48,6 @@ var i,
 	},
 
 	// General-purpose constants
-	strundefined = typeof undefined,
 	MAX_NEGATIVE = 1 << 31,
 
 	// Instance methods
@@ -58,12 +57,13 @@ var i,
 	push_native = arr.push,
 	push = arr.push,
 	slice = arr.slice,
-	// Use a stripped-down indexOf if we can't use a native one
-	indexOf = arr.indexOf || function( elem ) {
+	// Use a stripped-down indexOf as it's faster than native
+	// http://jsperf.com/thor-indexof-vs-for/5
+	indexOf = function( list, elem ) {
 		var i = 0,
-			len = this.length;
+			len = list.length;
 		for ( ; i < len; i++ ) {
-			if ( this[i] === elem ) {
+			if ( list[i] === elem ) {
 				return i;
 			}
 		}
@@ -433,7 +433,7 @@ function createPositionalPseudo( fn ) {
  * @returns {Element|Object|Boolean} The input node if acceptable, otherwise a falsy value
  */
 function testContext( context ) {
-	return context && typeof context.getElementsByTagName !== strundefined && context;
+	return context && typeof context.getElementsByTagName !== "undefined" && context;
 }
 
 // Expose support vars for convenience
@@ -524,7 +524,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// ID find and filter
 	if ( support.getById ) {
 		Expr.find["ID"] = function( id, context ) {
-			if ( typeof context.getElementById !== strundefined && documentIsHTML ) {
+			if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
 				var m = context.getElementById( id );
 				// Check parentNode to catch when Blackberry 4.6 returns
 				// nodes that are no longer in the document #6963
@@ -545,7 +545,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 		Expr.filter["ID"] =  function( id ) {
 			var attrId = id.replace( runescape, funescape );
 			return function( elem ) {
-				var node = typeof elem.getAttributeNode !== strundefined && elem.getAttributeNode("id");
+				var node = typeof elem.getAttributeNode !== "undefined" && elem.getAttributeNode("id");
 				return node && node.value === attrId;
 			};
 		};
@@ -554,7 +554,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// Tag
 	Expr.find["TAG"] = support.getElementsByTagName ?
 		function( tag, context ) {
-			if ( typeof context.getElementsByTagName !== strundefined ) {
+			if ( typeof context.getElementsByTagName !== "undefined" ) {
 				return context.getElementsByTagName( tag );
 			}
 		} :
@@ -746,7 +746,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 			// Maintain original order
 			return sortInput ?
-				( indexOf.call( sortInput, a ) - indexOf.call( sortInput, b ) ) :
+				( indexOf( sortInput, a ) - indexOf( sortInput, b ) ) :
 				0;
 		}
 
@@ -773,7 +773,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 				aup ? -1 :
 				bup ? 1 :
 				sortInput ?
-				( indexOf.call( sortInput, a ) - indexOf.call( sortInput, b ) ) :
+				( indexOf( sortInput, a ) - indexOf( sortInput, b ) ) :
 				0;
 
 		// If the nodes are siblings, we can do a quick check
@@ -1055,7 +1055,7 @@ Expr = Sizzle.selectors = {
 			return pattern ||
 				(pattern = new RegExp( "(^|" + whitespace + ")" + className + "(" + whitespace + "|$)" )) &&
 				classCache( className, function( elem ) {
-					return pattern.test( typeof elem.className === "string" && elem.className || typeof elem.getAttribute !== strundefined && elem.getAttribute("class") || "" );
+					return pattern.test( typeof elem.className === "string" && elem.className || typeof elem.getAttribute !== "undefined" && elem.getAttribute("class") || "" );
 				});
 		},
 
@@ -1197,7 +1197,7 @@ Expr = Sizzle.selectors = {
 							matched = fn( seed, argument ),
 							i = matched.length;
 						while ( i-- ) {
-							idx = indexOf.call( seed, matched[i] );
+							idx = indexOf( seed, matched[i] );
 							seed[ idx ] = !( matches[ idx ] = matched[i] );
 						}
 					}) :
@@ -1669,7 +1669,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 				i = matcherOut.length;
 				while ( i-- ) {
 					if ( (elem = matcherOut[i]) &&
-						(temp = postFinder ? indexOf.call( seed, elem ) : preMap[i]) > -1 ) {
+						(temp = postFinder ? indexOf( seed, elem ) : preMap[i]) > -1 ) {
 
 						seed[temp] = !(results[temp] = elem);
 					}
@@ -1704,7 +1704,7 @@ function matcherFromTokens( tokens ) {
 			return elem === checkContext;
 		}, implicitRelative, true ),
 		matchAnyContext = addCombinator( function( elem ) {
-			return indexOf.call( checkContext, elem ) > -1;
+			return indexOf( checkContext, elem ) > -1;
 		}, implicitRelative, true ),
 		matchers = [ function( elem, context, xml ) {
 			return ( !leadingRelative && ( xml || context !== outermostContext ) ) || (
