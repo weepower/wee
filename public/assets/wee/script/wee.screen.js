@@ -36,8 +36,8 @@ Wee.fn.make('screen', {
 					}
 				}
 
-				// Check current screen match if init is true
-				if (conf.init === true) {
+				// Evaluate current screen if not disabled
+				if (conf.init !== false) {
 					this.$private('check', true, [conf]);
 				}
 			}

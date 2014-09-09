@@ -22,9 +22,11 @@
 
 // Mobile Navigation Indicator
 
-.mobile-nav (@height: .67em) {
+.mobile-nav (@height: .67em; @size: 2) {
 	cursor: pointer;
+	position: relative;
 	&:before {
+		content: ' ';
 		height: @height;
 		left: @mobileNavLeft;
 		position: absolute;
@@ -32,7 +34,7 @@
 		width: @mobileNavWidth;
 		.border(bottom; @mobileNavBorderColor; .15em; solid);
 		.border(top; @mobileNavBorderColor; .42em; double);
-		.content();
+		.font-size(@size);
 	}
 }
 
