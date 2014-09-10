@@ -680,8 +680,8 @@ module.exports = function(grunt) {
 
 	// Proxy and launch from local server
 	grunt.registerTask('proxy', function() {
-		if (config.dev.server.proxy !== false) {
-			grunt.config.set('browserSync.options.proxy', config.server.tasks.connect.proxy);
+		if (config.server.tasks.local.proxy !== false) {
+			grunt.config.set('browserSync.options.proxy', config.server.tasks.local.proxy);
 			grunt.config.set('browserSync.options.port', config.server.port);
 		}
 
