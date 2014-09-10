@@ -33,8 +33,7 @@
 				"../wee/style/wee.legacy.less",
 				"custom/ie8.less"
 			]
-		},
-		"sourceMaps": false
+		}
 	},
 	"script": {
 		"core": {
@@ -68,19 +67,9 @@
 		},
 		"sourceMaps": true
 	},
-	"dev": {
-		"server": {
-			"port": 3000,
-			"proxy": "wee.dev"
-		}
-	},
-	"testing": {
-		"server": {
-			"ghostMode": true,
-			"host": "auto",
-			"https": false,
-			"port": 3000
-		},
+	"server": {
+		"ghostMode": true,
+		"port": 3000,
 		"reload": {
 			"enable": true,
 			"watch": {
@@ -91,6 +80,15 @@
 				"extensions": [
 					"html"
 				]
+			}
+		},
+		"tasks": {
+			"local": {
+				"proxy": "wee.dev"
+			},
+			"static": {
+				"host": "auto",
+				"https": false
 			}
 		}
 	}

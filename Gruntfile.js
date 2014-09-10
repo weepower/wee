@@ -259,23 +259,6 @@ module.exports = function(grunt) {
 			projectStyle[Wee.buildPath(target, styleRoot)] = from;
 		}
 
-		// Source maps
-		if (config.style.sourceMaps == true) {
-			var relativePath = config.assetPath + '/wee/maps/';
-
-			grunt.config.set('less.options.sourceMap', true);
-			grunt.config.set('less.options.sourceMapFilename', relativePath + 'source.css.map');
-			grunt.config.set('less.options.sourceMapURL', relativePath + 'source.css.map');
-			grunt.config.set('less.options.sourceMapBasepath', function(dest) {
-				var filename = dest.replace(config.assetPath + '/', '')
-					.replace('css/', '')
-					.replace(/\//g, '-')
-					.replace('.css', '');
-
-				return relativePath + filename + '.css.map';
-			});
-		}
-
 		////////////
 		// Script //
 		////////////
@@ -647,22 +630,22 @@ module.exports = function(grunt) {
 
 	// Configure reloading
 	grunt.registerTask('reload', function() {
-		if (config.testing.reload.enable == true) {
-			var reloadExtensions = config.testing.reload.watch.extensions.join(),
-				reloadCount = config.testing.reload.watch.paths.length,
+		if (config.server.reload.enable == true) {
+			var reloadExtensions = config.server.reload.watch.extensions.join(),
+				reloadCount = config.server.reload.watch.paths.length,
 				reloadPaths = [];
 
-			if (config.testing.reload.watch.extensions.length > 1) {
+			if (config.server.reload.watch.extensions.length > 1) {
 				reloadExtensions = '{' + reloadExtensions + '}';
 			}
 
 			// Add user-defined watch paths
 			for (var i = 0; i < reloadCount; i++) {
-				reloadPaths.push(config.testing.reload.watch.paths[i] + '/**/*.' + reloadExtensions);
+				reloadPaths.push(config.server.reload.watch.paths[i] + '/**/*.' + reloadExtensions);
 			}
 
 			// Add root to reload watchlist
-			if (config.testing.reload.watch.root == true) {
+			if (config.server.reload.watch.root == true) {
 				reloadPaths.push(config.paths.root + '/**/*.' + reloadExtensions);
 			}
 
@@ -679,12 +662,17 @@ module.exports = function(grunt) {
 			baseDir: config.paths.root,
 		});
 
-		grunt.config.set('browserSync.options.port', config.testing.server.port || 3000);
-		grunt.config.set('browserSync.options.https', config.testing.server.https || false);
-		grunt.config.set('browserSync.options.ghostMode', config.testing.server.ghostMode || false);
+		grunt.config.set('browserSync.options.port', config.server.port);
+		grunt.config.set('browserSync.options.ghostMode', config.server.ghostMode);
 
-		if (config.testing.server.host && config.testing.server.host !== 'auto') {
-			grunt.config.set('browserSync.options.host', config.testing.server.host);
+		// HTTPS mode
+		if (config.server.tasks.static.https === true) {
+			grunt.config.set('browserSync.options.https', config.server.tasks.static.https);
+		}
+
+		// Override auto-detected IP address
+		if (config.server.tasks.static.host !== 'auto') {
+			grunt.config.set('browserSync.options.host', config.server.tasks.static.host);
 		}
 
 		grunt.task.run('browserSync');
@@ -693,8 +681,8 @@ module.exports = function(grunt) {
 	// Proxy and launch from local server
 	grunt.registerTask('proxy', function() {
 		if (config.dev.server.proxy !== false) {
-			grunt.config.set('browserSync.options.proxy', config.dev.server.proxy);
-			grunt.config.set('browserSync.options.port', config.dev.server.port || 3000);
+			grunt.config.set('browserSync.options.proxy', config.server.tasks.connect.proxy);
+			grunt.config.set('browserSync.options.port', config.server.port);
 		}
 
 		grunt.task.run('browserSync');
@@ -719,7 +707,7 @@ module.exports = function(grunt) {
 	]);
 
 	// Build & Watch
-	grunt.registerTask('dev', [
+	grunt.registerTask('local', [
 		'default',
 		'reload',
 		'proxy',
@@ -727,7 +715,7 @@ module.exports = function(grunt) {
 	]);
 
 	// Build, Server, Open & Watch
-	grunt.registerTask('testing', [
+	grunt.registerTask('static', [
 		'default',
 		'reload',
 		'server',
