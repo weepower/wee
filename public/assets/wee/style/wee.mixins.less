@@ -1803,7 +1803,7 @@
 .square (@size) {
 	.size(@size; @size);
 }
-.ratio (@ratio: (16 / 9)) {
+.ratio (@ratio: (16 / 9)) when not (iskeyword(@ratio)) {
 	display: block;
 	height: 0;
 	.padding(top; ((1 / @ratio) * 100%));

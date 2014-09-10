@@ -119,8 +119,7 @@ module.exports = function(grunt) {
 					reload: true
 				},
 				files: [
-					'<%= config.modulePath %>/*module.json',
-					'<%= config.modulePath %>/*',
+					'<%= config.modulePath %>/*/module.json',
 					'project.json'
 				],
 				tasks: [
@@ -181,6 +180,55 @@ module.exports = function(grunt) {
 			],
 			ext: '.css'
 		});
+
+		// Core files
+		var styleFeatures = config.style.core,
+			styleSettings = {};
+
+		styleVars.buttonEnabled = styleFeatures.buttons ? true : false;
+		styleVars.codeEnabled = styleFeatures.code ? true : false;
+		styleVars.formEnabled = styleFeatures.forms ? true : false;
+		styleVars.printEnabled = styleFeatures.print ? true : false;
+		styleVars.tableEnabled = styleFeatures.tables ? true : false;
+
+		// Responsive
+		if (styleFeatures.responsive) {
+			var responsive = styleFeatures.responsive;
+
+			if (responsive.enable) {
+				styleVars.responsiveEnabled = true;
+				styleVars.responsiveOffset = responsive.offset + 'px';
+				styleVars.ieBreakpoint = responsive.fallback;
+
+				// Breakpoints
+				var breakpoints = responsive.breakpoints;
+
+				styleVars.mobileLandscapeWidth = breakpoints.mobileLandscape + 'px';
+				styleVars.tabletPortraitWidth = breakpoints.tabletPortrait + 'px';
+				styleVars.desktopSmallWidth = breakpoints.desktopSmall + 'px';
+				styleVars.desktopMediumWidth = breakpoints.desktopMedium + 'px';
+				styleVars.desktopLargeWidth = breakpoints.desktopLarge + 'px';
+
+				styleSettings = {
+					responsiveEnabled: true,
+					responsiveOffset: responsive.offset + 'px',
+					ieBreakpoint: responsive.fallback,
+					mobileLandscapeWidth: breakpoints.mobileLandscape + 'px',
+					tabletPortraitWidth: breakpoints.tabletPortrait + 'px',
+					desktopSmallWidth: breakpoints.desktopSmall + 'px',
+					desktopMediumWidth: breakpoints.desktopMedium + 'px',
+					desktopLargeWidth: breakpoints.desktopLarge + 'px'
+				};
+			} else {
+				styleVars.responsiveEnabled = false;
+				styleVars.ieBreakpoint = 1;
+
+				styleSettings = {
+					responsiveEnabled: false,
+					ieBreakpoint: 1
+				};
+			}
+		}
 
 		// Build
 		var buildStyles = [];
@@ -421,11 +469,11 @@ module.exports = function(grunt) {
 								path + '/js/build/*.js'
 							],
 							banner = "@import '../../../../wee/style/wee.module.less';",
-							moduleVars = {
-								moduleName: name,
-								responsive: false
-							},
+							moduleVars = JSON.parse(JSON.stringify(styleSettings)),
 							obj = {};
+
+						// Set module name
+						moduleVars.moduleName = name;
 
 						// Build additional style
 						if (module.style && module.style.build) {
@@ -440,48 +488,50 @@ module.exports = function(grunt) {
 						}
 
 						// Determine if module is responsive
-						if (fs.existsSync(path + '/module/style/breakpoints')) {
-							moduleVars.responsive = true;
+						if (styleSettings.responsive) {
+							if (fs.existsSync(path + '/module/style/breakpoints')) {
+								moduleVars.responsive = true;
 
-							banner += ' \
-								.mobile-landscape () when not (@mobileLandscapeWidth = false) { \
-									@import "breakpoints/mobile-landscape.less"; \
-								} \
-								.tablet-portrait () when not (@tabletPortraitWidth = false) { \
-									@import "breakpoints/tablet-portrait.less"; \
-								} \
-								.desktop-small () when not (@desktopSmallWidth = false) { \
-									@import "breakpoints/desktop-small.less"; \
-								} \
-								.desktop-medium () when not (@desktopMediumWidth = false) { \
-									@import "breakpoints/desktop-medium.less"; \
-								} \
-								.desktop-large () when not (@desktopLargeWidth = false) { \
-									@import "breakpoints/desktop-large.less"; \
-								} \
-							';
-						}
+								banner += ' \
+									.mobile-landscape () when not (@mobileLandscapeWidth = false) { \
+										@import "breakpoints/mobile-landscape.less"; \
+									} \
+									.tablet-portrait () when not (@tabletPortraitWidth = false) { \
+										@import "breakpoints/tablet-portrait.less"; \
+									} \
+									.desktop-small () when not (@desktopSmallWidth = false) { \
+										@import "breakpoints/desktop-small.less"; \
+									} \
+									.desktop-medium () when not (@desktopMediumWidth = false) { \
+										@import "breakpoints/desktop-medium.less"; \
+									} \
+									.desktop-large () when not (@desktopLargeWidth = false) { \
+										@import "breakpoints/desktop-large.less"; \
+									} \
+								';
+							}
 
-						if (fs.existsSync(path + '/css/breakpoints')) {
-							moduleVars.responsive = true;
+							if (fs.existsSync(path + '/css/breakpoints')) {
+								moduleVars.responsive = true;
 
-							banner += ' \
-								.mobile-landscape () when not (@mobileLandscapeWidth = false) { \
-									@import "../../css/breakpoints/mobile-landscape.less"; \
-								} \
-								.tablet-portrait () when not (@tabletPortraitWidth = false) { \
-									@import "../../css/breakpoints/tablet-portrait.less"; \
-								} \
-								.desktop-small () when not (@desktopSmallWidth = false) { \
-									@import "../../css/breakpoints/desktop-small.less"; \
-								} \
-								.desktop-medium () when not (@desktopMediumWidth = false) { \
-									@import "../../css/breakpoints/desktop-medium.less"; \
-								} \
-								.desktop-large () when not (@desktopLargeWidth = false) { \
-									@import "../../css/breakpoints/desktop-large.less"; \
-								} \
-							';
+								banner += ' \
+									.mobile-landscape () when not (@mobileLandscapeWidth = false) { \
+										@import "../../css/breakpoints/mobile-landscape.less"; \
+									} \
+									.tablet-portrait () when not (@tabletPortraitWidth = false) { \
+										@import "../../css/breakpoints/tablet-portrait.less"; \
+									} \
+									.desktop-small () when not (@desktopSmallWidth = false) { \
+										@import "../../css/breakpoints/desktop-small.less"; \
+									} \
+									.desktop-medium () when not (@desktopMediumWidth = false) { \
+										@import "../../css/breakpoints/desktop-medium.less"; \
+									} \
+									.desktop-large () when not (@desktopLargeWidth = false) { \
+										@import "../../css/breakpoints/desktop-large.less"; \
+									} \
+								';
+							}
 						}
 
 						// Create module style compile task
@@ -629,7 +679,13 @@ module.exports = function(grunt) {
 			baseDir: config.paths.root,
 		});
 
-		grunt.config.set('browserSync.options.port', config.testing.server.port);
+		grunt.config.set('browserSync.options.port', config.testing.server.port || 3000);
+		grunt.config.set('browserSync.options.https', config.testing.server.https || false);
+		grunt.config.set('browserSync.options.ghostMode', config.testing.server.ghostMode || false);
+
+		if (config.testing.server.host && config.testing.server.host !== 'auto') {
+			grunt.config.set('browserSync.options.host', config.testing.server.host);
+		}
 
 		grunt.task.run('browserSync');
 	});
@@ -638,6 +694,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('proxy', function() {
 		if (config.dev.server.proxy !== false) {
 			grunt.config.set('browserSync.options.proxy', config.dev.server.proxy);
+			grunt.config.set('browserSync.options.port', config.dev.server.port || 3000);
 		}
 
 		grunt.task.run('browserSync');

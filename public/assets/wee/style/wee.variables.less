@@ -239,8 +239,6 @@
 // Code //
 //////////
 
-@codeEnabled: true; // toggle code styling output
-
 @codeColor: @darkestGray;
 @codeFont: Monaco, 'Andale Mono', 'Courier New';
 @codeFontSize: 1.4;
@@ -271,8 +269,6 @@
 ///////////
 // Forms //
 ///////////
-
-@formEnabled: true; // toggle form styling output
 
 // Inputs
 
@@ -370,7 +366,6 @@
 // Buttons //
 /////////////
 
-@buttonEnabled: true;
 @buttonStyled: true;
 
 @buttonColor: @white;
@@ -421,7 +416,6 @@
 // Tables //
 ////////////
 
-@tableEnabled: true;  // toggle table styling output
 @tableStyled: true;   // apply base styling by default
 @tableBordered: true; // apply outer border by default
 @tableStriped: true;  // apply striping by default
@@ -448,26 +442,3 @@
 
 @tableStripedBackground: @lightestGray;
 @tableStripedPosition: odd; // even, odd
-
-///////////
-// Print //
-///////////
-
-@printEnabled: true; // enable print styling
-
-////////////////
-// Responsive //
-////////////////
-
-@responsiveEnabled: true; // enable automated breakpoints
-@responsiveOffset: 25px;  // breakpoint offset (subtracted from breakpoint width)
-
-// Breakpoints (false to disable)
-
-@mobileLandscapeWidth: 480px; // value = 2
-@tabletPortraitWidth: 768px;  // value = 3
-@desktopSmallWidth: 1024px;   // value = 4
-@desktopMediumWidth: 1280px;  // value = 5
-@desktopLargeWidth: 1440px;   // value = 6
-
-@ieBreakpoint: 4; // assumed IE8- screen size (using JavaScript values above)

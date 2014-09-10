@@ -6,6 +6,25 @@
 		"assets": "assets"
 	},
 	"style": {
+		"core": {
+			"buttons": true,
+			"code": true,
+			"forms": true,
+			"print": true,
+			"tables": true,
+			"responsive": {
+				"enable": true,
+				"fallback": 4,
+				"offset": 25,
+				"breakpoints": {
+					"mobileLandscape": 480,
+					"tabletPortrait": 768,
+					"desktopSmall": 1024,
+					"desktopMedium": 1280,
+					"desktopLarge": 1440
+				}
+			}
+		},
 		"build": [
 
 		],
@@ -51,12 +70,16 @@
 	},
 	"dev": {
 		"server": {
+			"port": 3000,
 			"proxy": "wee.dev"
 		}
 	},
 	"testing": {
 		"server": {
-			"port": 9000
+			"ghostMode": true,
+			"host": "auto",
+			"https": false,
+			"port": 3000
 		},
 		"reload": {
 			"enable": true,

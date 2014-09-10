@@ -40,9 +40,9 @@ Wee.fn.make('assets', {
 		}
 	},
 	// When specified references are ready execute callback
-	ready: function(group, recheck) {
+	ready: function(group, opt, poll) {
 		if (this.$get(group) === 0) {
-			var conf = this.$get(group + '-conf'),
+			var conf = Wee.$extend(this.$get(group + '-conf'), opt),
 				opt = {
 					args: conf.args,
 					scope: conf.scope
@@ -53,9 +53,9 @@ Wee.fn.make('assets', {
 			} else if (conf.success) {
 				Wee.$exec(conf.success, opt);
 			}
-		} else if (recheck) {
+		} else if (poll) {
 			setTimeout(function() {
-				Wee.loader.ready(group, opt);
+				Wee.loader.ready(group, {}, true);
 			}, 20);
 		}
 	}
@@ -115,7 +115,7 @@ Wee.fn.make('assets', {
 	// Decrement remaining count of assets to be loaded
 	done: function(group) {
 		this.$set(group, this.$get(group) - 1);
-		this.$public.ready(group, false);
+		this.$public.ready(group, {}, false);
 	},
 	// Track failed resources
 	fail: function(group) {
