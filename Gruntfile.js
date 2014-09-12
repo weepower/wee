@@ -285,9 +285,25 @@ module.exports = function(grunt) {
 			}
 		});
 
-		// Core files
+		// Build
 		var buildScripts = [];
 
+		// Build third-party
+		buildScripts.push(scriptRoot + '/build/vendor/**/.js');
+
+		// Build configured
+		var total = config.script.build.length;
+
+		for (var i = 0; i < total; i++) {
+			buildScripts.push(Wee.buildPath(config.script.build[i], scriptRoot));
+		}
+
+		buildScripts.push(scriptRoot + '/custom/script.js');
+
+		// Build other scripts
+		buildScripts.push(scriptRoot + '/build/**/*.js');
+
+		// Core files
 		if (config.script.core.enable) {
 			var features = config.script.core.features;
 
@@ -324,34 +340,6 @@ module.exports = function(grunt) {
 			if (features.chain) {
 				buildScripts.push(weeScriptRoot + 'wee.chain.js');
 			}
-		}
-
-		// Build
-		buildScripts.push(scriptRoot + '/build/**/*.js');
-
-		// Build configured
-		var total = config.script.build.length;
-
-		for (var i = 0; i < total; i++) {
-			buildScripts.push(Wee.buildPath(config.script.build[i], scriptRoot));
-		}
-
-		buildScripts.push(scriptRoot + '/custom/script.js');
-
-		// Compile custom
-		for (var target in config.script.compile) {
-			var sources = config.script.compile[target],
-				from = [];
-
-			if (sources instanceof Array) {
-				for (var source in sources) {
-					from.push(Wee.buildPath(sources[source], scriptRoot));
-				}
-			} else {
-				from = Wee.buildPath(sources, scriptRoot);
-			}
-
-			projectScript[Wee.buildPath(target, scriptRoot)] = from;
 		}
 
 		// Source maps
