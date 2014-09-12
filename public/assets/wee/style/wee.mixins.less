@@ -1812,7 +1812,7 @@
 	overflow: hidden;
 	position: relative;
 	&:before {
-		.content();
+		content: ' ';
 		.ratio(@ratio);
 	}
 }
@@ -1923,9 +1923,9 @@
 // Shapes
 
 .caret (...) {
+	content: ' ';
 	height: 0;
 	width: 0;
-	.content();
 }
 .caret (up; @color: @darkGray; @size: 5px; @horizontalSize: @size) {
 	.border(horizontal; transparent; @horizontalSize);
@@ -1947,7 +1947,7 @@
 // Rows
 
 .row (@margin: @gridMargin) {
-	.clear();
+	.clearfix();
 	.check () when not (@margin = false) {
 		.margin(left; (@margin * -1));
 		.max-width((100% + @margin));
@@ -2043,17 +2043,15 @@
 .right () {
 	float: right;
 }
-.clear () {
+.clearfix () {
 	&:after {
 		clear: both;
+		content : ' ';
 		display: table;
-		.content();
 	}
 }
-.clear (none) {
-	&:after {
-		clear: none;
-	}
+.clear (@value: both) {
+	clear: @value;
 }
 .align (center) {
 	text-align: center;
@@ -2093,10 +2091,10 @@
 .centered (vertical) {
 	position: absolute;
 	&:before {
+		content: ' ';
 		display: inline-block;
 		height: 100%;
 		vertical-align: middle;
-		.content();
 	}
 }
 .centered (both) {
