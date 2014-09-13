@@ -40,6 +40,10 @@ Wee.fn.make('events', {
 			});
 		}
 	},
+	// Remove bindings to bound object
+	unbind: function(id, evt) {
+		Wee.events.off('[data-bind=' + id + ']', evt);
+	},
 	// Execute specific function by name and event
 	fire: function(name, evt) {
 		var bound = this.$get('bound');
