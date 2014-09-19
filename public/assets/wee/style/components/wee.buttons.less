@@ -1,0 +1,101 @@
+// Wee 2.0.0 (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY THIS FILE
+
+.wee-button () when (@buttonEnabled = true) {
+	.rules () {
+		-webkit-tap-highlight-color: @buttonBackgroundHover;
+		color: @buttonColor;
+		cursor: pointer;
+		display: inline-block;
+		line-height: 1em;
+		text-align: center;
+		text-shadow: none;
+		.background(@buttonBackground);
+		.font(@buttonFont; @buttonFontSize; @buttonFontWeight);
+		.spaced(@buttonMarginBottom);
+		.padding(@buttonPaddingVertical; @buttonPaddingHorizontal);
+		&:hover {
+			color: @buttonColor;
+			.background-color(@buttonBackgroundHover);
+		}
+		&:active {
+			color: @buttonColor;
+			.background-color(@buttonBackgroundActive);
+		}
+	}
+	.rules () when not (@buttonRounded = false) {
+		.rounded(@buttonRounded);
+	}
+	.rules () when not (@buttonBorderColor = false) {
+		.border(@buttonBorderColor);
+	}
+	.rules () when (@buttonBorderColor = false) {
+		.border(0);
+	}
+	.rules () when (@buttonBevelEnabled = true) {
+		.shadow(inner; @buttonBevelColor; @buttonBevelOpacity; 0px);
+	}
+	.rules () when (@buttonTransitionEnabled = true) {
+		.transition(background-color);
+	}
+	.colored-rules () {
+		-webkit-tap-highlight-color: @coloredButtonBackgroundHover;
+		border-color: @coloredButtonBorderColor;
+		color: @coloredButtonColor;
+		.background(@coloredButtonBackground);
+		&:hover {
+			color: @coloredButtonColor;
+			.background-color(@coloredButtonBackgroundHover);
+		}
+		&:active {
+			color: @coloredButtonColor;
+			.background-color(@coloredButtonBackgroundActive);
+		}
+	}
+	.disabled-rules () {
+		cursor: @disabledButtonCursor;
+		&,
+		&:active,
+		&:hover {
+			color: @disabledButtonColor;
+			.background(@disabledButtonBackground);
+		}
+	}
+	.disabled-rules () when not (@buttonBorderColor = false) {
+		.border(@disabledButtonBorderColor);
+	}
+	.check () when (@buttonStyled = true) {
+		button,
+		input[type='button'],
+		input[type='reset'],
+		input[type='submit'],
+		.button {
+			.rules();
+			&.button-colored {
+				.colored-rules();
+			}
+			&[disabled],
+			&.button-disabled {
+				.disabled-rules();
+			}
+		}
+	}
+	.check () when not (@buttonStyled = true) {
+		.button {
+			.rules();
+		}
+		.button-colored {
+			.colored-rules();
+		}
+		.button[disabled],
+		.button-disabled {
+			.disabled-rules();
+		}
+	}
+	.check();
+	button[disabled] {
+		cursor: @disabledButtonCursor;
+	}
+}
+.wee-button();

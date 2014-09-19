@@ -1,0 +1,30 @@
+// Wee 2.0.0 (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY THIS FILE
+
+@import (reference) '../style/wee.variables.less';     // Core configuration
+@import (reference) '../../css/custom/variables.less'; // Custom configuration
+@import '../style/wee.mixins.less';                    // Mixins
+@import '../style/wee.reset.less';                     // Reset
+@import (reference) '../../css/custom/mixins.less';    // Custom mixins
+
+// Inject imports
+
+<%= imports %>
+
+// Core
+
+@import '../../css/custom/screen.less'; // Customizations
+
+// Responsive
+
+<%= responsive %>
+
+// Print
+
+<%= print %>
+
+// Framework
+
+@responsivePath: 'custom/breakpoints';
+@legacyMode: false;

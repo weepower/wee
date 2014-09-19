@@ -1,0 +1,114 @@
+// Wee 2.0.0 (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY THIS FILE
+
+// Import Breakpoints
+
+.mobile-landscape () when not (@mobileLandscapeWidth = false) {
+	@import '../../css/@{responsivePath}/mobile-landscape.less';
+}
+.tablet-portrait () when not (@tabletPortraitWidth = false) {
+	@import '../../css/@{responsivePath}/tablet-portrait.less';
+}
+.desktop-small () when not (@desktopSmallWidth = false) {
+	@import '../../css/@{responsivePath}/desktop-small.less';
+}
+.desktop-medium () when not (@desktopMediumWidth = false) {
+	@import '../../css/@{responsivePath}/desktop-medium.less';
+}
+.desktop-large () when not (@desktopLargeWidth = false) {
+	@import '../../css/@{responsivePath}/desktop-large.less';
+}
+
+// Components
+
+.responsive () when (@responsiveEnabled = true) and not (@legacyMode = true) {
+
+	// IE Metro Compatability
+
+	@-ms-viewport {
+		width: device-width;
+	}
+
+	// Mobile Landscape
+
+	.mobile-landscape-query () when not (@mobileLandscapeWidth = false) {
+		@breakpoint: (@mobileLandscapeWidth - @responsiveOffset);
+		@value: 2;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.mobile-landscape();
+		}
+	}
+
+	.mobile-landscape-query();
+
+	// Tablet Portrait
+
+	.tablet-portrait-query () when not (@tabletPortraitWidth = false) {
+		@breakpoint: (@tabletPortraitWidth - @responsiveOffset);
+		@value: 3;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.tablet-portrait();
+		}
+	}
+
+	.tablet-portrait-query();
+
+	// Small Desktop
+
+	.desktop-small-query () when not (@desktopSmallWidth = false) {
+		@breakpoint: (@desktopSmallWidth - @responsiveOffset);
+		@value: 4;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.desktop-small();
+		}
+	}
+
+	.desktop-small-query();
+
+	// Medium Desktop
+
+	.desktop-medium-query () when not (@desktopMediumWidth = false) {
+		@breakpoint: (@desktopMediumWidth - @responsiveOffset);
+		@value: 5;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.desktop-medium();
+		}
+	}
+
+	.desktop-medium-query();
+
+	// Large Desktop
+
+	.desktop-large-query () when not (@desktopLargeWidth = false) {
+		@breakpoint: (@desktopLargeWidth - @responsiveOffset);
+		@value: 6;
+
+		@media (min-width: @breakpoint) {
+			html {
+				font-family: '"@{value}"';
+			}
+			.desktop-large();
+		}
+	}
+
+	.desktop-large-query();
+}
+
+.responsive();

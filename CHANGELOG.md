@@ -1,3 +1,12 @@
+# 2.0.0
+
+2014-09-19
+
+- MAJOR: Complete rework of the Wee directory structure
+- MAJOR: Overhaul of the JavaScript structure and functionality
+- MAJOR: Major cleanup of the LESS library and addition of over two dozen new mixins
+- MAJOR: Grunt is now included as part of Wee by default and required for building
+
 # 1.1.4
 
 2014-01-21
@@ -22,7 +31,7 @@
 2014-01-09
 
 - FIXED: .background(none); will now compile correctly
-- ADDED: Added comment to empty reponsive files to resolve LESS 1.6 compile issue
+- ADDED: Added comment to empty responsive files to resolve LESS 1.6 compile issue
 - ADDED: Added new baseColor, resize, and display mixins
 - UPDATED: Slight cosmetic updates to the base index
 - UPDATED: Updated LESS version in lib to 1.6.0
@@ -62,7 +71,7 @@
 
 2013-10-26
 
-- ADDED: Added spaceless variablr to optionally eliminate grid inline-block space hacks with ability to override when generating grids
+- ADDED: Added spaceless variable to optionally eliminate grid inline-block space hacks with ability to override when generating grids
 - ADDED: Added sample grid to download
 
 # 1.0.6
@@ -99,7 +108,7 @@
 
 2013-10-06
 
-- ADDED: Added Bower compatability
+- ADDED: Added Bower compatibility
 - UPDATED: Added additional files to .gitignore
 - UPDATED: Optimized images with new Wee Grunt script
 

@@ -1,22 +1,31 @@
-# System
-.DS_Store
-.tmp
-Thumbs.db
+# Project
+
+# custom rules here
+
+# Wee
+node_modules
+bower_components
 
 # Tools
 .jshintrc
+.settings
+.bundle
 mixture.json
 prepros.json
 codekit-config.json
 
-# Compile
-package.json
-Gruntfile.js
-node_modules/
-bower_components/
-
-# Wee
-project.json
-
-# Source Maps
-.map
+# System
+Thumbs.db
+.DS_Store
+.tmp
+.cache
+*.diff
+*.tmproj
+*.err
+*.orig
+*.swp
+*.out
+*.gem
+*.log
+*.lock
+*.vi

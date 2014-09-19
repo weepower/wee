@@ -1,0 +1,2342 @@
+// Wee 2.0.0 (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY THIS FILE
+
+// Box Shadows
+
+.shadow (@value: '1px 1px 0 0 rgba(0, 0, 0, @{defaultOpacity})') when (isstring(@value)), (iskeyword(@value))
+		and not (@value = dark)
+		and not (@value = light)
+		and not (@value = inner) {
+	box-shadow: ~'@{value}';
+}
+.shadow (@color; @x: 1px; @y: 1px; @blur: 0; @spread: 0) when (iscolor(@color)) {
+	.wee-shadow(@color; @x; @y; @blur; @spread);
+}
+.shadow (inner; @color; @x: 1px; @y: 1px; @blur: 0; @spread: 0) when (iscolor(@color)) {
+	.wee-shadow(@color; @x; @y; @blur; @spread; 'inset ');
+}
+.shadow (light; @value: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0; @spread: 0; @prefix: '') {
+	.check () when not (isnumber(@value)) {
+		.shadow(@value);
+	}
+	.check () when (isnumber(@value))
+			and (@value =< 0) {
+		box-shadow: 0;
+	}
+	.check () when not (ispercentage(@value))
+			and (@value < 1)
+			and (@value > 0) {
+		.wee-shadow('rgba(255, 255, 255, @{value})'; @x; @y; @blur; @spread; @prefix);
+	}
+	.check () when not (ispercentage(@value))
+			and (@value >= 1), (@value >= 100) {
+		.wee-shadow(@white; @x; @y; @blur; @spread; @prefix);
+	}
+	.check () when (ispercentage(@value))
+			and (@value > 0)
+			and (@value < 100) {
+		@temp: unit((@value / 100));
+		.wee-shadow('rgba(255, 255, 255, @{temp})'; @x; @y; @blur; @spread; @prefix);
+	}
+	.check();
+}
+.shadow (inner; light; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+	.shadow(light; @opacity; @x; @y; @blur; @spread; 'inset ');
+}
+.shadow (dark; @value: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0; @spread: 0; @prefix: '') {
+	.check () when not (isnumber(@value)) {
+		.shadow(@value);
+	}
+	.check () when (isnumber(@value))
+			and (@value =< 0) {
+		box-shadow: 0;
+	}
+	.check () when not (ispercentage(@value))
+			and (@value < 1)
+			and (@value > 0) {
+		.wee-shadow('rgba(0, 0, 0, @{value})'; @x; @y; @blur; @spread; @prefix);
+	}
+	.check () when not (ispercentage(@value))
+			and (@value >= 1), (@value >= 100) {
+		.wee-shadow(@black; @x; @y; @blur; @spread; @prefix);
+	}
+	.check () when (ispercentage(@value))
+			and (@value > 0)
+			and (@value < 100) {
+		@temp: unit((@value / 100));
+		.wee-shadow('rgba(0, 0, 0, @{temp})'; @x; @y; @blur; @spread; @prefix);
+	}
+	.check();
+}
+.shadow (inner) {
+	.shadow(dark; light);
+}
+.shadow (inner; dark; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
+	.shadow(dark; @opacity; @x; @y; @blur; @spread; 'inset ');
+}
+.wee-shadow (@color; @x; @y; @blur; @spread; @prefix: '') {
+	@tempX: (@x * unit(1, @defaultUnit));
+	@tempY: (@y * unit(1, @defaultUnit));
+	@tempBlur: (@blur * unit(1, @defaultUnit));
+	@tempSpread: (@spread * unit(1, @defaultUnit));
+	.check () when (isunit(@tempX, rem)), (isunit(@x, rem)) {
+		@xRem: (@tempX * 1rem);
+		@yRem: (@tempY * 1rem);
+		@blurRem: (@tempBlur * 1rem);
+		@spreadRem: (@tempSpread * 1rem);
+		.shadow('@{prefix}@{xRem} @{yRem} @{blurRem} @{spreadRem} @{color}');
+	}
+	.check () when not (isunit(@tempX, rem))
+			and not (isunit(@x, rem)) {
+		.shadow('@{prefix}@{x} @{y} @{blur} @{spread} @{color}');
+	}
+	.check();
+}
+
+// Font Loading
+
+.load-font (@name; @file: @name; @weight: normal; @style: normal) {
+	@font-face {
+		font-family: @name;
+		src: url('@{fontPath}@{file}.eot');
+		src: url('@{fontPath}@{file}.eot?#iefix') format('embedded-opentype'),
+			 url('@{fontPath}@{file}.woff') format('woff'),
+			 url('@{fontPath}@{file}.ttf') format('truetype'),
+			 url('@{fontPath}@{file}.svg#@{name}') format('svg');
+		font-style: @style;
+		font-weight: @weight;
+	}
+}
+
+// Text Shadows
+
+.text-shadow (@value: '1px 1px 0 rgba(0, 0, 0, @{defaultOpacity})') when (isstring(@value)), (iskeyword(@value))
+		and not (@value = dark)
+		and not (@value = light)
+		and not (@value = inner) {
+	text-shadow: ~'@{value}';
+}
+.text-shadow (@color; @x: 1px; @y: 1px; @blur: 0) when (iscolor(@color)) {
+	.wee-text-shadow(@color; @x; @y; @blur);
+}
+.text-shadow (inner; @color; @x: 1px; @y: 1px; @blur: 0) when (iscolor(@color)) {
+	@negX: (@x * -1);
+	@negY: (@y * -1);
+	.wee-text-shadow(@color; @negX; @negY; @blur);
+}
+.text-shadow (light; @value: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
+	.check () when not (isnumber(@value)) {
+		.text-shadow(@value);
+	}
+	.check () when (isnumber(@value))
+			and (@value =< 0) {
+		text-shadow: none;
+	}
+	.check () when not (ispercentage(@value))
+			and (@value < 1)
+			and (@value > 0) {
+		.wee-text-shadow('rgba(255, 255, 255, @{value})'; @x; @y; @blur);
+	}
+	.check () when not (ispercentage(@value))
+			and (@value >= 1), (@value >= 100) {
+		.wee-text-shadow(@white; @x; @y; @blur);
+	}
+	.check () when (ispercentage(@value))
+			and (@value > 0)
+			and (@value < 100) {
+		@temp: unit((@value / 100));
+		.wee-text-shadow('rgba(255, 255, 255, @{temp})'; @x; @y; @blur);
+	}
+	.check();
+}
+.text-shadow (inner; light; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
+	@negX: (@x * -1);
+	@negY: (@y * -1);
+	.text-shadow(light; @opacity; @negX; @negY; @blur);
+}
+.text-shadow (dark; @value: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
+	.check () when not (isnumber(@value)) {
+		.text-shadow(@value);
+	}
+	.check () when (isnumber(@value))
+			and (@value =< 0) {
+		text-shadow: none;
+	}
+	.check () when not (ispercentage(@value))
+			and (@value < 1)
+			and (@value > 0) {
+		.wee-text-shadow('rgba(0, 0, 0, @{value})'; @x; @y; @blur);
+	}
+	.check () when not (ispercentage(@value))
+			and (@value >= 1), (@value >= 100) {
+		.wee-text-shadow(@black; @x; @y; @blur);
+	}
+	.check () when (ispercentage(@value))
+			and (@value > 0)
+			and (@value < 100) {
+		@temp: unit((@value / 100));
+		.wee-text-shadow('rgba(0, 0, 0, @{temp})'; @x; @y; @blur);
+	}
+	.check();
+}
+.text-shadow (inner; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) when (isnumber(@opacity)) {
+	@negX: (@x * -1);
+	@negY: (@y * -1);
+	.text-shadow(dark; @opacity; @negX; @negY; @blur);
+}
+.text-shadow (inner; dark; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
+	@negX: (@x * -1);
+	@negY: (@y * -1);
+	.text-shadow(dark; @opacity; @negX; @negY; @blur);
+}
+.wee-text-shadow (@color; @x; @y; @blur) {
+	@tempX: (@x * unit(1, @defaultUnit));
+	@tempY: (@y * unit(1, @defaultUnit));
+	@tempBlur: (@blur * unit(1, @defaultUnit));
+	.check () when (isunit(@tempX, rem)), (isunit(@x, rem)) {
+		@xRem: (@tempX * 1rem);
+		@yRem: (@tempY * 1rem);
+		@blurRem: (@tempBlur * 1rem);
+		.text-shadow('@{xRem} @{yRem} @{blurRem} @{color}');
+	}
+	.check () when not (isunit(@tempX, rem))
+			and not (isunit(@x, rem)) {
+		.text-shadow('@{x} @{y} @{blur} @{color}');
+	}
+	.check();
+}
+
+// Font Selection
+
+.font (@family) {
+	font-family: @family;
+}
+.font (@family; @size) {
+	font-family: @family;
+	.font-size(@size);
+}
+.font (@family; @size; @weight) {
+	.font(@family; @size);
+	.font-weight(@weight);
+}
+.font (@family; @size; @weight; @lineHeight) {
+	.font(@family; @size; @weight);
+	.line-height(@lineHeight);
+}
+.font (@family; @size; @weight; @lineHeight; @style) {
+	.font(@family; @size; @weight; @lineHeight);
+	.font-style(@style);
+}
+
+// Font Family
+
+.font-family (@value) when (isstring(@value)) and not (@value = false) {
+	font-family: ~'@{value}';
+}
+.font-family (@value: @baseFont) when not (isstring(@value)) {
+	font-family: @value;
+}
+
+// Font Size
+
+.font-size (@value: @baseLineHeight) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		font-size: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			font-size: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			font-size: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.font-size (@value; @lineHeight) {
+	.font-size(@value);
+	.line-height(@lineHeight);
+}
+
+// Font Weight
+
+.font-weight (@value: @baseFontWeight) when not (@value = false) {
+	font-weight: @value;
+}
+
+// Font Style
+
+.font-style (@value: normal) when not (@value = false) {
+	font-style: @value;
+}
+
+// Line Height
+
+.line-height (@value: @baseLineHeight) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		line-height: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			line-height: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			line-height: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+
+// Text Styling
+
+.text-sharpen () {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+}
+.capitalize () {
+	text-transform: capitalize;
+}
+.lowercase () {
+	text-transform: lowercase;
+}
+.uppercase () {
+	text-transform: uppercase;
+}
+.text-transform (@value: none) {
+	text-transform: @value;
+}
+.no-wrap () {
+	white-space: nowrap;
+}
+.ellipsis () {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.underline () {
+	text-decoration: underline;
+}
+.underline (@style; @color: inherit) {
+	.text-decoration(underline; @style; @color);
+}
+.line-through () {
+	text-decoration: line-through;
+}
+.text-decoration (@value: underline) {
+	text-decoration: @value;
+}
+.text-decoration (@line; @style; @color: inherit) {
+	.text-decoration(@line);
+	-moz-text-decoration-line: @line;
+	-moz-text-decoration-style: @style;
+	-moz-text-decoration-color: @color;
+	text-decoration: @color @style @line;
+}
+.outline (@value: 'thin dotted') {
+	outline: ~'@{value}';
+}
+.letter-spacing (@value) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		letter-spacing: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			letter-spacing: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			letter-spacing: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.word-spacing (@value) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		word-spacing: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			word-spacing: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			word-spacing: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.text-indent (@value) {
+	text-indent: @value;
+}
+.user-select (@value: none) {
+	-moz-user-select: @value;
+	-ms-user-select: @value;
+	-webkit-user-select: @value;
+	user-select: @value;
+}
+
+// Content
+
+.content (@value: ' '; @font: false) {
+	content: ~"'@{value}'";
+	.check () when not (@font = false) {
+		font-family: @font;
+	}
+	.check();
+}
+.prefix (@value: '-'; @margin: .5em; @font: false; @color: false) {
+	&:before {
+		.content(@value; @font);
+		.margin(right; @margin);
+		.check () when not (@font = false) {
+			font-family: @font;
+		}
+		.check () when not (@color = false) {
+			color: @color;
+		}
+		.check();
+	}
+}
+.suffix (@value: '-'; @margin: .5em; @font: false; @color: false) {
+	&:after {
+		.content(@value; @font);
+		.margin(left; @margin);
+		.check () when not (@font = false) {
+			font-family: @font;
+		}
+		.check () when not (@color = false) {
+			color: @color;
+		}
+		.check();
+	}
+}
+.bookends (@value: '-'; @margin: .5em; @font: false; @color: false) {
+	.prefix(@value; @margin; @font; @color);
+	.suffix(@value; @margin; @font; @color);
+}
+
+// Margin
+
+.margin (@value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		margin: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			margin: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			margin: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.margin (top; @value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		margin-top: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			margin-top: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			margin-top: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.margin (right; @value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		margin-right: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			margin-right: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			margin-right: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.margin (bottom; @value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		margin-bottom: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			margin-bottom: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			margin-bottom: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.margin (left; @value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		margin-left: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			margin-left: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			margin-left: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.margin (horizontal; @value) {
+	.margin(left; @value);
+	.margin(right; @value);
+}
+.margin (horizontal; @left; @right) {
+	.margin(left; @left);
+	.margin(right; @right);
+}
+.margin (vertical; @value) {
+	.margin(top; @value);
+	.margin(bottom; @value);
+}
+.margin (vertical; @top; @bottom) {
+	.margin(top; @top);
+	.margin(bottom; @bottom);
+}
+.margin (@y; @x) when not (iskeyword(@y)) {
+	.margin(@y; @x; @y; @x);
+}
+.margin (@top; @right; @bottom; @left) {
+	.margin(top; @top);
+	.margin(right; @right);
+	.margin(bottom; @bottom);
+	.margin(left; @left);
+}
+
+// Padding
+
+.padding (@value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		padding: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			padding: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			padding: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.padding (top; @value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		padding-top: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			padding-top: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			padding-top: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.padding (right; @value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		padding-right: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			padding-right: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			padding-right: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.padding (bottom; @value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		padding-bottom: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			padding-bottom: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			padding-bottom: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.padding (left; @value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		padding-left: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			padding-left: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			padding-left: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.padding (horizontal) {
+	.padded();
+}
+.padding (horizontal; @value) {
+	.padding(left; @value);
+	.padding(right; @value);
+}
+.padding (horizontal; @left; @right) {
+	.padding(left; @left);
+	.padding(right; @right);
+}
+.padding (vertical; @value) {
+	.padding(top; @value);
+	.padding(bottom; @value);
+}
+.padding (vertical; @top; @bottom) {
+	.padding(top; @top);
+	.padding(bottom; @bottom);
+}
+.padding (@vertical; @horizontal) when not (iskeyword(@vertical)) {
+	.padding(@vertical; @horizontal; @vertical; @horizontal);
+}
+.padding (@top; @right; @bottom; @left) {
+	.padding(top; @top);
+	.padding(right; @right);
+	.padding(bottom; @bottom);
+	.padding(left; @left);
+}
+.padded (@padding: @bumperPadding) when not (@padding = false) {
+	.padding(horizontal; @padding);
+}
+
+// Borders
+
+.border (@value) when (isstring(@value)), (@value = none), (@value = 0) and not (@value = false) {
+	border: ~'@{value}';
+}
+.border (@color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
+	.check () when not (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		border: @value @style @color;
+	}
+	.check () when (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border: unit(@temp, rem) @style @color;
+		}
+		.check() when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border: @temp @style @color;
+		}
+		.check();
+	}
+	.check();
+}
+.border (dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+	.border(@fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border: @value @style rgba(0, 0, 0, (@opacity / 100));
+	}
+	.check (@opacity) when (@value < 1) {
+		border: @value @style rgba(0, 0, 0, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+	.border(@fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border: @value @style rgba(255, 255, 255, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border: @value @style rgba(255, 255, 255, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (top; @color: @baseColor; @value: 1px; @style: solid) {
+	.check () when (@color = 0), (iskeyword(@color)) {
+		border-top: 0;
+	}
+	.check () when not (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		border-top: @value @style @color;
+	}
+	.check () when (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-top: unit(@temp, rem) @style @color;
+		}
+		.check() when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-top: @temp @style @color;
+		}
+		.check();
+	}
+	.check();
+}
+.border (top; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+	.border(top; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-top: @value @style rgba(0, 0, 0, (@opacity / 100));
+	}
+	.check (@value) when (@opacity < 1) {
+		border-top: @value @style rgba(0, 0, 0, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-top: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (top; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+	.border(top; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@value)) {
+		border-top: @value @style rgba(255, 255, 255, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-top: @value @style rgba(255, 255, 255, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-top: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (right; @color: @baseColor; @value: 1px; @style: solid) {
+	.check () when (@color = 0), (iskeyword(@color)) {
+		border-right: 0;
+	}
+	.check () when not (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		border-right: @value @style @color;
+	}
+	.check () when (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-right: unit(@temp, rem) @style @color;
+		}
+		.check() when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-right: @temp @style @color;
+		}
+		.check();
+	}
+	.check();
+}
+.border (right; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+	.border(right; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-right: @value @style rgba(0, 0, 0, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-right: @value @style rgba(0, 0, 0, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-right: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (right; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+	.border(right; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-right: @value @style rgba(255, 255, 255, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-right: @value @style rgba(255, 255, 255, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-right: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (bottom; @color: @baseColor; @value: 1px; @style: solid) {
+	.check () when (@color = 0), (iskeyword(@color)) {
+		border-bottom: 0;
+	}
+	.check () when not (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		border-bottom: @value @style @color;
+	}
+	.check () when (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-bottom: unit(@temp, rem) @style @color;
+		}
+		.check() when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-bottom: @temp @style @color;
+		}
+		.check();
+	}
+	.check();
+}
+.border (bottom; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+	.border(bottom; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-bottom: @value @style rgba(0, 0, 0, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-bottom: @value @style rgba(0, 0, 0, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-bottom: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (bottom; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+	.border(bottom; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-bottom: @value @style rgba(255, 255, 255, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-bottom: @value @style rgba(255, 255, 255, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-bottom: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (left; @color: @baseColor; @value: 1px; @style: solid) {
+	.check () when (@color = 0), (iskeyword(@color)) {
+		border-left: 0;
+	}
+	.check () when not (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		border-left: @value @style @color;
+	}
+	.check () when (isnumber(@value))
+			and not (@color = 0)
+			and not (iskeyword(@color)) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-left: unit(@temp, rem) @style @color;
+		}
+		.check() when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-left: @temp @style @color;
+		}
+		.check();
+	}
+	.check();
+}
+.border (left; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+	.border(left; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-left: @value @style rgba(0, 0, 0, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-left: @value @style rgba(0, 0, 0, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-left: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (left; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+	.border(left; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-left: @value @style rgba(255, 255, 255, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-left: @value @style rgba(255, 255, 255, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-left: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (horizontal; @value) when (@value = 0), (iskeyword(@value)) {
+	.border(left; @value);
+	.border(right; @value);
+}
+.border (horizontal; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
+	.border(left; @color; @value; @style);
+	.border(right; @color; @value; @style);
+}
+.border (horizontal; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+	.border(left; @fallback; @value; @style);
+	.border(right; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-left: @value @style rgba(0, 0, 0, (@opacity / 100));
+		border-right: @value @style rgba(0, 0, 0, (@opacity / 100));
+	}
+	.check (@opacity) when (@value < 1) {
+		border-left: @value @style rgba(0, 0, 0, @opacity);
+		border-right: @value @style rgba(0, 0, 0, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-left: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
+		border-right: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (horizontal; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+	.border(left; @fallback; @value; @style);
+	.border(right; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-left: @value @style rgba(255, 255, 255, (@opacity / 100));
+		border-right: @value @style rgba(255, 255, 255, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-left: @value @style rgba(255, 255, 255, @opacity);
+		border-right: @value @style rgba(255, 255, 255, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-left: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
+		border-right: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (vertical; @value) when (@value = 0), (iskeyword(@value)) {
+	.border(top; @value);
+	.border(bottom; @value);
+}
+.border (vertical; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+	.border(top; @fallback; @value; @style);
+	.border(bottom; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-top: @value @style rgba(0, 0, 0, (@opacity / 100));
+		border-bottom: @value @style rgba(0, 0, 0, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-top: @value @style rgba(0, 0, 0, @opacity);
+		border-bottom: @value @style rgba(0, 0, 0, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-top: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
+		border-bottom: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (vertical; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+	.border(top; @fallback; @value; @style);
+	.border(bottom; @fallback; @value; @style);
+	.check (@opacity) when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		border-top: @value @style rgba(255, 255, 255, (@opacity / 100));
+		border-bottom: @value @style rgba(255, 255, 255, (@opacity / 100));
+	}
+	.check (@opacity) when (@opacity < 1) {
+		border-top: @value @style rgba(255, 255, 255, @opacity);
+		border-bottom: @value @style rgba(255, 255, 255, @opacity);
+	}
+	.check (@opacity) when (ispercentage(@opacity)) {
+		border-top: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
+		border-bottom: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
+	}
+	.check(@opacity);
+}
+.border (vertical; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
+	.border(bottom; @color; @value; @style);
+	.border(top; @color; @value; @style);
+}
+.border (@top; @right; @bottom; @left; @color: @baseColor; @style: solid) when not (iskeyword(@top))
+		and (isnumber(@bottom)) {
+	.border(bottom; @color; @bottom; @style);
+	.border(left; @color; @left; @style);
+	.border(right; @color; @right; @style);
+	.border(top; @color; @top; @style);
+}
+.border-image (@filename; @slice: 100%; @width; 1; @outset: 0; @repeat: stretch) {
+	-webkit-border-image: url('@{imagePath}@{filename}') @slice @width @outset @repeat;
+	border-image: url('@{imagePath}@{filename}') @slice @width @outset @repeat;
+}
+.border-color (@color) {
+	border-color: @color;
+}
+.border-color (top; @color) {
+	border-top-color: @color;
+}
+.border-color (right; @color) {
+	border-right-color: @color;
+}
+.border-color (bottom; @color) {
+	border-bottom-color: @color;
+}
+.border-color (left; @color) {
+	border-left-color: @color;
+}
+.border-style (@style) {
+	border-style: @style;
+}
+.border-style (top; @style) {
+	border-top-style: @style;
+}
+.border-style (right; @style) {
+	border-top-style: @style;
+}
+.border-style (bottom; @style) {
+	border-top-style: @style;
+}
+.border-style (left; @style) {
+	border-top-style: @style;
+}
+.border-width (@width) {
+	border-width: @width;
+}
+.border-width (top; @width) {
+	border-top-width: @width;
+}
+.border-width (right; @width) {
+	border-right-width: @width;
+}
+.border-width (bottom; @width) {
+	border-bottom-width: @width;
+}
+.border-width (left; @width) {
+	border-left-width: @width;
+}
+
+// Rounded Corners
+
+.rounded (...) {
+	.background-clip();
+}
+.rounded (@value: 3px) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		border-radius: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-radius: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-radius: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.rounded (top; @value: 3px) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		border-top-left-radius: @value;
+		border-top-right-radius: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-top-left-radius: unit(@temp, rem);
+			border-top-right-radius: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-top-left-radius: @temp;
+			border-top-right-radius: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.rounded (top; right; @value: 3px) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		border-top-right-radius: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-top-right-radius: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-top-right-radius: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.rounded (top; left; @value: 3px) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		border-top-left-radius: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-top-left-radius: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-top-left-radius: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.rounded (right; @value: 3px) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		border-top-right-radius: @value;
+		border-bottom-right-radius: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-top-right-radius: unit(@temp, rem);
+			border-bottom-right-radius: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-top-right-radius: @temp;
+			border-bottom-right-radius: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.rounded (bottom; @value: 3px) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		border-bottom-right-radius: @value;
+		border-bottom-left-radius: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-bottom-right-radius: unit(@temp, rem);
+			border-bottom-left-radius: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-bottom-right-radius: @temp;
+			border-bottom-left-radius: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.rounded (bottom; right; @value: 3px) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		border-bottom-right-radius: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-bottom-right-radius: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-bottom-right-radius: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.rounded (bottom; left; @value: 3px) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		border-bottom-left-radius: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-bottom-left-radius: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-bottom-left-radius: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.rounded (left; @value: 3px) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		border-top-left-radius: @value;
+		border-bottom-left-radius: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			border-top-right-radius: unit(@temp, rem);
+			border-bottom-left-radius: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			border-top-left-radius: @temp;
+			border-bottom-left-radius: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.rounded (@topRight; @bottomRight; @bottomLeft; @topLeft) {
+	.rounded(top; right; @topRight);
+	.rounded(bottom; right; @bottomRight);
+	.rounded(bottom; left; @bottomLeft);
+	.rounded(top; left; @topLeft);
+}
+
+// Transitions
+
+.transition (@value) when (isstring(@value)) {
+	-moz-transition: ~'@{value}';
+	-webkit-backface-visibility: hidden;
+	-webkit-transition: ~'@{value}';
+	transition: ~'@{value}';
+}
+.transition (@property: all; @duration: @defaultDuration; @ease: ease-in-out; @delay: 0s) {
+	-moz-transition: @arguments;
+	-webkit-backface-visibility: hidden;
+	-webkit-transition: @arguments;
+	transition: @arguments;
+}
+.transition-delay (@delay: 1s) {
+	-webkit-transition-delay: @delay;
+	transition-delay: @delay;
+}
+.transition-duration (@duration: @defaultDuration) {
+	-webkit-transition-duration: @duration;
+	transition-duration: @duration;
+}
+
+// Backgrounds
+
+.background (@value) when (@value = 0) {
+	background: none;
+}
+.background (@value) when (isstring(@value)), (iskeyword(@value)) {
+	background: ~'@{value}';
+}
+.background (@color: @bodyBackground) when (iscolor(@color)) {
+	background: @color;
+}
+.background (@color; @filename) when not (iskeyword(@color)) {
+	background: @color url('@{imagePath}@{filename}');
+}
+.background (@color; @filename; @repeat) when (isstring(@repeat)), (iskeyword(@repeat)) {
+	background: @color url('@{imagePath}@{filename}') @repeat;
+}
+.background (@color; @filename; @x; @y: 0; @repeat: no-repeat) when (isnumber(@x)) {
+	background: @color url('@{imagePath}@{filename}') @x @y @repeat;
+}
+.background (light; @opacity; @fallback: @white) {
+	background-color: @fallback;
+}
+.background (light; @opacity; ...) when (@opacity > 1)
+		and not (ispercentage(@opacity)) {
+	background-color: rgba(255, 255, 255, (@opacity / 100));
+}
+.background (light; @opacity; ...) when (@opacity < 1) {
+	background-color: rgba(255, 255, 255, @opacity);
+}
+.background (light; @opacity; ...) when (ispercentage(@opacity)) {
+	background-color: rgba(255, 255, 255, unit((@opacity / 100)));
+}
+.background (dark; @opacity; @fallback: @black) {
+	background-color: @fallback;
+}
+.background (dark; @opacity; ...) when (@opacity > 1)
+		and not (ispercentage(@opacity)) {
+	background-color: rgba(0, 0, 0, (@opacity / 100));
+}
+.background (dark; @opacity; ...) when (@opacity < 1) {
+	background-color: rgba(0, 0, 0, @opacity);
+}
+.background (dark; @opacity; ...) when (ispercentage(@opacity)) {
+	background-color: rgba(0, 0, 0, unit((@opacity / 100)));
+}
+.background-color (@color: @bodyBackground) {
+	background-color: @color;
+}
+.background-image (@value) when (iskeyword(@value)) {
+	background-image: @value;
+}
+.background-image (@filename) when not (iskeyword(@filename)) {
+	background-image: url('@{imagePath}@{filename}');
+}
+.background-image (@filename; @repeat) when not (iskeyword(@filename)) and (iskeyword(@repeat)) {
+	background-image: url('@{imagePath}@{filename}');
+	.background-repeat(@repeat);
+}
+.background-image (retina; @filename; @width: auto; @height: auto) {
+	.background-image(@filename);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
+}
+.background-image (@filename; @x; @y: 0; @repeat: no-repeat) when not (iskeyword(@filename)) and (isnumber(@x)) {
+	.background-image(@filename);
+	.background-position(@x; @y);
+	.background-repeat(@repeat);
+}
+.background-image (retina; @filename; @width; @height; @x; @y: 0; @repeat: no-repeat) {
+	.background-image(@filename; @x; @y; @repeat);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
+}
+.background-image (@filename; @x; @y; @repeat; @attachment) when not (iskeyword(@filename)) and (isnumber(@x)) {
+	.background-attachment(@attachment);
+	.background-image(@filename; @x; @y; @repeat);
+}
+.background-image (retina; @filename; @width; @height; @x; @y; @repeat; @attachment) {
+	.background-image(@filename; @x; @y; @repeat; @attachment);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
+}
+.background-image (@filename; @x; @y; @repeat; @attachment; @size) when not (iskeyword(@filename)) and (isnumber(@x)) {
+	.background-image(@filename; @x; @y; @repeat; @attachment);
+	.background-size(@size);
+}
+.background-image (@filename; @x; @y; @repeat; @attachment; @width; @height) when (isnumber(@x)) {
+	.background-image(@filename; @x; @y; @repeat; @attachment);
+	.background-size(@width; @height);
+}
+.background-gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2); @angle: 180) {
+	@deg: unit(@angle, deg);
+	@revDeg: unit(mod((450 - @angle), 360), deg);
+	background-color: @color;
+	background-color: @start;
+	.background('-webkit-linear-gradient(@{revDeg}, @{start}, @{end})');
+	.background('linear-gradient(@{deg}, @{start}, @{end})');
+}
+.background-gradient (@color: @gray; @spread; @angle: 180) when (ispercentage(@spread)) {
+	@lighter: lighten(@color, @spread);
+	@darker: darken(@color, @spread);
+	@deg: unit(@angle, deg);
+	@revDeg: unit(mod((450 - @angle), 360), deg);
+	background-color: @color;
+	.background('-webkit-linear-gradient(@{revDeg}, @{lighter}, @{darker})');
+	.background('linear-gradient(@{deg}, @{lighter}, @{darker})');
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{lighter}', endColorstr='@{darker}', GradientType=0);
+}
+.background-gradient (dark; @start: 0; @end: 1; @angle: 180) {
+	@start: rgba(0, 0, 0, @start);
+	@end: rgba(0, 0, 0, @end);
+	@deg: unit(@angle, deg);
+	@revDeg: unit(mod((450 - @angle), 360), deg);
+	.background('-webkit-linear-gradient(@{revDeg}, @{start}, @{end})');
+	.background('linear-gradient(@{deg}, @{start}, @{end})');
+}
+.background-gradient (light; @start: 0; @end: 1; @angle: 180) {
+	@start: rgba(255, 255, 255, @start);
+	@end: rgba(255, 255, 255, @end);
+	@deg: unit(@angle, deg);
+	@revDeg: unit(mod((450 - @angle), 360), deg);
+	.background('-webkit-linear-gradient(@{revDeg}, @{start}, @{end})');
+	.background('linear-gradient(@{deg}, @{start}, @{end})');
+}
+.background-attachment (...) {
+	background-attachment: @arguments;
+}
+.background-position (@x: 0; @y: 0) {
+	background-position: @x @y;
+}
+.background-repeat (...) {
+	background-repeat: @arguments;
+}
+.background-size (@size) {
+	background-size: @size;
+}
+.background-size (@width; @height) {
+	background-size: @width @height;
+}
+.background-clip (@value: border-box) {
+	-moz-background-clip: @value;
+	-webkit-background-clip: ~'@{value}';
+	background-clip: ~'@{value}';
+}
+.sprite (@color; @x: 0; @y: 0; @repeat: no-repeat; @filename: @spriteFilename) when (iscolor(@color)) {
+	.background(@color; @filename; @x; @y; @repeat);
+}
+.sprite (retina; @color; @width: auto; @height: auto; @x: 0; @y: 0; @repeat: no-repeat; @filename: @spriteFilename) when (iscolor(@color)) {
+	.background(@color; @filename; @x; @y; @repeat);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
+}
+.sprite (@x: 0; @y: 0; @repeat: no-repeat; @filename: @spriteFilename) when (isnumber(@x)) {
+	.background-image(@filename);
+	.background-position(@x; @y);
+	.background-repeat(@repeat);
+}
+.sprite (retina; @x: 0; @y: 0; @width: @retinaSpriteWidth; @height: @retinaSpriteHeight; @repeat: no-repeat; @filename: @spriteFilename) when (isnumber(@x)) {
+	.background-image(@filename);
+	.background-position(@x; @y);
+	.background-repeat(@repeat);
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min--moz-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		@retinaFilename: ~`@{filename}.split('.').slice(0, @{filename}.split('.').length - 1).join('.') + @{retinaSuffix} + '.' + @{filename}.split('.')[@{filename}.split('.').length - 1]`;
+		.background-image(@retinaFilename);
+		.background-size(@width; @height);
+	}
+}
+
+// Colors
+
+.color (@color) {
+	color: @color;
+}
+.baseColor () {
+	color: @baseColor;
+}
+.white () {
+	color: @white;
+}
+.lightestGray () {
+	color: @lightestGray;
+}
+.lighterGray () {
+	color: @lighterGray;
+}
+.lightGray () {
+	color: @lightGray;
+}
+.gray () {
+	color: @gray;
+}
+.darkGray () {
+	color: @darkGray;
+}
+.darkerGray () {
+	color: @darkerGray;
+}
+.darkestGray () {
+	color: @darkestGray;
+}
+.black () {
+	color: @black;
+}
+
+// Transforms
+
+.transform (...) {
+	-ms-transform: @arguments;
+	-webkit-transform: @arguments;
+	transform: @arguments;
+}
+.rotate (@angle: 45) {
+	.transform(rotate(unit(@angle, deg)));
+}
+.scale (@deg: 1) {
+	.transform(scale(@deg));
+}
+.skew (@x: 45; @y: 0) when not (iskeyword(@x)) {
+	.transform(skew(unit(@x, deg), unit(@y, deg)));
+}
+.skew (x; @x: 45) {
+	.transform(skewX(unit(@x, deg)));
+}
+.skew (y; @y: 45) {
+	.transform(skewY(unit(@y, deg)));
+}
+.transform-origin (@x; @y: 0) {
+	.transform(transform-origin(@x, @y));
+}
+.translate (@x: 0; @y: 0) {
+	.transform(translate(@x, @y));
+}
+.translate (@x; @y; @z) {
+	-webkit-transform: translate3d(@x, @y, @z);
+	transform: translate3d(@x, @y, @z);
+}
+
+// Filters
+
+.filter (@value) when (isstring(@value)), (iskeyword(@value)) {
+	-webkit-filter: ~'@{value}';
+}
+.blur (@value: 2px) {
+	.filter('blur(@{value})');
+}
+.brightness (@value: .5) {
+	.filter('brightness(@{value})');
+}
+.contrast (@value: 1.5) {
+	.filter('contrast(@{value})');
+}
+.grayscale (@value: 1) {
+	.filter('grayscale(@{value})');
+}
+.hue-rotate (@value: 180deg) {
+	.filter('hue-rotate(@{value})');
+}
+.invert (@value: 1) {
+	.filter('invert(@{value})');
+}
+.saturate (@value: .5) {
+	.filter('saturate(@{value})');
+}
+.sepia (@value: .5) {
+	.filter('sepia(@{value})');
+}
+.drop-shadow (@value: '1px 1px 0 rgba(0, 0, 0, @{defaultOpacity})') when (isstring(@value)), (iskeyword(@value)) {
+	filter: drop-shadow(@value);
+}
+.drop-shadow (@color; @x: 1px; @y: 1px; @blur: 0) when (iscolor(@color)) {
+	.drop-shadow('@{x} @{y} @{blur} @{color}');
+}
+.drop-shadow (light; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
+	.drop-shadow('@{x} @{y} @{blur} rgba(255, 255, 255, @{opacity})');
+}
+.drop-shadow (dark; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0) {
+	.drop-shadow('@{x} @{y} @{blur} rgba(0, 0, 0, @{opacity})');
+}
+
+// Animation
+
+.animation (...) {
+	-moz-animation: @arguments;
+	-webkit-animation: @arguments;
+	animation: @arguments;
+}
+
+// Blocks
+
+.block-row () {
+	display: block;
+	margin-left: 0;
+	width: auto;
+}
+.block-column () {
+	display: block;
+	margin-left: 0;
+	width: auto;
+}
+.centered-block () {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+.centered-block (@maxWidth; ...) {
+	.centered-block();
+	.max-width(@maxWidth);
+}
+.centered-block (@maxWidth; @margin) {
+	.spaced(@margin);
+}
+
+// Positioning
+
+.top (@value: 0) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		top: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			top: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			top: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.right (@value) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		right: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			right: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			right: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.bottom (@value: 0) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		bottom: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			bottom: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			bottom: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.left (@value) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		left: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			left: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			left: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.position (@value; ...) when not (@value = false) {
+	position: @value;
+}
+.position (@value; @top; ...) when not (@top = false) {
+	.top(@top);
+}
+.position (@value; @top; @right; ...) when not (@right = false) {
+	.right(@right);
+}
+.position (@value; @top; @right; @bottom; ...) when not (@bottom = false) {
+	.bottom(@bottom);
+}
+.position (@value; @top; @right; @bottom; @left) when not (@left = false) {
+	.left(@left);
+}
+.absolute (...) {
+	position: absolute;
+}
+.absolute (@top; ...) when not (@top = false) {
+	.top(@top);
+}
+.absolute (@top; @right; ...) when not (@right = false) {
+	.right(@right);
+}
+.absolute (@top; @right; @bottom; ...) when not (@bottom = false) {
+	.bottom(@bottom);
+}
+.absolute (@top; @right; @bottom; @left) when not (@left = false) {
+	.left(@left);
+}
+.fixed (...) {
+	position: fixed;
+}
+.fixed (@top; ...) when not (@top = false) {
+	.top(@top);
+}
+.fixed (@top; @right; ...) when not (@right = false) {
+	.right(@right);
+}
+.fixed (@top; @right; @bottom; ...) when not (@bottom = false) {
+	.bottom(@bottom);
+}
+.fixed (@top; @right; @bottom; @left) when not (@left = false) {
+	.left(@left);
+}
+.relative () {
+	position: relative;
+}
+.static () {
+	position: static;
+}
+.z-index (@index: 1) {
+	z-index: @index;
+}
+
+// Sizing
+
+.width (@value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		width: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			width: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			width: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.width (@width; @maxWidth) {
+	.width(@width);
+	.max-width(@maxWidth);
+}
+.height (@value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		height: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			height: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			height: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.height (@height; @maxHeight) {
+	.height(@height);
+	.max-height(@maxHeight);
+}
+.size (@width; @height) {
+	.width(@width);
+	.height(@height);
+}
+.min-size (@width; @height) {
+	.min-width(@width);
+	.min-height(@height);
+}
+.max-size (@width; @height) {
+	.max-width(@width);
+	.max-height(@height);
+}
+.square (@size) {
+	.size(@size; @size);
+}
+.ratio (@ratio: (16 / 9)) when not (iskeyword(@ratio)) {
+	display: block;
+	height: 0;
+	.padding(top; ((1 / @ratio) * 100%));
+}
+.ratio (embed; @ratio: (16 / 9)) {
+	overflow: hidden;
+	position: relative;
+	&:before {
+		content: ' ';
+		.ratio(@ratio);
+	}
+}
+.circle (@diameter) {
+	.rounded((@diameter / 2));
+	.square(@diameter);
+}
+.circle (@diameter; @crop) when (@crop = true) {
+	.crop();
+}
+.min-width (@value: @minWidth) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		min-width: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			min-width: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			min-width: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.max-width (@value: @maxWidth) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		max-width: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			max-width: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			max-width: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.min-height (@value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		min-height: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			min-height: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			min-height: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+.max-height (@value) when not (@value = false) {
+	.check () when not (isnumber(@value)), (@value = 0) {
+		max-height: @value;
+	}
+	.check () when (isnumber(@value))
+			and not (@value = 0) {
+		@temp: (@value * unit(1, @defaultUnit));
+		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
+			max-height: unit(@temp, rem);
+		}
+		.check () when not (isunit(@temp, rem))
+				and not (isunit(@value, rem)) {
+			max-height: @temp;
+		}
+		.check();
+	}
+	.check();
+}
+
+// Opacity
+
+.opacity (@value) when (@value > 1)
+		and not (ispercentage(@value)) {
+	filter: ~'alpha(opacity=@{value})';
+	opacity: (@value / 100);
+}
+.opacity (@value) when (@value < 1) {
+	@ieValue: (@value * 100);
+	filter: ~'alpha(opacity=@{ieValue})';
+	opacity: @value;
+}
+.opacity (@value) when (ispercentage(@value)) {
+	@ieValue: unit(@value);
+	filter: ~'alpha(opacity=@{ieValue})';
+	opacity: unit((@value / 100));
+}
+.transparent () {
+	.opacity(0);
+}
+.opaque () {
+	.opacity(100);
+}
+
+// Shapes
+
+.caret (...) {
+	content: ' ';
+	height: 0;
+	width: 0;
+}
+.caret (up; @color: @darkGray; @size: 5px; @horizontalSize: @size) {
+	.border(horizontal; transparent; @horizontalSize);
+	.border(bottom; @color; @size);
+}
+.caret (down; @color: @darkGray; @size: 5px; @horizontalSize: @size) {
+	.border(horizontal; transparent; @horizontalSize);
+	.border(top; @color; @size);
+}
+.caret (right; @color: @darkGray; @size: 5px; @verticalSize: @size) {
+	.border(vertical; transparent; @verticalSize);
+	.border(left; @color; @size);
+}
+.caret (left; @color: @darkGray; @size: 5px; @verticalSize: @size) {
+	.border(vertical; transparent; @verticalSize);
+	.border(right; @color; @size);
+}
+
+// Rows
+
+.row (@margin: @gridMargin) {
+	.clearfix();
+	.check () when not (@margin = false) {
+		.margin(left; (@margin * -1));
+		.max-width((100% + @margin));
+	}
+	.check();
+}
+.row-modify (@margin: @gridMargin) {
+	.margin(left; (@margin * -1));
+	.max-width((100% + @margin));
+}
+.row-reset () {
+	margin-left: 0;
+	max-width: none;
+}
+
+// Columns
+
+.column (@width: false) when (ispercentage(@width)), (ispixel(@width)), (isunit(@width, 'rem')) and not (@width = false) {
+	float: left;
+	.width(@width);
+}
+.column (@share; @columns: @gridColumns) when not (iskeyword(@share))
+		and not (ispercentage(@share))
+		and not (ispixel(@share))
+		and not (isunit(@share, 'rem')) {
+	float: left;
+	width: ((100% / @columns) * @share);
+}
+.column (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) {
+	float: left;
+	width: (((100% / @columns) * @share) - (@margin));
+	.margin(left; @margin);
+}
+.column-modify (@share; @columns: @gridColumns) {
+	width: ((100% / @columns) * @share);
+}
+.column-modify (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) {
+	width: (((100% / @columns) * @share) - (@margin));
+	.margin(left; @margin);
+}
+.column-modify (@width) when (ispercentage(@width)), (ispixel(@width)), (isunit(@width, 'rem')) {
+	.width(@width);
+}
+.column-reset (@resetMargin: false) {
+	float: none;
+	width: auto;
+	.check () when (@resetMargin = true) {
+		margin-left: 0;
+	}
+	.check();
+}
+.column-pull (@share; @columns: @gridColumns) {
+	position: relative;
+	right: ((100% / @columns) * @share);
+}
+.column-push (@share; @columns: @gridColumns) {
+	left: ((100% / @columns) * @share);
+	position: relative;
+}
+.column-offset (@share; @columns: @gridColumns) {
+	margin-left: ((100% / @columns) * @share);
+}
+.column-offset (spaced; @share; @columns: @gridColumns; @margin: (@gridMargin / 2)) {
+	margin-left: (((100% / @columns) * @share) + (@margin * 2));
+}
+
+// Alignment
+
+.wee-container () {
+	.centered-block();
+	.content-box();
+	.max-width(@maxWidth);
+	.min-width(@minWidth);
+	.check () when (@padContainer = true) {
+		.padded();
+	}
+	.check();
+}
+.float (@value) {
+	float: @value;
+}
+.float (left; @value) {
+	float: left;
+	width: @value;
+}
+.float (right; @value) {
+	float: right;
+	width: @value;
+}
+.left () {
+	float: left;
+}
+.right () {
+	float: right;
+}
+.clearfix () {
+	&:after {
+		clear: both;
+		content : ' ';
+		display: table;
+	}
+}
+.clear (@value: both) {
+	clear: @value;
+}
+.align (center) {
+	text-align: center;
+}
+.align (justify) {
+	text-align: justify;
+}
+.align (left) {
+	text-align: left;
+}
+.align (right) {
+	text-align: right;
+}
+.align (baseline) {
+	vertical-align: baseline;
+}
+.align (bottom) {
+	vertical-align: bottom;
+}
+.align (middle) {
+	vertical-align: middle;
+}
+.align (top) {
+	vertical-align: top;
+}
+.display (@value) {
+	display: @value;
+}
+.centered () {
+	.centered(horizontal);
+}
+.centered (horizontal) {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+.centered (vertical) {
+	position: absolute;
+	&:before {
+		content: ' ';
+		display: inline-block;
+		height: 100%;
+		vertical-align: middle;
+	}
+}
+.centered (both) {
+	.centered();
+}
+.inline () {
+	display: inline;
+}
+.inline-block () {
+	display: inline-block;
+}
+.inline-block (@width; ...) {
+	display: inline-block;
+	.width(@width);
+}
+.inline-block (@width; @height) {
+	.height(@height);
+}
+
+// Lists
+
+.inline-list () {
+	li {
+		display: inline;
+	}
+}
+.inline-list (@spacing) when (isnumber(@spacing)) {
+	li {
+		display: inline;
+		.margin(left; @spacing);
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+}
+.inline-list (@content; @margin: 0) when (isstring(@content)) {
+	li {
+		display: inline;
+		.margin(right; @margin);
+		.prefix(@content; @margin);
+		&:first-child {
+			&:before {
+				display: none;
+			}
+		}
+	}
+}
+.floated-list () {
+	li {
+		float: left;
+	}
+}
+.list-style (@value) {
+	list-style: @value;
+}
+.list-style-position (@value: outside) {
+	list-style-position: @value;
+}
+.list-position (@value: outside) {
+	list-style-position: @value;
+}
+.unstyled () {
+	list-style: none;
+}
+
+// Display
+
+.hidden () {
+	visibility: hidden;
+}
+.visible () {
+	visibility: visible;
+}
+.block (@width; ...) {
+	display: block;
+	.width(@width);
+}
+.block (@width; @height) {
+	.height(@height);
+}
+.spaced (@margin: @blockMarginBottom) when not (@margin = false) {
+	.margin(bottom; @margin);
+}
+.spaced-block (@margin: @blockMarginBottom; ...) {
+	display: block;
+	.spaced(@margin);
+}
+.spaced-block (@margin; @width; ...) {
+	.width(@width);
+}
+.spaced-block (@margin; @width; @height) {
+	.height(@height);
+}
+.box-sizing (@val: border-box) {
+	-moz-box-sizing: @val;
+	-webkit-box-sizing: @val;
+	box-sizing: @val;
+}
+.border-box () {
+	.box-sizing(border-box);
+}
+.content-box () {
+	.box-sizing(content-box);
+}
+
+// Tables
+
+.responsive-table () {
+	overflow-x: auto;
+	overflow-y: hidden;
+	width: 100%;
+	.spaced();
+	table {
+		margin-bottom: 0;
+	}
+}
+
+// Forms
+
+.input-placeholder (@color: @inputPlaceholderColor) {
+	:-moz-placeholder {
+		color: @color;
+	}
+	::-moz-placeholder {
+		color: @color;
+	}
+	:-ms-input-placeholder {
+		color: @color;
+	}
+	::-webkit-input-placeholder {
+		color: @color;
+	}
+}
+
+// Other
+
+.resize (@value) {
+	resize: @value;
+}
+.resizable (@value: both) {
+	overflow: hidden;
+	resize: @value;
+}
+.hide-text () {
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+}
+.hide (text) {
+	.hide-text();
+}
+.selection () {
+	color: @selectionColor;
+	text-shadow: none;
+	.background(@selectionBackground);
+}
+.cursor (@value: pointer) {
+	cursor: @value;
+}
+.overflow (@value) when not (@value = x) and not (@value = y) {
+	overflow: @value;
+}
+.overflow (@x; @y) when not (@x = x) and not (@x = y) {
+	overflow-x: @x;
+	overflow-y: @y;
+}
+.overflow (x; @value) {
+	overflow-x: @value;
+}
+.overflow (y; @value) {
+	overflow-y: @value;
+}
+.crop (horizontal) {
+	overflow-x: hidden;
+}
+.crop (vertical) {
+	overflow-y: hidden;
+}
+.crop () {
+	overflow: hidden;
+}
+.crop (both) {
+	overflow: hidden;
+}
+.scroll (horizontal) {
+	overflow-x: scroll;
+}
+.scroll (vertical) {
+	overflow-y: scroll;
+}
+.scroll () {
+	overflow: scroll;
+}
+.scroll (both) {
+	overflow: scroll;
+}
+.fill (horizontal) {
+	width: 100%;
+}
+.fill (vertical) {
+	height: 100%;
+}
+.fill (both) {
+	height: 100%;
+	width: 100%;
+}
+.fill () {
+	width: 100%;
+}
+.no-clear () {
+	&::-ms-clear {
+		display: none;
+	}
+	&::-webkit-search-cancel-button {
+		-webkit-appearance: none;
+	}
+}
+
+///////////////////
+// Mixin Classes //
+///////////////////
+
+.container {
+	.wee-container();
+}
+.img-left {
+	float: left;
+	.margin(.32em; @imageMarginSide; @imageMarginBottom; false);
+}
+.img-right {
+	float: right;
+	.margin(.32em; false; @imageMarginBottom; @imageMarginSide);
+}
+.hide {
+	display: none;
+}
+.js-hide {
+	display: none !important;
+}
+.show {
+	display: inherit;
+}
+.block {
+	display: block;
+}

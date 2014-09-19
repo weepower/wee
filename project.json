@@ -1,0 +1,100 @@
+{
+	"name": "Wee",
+	"description": "Your blueprint for modern web development.",
+	"paths": {
+		"root": "public",
+		"assets": "assets"
+	},
+	"style": {
+		"core": {
+			"buttons": true,
+			"code": true,
+			"forms": true,
+			"print": true,
+			"tables": true,
+			"responsive": {
+				"enable": true,
+				"offset": 25,
+				"breakpoints": {
+					"mobileLandscape": 480,
+					"tabletPortrait": 768,
+					"desktopSmall": 1024,
+					"desktopMedium": 1280,
+					"desktopLarge": 1440
+				}
+			}
+		},
+		"build": [
+
+		],
+		"compile": {
+
+		},
+		"legacy": {
+			"enable": true,
+			"watch": false,
+			"breakpoint": 4,
+			"rootSize": "62.5%",
+			"dest": "ie8.min.css",
+			"build": [
+				"custom/ie8.less"
+			]
+		}
+	},
+	"script": {
+		"core": {
+			"enable": true,
+			"features": {
+				"assets": true,
+				"chain": true,
+				"data": true,
+				"dom": true,
+				"events": true,
+				"routes": true,
+				"screen": true
+			}
+		},
+		"build": [
+
+		],
+		"compile": {
+			"ie8.min.js": [
+				"polyfill/es5-shim.js",
+				"polyfill/html5shiv.js",
+				"polyfill/sizzle.js",
+				"polyfill/wee.svg.js",
+				"custom/ie8.js"
+			],
+			"ie9.min.js": [
+				"polyfill/wee.slice.js",
+				"polyfill/wee.placeholder.js"
+			]
+		},
+		"sourceMaps": true
+	},
+	"server": {
+		"ghostMode": true,
+		"host": "auto",
+		"port": 9000,
+		"reload": {
+			"enable": true,
+			"watch": {
+				"root": true,
+				"paths": [
+
+				],
+				"extensions": [
+					"html"
+				]
+			}
+		},
+		"tasks": {
+			"local": {
+				"proxy": "wee.dev"
+			},
+			"static": {
+				"https": false
+			}
+		}
+	}
+}
