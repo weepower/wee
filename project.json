@@ -14,7 +14,6 @@
 			"tables": true,
 			"responsive": {
 				"enable": true,
-				"fallback": 4,
 				"offset": 25,
 				"breakpoints": {
 					"mobileLandscape": 480,
@@ -29,8 +28,15 @@
 
 		],
 		"compile": {
-			"ie8.css": [
-				"../wee/style/wee.legacy.less",
+
+		},
+		"legacy": {
+			"enable": true,
+			"watch": false,
+			"breakpoint": 4,
+			"rootSize": "62.5%",
+			"dest": "ie8.min.css",
+			"build": [
 				"custom/ie8.less"
 			]
 		}
@@ -56,7 +62,6 @@
 				"polyfill/es5-shim.js",
 				"polyfill/html5shiv.js",
 				"polyfill/sizzle.js",
-				"polyfill/wee.rem.js",
 				"polyfill/wee.svg.js",
 				"custom/ie8.js"
 			],
@@ -69,7 +74,8 @@
 	},
 	"server": {
 		"ghostMode": true,
-		"port": 3000,
+		"host": "auto",
+		"port": 9000,
 		"reload": {
 			"enable": true,
 			"watch": {
@@ -87,7 +93,6 @@
 				"proxy": "wee.dev"
 			},
 			"static": {
-				"host": "auto",
 				"https": false
 			}
 		}

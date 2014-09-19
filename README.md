@@ -14,7 +14,7 @@ Mobile-first CSS framework with reset, base, and LESS mixin library < 4KB gzippe
 * **Feature toggling** for major components to keep your output minimal
 * **Baseline print styling** to format printed pages (optional)
 * **Structured breakpoints** for your responsive projects to keep you organized
-* **Legacy handling** for IE8 to make sure everything works, along with a media query fallback
+* **Legacy handling** for IE8 to make sure everything works, with media query and REM fallbacks
 
 JavaScript toolset to build scalable, well-organized browser functionality < 8KB gzipped
 
@@ -25,7 +25,7 @@ JavaScript toolset to build scalable, well-organized browser functionality < 8KB
 * **Resource loading** for JavaScript, CSS, and images along with callbacks
 * **Data request and binding** functions
 * **Breakpoint watching** system for efficient media query callbacks
-* **Polyfill support** for input placeholders, SVG images, REMs and more
+* **Polyfill support** for HTML5, SVG images, input placeholders, and ES5
 * **Sourcemap output** to line match against unminified code
 
 Structure baseline of markup, icons, and files to serve as a frontend roadmap  
@@ -33,11 +33,10 @@ Grunt build process configured through a simple JSON file to compile, optimize, 
 
 ## Quick Start
 
-Get started with Wee using one of these three methods:
+Get started with Wee using one of these methods:
 
 * [Download the latest release](https://github.com/weepower/wee/archive/master.zip) or
-* Clone the repository from `git clone git://github.com/weepower/wee.git` or
-* Execute the [Bower](http://bower.io/) command `bower install wee`
+* Clone the repository from `git clone git://github.com/weepower/wee.git`
 
 ## Bugs
 
@@ -59,7 +58,7 @@ Wee adheres to [Semantic Versioning](http://semver.org/) in the form of MAJOR.MI
 
 ## Community
 
-Keep track of development and news by following [@weecss on Twitter](https://twitter.com/weecss) or reading the [Wee blog](http://www.weepower.com/blog).
+Keep track of development and news by following [@weecss on Twitter](https://twitter.com/weecss).
 
 ## License
 

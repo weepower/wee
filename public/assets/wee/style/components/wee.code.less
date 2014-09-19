@@ -1,0 +1,57 @@
+// Wee 2.0.0 (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY THIS FILE
+
+.wee-code () when (@codeEnabled = true) {
+	.rules () {
+		color: @codeColor;
+		.background(@codeBackground);
+		.font(@codeFont; @codeFontSize);
+		.line-height(@codeLineHeight);
+		.padding(@codePaddingVertical; @codePaddingHorizontal);
+	}
+	.rules () when not (@codeRounded = 0)
+			and not (@codeRounded = false) {
+		.rounded(@codeRounded);
+	}
+	.rules () when not (@codeBorderColor = false) {
+		.border(@codeBorderColor);
+	}
+	code,
+	kbd,
+	samp {
+		.rules();
+	}
+}
+.wee-code();
+.wee-code-block () when (@codeEnabled = true) {
+	.rules () {
+		-moz-tab-size: @codeBlockTabSize;
+		tab-size: @codeBlockTabSize;
+		.background(@codeBlockBackground);
+		.padding(@codeBlockPaddingVertical; @codeBlockPaddingHorizontal);
+		.spaced();
+		code {
+			.sub-rules () when not (@codeBorderColor = false) {
+				border: none;
+			}
+			background: none;
+			color: @codeBlockColor;
+			display: block;
+			padding: 0;
+			.font(@codeBlockFont; @codeBlockFontSize);
+			.sub-rules();
+		}
+	}
+	.rules () when not (@codeBlockRounded = 0)
+			and not (@codeBlockRounded = false) {
+		.rounded(@codeBlockRounded);
+	}
+	.rules () when not (@codeBlockBorderColor = false) {
+		.border(@codeBlockBorderColor);
+	}
+	pre {
+		.rules();
+	}
+}
+.wee-code-block();

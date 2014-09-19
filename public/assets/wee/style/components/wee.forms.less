@@ -1,0 +1,188 @@
+// Wee 2.0.0 (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY THIS FILE
+
+.wee-form () when (@formEnabled = true) {
+	form {
+		.spaced();
+	}
+	button,
+	input,
+	select,
+	textarea {
+		margin: 0;
+		.font(@inputFont; @inputFontSize; normal);
+	}
+	button::-moz-focus-inner,
+	input::-moz-focus-inner {
+		border: 0;
+		padding: 0;
+	}
+	.input-placeholder();
+	fieldset {
+		border: 0;
+		.spaced();
+	}
+	legend {
+		border: 0;
+		color: @legendColor;
+		.font(@legendFont; @legendFontSize);
+		.line-height();
+		.spaced-block(@legendMarginBottom);
+	}
+	label {
+		font-weight: @labelFontWeight;
+		line-height: @labelLineHeight;
+		.spaced-block(@labelMarginBottom);
+	}
+	input[type='checkbox'],
+	input[type='radio'] {
+		padding: 0;
+		.margin(right; @checkboxMarginRight);
+	}
+	.input () {
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		color: @inputColor;
+		width: 100%;
+		.background(@inputBackground);
+		.background-clip();
+		.padding(@inputPaddingVertical; @inputPaddingHorizontal);
+		.spaced(@inputMarginBottom);
+		&:focus {
+			&:required {
+				&:invalid {
+					color: @inputColorInvalid;
+					.background(@inputBackgroundInvalid);
+					.border(@inputBorderColorInvalid);
+				}
+			}
+		}
+		&:invalid {
+			color: @inputColorInvalid;
+			.background(@inputBackgroundInvalid);
+			.border () when not (@inputBorderWidthInvalid = 0)
+					and not (@inputBorderWidthInvalid = false) {
+				.border(@inputBorderColorInvalid; @inputBorderWidthInvalid);
+				&:hover {
+					.border(@inputBorderColorInvalidHover);
+				}
+				&:focus {
+					.border(@inputBorderColorInvalidFocus);
+				}
+			}
+			.border () when (@inputBorderWidthInvalid = 0), (@inputBorderWidthInvalid = false) {
+				border-width: 0;
+			}
+			.border();
+		}
+		&:required {
+			color: @inputColorRequired;
+			.background(@inputBackgroundRequired);
+			.border(@inputBorderColorRequired);
+			.border () when not (@inputBorderWidthRequired = 0)
+					and not (@inputBorderWidthRequired = false) {
+				.border(@inputBorderColorRequired; @inputBorderWidthRequired);
+				&:hover {
+					.border(@inputBorderColorRequiredHover);
+				}
+				&:focus {
+					.border(@inputBorderColorRequiredFocus);
+				}
+			}
+			.border () when (@inputBorderWidthRequired = 0), (@inputBorderWidthRequired = false) {
+				border-width: 0;
+			}
+			.border();
+		}
+	}
+	.input () when not (@inputBorderWidth = 0)
+			and not (@inputBorderWidth = false) {
+		.border(@inputBorderColor; @inputBorderWidth);
+		&:hover {
+			.border(@inputBorderColorHover);
+		}
+		&:focus {
+			.border(@inputBorderColorFocus);
+		}
+	}
+	.input () when (@inputBorderWidth = 0), (@inputBorderWidth = false) {
+		border-width: 0;
+	}
+	.input () when not (@inputMinHeight = false) {
+		.min-height(@inputMinHeight);
+	}
+	.input () when not (@inputMinWidth = false) {
+		.min-width(@inputMinWidth);
+	}
+	.input () when not (@inputRounded = false) {
+		.rounded(@inputRounded);
+	}
+	.input () when (@inputEnableInnerShadow = true) {
+		.shadow(inner; dark; .1; 1px; 1px; 2px; 0);
+	}
+	.input () when (@inputEnableFocusOuterShadow = true) {
+		&:focus {
+			.shadow(dark; .1; 0; 0; 2px; 2px);
+		}
+	}
+	input[type='email'],
+	input[type='file'],
+	input[type='number'],
+	input[type='password'],
+	input[type='search'],
+	input[type='tel'],
+	input[type='text'],
+	textarea,
+	select {
+		.input();
+	}
+	input[type='search']::-webkit-search-decoration {
+		display: none;
+	}
+	input[type='button'],
+	input[type='reset'],
+	input[type='submit'] {
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		cursor: pointer;
+	}
+	select {
+		cursor: pointer;
+		outline: 0;
+		.padding(right; @inputPaddingVertical);
+		&[multiple] {
+			vertical-align: top;
+			.min-height(@multiSelectMinHeight);
+			&:after {
+				content: ' ';
+			}
+		}
+	}
+	textarea {
+		vertical-align: top;
+		.line-height(@textareaLineHeight);
+		.min-height(@textareaMinHeight);
+		.padding(@textareaPaddingVertical; @textareaPaddingHorizontal);
+		.resizable(@textareaResize);
+	}
+	input[disabled] {
+		color: @inputColorDisabled;
+		cursor: @inputCursorDisabled;
+		.background-color(@inputBackgroundDisabled);
+	}
+	.inline-field {
+		button,
+		input,
+		select,
+		textarea {
+			display: inline-block;
+			width: auto;
+		}
+		label {
+			display: inline-block;
+			.margin(right; @labelMarginRight);
+		}
+	}
+}
+.wee-form();

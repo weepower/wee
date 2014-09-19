@@ -2,11 +2,15 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-@import (reference) 'wee.variables.less';              // Core configuration
+@import (reference) '../style/wee.variables.less';     // Core configuration
 @import (reference) '../../css/custom/variables.less'; // Custom configuration
-@import 'wee.mixins.less';                             // Mixins
-@import 'wee.base.less';                               // Baseline
+@import '../style/wee.mixins.less';                    // Mixins
+@import '../style/wee.reset.less';                     // Reset
 @import (reference) '../../css/custom/mixins.less';    // Custom mixins
+
+// Inject imports
+
+<%= imports %>
 
 // Core
 
@@ -14,20 +18,13 @@
 
 // Responsive
 
-@responsivePath: 'custom/breakpoints';
-@import 'wee.responsive.less';
+<%= responsive %>
 
 // Print
 
-.wee-print() when (@printEnabled = true) {
-	@media print {
-		@import (inline) 'wee.print.less';
-		@import '../../css/custom/print.less'; // Customizations
-	}
-}
-
-.wee-print();
+<%= print %>
 
 // Framework
 
+@responsivePath: 'custom/breakpoints';
 @legacyMode: false;

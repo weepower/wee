@@ -1,0 +1,104 @@
+// Wee 2.0.0 (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY THIS FILE
+
+.wee-table () when (@tableEnabled = true) {
+	.rules () {
+		-ms-word-wrap: break-word;
+		border-collapse: collapse;
+		border-spacing: 0;
+		empty-cells: show;
+		min-width: 100%;
+		table-layout: fixed;
+		word-wrap: break-word;
+		.spaced();
+		td,
+		th {
+			text-align: left;
+			vertical-align: top;
+			.line-height(@tableCellLineHeight);
+			.padding(@tableCellPaddingVertical; @tableCellPaddingHorizontal);
+		}
+		thead,
+		tfoot {
+			.bold();
+			th {
+				vertical-align: bottom;
+				.darkestGray();
+			}
+		}
+		tbody {
+			.wee-table-striped(@tableStriped);
+		}
+		caption {
+			.background(@tableCaptionBackground);
+			.font-style(@tableCaptionFontStyle);
+			.padding(@tableCaptionPaddingVertical; @tableCaptionPaddingHorizontal);
+		}
+		img {
+			vertical-align: top;
+		}
+		.wee-table-bordered(@tableBordered);
+	}
+	.check () when (@tableStyled = true) {
+		table,
+		.table {
+			.rules();
+		}
+	}
+	.check () when not (@tableStyled = true) {
+		.table {
+			.rules();
+		}
+	}
+	.table-bordered () when not (@tableBordered = true) {
+		.table-bordered {
+			.wee-table-bordered(true);
+		}
+	}
+	.table-striped () when not (@tableStriped = true)
+			and not (@tableStripedBackground = false) {
+		.table-striped {
+			.wee-table-striped(true);
+		}
+	}
+	.table-bordered();
+	.table-striped();
+	.check();
+}
+.wee-table-bordered (@output) when (@output = true) {
+	.border(bottom; @tableCellBorderColor);
+	caption {
+		.border(@tableCellBorderColor);
+		border-bottom: 0;
+	}
+	td,
+	th {
+		.border(right; @tableCellBorderColor);
+		.border(top; @tableCellBorderColor);
+		&:first-child {
+			.border(left; @tableCellBorderColor);
+		}
+	}
+}
+.wee-table-striped (@output) when (@output = true)
+		and (@tableStripedPosition = even) {
+	tr {
+		&:nth-child(even) {
+			td {
+				.background(@tableStripedBackground);
+			}
+		}
+	}
+}
+.wee-table-striped (@output) when (@output = true)
+		and not (@tableStripedPosition = even) {
+	tr {
+		&:nth-child(odd) {
+			td {
+				.background(@tableStripedBackground);
+			}
+		}
+	}
+}
+.wee-table();

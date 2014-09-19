@@ -1,47 +1,11 @@
 # 2.0.0
 
-2014-06-09
+2014-09-19
 
+- MAJOR: Complete rework of the Wee directory structure
 - MAJOR: Overhaul of the JavaScript structure and functionality
 - MAJOR: Major cleanup of the LESS library and addition of over two dozen new mixins
-- MAJOR: The custom variables.less file is now empty and intended only to host core overrides and custom variables
-- MAJOR: The Grunt build files are now included as part of Wee by default
-- FIXED: Renamed "fonts" folder to "font" for consistency with variables.less
-- FIXED: Resolved external path issues in index.local.html
-- FIXED: Fixed issue with .background(dark) and .background(light) mixins
-- FIXED: Added missing comma in the .clear mixin
-- FIXED: Resolved transition with backface visibility hack
-- ADDED: Added skew(x; @x) and skew(y: @y) mixins
-- ADDED: Added new fallback data attribute option for SVG images
-- ADDED: Added new .background-image mixin option for @filename, @repeat
-- ADDED: Added a new variable @responsivePath in legacy.less and screen.less for advanced usage
-- ADDED: Added new defaultDuration and defaultOpacity variables to variables.less
-- ADDED: Added new .border-color() mixin options
-- ADDED: Created new .min-size and .max-size mixins
-- ADDED: Created new .caret mixin
-- ADDED: Added back OpenGraph description for proper social shareability
-- ADDED: Added new prefix, suffix, and bookends mixins for pseudo content placement
-- ADDED: Added new position, absolute, and fixed overrides for position values
-- ADDED: Added new ratio mixins, useful for responsive media embeds
-- ADDED: Added new .floated-list mixin and overrides for .inline-list
-- ADDED: Created new variables-static.less file in the core for helper variables
-- UPDATED: Many mixins can now accept false for values to supress output of a particular dimension
-- UPDATED: Added row-modify mixin and optional margin to column-modify for modifying spacing
-- UPDATED: Removed jQuery from the default fileset
-- UPDATED: The .mobile-nav mixin can now take a height override value
-- UPDATED: Removed less.js from the lib directory
-- UPDATED: Went ahead and removed the crossdomain.xml file
-- UPDATED: Adjusted .gitignore to ignore additional files
-- UPDATED: Updated .jshintrc doc for more strict default jshinting
-- UPDATED: Configured .htaccess rewrites for specific domain rather than catchall
-- UPDATED: Made improvements to legacy handling
-- UPDATED: Simplified sample index to be complemented by separately downloadable examples
-- UPDATED: Removed responsive nav code from base.js
-- UPDATED: Added .heading class and renamed .subheader to .subheading
-- UPDATED: Removed holder.js reference and files from the lib directory
-- UPDATED: Responsive test mode now shows the JavaScript size value in parentheses
-- UPDATED: Responsive test mode now offers the ability to click on breakspoints and resize the viewport
-- UPDATED: Updated the default responsive test mode style values to blend better with the browser window
+- MAJOR: Grunt is now included as part of Wee by default and required for building
 
 # 1.1.4
 

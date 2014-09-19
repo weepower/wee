@@ -1388,39 +1388,39 @@
 	.background-image(@filename; @x; @y; @repeat; @attachment);
 	.background-size(@width; @height);
 }
-.background-gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2)) {
+.background-gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2); @angle: 180) {
+	@deg: unit(@angle, deg);
+	@revDeg: unit(mod((450 - @angle), 360), deg);
 	background-color: @color;
 	background-color: @start;
-	.background('-moz-linear-gradient(top, @{start} 0%, @{end} 100%)');
-	.background('-webkit-gradient(linear, left top, left bottom, from(@{start}), to(@{end}))');
-	.background('-webkit-linear-gradient(top, @{start}, @{end})');
-	.background('linear-gradient(to bottom, @{start} 0%, @{end} 100%)');
+	.background('-webkit-linear-gradient(@{revDeg}, @{start}, @{end})');
+	.background('linear-gradient(@{deg}, @{start}, @{end})');
 }
-.background-gradient (@color: @gray; @spread) when (ispercentage(@spread)) {
+.background-gradient (@color: @gray; @spread; @angle: 180) when (ispercentage(@spread)) {
 	@lighter: lighten(@color, @spread);
 	@darker: darken(@color, @spread);
+	@deg: unit(@angle, deg);
+	@revDeg: unit(mod((450 - @angle), 360), deg);
 	background-color: @color;
-	.background('-moz-linear-gradient(top, @{lighter} 0%, @{darker} 100%)');
-	.background('-webkit-gradient(linear, left top, left bottom, color-stop(0%, @{lighter}), color-stop(100%, @{darker}))');
-	.background('-webkit-linear-gradient(top, @{lighter} 0%, @{darker} 100%)');
-	.background('linear-gradient(to bottom, @{lighter} 0%, @{darker} 100%)');
+	.background('-webkit-linear-gradient(@{revDeg}, @{lighter}, @{darker})');
+	.background('linear-gradient(@{deg}, @{lighter}, @{darker})');
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{lighter}', endColorstr='@{darker}', GradientType=0);
 }
-.background-gradient (dark; @start: 0; @end: 1) {
+.background-gradient (dark; @start: 0; @end: 1; @angle: 180) {
 	@start: rgba(0, 0, 0, @start);
 	@end: rgba(0, 0, 0, @end);
-	.background('-moz-linear-gradient(top, @{start} 0%, @{end} 100%)');
-	.background('-webkit-gradient(linear, left top, left bottom, from(@{start}), to(@{end}))');
-	.background('-webkit-linear-gradient(top, @{start}, @{end})');
-	.background('linear-gradient(to bottom, @{start} 0%, @{end} 100%)');
+	@deg: unit(@angle, deg);
+	@revDeg: unit(mod((450 - @angle), 360), deg);
+	.background('-webkit-linear-gradient(@{revDeg}, @{start}, @{end})');
+	.background('linear-gradient(@{deg}, @{start}, @{end})');
 }
-.background-gradient (light; @start: 0; @end: 1) {
+.background-gradient (light; @start: 0; @end: 1; @angle: 180) {
 	@start: rgba(255, 255, 255, @start);
 	@end: rgba(255, 255, 255, @end);
-	.background('-moz-linear-gradient(top, @{start} 0%, @{end} 100%)');
-	.background('-webkit-gradient(linear, left top, left bottom, from(@{start}), to(@{end}))');
-	.background('-webkit-linear-gradient(top, @{start}, @{end})');
-	.background('linear-gradient(to bottom, @{start} 0%, @{end} 100%)');
+	@deg: unit(@angle, deg);
+	@revDeg: unit(mod((450 - @angle), 360), deg);
+	.background('-webkit-linear-gradient(@{revDeg}, @{start}, @{end})');
+	.background('linear-gradient(@{deg}, @{start}, @{end})');
 }
 .background-attachment (...) {
 	background-attachment: @arguments;
@@ -2254,10 +2254,10 @@
 .cursor (@value: pointer) {
 	cursor: @value;
 }
-.overflow (@value) when not (@value = x), (@value = y) {
+.overflow (@value) when not (@value = x) and not (@value = y) {
 	overflow: @value;
 }
-.overflow (@x; @y) when not (@x = x), (@x = y) {
+.overflow (@x; @y) when not (@x = x) and not (@x = y) {
 	overflow-x: @x;
 	overflow-y: @y;
 }
