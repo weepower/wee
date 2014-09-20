@@ -973,7 +973,9 @@ module.exports = function(grunt) {
 			}
 		}
 
-		grunt.config.set('browserSync.options.ghostMode', serverConfig.ghostMode);
+		if (serverConfig.ghostMode === false) {
+			grunt.config.set('browserSync.options.ghostMode', serverConfig.ghostMode);
+		}
 
 		grunt.task.run('browserSync');
 	});
@@ -988,10 +990,13 @@ module.exports = function(grunt) {
 		});
 
 		grunt.config.set('browserSync.options.port', serverConfig.port);
-		grunt.config.set('browserSync.options.ghostMode', serverConfig.ghostMode);
+
+		if (serverConfig.ghostMode === false) {
+			grunt.config.set('browserSync.options.ghostMode', serverConfig.ghostMode);
+		}
 
 		// HTTPS mode
-		if (staticConfig.https == true) {
+		if (staticConfig.https === true) {
 			grunt.config.set('browserSync.options.https', staticConfig.https);
 		}
 
