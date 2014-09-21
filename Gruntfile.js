@@ -785,7 +785,7 @@ module.exports = function(grunt) {
 		grunt.config.set('watch.styleBuildUpdate.files', buildArray);
 
 		// Merge imports into global imports
-		style.imports.concat(imports);
+		style.imports = style.imports.concat(imports);
 
 		// Process template
 		style.imports.forEach(function(val) {

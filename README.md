@@ -8,13 +8,13 @@ Wee is an organized framework for building complex web projects. It bundles many
 
 #### Features include:
 
-Mobile-first CSS framework with reset, base, and LESS mixin library < 4KB gzipped
+Mobile-first CSS framework with reset, base, and Less mixin library < 4KB gzipped
 
 * **Central configuration** for setting every component of your brand's baseline
 * **Feature toggling** for major components to keep your output minimal
 * **Baseline print styling** to format printed pages (optional)
 * **Structured breakpoints** for your responsive projects to keep you organized
-* **Legacy handling** for IE8 to make sure everything works, with media query and REM fallbacks
+* **Legacy handling** for IE8 to make sure everything works, with media query and rem fallbacks
 
 JavaScript toolset to build scalable, well-organized browser functionality < 8KB gzipped
 
