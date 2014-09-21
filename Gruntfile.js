@@ -789,7 +789,11 @@ module.exports = function(grunt) {
 
 		// Process template
 		style.imports.forEach(function(val) {
-			inject += '@import "' + val + '";\n';
+			if (Wee.getExtension(val) == 'css') {
+				inject += '@import (inline) "' + val + '";\n';
+			} else {
+				inject += '@import "' + val + '";\n';
+			}
 		});
 
 		less = grunt.template.process(less, {
