@@ -27,8 +27,7 @@ Wee.fn.make('routes', {
 
 		return curr;
 	},
-	// Get segments from an optionally specified path
-	// Defaults to currently bound path
+	// Get all segments or single segment at index
 	// Returns array of segment strings or string if index specified
 	segments: function(i) {
 		var segs = Wee.$toArray(this.path().replace(/^\/|\/$/g, '').split('/'));
