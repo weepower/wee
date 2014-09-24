@@ -98,7 +98,7 @@
 
 .load-font (@name; @file: @name; @weight: normal; @style: normal) {
 	@font-face {
-		font-family: @name;
+		font-family: ~'@{name}';
 		src: url('@{fontPath}@{file}.eot');
 		src: url('@{fontPath}@{file}.eot?#iefix') format('embedded-opentype'),
 			 url('@{fontPath}@{file}.woff') format('woff'),
@@ -210,10 +210,10 @@
 // Font Selection
 
 .font (@family) {
-	font-family: @family;
+	.font-family(@family);
 }
 .font (@family; @size) {
-	font-family: @family;
+	.font-family(@family);
 	.font-size(@size);
 }
 .font (@family; @size; @weight) {
@@ -231,11 +231,14 @@
 
 // Font Family
 
-.font-family (@value) when (isstring(@value)) and not (@value = false) {
-	font-family: ~'@{value}';
-}
-.font-family (@value: @baseFont) when not (isstring(@value)) {
-	font-family: @value;
+.font-family (@value: @baseFont) when not (@value = false) {
+	.check () when (isstring(@value)) {
+		font-family: ~'@{value}';
+	}
+	.check () when not (isstring(@value)) {
+		font-family: @value;
+	}
+	.check();
 }
 
 // Font Size
