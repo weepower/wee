@@ -426,7 +426,7 @@ module.exports = function(grunt) {
 				]
 			});
 
-			// Create uglify task
+			// Create Less task
 			grunt.config.set('less.' + taskName, {
 				files: [{
 					dest: Wee.buildPath(target, style.rootPath),
@@ -549,7 +549,7 @@ module.exports = function(grunt) {
 		}
 	});
 
-	// Initialize modules 
+	// Initialize modules
 	grunt.registerTask('configModules', function() {
 		// Set global config
 		modules = {
@@ -683,7 +683,7 @@ module.exports = function(grunt) {
 					grunt.config.set('watch.' + name + '-style', {
 						files: path + '/**/*.less',
 						tasks: [
-							'less:' + name + '-style',
+							'less:' + name,
 							'concat:style'
 						]
 					});
@@ -842,7 +842,7 @@ module.exports = function(grunt) {
 				legacyBuild.push(Wee.buildPath(legacy.build[i], styleRoot));
 			}
 
-			// LESS config update
+			// Less config update
 			grunt.config.merge({
 				less: {
 					legacy: {
