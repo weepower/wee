@@ -1,4 +1,4 @@
-// Wee 2.0.0 (weepower.com)
+// Wee 2.0.2 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -12,7 +12,8 @@ var project = {},
 	style = {},
 	script = {},
 	modules = {},
-	legacy = {};
+	legacy = {},
+	version = '2.0.2';
 
 // Helper functions
 var Wee = {
@@ -595,8 +596,8 @@ module.exports = function(grunt) {
 
 					// Build additional script
 					if (module.script && module.script.build) {
-						module.style.build.forEach(function(path) {
-							moduleScript.push(Wee.concatPaths(module.script.build, path));
+						module.script.build.forEach(function(scriptPath) {
+							moduleScript.push(Wee.concatPaths(path, scriptPath));
 						});
 					}
 
@@ -693,7 +694,7 @@ module.exports = function(grunt) {
 						style.concat.push(dest);
 
 						// Add script paths to uglify
-						script.files.push(moduleScript);
+						script.files = script.files.concat(moduleScript);
 					} else {
 						// Create module style compile task
 						obj[name] = {

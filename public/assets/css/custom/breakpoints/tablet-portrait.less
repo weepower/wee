@@ -1,31 +1,26 @@
 // Sample rules below can be removed
 
-// Global
-
-.row {
-	.row();
-}
-
 // Footer
 
-footer[role='contentinfo'] {
+.footer {
 	.clearfix();
-	small {
+	&__license {
 		.left();
 	}
-	ul {
+	&__links {
 		.right();
 	}
 }
 
 // Index
 
-.intro {
-	.column(spaced; 2; 3);
-}
-.buttons {
-	.column(spaced; 1; 3);
+.main {
+	.row();
 }
 .heading {
+	.column(spaced; 2; 3);
 	.font-size(3.4);
+}
+.nav {
+	.column(spaced; 1; 3);
 }
