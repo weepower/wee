@@ -70,7 +70,7 @@
 	.check();
 }
 .shadow (inner) {
-	.shadow(dark; light);
+	.shadow(inner; dark);
 }
 .shadow (inner; dark; @opacity: @defaultOpacity; @x: 1px; @y: 1px; @blur: 0; @spread: 0) {
 	.shadow(dark; @opacity; @x; @y; @blur; @spread; 'inset ');
@@ -209,23 +209,19 @@
 
 // Font Selection
 
-.font (@family) {
+.font (@family; ...) {
 	.font-family(@family);
 }
-.font (@family; @size) {
-	.font-family(@family);
+.font (@family; @size; ...) {
 	.font-size(@size);
 }
-.font (@family; @size; @weight) {
-	.font(@family; @size);
+.font (@family; @size; @weight; ...) {
 	.font-weight(@weight);
 }
-.font (@family; @size; @weight; @lineHeight) {
-	.font(@family; @size; @weight);
+.font (@family; @size; @weight; @lineHeight; ...) {
 	.line-height(@lineHeight);
 }
 .font (@family; @size; @weight; @lineHeight; @style) {
-	.font(@family; @size; @weight; @lineHeight);
 	.font-style(@style);
 }
 
@@ -243,7 +239,7 @@
 
 // Font Size
 
-.font-size (@value: @baseLineHeight) when not (@value = false) {
+.font-size (@value: @baseFontSize; ...) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		font-size: @value;
 	}
@@ -262,7 +258,6 @@
 	.check();
 }
 .font-size (@value; @lineHeight) {
-	.font-size(@value);
 	.line-height(@lineHeight);
 }
 
@@ -644,7 +639,8 @@
 	.check();
 }
 .padding (horizontal) {
-	.padded();
+	.padding(left; @bumperPadding);
+	.padding(right; @bumperPadding);
 }
 .padding (horizontal; @value) {
 	.padding(left; @value);
@@ -672,7 +668,8 @@
 	.padding(left; @left);
 }
 .padded (@padding: @bumperPadding) when not (@padding = false) {
-	.padding(horizontal; @padding);
+	.padding(left; @padding);
+	.padding(right; @padding);
 }
 
 // Borders
@@ -1276,11 +1273,9 @@
 	-webkit-transition: ~'@{value}';
 	transition: ~'@{value}';
 }
-.transition (@property: all; @duration: @defaultDuration; @ease: ease-in-out; @delay: 0s) {
-	-moz-transition: @arguments;
-	-webkit-backface-visibility: hidden;
-	-webkit-transition: @arguments;
-	transition: @arguments;
+.transition (@property: all; @duration: @defaultDuration; @ease: ease-in-out; @delay: 0s)
+		when not (isstring(@property)) {
+	.transition('@{arguments}');
 }
 .transition-delay (@delay: 1s) {
 	-webkit-transition-delay: @delay;
@@ -1603,13 +1598,12 @@
 	margin-left: 0;
 	width: auto;
 }
-.centered-block () {
+.centered-block (...) {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 }
 .centered-block (@maxWidth; ...) {
-	.centered-block();
 	.max-width(@maxWidth);
 }
 .centered-block (@maxWidth; @margin) {
@@ -1747,7 +1741,7 @@
 
 // Sizing
 
-.width (@value) when not (@value = false) {
+.width (@value; ...) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		width: @value;
 	}
@@ -1769,7 +1763,7 @@
 	.width(@width);
 	.max-width(@maxWidth);
 }
-.height (@value) when not (@value = false) {
+.height (@value; ...) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		height: @value;
 	}
@@ -1788,7 +1782,6 @@
 	.check();
 }
 .height (@height; @maxHeight) {
-	.height(@height);
 	.max-height(@maxHeight);
 }
 .size (@width; @height) {
@@ -1804,7 +1797,8 @@
 	.max-height(@height);
 }
 .square (@size) {
-	.size(@size; @size);
+	.width(@size);
+	.height(@size);
 }
 .ratio (@ratio: (16 / 9)) when not (iskeyword(@ratio)) {
 	display: block;
@@ -1819,7 +1813,7 @@
 		.ratio(@ratio);
 	}
 }
-.circle (@diameter) {
+.circle (@diameter; ...) {
 	.rounded((@diameter / 2));
 	.square(@diameter);
 }
@@ -1901,26 +1895,31 @@
 
 // Opacity
 
-.opacity (@value) when (@value > 1)
-		and not (ispercentage(@value)) {
-	filter: ~'alpha(opacity=@{value})';
-	opacity: (@value / 100);
-}
-.opacity (@value) when (@value < 1) {
-	@ieValue: (@value * 100);
-	filter: ~'alpha(opacity=@{ieValue})';
-	opacity: @value;
-}
-.opacity (@value) when (ispercentage(@value)) {
-	@ieValue: unit(@value);
-	filter: ~'alpha(opacity=@{ieValue})';
-	opacity: unit((@value / 100));
+.opacity (@value) {
+	.check () when (@value > 1)
+			and not (ispercentage(@value)) {
+		filter: ~'alpha(opacity=@{value})';
+		opacity: (@value / 100);
+	}
+	.check () when (@value < 1) {
+		@ieValue: (@value * 100);
+		filter: ~'alpha(opacity=@{ieValue})';
+		opacity: @value;
+	}
+	.check () when (ispercentage(@value)) {
+		@ieValue: unit(@value);
+		filter: ~'alpha(opacity=@{ieValue})';
+		opacity: unit((@value / 100));
+	}
+	.check();
 }
 .transparent () {
-	.opacity(0);
+	filter: alpha(opacity=0);
+	opacity: 0;
 }
 .opaque () {
-	.opacity(100);
+	filter: alpha(opacity=100);
+	opacity: 1;
 }
 
 // Shapes
@@ -2029,16 +2028,14 @@
 	}
 	.check();
 }
-.float (@value) {
+.float (@value; ...) {
 	float: @value;
 }
 .float (left; @value) {
-	float: left;
-	width: @value;
+	.width(@value);
 }
 .float (right; @value) {
-	float: right;
-	width: @value;
+	.width(@value);
 }
 .left () {
 	float: left;
@@ -2106,11 +2103,10 @@
 .inline () {
 	display: inline;
 }
-.inline-block () {
+.inline-block (...) {
 	display: inline-block;
 }
 .inline-block (@width; ...) {
-	display: inline-block;
 	.width(@width);
 }
 .inline-block (@width; @height) {
@@ -2301,8 +2297,8 @@
 	height: 100%;
 }
 .fill (both) {
-	height: 100%;
 	width: 100%;
+	height: 100%;
 }
 .fill () {
 	width: 100%;
