@@ -595,8 +595,8 @@ module.exports = function(grunt) {
 
 					// Build additional script
 					if (module.script && module.script.build) {
-						module.style.build.forEach(function(path) {
-							moduleScript.push(Wee.concatPaths(module.script.build, path));
+						module.script.build.forEach(function(scriptPath) {
+							moduleScript.push(Wee.concatPaths(path, scriptPath));
 						});
 					}
 
@@ -693,7 +693,7 @@ module.exports = function(grunt) {
 						style.concat.push(dest);
 
 						// Add script paths to uglify
-						script.files.push(moduleScript);
+						script.files = script.files.concat(moduleScript);
 					} else {
 						// Create module style compile task
 						obj[name] = {
