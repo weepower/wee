@@ -1,3 +1,11 @@
+# 2.0.2
+
+2014-09-25
+
+- FIXED: Removed stray module script file reference from index.html
+- FIXED: Resolve Gruntfile issue where custom module scripts are not compiled or watched
+- UPDATED: Implement BEM-style class structure
+
 # 2.0.1
 
 2014-09-24
