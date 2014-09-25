@@ -1,4 +1,4 @@
-// Wee 2.0.0 (weepower.com)
+// Wee 2.0.1 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -507,7 +507,7 @@ Wee.fn.extend({
 				case Wee._win:
 					return el.innerHeight;
 				case Wee._doc:
-					return Math.max(Wee._body.scrollHeight, Wee._body.offsetHeight, 
+					return Math.max(Wee._body.scrollHeight, Wee._body.offsetHeight,
 					Wee._html.clientHeight, Wee._html.scrollHeight, Wee._html.offsetHeight);
 				default:
 					var height = el.offsetHeight;

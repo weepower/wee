@@ -1,4 +1,4 @@
-# [Wee 2.0.0](https://github.com/weepower/wee)
+# [Wee 2.0.1](https://github.com/weepower/wee)
 
 Your blueprint for modern web development. To read more, visit [weepower.com](http://www.weepower.com).
 
@@ -28,7 +28,7 @@ JavaScript toolset to build scalable, well-organized browser functionality < 8KB
 * **Polyfill support** for HTML5, SVG images, input placeholders, and ES5
 * **Sourcemap output** to line match against unminified code
 
-Structure baseline of markup, icons, and files to serve as a frontend roadmap  
+Structure baseline of markup, icons, and files to serve as a frontend roadmap
 Grunt build process configured through a simple JSON file to compile, optimize, and minify your source
 
 ## Quick Start
@@ -40,7 +40,7 @@ Get started with Wee using one of these methods:
 
 ## Bugs
 
-Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).  
+Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).
 To view the working Wee todo list check out our public [Trello board](https://trello.com/b/7KbnQra9/wee).
 
 #### Minimum browser support

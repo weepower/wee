@@ -1,3 +1,14 @@
+# 2.0.1
+
+2014-09-24
+
+- FIXED: Resolve issue with module watch task configuration
+- FIXED: Update core font-family mixin to accommodate fonts encapsulated in quotes
+- FIXED: Allow style build directory to import raw CSS files
+- UPDATED: Remove stray stylesheet reference in samples index.html
+- UPDATED: Update browser-sync dependency to 1.5.2
+- UPDATED: Update mixins with various tweaks and efficiencies
+
 # 2.0.0
 
 2014-09-19

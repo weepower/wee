@@ -1,4 +1,4 @@
-// Wee 2.0.0 (weepower.com)
+// Wee 2.0.1 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -13,7 +13,7 @@ Wee.fn.make('routes', {
 	},
 	// Retrieve or add route endpoints to route storage
 	// Optionally run the rules by setting init to true
-	// Returns 
+	// Returns
 	map: function(routes, init) {
 		var curr = this.$get('routes', {});
 
