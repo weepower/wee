@@ -103,7 +103,9 @@ Wee.fn.make('events', {
 								sel = t['_$_'] ? t.sel : t;
 								t = Wee.$toArray(Wee.$(sel));
 
-							if (t.indexOf(e.target) < 0) {
+							if (! t.some(function(par) {
+								return par.contains(e.target);
+							})) {
 								return false;
 							}
 						}
