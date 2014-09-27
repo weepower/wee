@@ -1,4 +1,4 @@
-# [Wee 2.0.2](https://github.com/weepower/wee)
+# [Wee 2.0.3](https://github.com/weepower/wee)
 
 Your blueprint for modern web development. To read more, visit [weepower.com](http://www.weepower.com).
 

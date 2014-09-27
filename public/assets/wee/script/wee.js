@@ -1,4 +1,4 @@
-// Wee 2.0.2 (weepower.com)
+// Wee 2.0.3 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -199,15 +199,10 @@ var Wee = (function(w, d) {
 
 				if (this.$isString(fn)) {
 					var segs = fn.split(':');
+						fn = Wee[segs[0]][segs.length > 1 ? segs[1] : 'init'];
 
-					if (segs.length === 2) {
-						fn = Wee[segs[0]][segs[1]];
-
-						if (! opt.scope) {
-							conf.scope = Wee[segs[0]];
-						}
-					} else {
-						return false;
+					if (! opt.scope) {
+						conf.scope = Wee[segs[0]];
 					}
 				}
 
@@ -321,7 +316,7 @@ var Wee = (function(w, d) {
 						return [w];
 					} else if (sel == 'document') {
 						return [d];
-					} else if (sel.indexOf(' ') > 0 || sel.indexOf(':') > -1 || sel.indexOf('[') > -1 || sel.indexOf('#') > -1 || sel.indexOf('.') > 0) {
+					} else if (sel.indexOf(' ') > 0 || sel.indexOf(':') > -1 || sel.indexOf('[') > -1 || sel.indexOf('#') > -1 || sel.lastIndexOf('.') > 0) {
 						el = context.querySelectorAll(sel);
 					} else {
 						var c = sel.charAt(0);
