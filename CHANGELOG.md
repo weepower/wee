@@ -1,3 +1,12 @@
+# 2.0.3
+
+2014-09-27
+
+- FIXED: Resolve issue where delegate did validate past the direct parent element
+- FIXED: Resolve issue with Wee.$('.class.class') selectors
+- UPDATED: Modify $exec to assume the init function if no function is supplied in "wee:fn" format
+- UPDATED: Add JetBrains IDE storage folder pattern to .gitignore
+
 # 2.0.2
 
 2014-09-25
