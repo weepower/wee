@@ -1,3 +1,12 @@
+# 2.0.4
+
+2014-09-29
+
+- FIXED: Resolve issue with argument splicing on mouseenter/leave events
+- UPDATED: Remove undocumented element template parsing
+- UPDATED: Move anchor styling in sample CSS to correct position within footer class
+- UPDATED: Update qUnit to 1.15.0 and resolve test file paths
+
 # 2.0.3
 
 2014-09-27

@@ -1,4 +1,4 @@
-// Wee 2.0.3 (weepower.com)
+// Wee 2.0.4 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -13,7 +13,7 @@ var project = {},
 	script = {},
 	modules = {},
 	legacy = {},
-	version = '2.0.2';
+	version = '2.0.4';
 
 // Helper functions
 var Wee = {
