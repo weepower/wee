@@ -5,26 +5,9 @@
 		"spec/**/*.js"
 	],
 	"routes": {
-		"/js": "../public/assets/js"
+		"/js": "../public/assets/wee/script"
 	},
-	"on_start": { 
-		"command": "browserstack tunnel localhost:<port>",
-		"wait_for_text": "Tunnel is running"
-	},
-	"launchers": {
-		"bs_chrome": {
-			"command": "browserstack launch --attach chrome:24.0 <url>",
-			"protocol": "browser"
-		},
-		"bs_firefox": {
-			"command": "browserstack launch --attach firefox:16.0 <url>",
-			"protocol": "browser"
-		}
-	},
-	"launch_in_ci": [
-		"bs_chrome",
-		"bs_firefox",
-		"bs_safari"
-	],
-	"launch_in_dev": []
+	"launch_in_dev": [
+		"chrome"
+	]
 }
