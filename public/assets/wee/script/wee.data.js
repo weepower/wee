@@ -1,4 +1,4 @@
-// Wee 2.0.3 (weepower.com)
+// Wee 2.0.4 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -78,22 +78,6 @@ Wee.fn.make('data', {
 	parse: function(str, obj, opt) {
 		opt = opt || {};
 		obj = obj || {};
-
-		// Make data-parse replacements
-		var div = Wee._doc.createElement('div'),
-			scope = this;
-
-		div.innerHTML = str;
-
-		Wee.$each('[data-parse]', function(el) {
-			var key = Wee.$data(el, 'parse');
-
-			el.innerHTML = scope.$private('replace', obj, key, opt);
-		}, {
-			context: div
-		});
-
-		str = div.innerHTML;
 
 		// Make {{template}} variable replacements
 		return str.replace(/{{([^}]*)}}/g, function(str, key) {

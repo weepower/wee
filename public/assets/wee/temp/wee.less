@@ -10,7 +10,11 @@
 
 // Inject imports
 
-<%= imports %>
+@import "../style/components/wee.buttons.less";
+@import "../style/components/wee.code.less";
+@import "../style/components/wee.forms.less";
+@import "../style/components/wee.tables.less";
+
 
 // Core
 
@@ -18,11 +22,14 @@
 
 // Responsive
 
-<%= responsive %>
+@import "../style/wee.responsive.less";
 
 // Print
 
-<%= print %>
+@media print {
+@import (inline) "../style/wee.print.less";
+@import "../../css/custom/print.less"; // Customizations
+}
 
 // Framework
 
