@@ -79,22 +79,6 @@ Wee.fn.make('data', {
 		opt = opt || {};
 		obj = obj || {};
 
-		// Make data-parse replacements
-		var div = Wee._doc.createElement('div'),
-			scope = this;
-
-		div.innerHTML = str;
-
-		Wee.$each('[data-parse]', function(el) {
-			var key = Wee.$data(el, 'parse');
-
-			el.innerHTML = scope.$private('replace', obj, key, opt);
-		}, {
-			context: div
-		});
-
-		str = div.innerHTML;
-
 		// Make {{template}} variable replacements
 		return str.replace(/{{([^}]*)}}/g, function(str, key) {
 			return scope.$private('replace', obj, key, opt);
