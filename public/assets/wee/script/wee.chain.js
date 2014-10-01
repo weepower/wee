@@ -1,4 +1,4 @@
-// Wee 2.0.4 (weepower.com)
+// Wee 2.0.5 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -16,10 +16,9 @@ Wee.fn.extend({
 	function get(sel, context) {
 		if (sel) {
 			var el = Array.isArray(sel) ? sel : Wee.$toArray(Wee.$(sel, context)),
-				len = el.length,
 				i = 0;
 
-			for (; i < len; i++) {
+			for (; i < el.length; i++) {
 				c.call(this, el[i]);
 			}
 		}
@@ -35,21 +34,21 @@ Wee.fn.extend({
 	Wee._win[WeeAlias]['prototype'] = get['prototype'] = {
 		length: 0,
 		_$_: true,
-		// Utility
+		// Utilities
 		reverse: function() {
 			var cp = Wee.$extend({}, this),
 				len = this.length,
-				i = 0,
-				x = len - 1;
+				x = len,
+				i = 0;
 
 			for (; i < len; i++) {
-				this[i] = cp[x];
 				x--;
+				this[i] = cp[x];
 			}
 
 			return this;
 		},
-		// Base
+		// Core
 		clone: function() {
 			return $(Wee.$clone(this));
 		},
@@ -193,11 +192,11 @@ Wee.fn.extend({
 		find: function(filter) {
 			return $(Wee.$find(this, filter));
 		},
-		next: function() {
-			return $(Wee.$next(this));
+		next: function(filter) {
+			return $(Wee.$next(this, filter));
 		},
-		prev: function() {
-			return $(Wee.$prev(this));
+		prev: function(filter) {
+			return $(Wee.$prev(this, filter));
 		},
 		filter: function(filter) {
 			return $(Wee.$filter(this, filter));
@@ -226,15 +225,15 @@ Wee.fn.extend({
 		},
 		width: function(val) {
 			var r = Wee.$width(this, val);
-			return (val === undefined || val === true) ? r : this;
+			return val === undefined || val === true ? r : this;
 		},
 		height: function(val) {
 			var r = Wee.$height(this, val);
-			return (val === undefined || val === true) ? r : this;
+			return val === undefined || val === true ? r : this;
 		},
 		scrollTop: function(val) {
 			var r = Wee.$scrollTop(this, val);
-			return (val === undefined || val === true) ? r : this;
+			return val === undefined || val === true ? r : this;
 		},
 		// Events
 		on: function(a, b, c) {
@@ -255,9 +254,9 @@ Wee.fn.extend({
 		},
 		// Data
 		parse: function(obj, opt) {
-			var str = Wee.$html(this);
-				str = Wee.data.parse(str, obj, opt);
-			Wee.$html(this, str);
+			Wee.$each(this, function(el) {
+				Wee.$html(el, Wee.data.parse(Wee.$html(el), obj, opt));
+			});
 			return this;
 		}
 	}

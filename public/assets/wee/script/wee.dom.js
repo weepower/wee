@@ -1,4 +1,4 @@
-// Wee 2.0.4 (weepower.com)
+// Wee 2.0.5 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -25,7 +25,9 @@ Wee.fn.extend({
 	// Toggle the display of a specified element
 	$toggle: function(sel) {
 		this.$each(sel, function(el) {
-			! Wee.$hasClass(el, 'js-hide') ? Wee.$hide(el) : Wee.$show(el);
+			! Wee.$hasClass(el, 'js-hide') ?
+				Wee.$hide(el) :
+				Wee.$show(el);
 		});
 	},
 	// Get children of specified element with optional filter
@@ -36,7 +38,11 @@ Wee.fn.extend({
 		this.$each(sel, function(el) {
 			var children = Wee._slice.call(el.children);
 
-			arr = arr.concat(filter ? Wee.$filter(children, filter) : children);
+			arr = arr.concat(
+				filter ?
+					Wee.$filter(children, filter) :
+					children
+			);
 		});
 
 		return this.$unique(arr);
@@ -59,17 +65,20 @@ Wee.fn.extend({
 
 		this.$each(sel, function(el) {
 			var siblings = Wee._slice.call(el.parentNode.children),
-				len = siblings.length,
 				i = 0;
 
-			for (; i < len; i++) {
+			for (; i < siblings.length; i++) {
 				if (siblings[i] === el) {
 					siblings.splice(i, 1);
 					break;
 				}
 			}
 
-			arr = arr.concat(filter ? Wee.$filter(siblings, filter) : siblings);
+			arr = arr.concat(
+				filter ?
+					Wee.$filter(siblings, filter) :
+					siblings
+			);
 		});
 
 		return this.$unique(arr);
@@ -133,7 +142,7 @@ Wee.fn.extend({
 		});
 	},
 	// Insert specified element before specified element
-	$before: function(sel, pos) {
+	$before: function(sel, pos, rem) {
 		var str = Wee.$isString(pos);
 
 		this.$each(sel, function(el, i) {
@@ -148,6 +157,10 @@ Wee.fn.extend({
 				}, {
 					reverse: true
 				});
+
+			if (rem) {
+				Wee.$remove(el);
+			}
 		});
 	},
 	// Insert specified element before specified element
@@ -255,73 +268,52 @@ Wee.fn.extend({
 	// Get text value of specified element or set text with specified value
 	// Returns string
 	$text: function(sel, val) {
-		if (val !== undefined) {
-			this.$each(sel, function(el) {
-				el.textContent !== undefined ?
-					el.textContent = val:
-					el.innerText = val;
-			});
-		} else {
-			var r = '';
-
-			this.$each(sel, function(el) {
-				r += (el.textContent || el.innerText).trim();
-			});
-
-			return r;
+		if (val === undefined) {
+			return this.$map(sel, function(el) {
+				return (el.textContent || el.innerText).trim();
+			}).join('');
 		}
+
+		this.$each(sel, function(el) {
+			el.textContent === undefined ?
+				el.innerText = val :
+				el.textContent = val;
+		});
 	},
 	// Get value of specified element or set specified value
 	// Returns string
 	$val: function(sel, val) {
-		if (val !== undefined) {
-			this.$each(sel, function(el) {
-				if (el.nodeName == 'SELECT') {
-					var opt = Wee.$find(el, 'option');
-						val = Wee.$toArray(val);
-
-					opt.forEach(function(a) {
-						if (val.indexOf(a.value) > -1) {
-							a.selected = true;
-						}
-					});
-				} else {
-					this.value = val;
-				}
-			});
-		} else {
+		if (val === undefined) {
 			var el = Wee.$first(sel);
 
 			if (el.nodeName == 'SELECT') {
 				var opt = this.$find(el, 'option'),
-					val = [];
-
-				opt.forEach(function(a) {
-					if (a.selected) {
-						val.push(a.value);
-					}
-				});
+					val = opt.map(function(a) {
+						if (a.selected) {
+							return a.value;
+						}
+					});
 
 				return el.multiple ? val : val[0];
-			} else {
-				return el.value;
 			}
-		}
-	},
-	// Get indexed node of specified element
-	// Returns element
-	$eq: function(sel, i) {
-		if (sel['_$_']) {
-			return sel[i];
+
+			return el.value;
 		}
 
-		var el = this.$(sel);
+		this.$each(sel, function(el) {
+			if (el.nodeName == 'SELECT') {
+				var opt = Wee.$find(el, 'option');
+					val = Wee.$toArray(val);
 
-		if (Array.isArray(el)) {
-			return i < 0 ? el[el.length + i] : el[i];
-		}
-
-		return null;
+				opt.forEach(function(a) {
+					if (val.indexOf(a.value) > -1) {
+						a.selected = true;
+					}
+				});
+			} else {
+				el.value = val;
+			}
+		});
 	},
 	// Get matching nodes based on a specified filter within a specified element
 	// Returns element array
@@ -336,25 +328,39 @@ Wee.fn.extend({
 	},
 	// Get the next sibling of a specified element
 	// Returns element
-	$next: function(sel) {
-		return this.$map(sel, function(el) {
-			do {
-				el = el.nextSibling;
-			} while (el && el.nodeType !== 1);
+	$next: function(sel, filter, opt) {
+		var arr = [];
 
-			return el || false;
-		}).reverse();
+		this.$each(sel, function(el) {
+			var nodes = Wee.$children(Wee.$parent(el)),
+				index = Wee.$index(el);
+
+			nodes.forEach(function(el, i) {
+				if (i > index && (! filter || filter && Wee.$is(el, filter, opt))) {
+					arr.push(el);
+				}
+			});
+		});
+
+		return arr;
 	},
 	// Get the previous sibling of a specified element
 	// Returns element
-	$prev: function(sel) {
-		return this.$map(sel, function(el) {
-			do {
-				el = el.previousSibling;
-			} while (el && el.nodeType !== 1);
+	$prev: function(sel, filter, opt) {
+		var arr = [];
 
-			return el || false;
+		this.$each(sel, function(el) {
+			var nodes = Wee.$children(Wee.$parent(el)),
+				index = nodes.length - Wee.$index(el) - 1;
+
+			nodes.reverse().forEach(function(el, i) {
+				if (i > index && (! filter || filter && Wee.$is(el, filter, opt))) {
+					arr.push(el);
+				}
+			});
 		});
+
+		return arr;
 	},
 	// Return a subset of elements based on a specified filter from a specified element
 	// Returns element array
@@ -380,16 +386,16 @@ Wee.fn.extend({
 				scope: el
 			}, opt));
 		} else {
-			var matches = el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector;
+			var matches = el.matches || el.matchesSelector || el.msMatchesSelector ||
+					el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector;
 
 			if (matches) {
 				return matches.call(el, filter);
 			} else {
 				var elem = el.parentNode.querySelectorAll(filter),
-					len = elem.length;
 					i = 0;
 
-				for (; i < len; i++) {
+				for (; i < elem.length; i++) {
 					if (elem[i] === el) {
 						return true;
 					}
@@ -403,12 +409,10 @@ Wee.fn.extend({
 	// Returns int
 	$index: function(sel) {
 		var el = this.$first(sel),
-			parent = this.$parent(el),
-			children = this.$children(parent),
-			len = children.length,
+			children = this.$children(this.$parent(el)),
 			i = 0;
 
-		for (; i < len; i++) {
+		for (; i < children.length; i++) {
 			if (children[i] === el) {
 				return i;
 			}
@@ -436,7 +440,7 @@ Wee.fn.extend({
 	// Toggle the display of a specified element
 	$toggleClass: function(sel, val) {
 		this.$each(sel, function(el) {
-			Wee.$each(val.split(' '), function(val) {
+			val.split(' ').forEach(function(val) {
 				Wee.$hasClass(el, val) ?
 					Wee.$removeClass(el, val) :
 					Wee.$addClass(el, val);
@@ -447,7 +451,8 @@ Wee.fn.extend({
 	// Returns element
 	$parseHTML: function(html, obj) {
 		var el = Wee._doc.createElement('div');
-			el.innerHTML = html;
+
+		el.innerHTML = html;
 
 		var children = this.$children(el);
 
@@ -461,19 +466,17 @@ Wee.fn.extend({
 		return {
 			top: el.offsetTop,
 			left: el.offsetLeft
-		}
+		};
 	},
 	// Get the offset of a specified element
 	// Returns object
 	$offset: function(sel) {
-		var el = this.$first(sel),
-			rect = el.getBoundingClientRect(),
-			b = Wee._body;
+		var rect = this.$first(sel).getBoundingClientRect();
 
 		return {
-			top: rect.top + b.scrollTop,
-			left: rect.left + b.scrollLeft
-		}
+			top: rect.top + Wee._body.scrollTop,
+			left: rect.left + Wee._body.scrollLeft
+		};
 	},
 	// Get or set the width of a specified element, optionally accounting for margin
 	// Returns int
@@ -507,8 +510,13 @@ Wee.fn.extend({
 				case Wee._win:
 					return el.innerHeight;
 				case Wee._doc:
-					return Math.max(Wee._body.scrollHeight, Wee._body.offsetHeight,
-					Wee._html.clientHeight, Wee._html.scrollHeight, Wee._html.offsetHeight);
+					return Math.max(
+						Wee._body.scrollHeight,
+						Wee._body.offsetHeight,
+						Wee._html.clientHeight,
+						Wee._html.scrollHeight,
+						Wee._html.offsetHeight
+					);
 				default:
 					var height = el.offsetHeight;
 

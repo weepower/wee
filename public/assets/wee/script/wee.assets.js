@@ -1,4 +1,4 @@
-// Wee 2.0.4 (weepower.com)
+// Wee 2.0.5 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -86,7 +86,7 @@ Wee.fn.make('assets', {
 
 			el.onerror = function() {
 				scope.fail(group);
-			}
+			};
 
 			head.appendChild(el);
 		} else if (ext == 'css') {
@@ -103,11 +103,11 @@ Wee.fn.make('assets', {
 
 			img.onload = function() {
 				scope.done(group);
-			}
+			};
 
 			img.onerror = function() {
 				scope.fail(group);
-			}
+			};
 
 			img.src = path;
 		}

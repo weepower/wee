@@ -1,4 +1,4 @@
-// Wee 2.0.4 (weepower.com)
+// Wee 2.0.5 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -30,7 +30,7 @@ Wee.fn.make('screen', {
 						this.$set('evts', [conf]);
 
 						// Watch widow resize event for breakpoint changes
-						Wee.events.on(window, 'resize', function() {
+						Wee.events.on(Wee._win, 'resize', function() {
 							scope.$private('check');
 						});
 					}
@@ -52,10 +52,9 @@ Wee.fn.make('screen', {
 		// If breakpoint has been hit or resize logic initialized
 		if (size !== prev || init) {
 			var evts = conf || this.$get('evts'),
-				len = evts.length,
 				i = 0;
 
-			for (; i < len; i++) {
+			for (; i < evts.length; i++) {
 				var evt = evts[i],
 					sz = evt.size,
 					mn = evt.min,

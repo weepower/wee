@@ -1,4 +1,4 @@
-// Wee 2.0.4 (weepower.com)
+// Wee 2.0.5 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -215,7 +215,7 @@ Wee.fn.make('events', {
 		}
 
 		var args = Wee._slice.call(arguments);
-		args.splice(2, 1)
+		args.splice(2, 1);
 
 		Wee.$exec(fn, {
 			args: args,

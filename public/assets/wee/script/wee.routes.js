@@ -1,4 +1,4 @@
-// Wee 2.0.4 (weepower.com)
+// Wee 2.0.5 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -74,10 +74,9 @@ Wee.fn.make('routes', {
 			var key = keys[x],
 				opts = key.split('||'),
 				match = 0,
-				len = opts.length,
 				k = 0;
 
-			for (; k < len; k++) {
+			for (; k < opts.length; k++) {
 				var opt = opts[k],
 					child = route[key];
 

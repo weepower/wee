@@ -1,9 +1,9 @@
-// Wee 2.0.4 (weepower.com)
+// Wee Placeholder 1.0.0 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
-this.attachEvent('onload', function() {
-	(function(d) {
+(function(w, d) {
+	w.attachEvent('onload', function() {
 		var arr = d.querySelectorAll('input[placeholder], textarea[placeholder]'),
 			len = arr.length,
 			i = 0;
@@ -55,5 +55,5 @@ this.attachEvent('onload', function() {
 				}
 			})();
 		}
-	})(document);
-});
+	});
+})(this, document);
