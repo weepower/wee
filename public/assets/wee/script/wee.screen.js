@@ -30,7 +30,7 @@ Wee.fn.make('screen', {
 						this.$set('evts', [conf]);
 
 						// Watch widow resize event for breakpoint changes
-						Wee.events.on(window, 'resize', function() {
+						Wee.events.on(Wee._win, 'resize', function() {
 							scope.$private('check');
 						});
 					}
