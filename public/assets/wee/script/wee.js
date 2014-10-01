@@ -109,7 +109,7 @@ var Wee = (function(w, d) {
 		// Optional url can be passed for evaluation
 		// Returns boolean
 		$envSecure: function(url) {
-			return (url || w.location.protocol) == 'https:';
+			return (url || w.location.href).slice(0, 5) == 'https';
 		},
 		// Get public variable with optional default
 		// Accepts optional boolean to set default value if variable doesn't exist
@@ -124,7 +124,9 @@ var Wee = (function(w, d) {
 				if (root.hasOwnProperty(key)) {
 					return root[key]
 				} else if (def !== _undefined) {
-					def = this.$isFunction(def) ? def() : (opt ? this.$exec(def, opt) : def);
+					def = this.$isFunction(def) ?
+						def() :
+						(opt ? this.$exec(def, opt) : def);
 
 					if (set) {
 						this.$set(key, def);
@@ -143,8 +145,11 @@ var Wee = (function(w, d) {
 		// Returns mixed
 		$set: function(key, val, opt) {
 			var split = this._storeData(key),
-				set = this.$isFunction(val) ? val() : (opt ? this.$exec(val, opt) : val);
-				split[0][split[1]] = set;
+				set = this.$isFunction(val) ?
+					val() :
+					(opt ? this.$exec(val, opt) : val);
+
+			split[0][split[1]] = set;
 
 			return set;
 		},
@@ -208,10 +213,10 @@ var Wee = (function(w, d) {
 
 				if (this.$isFunction(fn)) {
 					var response = fn.apply(conf.scope, Wee.$toArray(conf.args));
-				}
 
-				if (len === 1) {
-					return response;
+					if (len === 1) {
+						return response;
+					}
 				}
 			}
 		},
@@ -336,7 +341,7 @@ var Wee = (function(w, d) {
 
 			if (el === null) {
 				return el;
-			} else if (el.nodeType !== _undefined || el === this._win) {
+			} else if (el.nodeType !== _undefined || el === w) {
 				return [el];
 			}
 
@@ -364,14 +369,13 @@ var Wee = (function(w, d) {
 					args: []
 				}, opt),
 				el = this._selArray(sel, conf),
-				len = el.length,
 				i = 0;
 
 			if (conf.reverse) {
 				el = el.reverse();
 			}
 
-			for (; i < len; i++) {
+			for (; i < el.length; i++) {
 				this.$exec(fn, {
 					args: [el[i], i].concat(conf.args),
 					scope: conf.scope || el[i]
@@ -386,10 +390,9 @@ var Wee = (function(w, d) {
 			}
 
 			var res = [],
-				len = sel.length,
 				i = 0;
 
-			for (; i < len; i++) {
+			for (; i < sel.length; i++) {
 				var el = sel[i],
 					val = this.$exec(fn, {
 						args: [el, i],
@@ -424,7 +427,9 @@ var Wee = (function(w, d) {
 		$removeClass: function(sel, val) {
 			this.$each(sel, function(el) {
 				val.split(' ').forEach(function(val) {
-					el.className = el.className.replace(new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'), ' ').trim();
+					el.className = el.className.replace(
+						new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'
+					), ' ').trim();
 				});
 			});
 		},
@@ -434,7 +439,7 @@ var Wee = (function(w, d) {
 		$css: function(sel, a, b) {
 			var obj = this.$isObject(a);
 
-			if (b !== undefined || obj) {
+			if (b !== _undefined || obj) {
 				this.$each(sel, function(el) {
 					obj ?
 						Object.keys(a).forEach(function(key) {
