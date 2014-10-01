@@ -86,7 +86,7 @@ Wee.fn.make('assets', {
 
 			el.onerror = function() {
 				scope.fail(group);
-			}
+			};
 
 			head.appendChild(el);
 		} else if (ext == 'css') {
@@ -103,11 +103,11 @@ Wee.fn.make('assets', {
 
 			img.onload = function() {
 				scope.done(group);
-			}
+			};
 
 			img.onerror = function() {
 				scope.fail(group);
-			}
+			};
 
 			img.src = path;
 		}
