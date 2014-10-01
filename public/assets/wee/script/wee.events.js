@@ -215,7 +215,7 @@ Wee.fn.make('events', {
 		}
 
 		var args = Wee._slice.call(arguments);
-		args.splice(2, 1)
+		args.splice(2, 1);
 
 		Wee.$exec(fn, {
 			args: args,
