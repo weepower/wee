@@ -52,10 +52,9 @@ Wee.fn.make('screen', {
 		// If breakpoint has been hit or resize logic initialized
 		if (size !== prev || init) {
 			var evts = conf || this.$get('evts'),
-				len = evts.length,
 				i = 0;
 
-			for (; i < len; i++) {
+			for (; i < evts.length; i++) {
 				var evt = evts[i],
 					sz = evt.size,
 					mn = evt.min,

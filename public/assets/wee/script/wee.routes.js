@@ -74,10 +74,9 @@ Wee.fn.make('routes', {
 			var key = keys[x],
 				opts = key.split('||'),
 				match = 0,
-				len = opts.length,
 				k = 0;
 
-			for (; k < len; k++) {
+			for (; k < opts.length; k++) {
 				var opt = opts[k],
 					child = route[key];
 
