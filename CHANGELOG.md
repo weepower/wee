@@ -1,3 +1,22 @@
+# 2.0.5
+
+2014-10-01
+
+- FIXED: Resolve issue with the array format of $setVars
+- FIXED: Resolve issue with passing a negative value to $eq from a chained function
+- FIXED: Resolve issue with passing specific URL to $envSecure
+- FIXED: Resolve issue with scope variable calling private replace function
+- FIXED: Fix $('.element').parse() to render all matched elements if there is more than one
+- UPDATED: Move Wee.$eq() to wee.js from wee.dom.js to deduplicate logic
+- UPDATED: Replace commas with semicolons in screen.less sample code
+- UPDATED: Reset all Wee polyfills with their own semantic versioning
+- UPDATED: Add trailing semicolons to unload and onerror asset variables
+- UPDATED: Add filter parameter to next() and previous() methods
+- UPDATED: Add remove argument to $before() function to match $after()
+- UPDATED: Simplify logic for $text()
+- UPDATED: Add ability to pass filter selector and options to $next() and $prev()
+- UPDATED: Update $toggleClass to use native forEach instead of $each
+
 # 2.0.4
 
 2014-09-29
