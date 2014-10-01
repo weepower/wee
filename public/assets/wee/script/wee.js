@@ -342,17 +342,19 @@ var Wee = (function(w, d) {
 
 			return Wee._slice.call(el, 0);
 		},
-		// Get first match to specified element
+		// Get indexed node of specified element
 		// Returns element
-		$first: function(sel) {
-			if (sel['_$_']) {
-				return sel[0];
+		$eq: function(sel, i, context) {
+			if (! sel['_$_']) {
+				sel = this.$(sel, context);
 			}
 
-			var el = this.$(sel);
-
-			return Array.isArray(el) ? el[0] : el;
-
+			return sel[i < 0 ? sel.length + i : i];
+		},
+		// Get first match to specified element
+		// Returns element
+		$first: function(sel, context) {
+			return this.$eq(sel, 0, context);
 		},
 		// Execute specified function for specified elements|selector
 		// Options include arguments, context, and scope
@@ -482,9 +484,9 @@ var Wee = (function(w, d) {
 				var key = Wee.$data(el, 'set'),
 					val = Wee.$data(el, 'value');
 
-				key.indexOf('[]') == -1 ?
-					Wee.$set(key, val) :
-					Wee.$push(key.replace('[]', ''), val);
+				key.slice(-2) == '[]' ?
+					Wee.$push(key.slice(0, -2), val) :
+					Wee.$set(key, val);
 			});
 		},
 		// Fallback for non-existent chaining
