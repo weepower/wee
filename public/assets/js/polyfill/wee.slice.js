@@ -1,4 +1,4 @@
-// Wee 2.0.4 (weepower.com)
+// Wee Slice 1.0.0 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
