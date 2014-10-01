@@ -79,6 +79,8 @@ Wee.fn.make('data', {
 		opt = opt || {};
 		obj = obj || {};
 
+		var scope = this;
+
 		// Make {{template}} variable replacements
 		return str.replace(/{{([^}]*)}}/g, function(str, key) {
 			return scope.$private('replace', obj, key, opt);
