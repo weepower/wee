@@ -2,9 +2,9 @@
 
 
 
-// assets.load(opt)
+// assets.load(conf)
 
 
 
-// aseets.ready(group, recheck)
+// aseets.ready(group, opt, poll)
 

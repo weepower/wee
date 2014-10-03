@@ -29,8 +29,7 @@ Options +FollowSymLinks -MultiViews -Indexes
 
 # Remove trailing slash
 #RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteRule ^(.+)/$ /$1 [R=301,L,QSA]
+#RewriteRule ^(.*)/$ $1 [R=301,L,QSA]
 
 # Remove extension
 RewriteCond %{REQUEST_FILENAME} !-d
