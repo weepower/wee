@@ -30,7 +30,7 @@
 
 2014-09-27
 
-- FIXED: Resolve issue where delegate did validate past the direct parent element
+- FIXED: Resolve issue where delegate didn't validate past the direct parent element
 - FIXED: Resolve issue with Wee.$('.class.class') selectors
 - UPDATED: Modify $exec to assume the init function if no function is supplied in "wee:fn" format
 - UPDATED: Add JetBrains IDE storage folder pattern to .gitignore
@@ -50,7 +50,7 @@
 - FIXED: Resolve issue with module watch task configuration
 - FIXED: Update core font-family mixin to accommodate fonts encapsulated in quotes
 - FIXED: Allow style build directory to import raw CSS files
-- UPDATED: Remove stray stylesheet reference in samples index.html
+- UPDATED: Remove stray stylesheet reference in sample index.html
 - UPDATED: Update browser-sync dependency to 1.5.2
 - UPDATED: Update mixins with various tweaks and efficiencies
 

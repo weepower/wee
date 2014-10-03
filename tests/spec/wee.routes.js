@@ -1,4 +1,4 @@
-// path(val)
+// routes.path(val, opt)
 
 module('routes');
 
@@ -14,7 +14,7 @@ test('get set path', function() {
 	strictEqual(Wee.routes.path(), '/segment/value', 'Path is still correctly set to "/segment/value".');
 });
 
-// map(routes, init)
+// routes.map(routes, init)
 
 test('get mapped routes', function() {
 	propEqual(Wee.routes.map(), {}, 'There are currently no mapped routes.');
@@ -28,13 +28,13 @@ test('map routes', function() {
 	}, 'There route was correctly mapped.');
 });
 
-// segments(i)
+// routes.segments(i)
 
 test('get all segments', function() {
 	propEqual(Wee.routes.segments(), ['segment', 'value'], 'Segment array is correctly set.');
 });
 
-// run(opt)
+// routes.run(opt)
 
 // test('run routes', function() {
 // 	propEqual(Wee.routes.run(), , 'Routes were correctly evaluated.');
