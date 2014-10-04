@@ -1303,34 +1303,51 @@
 .background (@color; @filename; @repeat) when (isstring(@repeat)), (iskeyword(@repeat)) {
 	background: @color url('@{imagePath}@{filename}') @repeat;
 }
+.background (@color; @opacity; @fallback: @color) when (isnumber(@opacity)) {
+	background-color: @fallback;
+	.check () when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		background-color: rgba(red(@color), green(@color), blue(@color), (@opacity / 100));
+	}
+	.check () when (@opacity < 1) {
+		background-color: rgba(red(@color), green(@color), blue(@color), @opacity);
+	}
+	.check () when (ispercentage(@opacity)) {
+		background-color: rgba(red(@color), green(@color), blue(@color), unit((@opacity / 100)));
+	}
+	.check();
+}
 .background (@color; @filename; @x; @y: 0; @repeat: no-repeat) when (isnumber(@x)) {
 	background: @color url('@{imagePath}@{filename}') @x @y @repeat;
 }
-.background (light; @opacity; @fallback: @white) {
-	background-color: @fallback;
-}
-.background (light; @opacity; ...) when (@opacity > 1)
+.background (light; @opacity; @fallback: @white) when (@opacity > 1)
 		and not (ispercentage(@opacity)) {
-	background-color: rgba(255, 255, 255, (@opacity / 100));
-}
-.background (light; @opacity; ...) when (@opacity < 1) {
-	background-color: rgba(255, 255, 255, @opacity);
-}
-.background (light; @opacity; ...) when (ispercentage(@opacity)) {
-	background-color: rgba(255, 255, 255, unit((@opacity / 100)));
+	background-color: @fallback;
+	.check () when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		background-color: rgba(255, 255, 255, (@opacity / 100));
+	}
+	.check () when (@opacity < 1) {
+		background-color: rgba(255, 255, 255, @opacity);
+	}
+	.check () when (ispercentage(@opacity)) {
+		background-color: rgba(255, 255, 255, unit((@opacity / 100)));
+	}
+	.check();
 }
 .background (dark; @opacity; @fallback: @black) {
 	background-color: @fallback;
-}
-.background (dark; @opacity; ...) when (@opacity > 1)
-		and not (ispercentage(@opacity)) {
-	background-color: rgba(0, 0, 0, (@opacity / 100));
-}
-.background (dark; @opacity; ...) when (@opacity < 1) {
-	background-color: rgba(0, 0, 0, @opacity);
-}
-.background (dark; @opacity; ...) when (ispercentage(@opacity)) {
-	background-color: rgba(0, 0, 0, unit((@opacity / 100)));
+	.check () when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
+		background-color: rgba(0, 0, 0, (@opacity / 100));
+	}
+	.check () when (@opacity < 1) {
+		background-color: rgba(0, 0, 0, @opacity);
+	}
+	.check () when (ispercentage(@opacity)) {
+		background-color: rgba(0, 0, 0, unit((@opacity / 100)));
+	}
+	.check();
 }
 .background-color (@color: @bodyBackground) {
 	background-color: @color;
