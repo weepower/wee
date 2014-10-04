@@ -435,8 +435,8 @@ module.exports = function(grunt) {
 				}]
 			});
 
-			// Run task
-			grunt.task.run('less:' + taskName);
+			// Push task
+			style.tasks.push('less:' + taskName);
 		}
 	});
 
@@ -678,6 +678,7 @@ module.exports = function(grunt) {
 						less: obj
 					});
 
+					// Push task
 					style.tasks.push('less:' + name);
 
 					// Configure style watch task
