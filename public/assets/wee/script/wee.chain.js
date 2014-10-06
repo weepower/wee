@@ -5,10 +5,14 @@
 var WeeAlias = WeeAlias || '$';
 
 Wee.fn.extend({
-	$chain: function(obj) {
-		for (var key in obj) {
-			Wee._win[WeeAlias]['prototype'][key] = obj[key];
-		}
+	$chain: function(a, b) {
+		var p = Wee._win[WeeAlias]['prototype'];
+
+		Wee.$isString(a) ?
+			p[a] = b :
+			Object.keys(a).forEach(function(key) {
+				p[key] = a[key];
+			});
 	}
 });
 
