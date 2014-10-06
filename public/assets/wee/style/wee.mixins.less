@@ -299,6 +299,7 @@
 .text-sharpen () {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
 }
 .capitalize () {
 	text-transform: capitalize;
@@ -1777,7 +1778,6 @@
 	.check();
 }
 .width (@width; @maxWidth) {
-	.width(@width);
 	.max-width(@maxWidth);
 }
 .height (@value; ...) when not (@value = false) {
@@ -1802,20 +1802,20 @@
 	.max-height(@maxHeight);
 }
 .size (@width; @height) {
-	.width(@width);
 	.height(@height);
+	.width(@width);
 }
 .min-size (@width; @height) {
-	.min-width(@width);
 	.min-height(@height);
+	.min-width(@width);
 }
 .max-size (@width; @height) {
-	.max-width(@width);
 	.max-height(@height);
+	.max-width(@width);
 }
 .square (@size) {
-	.width(@size);
 	.height(@size);
+	.width(@size);
 }
 .ratio (@ratio: (16 / 9)) when not (iskeyword(@ratio)) {
 	display: block;
@@ -1831,11 +1831,13 @@
 	}
 }
 .circle (@diameter; ...) {
+	display: block;
+	.height(@diameter);
 	.rounded((@diameter / 2));
-	.square(@diameter);
+	.width(@diameter);
 }
 .circle (@diameter; @crop) when (@crop = true) {
-	.crop();
+	overflow: hidden;
 }
 .min-width (@value: @minWidth) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
@@ -2036,8 +2038,10 @@
 // Alignment
 
 .wee-container () {
-	.centered-block();
-	.content-box();
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	.box-sizing('content-box');
 	.max-width(@maxWidth);
 	.min-width(@minWidth);
 	.check () when (@padContainer = true) {
