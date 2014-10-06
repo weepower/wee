@@ -259,6 +259,37 @@ var Wee = (function(w, d) {
 		// Serialize specified object
 		// Returns string
 		$serialize: function(obj) {
+			if (! this.$isObject(obj)) {
+				var arr = [],
+					sel = this.$first(obj);
+
+				if (sel.nodeName == 'FORM') {
+					for (var i = 0; i < sel.elements.length; i++) {
+						var el = sel.elements[i];
+
+						if (el.name && el.type != 'file' && el.type != 'reset') {
+							if (el.type == 'select-multiple') {
+								for (var x = 0; x < el.options.length; x++) {
+									if (el.options[x].selected) {
+										arr.push(el.name + '=' + encodeURIComponent(el.options[x].value).replace(/%20/g, '+'));
+									}
+								}
+							} else {
+								if (el.type != 'submit' && el.type != 'button') {
+									if ((el.type != 'checkbox' && el.type != 'radio') || el.checked) {
+										arr.push(el.name + '=' + encodeURIComponent(el.value).replace(/%20/g, '+'));
+									}
+								}
+							}
+						}
+					}
+
+					return arr.join('&');
+				}
+
+				return '';
+			}
+
 			return Object.keys(obj).map(function(key) {
 				return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]);
 			}).join('&');
