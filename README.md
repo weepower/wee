@@ -54,7 +54,7 @@ To view the working Wee to-do list check out our public [Trello board](https://t
 
 ## Versioning
 
-Wee adheres to [Semantic Versioning](http://semver.org/) in the form of MAJOR.MINOR.PATCH. Regardless of version we always recommend you thoroughly review the [changelog](https://github.com/weepower/wee/blob/development/CHANGELOG.md) before updating.
+Wee adheres to [Semantic Versioning](http://semver.org/) in the form of MAJOR.MINOR.PATCH. Regardless of version we always recommend you thoroughly review the [changelog](https://github.com/weepower/wee/blob/master/CHANGELOG.md) before updating.
 
 ## Community
 
