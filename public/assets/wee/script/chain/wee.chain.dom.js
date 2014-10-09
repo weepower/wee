@@ -3,6 +3,28 @@
 // DO NOT MODIFY THIS FILE
 
 Wee.$chain({
+	html: function(val) {
+		var r = Wee.$html(this, val);
+		return val !== undefined ? this : r;
+	},
+	hasClass: function(val) {
+		return Wee.$hasClass(this, val);
+	},
+	addClass: function(val) {
+		Wee.$addClass(this, val);
+		return this;
+	},
+	removeClass: function(val) {
+		Wee.$removeClass(this, val);
+		return this;
+	},
+	css: function(a, b) {
+		var r = Wee.$css(this, a, b);
+		return b || Wee.$isObject(a) ? this : r;
+	},
+	clone: function() {
+		return $(Wee.$clone(this));
+	},
 	removeAttr: function(key) {
 		Wee.$removeAttr(this, key);
 		return this;

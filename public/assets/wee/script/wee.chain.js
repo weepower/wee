@@ -53,26 +53,11 @@ Wee.fn.extend({
 			return this;
 		},
 		// Core
-		clone: function() {
-			return $(Wee.$clone(this));
-		},
 		each: function(fn, opt) {
 			Wee.$each(this, fn, opt);
 		},
 		map: function(fn) {
 			return Wee.$map(this, fn);
-		},
-		addClass: function(val) {
-			Wee.$addClass(this, val);
-			return this;
-		},
-		removeClass: function(val) {
-			Wee.$removeClass(this, val);
-			return this;
-		},
-		css: function(a, b) {
-			var r = Wee.$css(this, a, b);
-			return b || Wee.$isObject(a) ? this : r;
 		},
 		attr: function(key, val) {
 			var r = Wee.$attr(this, key, val);
@@ -84,15 +69,8 @@ Wee.fn.extend({
 		first: function() {
 			return $(Wee.$eq(this, 0));
 		},
-		hasClass: function(val) {
-			return Wee.$hasClass(this, val);
-		},
 		data: function(key, val) {
 			var r = Wee.$data(this, key, val);
-			return val !== undefined ? this : r;
-		},
-		html: function(val) {
-			var r = Wee.$html(this, val);
 			return val !== undefined ? this : r;
 		}
 	}

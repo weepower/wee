@@ -437,66 +437,6 @@ var Wee = (function(w, d) {
 
 			return res;
 		},
-		// Determine if specified element has specified class
-		// Returns boolean
-		$hasClass: function(sel, val) {
-			return this.$(sel).some(function(el) {
-				return new RegExp('\\b' + val + '\\b').test(el.className);
-			});
-		},
-		// Add specified class name to specified element
-		// Returns undefined
-		$addClass: function(sel, val) {
-			this.$each(sel, function(el) {
-				el.className = (el.className + ' ' + val.split(' ').filter(function(val) {
-					return ! Wee.$hasClass(el, val);
-				}).join(' ')).trim();
-			});
-		},
-		// Removes specified class from specified element
-		// Returns undefined
-		$removeClass: function(sel, val) {
-			this.$each(sel, function(el) {
-				val.split(' ').forEach(function(val) {
-					el.className = el.className.replace(
-						new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'
-					), ' ').trim();
-				});
-			});
-		},
-		// Get CSS value of first element or set matched elements CSS property with specified value
-		// Accepts either rule object or rule, value
-		// Returns string|undefined
-		$css: function(sel, a, b) {
-			var obj = this.$isObject(a);
-
-			if (b !== _undefined || obj) {
-				this.$each(sel, function(el) {
-					obj ?
-						Object.keys(a).forEach(function(key) {
-							el.style[key] = a[key];
-						}) :
-						el.style[a] = b;
-				});
-			} else {
-				var el = this.$first(sel);
-
-				return this._legacy ?
-					el.currentStyle[a] :
-					getComputedStyle(el, null)[a];
-			}
-		},
-		// Get HTML value of first element or set matched elements HTML with specified value
-		// Returns string|undefined
-		$html: function(sel, val) {
-			if (val === _undefined) {
-				return this.$first(sel).innerHTML;
-			}
-
-			this.$each(sel, function(el) {
-				el.innerHTML = val;
-			});
-		},
 		// Get attribute of first element or set matched elements attribute with specified value
 		// Returns string|undefined
 		$attr: function(sel, key, val) {
@@ -554,8 +494,6 @@ var Wee = (function(w, d) {
 		// Toggle HTML JavaScript status class and set data variables
 		// Returns undefined
 		init: function() {
-			this.$removeClass(this._html, 'no-js');
-			this.$addClass(this._html, 'js');
 			this.$setVars();
 		}
 	};
