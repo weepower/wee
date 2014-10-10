@@ -1,5 +1,4 @@
 # Project
-
 # custom rules here
 
 # Wee
@@ -8,12 +7,16 @@ bower_components
 
 # Tools
 .idea
+.idea/
+.idea/*
 .jshintrc
 .settings
 .bundle
 mixture.json
 prepros.json
 codekit-config.json
+/*.sublime-project
+*.sublime-workspace
 
 # System
 Thumbs.db
