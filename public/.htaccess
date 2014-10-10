@@ -1,11 +1,24 @@
 RewriteEngine On
-Options +FollowSymLinks -MultiViews -Indexes
+Options +FollowSymLinks -Indexes -MultiViews
 
 #Header set X-UA-Compatible "IE=edge"
 
 # Character set
 #AddDefaultCharset utf-8
 #AddCharset utf-8 .css .js .json .map .rss .xml
+
+# -------------
+# Remote Assets
+# -------------
+
+#<FilesMatch "\.(cur|gif|ico|jpe?g|png|svgz?|webp)$">
+#SetEnvIf Origin ":" IS_CORS
+#Header set Access-Control-Allow-Origin "*" env=IS_CORS
+#</FilesMatch>
+
+#<FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
+#Header set Access-Control-Allow-Origin "*"
+#</FilesMatch>
 
 # --------
 # Rewrites
@@ -19,22 +32,18 @@ Options +FollowSymLinks -MultiViews -Indexes
 #RewriteCond %{HTTP_HOST} ^www\.weepower\.com [NC]
 #RewriteRule ^(.*)$ http://www.weepower.com/$1 [R=301,L]
 
-# Remove root index file
-#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^/]+/)*index\.html\ HTTP/
-#RewriteRule ^(([^/]+/)*)index\.html$ http://%{HTTP_HOST}/ [R=301,L,QSA,NS]
-
-# Remove subdirectory index files
-#RewriteCond %{THE_REQUEST} ^[^/]*/index\.html/ [NC]
-#RewriteRule ^index\.html/(.+) http://%{HTTP_HOST}/$1 [R=301,L,QSA]
+# Remove index files
+RewriteRule ^index\.html$ / [R=301,L]
+RewriteRule ^(.*)/index\.html$ /$1 [R=301,L]
 
 # Remove trailing slash
-#RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteRule ^(.*)/$ $1 [R=301,L,QSA]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [R=301,L]
 
 # Remove extension
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^(.*)$ $1.html
+RewriteRule ^(.*)$ /$1.html [R=301,L]
 
 # -----------
 # Maintenance
