@@ -30,6 +30,8 @@ JavaScript toolset to build scalable, well-organized browser functionality < 8KB
 
 Structure baseline of markup, icons, and files to serve as a front-end roadmap
 Grunt build process configured through a simple JSON file to compile, optimize, and minify your source
+Automated process for building living style guide
+Advanced linting options to ensure quality and formatting consistency for CSS and JavaScript
 
 ## Quick Start
 
