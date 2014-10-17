@@ -32,6 +32,10 @@ Options +FollowSymLinks -Indexes -MultiViews
 #RewriteCond %{HTTP_HOST} ^www\.weepower\.com [NC]
 #RewriteRule ^(.*)$ http://www.weepower.com/$1 [R=301,L]
 
+# Force SSL
+#RewriteCond %{SERVER_PORT} 80
+#RewriteRule ^(.*)$ https://www.weepower.com/$1 [R=301,L]
+
 # Remove index files
 RewriteRule ^index\.html$ / [R=301,L]
 RewriteRule ^(.*)/index\.html$ /$1 [R=301,L]
