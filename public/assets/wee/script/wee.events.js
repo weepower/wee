@@ -16,8 +16,10 @@ Wee.fn.make('events', {
 		evts = evts || this.$get('bound');
 
 		if (evts) {
-			Wee.$each('[data-bind]', function(el) {
-				var id = Wee.$data(el, 'bind');
+			var bind = Wee.$get('bind');
+
+			for (var id in bind) {
+				var el = bind[id];
 
 				if (evts.hasOwnProperty(id)) {
 					var inst = evts[id];
@@ -26,9 +28,9 @@ Wee.fn.make('events', {
 						var fn = inst[key];
 
 						if (key == 'init') {
-							Wee.$exec(fn, Wee.$extend({
-								scope: el
-							}, opt));
+							opt.args = opt.args || [];
+							opt.args.unshift(el);
+							Wee.$exec(fn, opt);
 						} else {
 							var evt = {};
 								evt[key] = fn;
@@ -37,7 +39,7 @@ Wee.fn.make('events', {
 						}
 					}
 				}
-			});
+			}
 		}
 	},
 	// Remove bindings to bound object
@@ -100,7 +102,7 @@ Wee.fn.make('events', {
 						// If watch within parent make sure the target matches the selector
 						if (conf.targ) {
 							var t = conf.targ,
-								sel = t['_$_'] ? t.sel : t;
+								sel = t._$_ ? t.sel : t;
 								t = Wee.$toArray(Wee.$(sel));
 
 							if (! t.some(function(par) {
