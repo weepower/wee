@@ -1259,11 +1259,11 @@
 	}
 	.check();
 }
-.rounded (@topRight; @bottomRight; @bottomLeft; @topLeft) {
-	.rounded(top; right; @topRight);
-	.rounded(bottom; right; @bottomRight);
-	.rounded(bottom; left; @bottomLeft);
-	.rounded(top; left; @topLeft);
+.rounded (@top; @right; @bottom; @left) {
+	.rounded(top; left; @top);
+	.rounded(top; right; @right);
+	.rounded(bottom; right; @bottom);
+	.rounded(bottom; left; @left);
 }
 
 // Transitions
@@ -1321,7 +1321,7 @@
 .background (@color; @filename; @x; @y: 0; @repeat: no-repeat) when (isnumber(@x)) {
 	background: @color url('@{imagePath}@{filename}') @x @y @repeat;
 }
-.background (light; @opacity; @fallback: @white) when (@opacity > 1)
+.background (light; @opacity: @defaultOpacity; @fallback: @white) when (@opacity > 1)
 		and not (ispercentage(@opacity)) {
 	background-color: @fallback;
 	.check () when (@opacity > 1)
@@ -1336,7 +1336,7 @@
 	}
 	.check();
 }
-.background (dark; @opacity; @fallback: @black) {
+.background (dark; @opacity: @defaultOpacity; @fallback: @black) {
 	background-color: @fallback;
 	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
@@ -2101,26 +2101,6 @@
 .display (@value) {
 	display: @value;
 }
-.centered () {
-	.centered(horizontal);
-}
-.centered (horizontal) {
-	display: table;
-	margin-left: auto;
-	margin-right: auto;
-}
-.centered (vertical) {
-	position: absolute;
-	&:before {
-		content: ' ';
-		display: inline-block;
-		height: 100%;
-		vertical-align: middle;
-	}
-}
-.centered (both) {
-	.centered();
-}
 .inline () {
 	display: inline;
 }
@@ -2266,10 +2246,18 @@
 .hide (text) {
 	.hide-text();
 }
-.selection () {
-	color: @selectionColor;
-	text-shadow: none;
-	.background(@selectionBackground);
+.selection (@color: @selectionColor; @background: @selectionBackground) {
+	.check () {
+		text-shadow: none;
+		.background(@background);
+		.color(@color);
+	}
+	::-moz-selection {
+		.check();
+	}
+	::selection {
+		.check();
+	}
 }
 .cursor (@value: pointer) {
 	cursor: @value;
@@ -2293,10 +2281,7 @@
 .crop (vertical) {
 	overflow-y: hidden;
 }
-.crop () {
-	overflow: hidden;
-}
-.crop (both) {
+.crop (@value: true) when (@value), (@value = both) {
 	overflow: hidden;
 }
 .scroll (horizontal) {
@@ -2311,7 +2296,7 @@
 .scroll (both) {
 	overflow: scroll;
 }
-.fill (horizontal) {
+.fill (@value: true) when (@value), (@value = horizontal) {
 	width: 100%;
 }
 .fill (vertical) {
@@ -2333,9 +2318,9 @@
 	}
 }
 
-///////////////////
-// Mixin Classes //
-///////////////////
+////////////////////
+// Helper Classes //
+////////////////////
 
 .container {
 	.wee-container();
