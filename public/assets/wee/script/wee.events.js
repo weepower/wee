@@ -8,7 +8,7 @@ Wee.fn.make('events', {
 		this.$set('bound', Wee.$extend(this.$get('bound', {}), evts));
 
 		if (a === true || b === true) {
-			this.bind(evts, a);
+			this.bind(evts, a === true ? {} : a);
 		}
 	},
 	// Traverse DOM for available bindings
@@ -17,6 +17,7 @@ Wee.fn.make('events', {
 
 		if (evts) {
 			var bind = Wee.$get('bind');
+				opt = opt || {};
 
 			for (var id in bind) {
 				var el = bind[id];
@@ -157,17 +158,27 @@ Wee.fn.make('events', {
 		}, c));
 	},
 	// Remove specified function to specified element and optional event|function
-	off: function(sel, evt, fn) {
-		Wee.$each(this.bound(sel, evt, fn), function(e) {
-			Wee._legacy ?
-				e.el.detachEvent('on' + e.evt, e.cb) :
-				e.el.removeEventListener(e.evt, e.cb);
+	off: function(sel, a, b) {
+		var obj = a;
 
-			// Remove object from the bound array
-			var bound = Wee.events.$get('evts');
+		if (Wee.$isString(a)) {
+			obj = {a: b};
+		}
 
-			bound.splice(bound.indexOf(e), 1);
-		});
+		for (var evt in obj) {
+			var fn = obj[evt];
+
+			Wee.$each(this.bound(sel, evt, fn), function(e) {
+				Wee._legacy ?
+					e.el.detachEvent('on' + e.evt, e.cb) :
+					e.el.removeEventListener(e.evt, e.cb);
+
+				// Remove object from the bound array
+				var bound = Wee.events.$get('evts');
+
+				bound.splice(bound.indexOf(e), 1);
+			});
+		}
 	},
 	// Get currently bound events to optional specified element and event|function
 	// Returns array of objects
