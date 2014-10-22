@@ -122,6 +122,9 @@ Wee.$chain({
 	last: function() {
 		return $(Wee.$last(this));
 	},
+	slice: function(start, end) {
+		return $(Wee.$slice(this, start, end));
+	},
 	find: function(filter) {
 		return $(Wee.$find(this, filter));
 	},
