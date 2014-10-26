@@ -1,4 +1,4 @@
-// Wee 2.0.5 (weepower.com)
+// Wee (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
@@ -36,6 +36,10 @@ var Wee = (function(w, d) {
 							},
 							$push: function(key, a, b) {
 								return Wee.$push(name + ':' + key, a, b);
+							},
+							// Destroy current controller
+							$destroy: function() {
+								delete Wee[name];
 							}
 						};
 
@@ -118,7 +122,7 @@ var Wee = (function(w, d) {
 		$get: function(key, def, set, opt) {
 			if (key) {
 				var split = this._storeData(key),
-					root = split[0],
+					root = split[0];
 					key = split[1];
 
 				if (root.hasOwnProperty(key)) {
@@ -157,16 +161,22 @@ var Wee = (function(w, d) {
 		// Returns array
 		$push: function(key, a, b) {
 			var split = this._storeData(key),
-				root = split[0],
+				root = split[0];
 				key = split[1];
 
 			if (! root.hasOwnProperty(key)) {
 				root[key] = b ? {} : [];
 			}
 
-			b ?
-				root[key][a] = b :
-				root[key].push(a);
+			if (b) {
+				root[key][a] = b;
+			} else {
+				if (Array.isArray(a)) {
+					root[key] = root[key].concat(a);
+				} else {
+					root[key].push(a);
+				}
+			}
 
 			return root[key];
 		},
@@ -191,8 +201,9 @@ var Wee = (function(w, d) {
 		// Arguments defaults to an empty array and the scope defaults to null
 		// Returns mixed
 		$exec: function(fn, opt) {
-			var opt = opt || {},
-				conf = this.$extend({
+			opt = opt || {};
+
+			var conf = this.$extend({
 					args: []
 				}, opt),
 				fns = this.$toArray(fn),
@@ -200,7 +211,7 @@ var Wee = (function(w, d) {
 				i = 0;
 
 			for (; i < len; i++) {
-				var fn = fns[i];
+				fn = fns[i];
 
 				if (this.$isString(fn)) {
 					var segs = fn.split(':');
@@ -343,9 +354,9 @@ var Wee = (function(w, d) {
 			} else {
 				// Use third-party selector engine if defined
 				if (w.WeeSelector !== _undefined) {
-					el = WeeSelector(sel, context);
+					el = w.WeeSelector(sel, context);
 				} else {
-					var context = context !== _undefined ? this.$first(context) : d;
+					context = context !== _undefined ? this.$first(context) : d;
 
 					// If selector doesn't have a space or [ assume its a simple selection
 					if (sel == 'window') {
@@ -381,7 +392,7 @@ var Wee = (function(w, d) {
 		// Get indexed node of specified element
 		// Returns element
 		$eq: function(sel, i, context) {
-			if (! sel['_$_']) {
+			if (! sel._$_) {
 				sel = this.$(sel, context);
 			}
 
@@ -465,6 +476,15 @@ var Wee = (function(w, d) {
 					Wee.$set(key, val);
 			});
 		},
+		// Add bind elements to datastore
+		// Returns undefined
+		$setBind: function() {
+			Wee.$each('[data-bind]', function(el) {
+				var id = Wee.$data(el, 'bind');
+
+				Wee.$push('bind', id, el);
+			});
+		},
 		// Fallback for non-existent chaining
 		$chain: function() {},
 		// Convert selection to array
@@ -472,7 +492,7 @@ var Wee = (function(w, d) {
 		_selArray: function(sel, conf) {
 			conf = conf || {};
 
-			return sel['_$_'] ?
+			return sel._$_ ?
 				sel :
 				this.$toArray(this.$isString(sel) ?
 					this.$(sel, conf.context) :
@@ -495,8 +515,9 @@ var Wee = (function(w, d) {
 		// Returns undefined
 		init: function() {
 			this.$setVars();
+			this.$setBind();
 		}
 	};
-})(this, document);
+})(window, document);
 
 Wee.init();
