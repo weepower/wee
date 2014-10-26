@@ -1,16 +1,10 @@
-// Wee 2.0.5 (weepower.com)
-// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
-
-* {
-	&,
-	&:before,
-	&:after {
-		margin: 0;
-		outline: 0;
-		padding: 0;
-		.border-box();
-	}
+*,
+*:before,
+*:after {
+	margin: 0;
+	outline: 0;
+	padding: 0;
+	.border-box();
 }
 .wee-container-min-width () when not (@minWidth = 0)
 		and not (@minWidth = false) {
@@ -31,10 +25,10 @@ body {
 	position: relative;
 	.font(@baseFont; @baseFontSize; @baseFontWeight);
 	.line-height(@baseLineHeight);
-	.wee-body-background () when not (@bodyBackground = false) {
+	.check () when not (@bodyBackground = false) {
 		.background();
 	}
-	.wee-body-background();
+	.check();
 }
 article,
 aside,
@@ -128,16 +122,15 @@ sub {
 sup {
 	top: -1em;
 }
-::-moz-selection {
-	.selection();
-}
-::selection {
-	.selection();
-}
+.selection();
 
-////////////////
-// Typography //
-////////////////
+
+
+
+
+/*------------------------------------*\
+	# Typography
+\*------------------------------------*/
 
 h1,
 h2,
@@ -276,9 +269,13 @@ address {
 	.spaced();
 }
 
-///////////
-// Lists //
-///////////
+
+
+
+
+/*------------------------------------*\
+	# Lists
+\*------------------------------------*/
 
 dl,
 ol,

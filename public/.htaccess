@@ -7,22 +7,24 @@ Options +FollowSymLinks -Indexes -MultiViews
 #AddDefaultCharset utf-8
 #AddCharset utf-8 .css .js .json .map .rss .xml
 
-# -------------
-# Remote Assets
-# -------------
+
+#------------------------------------
+	# Remote Assets
+#------------------------------------
 
 #<FilesMatch "\.(cur|gif|ico|jpe?g|png|svgz?|webp)$">
-#SetEnvIf Origin ":" IS_CORS
-#Header set Access-Control-Allow-Origin "*" env=IS_CORS
+#	SetEnvIf Origin ":" IS_CORS
+#	Header set Access-Control-Allow-Origin "*" env=IS_CORS
 #</FilesMatch>
 
 #<FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
-#Header set Access-Control-Allow-Origin "*"
+#	Header set Access-Control-Allow-Origin "*"
 #</FilesMatch>
 
-# --------
-# Rewrites
-# --------
+
+#------------------------------------
+	# Rewrites
+#------------------------------------
 
 # Force www
 #RewriteCond %{HTTP_HOST} !^www\.weepower\.com [NC]
@@ -49,9 +51,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
 RewriteRule ^(.*)$ /$1.html [R=301,L]
 
-# -----------
-# Maintenance
-# -----------
+
+#------------------------------------
+	# Maintenance
+#------------------------------------
 
 #RewriteCond %{REMOTE_ADDR} !^123.456.789.
 #RewriteCond %{REQUEST_URI} !^/maintenance\.html$

@@ -1,8 +1,6 @@
-// Wee 2.0.5 (weepower.com)
-// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
-
-// Box Shadows
+/*------------------------------------*\
+	# Box Shadows
+\*------------------------------------*/
 
 .shadow (@value: '1px 1px 0 0 rgba(0, 0, 0, @{defaultOpacity})') when (isstring(@value)), (iskeyword(@value))
 		and not (@value = dark)
@@ -94,7 +92,13 @@
 	.check();
 }
 
-// Font Loading
+
+
+
+
+/*------------------------------------*\
+	# Font Loading
+\*------------------------------------*/
 
 .load-font (@name; @file: @name; @weight: normal; @style: normal) {
 	@font-face {
@@ -109,7 +113,13 @@
 	}
 }
 
-// Text Shadows
+
+
+
+
+/*------------------------------------*\
+	# Text Shadows
+\*------------------------------------*/
 
 .text-shadow (@value: '1px 1px 0 rgba(0, 0, 0, @{defaultOpacity})') when (isstring(@value)), (iskeyword(@value))
 		and not (@value = dark)
@@ -207,7 +217,13 @@
 	.check();
 }
 
-// Font Selection
+
+
+
+
+/*------------------------------------*\
+	# Font Selection
+\*------------------------------------*/
 
 .font (@family; ...) {
 	.font-family(@family);
@@ -225,7 +241,13 @@
 	.font-style(@style);
 }
 
-// Font Family
+
+
+
+
+/*------------------------------------*\
+	# Font Family
+\*------------------------------------*/
 
 .font-family (@value: @baseFont) when not (@value = false) {
 	.check () when (isstring(@value)) {
@@ -237,7 +259,13 @@
 	.check();
 }
 
-// Font Size
+
+
+
+
+/*------------------------------------*\
+	# Font Size
+\*------------------------------------*/
 
 .font-size (@value: @baseFontSize; ...) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
@@ -261,19 +289,37 @@
 	.line-height(@lineHeight);
 }
 
-// Font Weight
+
+
+
+
+/*------------------------------------*\
+	# Font Weight
+\*------------------------------------*/
 
 .font-weight (@value: @baseFontWeight) when not (@value = false) {
 	font-weight: @value;
 }
 
-// Font Style
+
+
+
+
+/*------------------------------------*\
+	# Font Size
+\*------------------------------------*/
 
 .font-style (@value: normal) when not (@value = false) {
 	font-style: @value;
 }
 
-// Line Height
+
+
+
+
+/*------------------------------------*\
+	# Line Height
+\*------------------------------------*/
 
 .line-height (@value: @baseLineHeight) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
@@ -294,7 +340,13 @@
 	.check();
 }
 
-// Text Styling
+
+
+
+
+/*------------------------------------*\
+	# Text Styling
+\*------------------------------------*/
 
 .text-sharpen () {
 	-moz-osx-font-smoothing: grayscale;
@@ -389,7 +441,13 @@
 	user-select: @value;
 }
 
-// Content
+
+
+
+
+/*------------------------------------*\
+	# Content
+\*------------------------------------*/
 
 .content (@value: ' '; @font: false) {
 	content: ~"'@{value}'";
@@ -429,7 +487,13 @@
 	.suffix(@value; @margin; @font; @color);
 }
 
-// Margin
+
+
+
+
+/*------------------------------------*\
+	# Margin
+\*------------------------------------*/
 
 .margin (@value) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
@@ -547,7 +611,13 @@
 	.margin(left; @left);
 }
 
-// Padding
+
+
+
+
+/*------------------------------------*\
+	# Padding
+\*------------------------------------*/
 
 .padding (@value) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
@@ -673,7 +743,13 @@
 	.padding(right; @padding);
 }
 
-// Borders
+
+
+
+
+/*------------------------------------*\
+	# Borders
+\*------------------------------------*/
 
 .border (@value) when (isstring(@value)), (@value = none), (@value = 0) and not (@value = false) {
 	border: ~'@{value}';
@@ -1080,7 +1156,13 @@
 	border-left-width: @width;
 }
 
-// Rounded Corners
+
+
+
+
+/*------------------------------------*\
+	# Rounded Corners
+\*------------------------------------*/
 
 .rounded (...) {
 	.background-clip();
@@ -1266,7 +1348,13 @@
 	.rounded(bottom; left; @left);
 }
 
-// Transitions
+
+
+
+
+/*------------------------------------*\
+	# Transitions
+\*------------------------------------*/
 
 .transition (@value) when (isstring(@value)) {
 	-moz-transition: ~'@{value}';
@@ -1287,7 +1375,13 @@
 	transition-duration: @duration;
 }
 
-// Backgrounds
+
+
+
+
+/*------------------------------------*\
+	# Backgrounds
+\*------------------------------------*/
 
 .background (@value) when (@value = 0) {
 	background: none;
@@ -1485,7 +1579,13 @@
 	}
 }
 
-// Colors
+
+
+
+
+/*------------------------------------*\
+	# Colors
+\*------------------------------------*/
 
 .color (@color) {
 	color: @color;
@@ -1521,7 +1621,13 @@
 	color: @black;
 }
 
-// Transforms
+
+
+
+
+/*------------------------------------*\
+	# Transforms
+\*------------------------------------*/
 
 .transform (...) {
 	-ms-transform: @arguments;
@@ -1554,7 +1660,13 @@
 	transform: translate3d(@x, @y, @z);
 }
 
-// Filters
+
+
+
+
+/*------------------------------------*\
+	# Filters
+\*------------------------------------*/
 
 .filter (@value) when (isstring(@value)), (iskeyword(@value)) {
 	-webkit-filter: ~'@{value}';
@@ -1596,7 +1708,13 @@
 	.drop-shadow('@{x} @{y} @{blur} rgba(0, 0, 0, @{opacity})');
 }
 
-// Animation
+
+
+
+
+/*------------------------------------*\
+	# Animation
+\*------------------------------------*/
 
 .animation (...) {
 	-moz-animation: @arguments;
@@ -1604,7 +1722,13 @@
 	animation: @arguments;
 }
 
-// Blocks
+
+
+
+
+/*------------------------------------*\
+	# Blocks
+\*------------------------------------*/
 
 .block-row () {
 	display: block;
@@ -1628,7 +1752,13 @@
 	.spaced(@margin);
 }
 
-// Positioning
+
+
+
+
+/*------------------------------------*\
+	# Position
+\*------------------------------------*/
 
 .top (@value: 0) {
 	.check () when not (isnumber(@value)), (@value = 0) {
@@ -1757,7 +1887,13 @@
 	z-index: @index;
 }
 
-// Sizing
+
+
+
+
+/*------------------------------------*\
+	# Sizing
+\*------------------------------------*/
 
 .width (@value; ...) when not (@value = false) {
 	.check () when not (isnumber(@value)), (@value = 0) {
@@ -1912,7 +2048,13 @@
 	.check();
 }
 
-// Opacity
+
+
+
+
+/*------------------------------------*\
+	# Opacity
+\*------------------------------------*/
 
 .opacity (@value) {
 	.check () when (@value > 1)
@@ -1941,7 +2083,13 @@
 	opacity: 1;
 }
 
-// Shapes
+
+
+
+
+/*------------------------------------*\
+	# Shapes
+\*------------------------------------*/
 
 .caret (...) {
 	content: ' ';
@@ -1965,7 +2113,13 @@
 	.border(right; @color; @size);
 }
 
-// Rows
+
+
+
+
+/*------------------------------------*\
+	# Rows
+\*------------------------------------*/
 
 .row (@margin: @gridMargin) {
 	.clearfix();
@@ -1984,7 +2138,13 @@
 	max-width: none;
 }
 
-// Columns
+
+
+
+
+/*------------------------------------*\
+	# Columns
+\*------------------------------------*/
 
 .column (@width: false) when (ispercentage(@width)), (ispixel(@width)), (isunit(@width, 'rem')) and not (@width = false) {
 	float: left;
@@ -2035,7 +2195,13 @@
 	margin-left: (((100% / @columns) * @share) + (@margin * 2));
 }
 
-// Alignment
+
+
+
+
+/*------------------------------------*\
+	# Alignment
+\*------------------------------------*/
 
 .wee-container () {
 	display: block;
@@ -2114,7 +2280,13 @@
 	.height(@height);
 }
 
-// Lists
+
+
+
+
+/*------------------------------------*\
+	# Lists
+\*------------------------------------*/
 
 .inline-list () {
 	li {
@@ -2160,7 +2332,13 @@
 	list-style: none;
 }
 
-// Display
+
+
+
+
+/*------------------------------------*\
+	# Display
+\*------------------------------------*/
 
 .hidden () {
 	visibility: hidden;
@@ -2200,7 +2378,13 @@
 	.box-sizing(content-box);
 }
 
-// Tables
+
+
+
+
+/*------------------------------------*\
+	# Tables
+\*------------------------------------*/
 
 .responsive-table () {
 	overflow-x: auto;
@@ -2212,7 +2396,13 @@
 	}
 }
 
-// Forms
+
+
+
+
+/*------------------------------------*\
+	# Forms
+\*------------------------------------*/
 
 .input-placeholder (@color: @inputPlaceholderColor) {
 	:-moz-placeholder {
@@ -2229,7 +2419,13 @@
 	}
 }
 
-// Other
+
+
+
+
+/*------------------------------------*\
+	# Other
+\*------------------------------------*/
 
 .resize (@value) {
 	resize: @value;
@@ -2318,9 +2514,13 @@
 	}
 }
 
-////////////////////
-// Helper Classes //
-////////////////////
+
+
+
+
+/*------------------------------------*\
+	# Helper Classes
+\*------------------------------------*/
 
 .container {
 	.wee-container();
