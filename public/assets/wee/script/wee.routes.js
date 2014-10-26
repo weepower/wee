@@ -1,7 +1,3 @@
-// Wee 2.0.5 (weepower.com)
-// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
-
 Wee.fn.make('routes', {
 	// Get currently bound path or set path with a specified value
 	// Accepts optional options to pass through to get/set
@@ -106,12 +102,12 @@ Wee.fn.make('routes', {
 								}
 								break;
 							case '$num':
-								if (! isNaN(seg) && seg.trim() != '') {
+								if (! isNaN(seg) && seg.trim() !== '') {
 									match = true;
 								}
 								break;
 							default:
-								if (seg && seg.trim() != '') {
+								if (seg && seg.trim() !== '') {
 									match = true;
 								}
 						}

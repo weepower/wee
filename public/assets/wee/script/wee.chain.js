@@ -1,12 +1,8 @@
-// Wee 2.0.5 (weepower.com)
-// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
-
 var WeeAlias = WeeAlias || '$';
 
 Wee.fn.extend({
 	$chain: function(a, b) {
-		var p = Wee._win[WeeAlias]['prototype'];
+		var p = Wee._win[WeeAlias].prototype;
 
 		Wee.$isString(a) ?
 			p[a] = b :
@@ -16,7 +12,7 @@ Wee.fn.extend({
 	}
 });
 
-(function(c, s) {
+(function(c) {
 	function get(sel, context) {
 		if (sel) {
 			var el = Array.isArray(sel) ? sel : Wee.$toArray(Wee.$(sel, context)),
@@ -35,7 +31,7 @@ Wee.fn.extend({
 		return o;
 	}
 
-	Wee._win[WeeAlias]['prototype'] = get['prototype'] = {
+	Wee._win[WeeAlias].prototype = get.prototype = {
 		length: 0,
 		_$_: true,
 		// Utilities

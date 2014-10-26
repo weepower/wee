@@ -1,8 +1,10 @@
-// Wee Placeholder 1.0.0 (weepower.com)
+// Wee Placeholder 1.0.1 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
 (function(w, d) {
+	'use strict';
+
 	w.attachEvent('onload', function() {
 		var arr = d.querySelectorAll('input[placeholder], textarea[placeholder]'),
 			len = arr.length,
@@ -13,18 +15,18 @@
 				var el = arr[i],
 					val = el.getAttribute('placeholder');
 
-				if (el.value == '') {
+				if (el.value === '') {
 					el.value = val;
 				}
 
 				el.onblur = function() {
-					if (this.value.replace(/^\s+|\s+$/g, '') == '') {
+					if (this.value.replace(/^\s+|\s+$/g, '') === '') {
 						this.value = val;
 					}
 				};
 
 				el.onfocus = function() {
-					if (this.value == val) {
+					if (this.value === val) {
 						this.value = '';
 					}
 				};

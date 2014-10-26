@@ -1,8 +1,10 @@
-// Wee Slice 1.0.0 (weepower.com)
+// Wee Slice 1.0.1 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY THIS FILE
 
 (function(d, s) {
+	'use strict';
+
 	try {
 		s.call(d.documentElement);
 	} catch(e) {

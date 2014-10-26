@@ -1,7 +1,3 @@
-// Wee 2.0.5 (weepower.com)
-// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
-
 Wee.fn.make('assets', {
 	// Get currently bound resource root or set root with specified value
 	// Returns string
@@ -42,7 +38,7 @@ Wee.fn.make('assets', {
 	// When specified references are ready execute callback
 	ready: function(group, opt, poll) {
 		if (this.$get(group) === 0) {
-			var conf = Wee.$extend(this.$get(group + '-conf'), opt),
+			var conf = Wee.$extend(this.$get(group + '-conf'), opt);
 				opt = {
 					args: conf.args,
 					scope: conf.scope
@@ -69,12 +65,12 @@ Wee.fn.make('assets', {
 
 		// Load file based on extension
 		if (ext == 'js') {
-			var el = Wee._doc.createElement('script');
+			var js = Wee._doc.createElement('script');
 
-			el.src = path;
-			el.async = conf.async === false ? false : true;
+			js.src = path;
+			js.async = conf.async === false ? false : true;
 
-			el.onload = el.onreadystatechange = function() {
+			js.onload = js.onreadystatechange = function() {
 				var rs = this.readyState;
 
 				if (rs && rs != 'complete' && rs != 'loaded') {
@@ -84,20 +80,20 @@ Wee.fn.make('assets', {
 				scope.done(group);
 			};
 
-			el.onerror = function() {
+			js.onerror = function() {
 				scope.fail(group);
 			};
 
-			head.appendChild(el);
+			head.appendChild(js);
 		} else if (ext == 'css') {
-			var el = Wee._doc.createElement('link');
+			var link = Wee._doc.createElement('link');
 
-			el.rel = 'stylesheet';
-			el.href = path;
+			link.rel = 'stylesheet';
+			link.href = path;
 
 			scope.done(group);
 
-			head.appendChild(el);
+			head.appendChild(link);
 		} else if ((/(gif|jpg|jpeg|png|svg)$/i).test(ext)) {
 			var img = new Image();
 
