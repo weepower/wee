@@ -19,23 +19,11 @@ body {
 
 
 /*------------------------------------*\
-	# Header
-\*------------------------------------*/
-
-.logo {
-	.crop();
-	.spaced-block(@blockMarginBottom; 120px; 40px);
-}
-
-
-
-
-
-/*------------------------------------*\
 	# Footer
 \*------------------------------------*/
 
 .footer {
+	.align(center);
 	.padding(top; 3);
 	a {
 		&:hover {
@@ -63,16 +51,24 @@ body {
 	# Index
 \*------------------------------------*/
 
+.main {
+	.align(center);
+}
+.logo {
+	.align(middle);
+	.inline-block(12; 4);
+	.spaced(1.5);
+}
 .heading {
 	.font-size(2.4);
-	.max-width(75);
 	.spaced();
 }
 .nav {
 	.margin(vertical; 10px; 5);
 	&__button {
-		.border(light; 70%);
+		.border(light; 60%);
 		.fill();
+		.transition(border);
 		&:hover {
 			.border(@white);
 		}

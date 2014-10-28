@@ -17,18 +17,13 @@
 
 
 
-
 /*------------------------------------*\
 	# Index
 \*------------------------------------*/
 
-.main {
-	.row();
-}
-.heading {
-	.column(spaced; 2; 3);
-	.font-size(3.4);
-}
 .nav {
-	.column(spaced; 1; 3);
+	.row(3%);
+	&__button {
+		.column(spaced; 1; 3; 3%);
+	}
 }
