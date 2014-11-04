@@ -1,4 +1,4 @@
-# [Wee](http://www.weepower.com)
+# [Wee 2.1.0](http://www.weepower.com)
 
 Wee is an organized framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does it all with a tiny footprint.
 
