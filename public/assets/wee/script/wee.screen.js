@@ -1,57 +1,56 @@
-// Wee 2.0.5 (weepower.com)
-// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
-
 Wee.fn.make('screen', {
 	// Get current screen value
+	// Returns number
 	size: function() {
 		var size = Wee._legacy ?
-				(Wee._html.currentStyle ? Wee._html.currentStyle['fontFamily'] : null) :
+				(Wee._html.currentStyle ? Wee._html.currentStyle.fontFamily : null) :
 				Wee._win.getComputedStyle(Wee._html, null).getPropertyValue('font-family');
 
 		return parseFloat(size.replace(/[^0-9\.]+/g, ''), 10);
 	},
 	// Bind single or set of screen events with specified options
-	map: function(sets) {
-		sets = Wee.$toArray(sets);
+	map: function(val) {
+		var sets = Wee.$toArray(val),
+			scope = this,
+			cb = function() {
+				scope.$private('check');
+			};
 
-		for (var i = 0; i < sets.length; i++) {
-			var conf = sets[i],
-				scope = this;
+		// Delay check 1ms to avoid incorrect size in IE
+		setTimeout(function() {
+			for (var i = 0; i < sets.length; i++) {
+				var conf = sets[i];
 
-			if (conf.callback) {
-				// Only bind resize event if not disabled
-				if (conf.watch !== false) {
-					this.$push('evts', conf);
+				if (conf.callback) {
+					// Only bind resize event if not disabled
+					if (conf.watch !== false) {
+						scope.$push('evts', conf);
 
-					// Only create event if not already running
-					if (! this.$get('on')) {
-						this.$set('on', 1);
-						this.$set('evts', [conf]);
+						// Only create event if not already running
+						if (! scope.$get('on')) {
+							scope.$set('on', 1);
+							scope.$set('evts', [conf]);
 
-						// Watch widow resize event for breakpoint changes
-						var cb = function() {
-							scope.$private('check');
-						};
+							// Watch widow resize event for breakpoint changes
+							Wee._legacy ?
+								Wee._win.attachEvent('onresize', cb) :
+								Wee._win.addEventListener('resize', cb);
+						}
+					}
 
-						Wee._legacy ?
-							Wee._win.attachEvent('onresize', cb) :
-							Wee._win.addEventListener('resize', cb);
+					// Evaluate current screen if not disabled
+					if (conf.init !== false) {
+						scope.$private('check', true, [conf]);
 					}
 				}
-
-				// Evaluate current screen if not disabled
-				if (conf.init !== false) {
-					this.$private('check', true, [conf]);
-				}
 			}
-		}
+		}, 1);
 	}
 }, {
 	check: function(init, conf) {
 		var size = this.$public.size(),
 			prev = this.$get('size');
-			init = init || false;
+		init = init || false;
 
 		// If breakpoint has been hit or resize logic initialized
 		if (size !== prev || init) {
@@ -78,6 +77,13 @@ Wee.fn.make('screen', {
 						}].concat(evt.args),
 						scope: evt.scope
 					});
+
+					// Disable future execution if set for once
+					if (evt.once === true) {
+						this.$set('evts', this.$get('evts').filter(function(el) {
+							return el !== evt;
+						}));
+					}
 				}
 			}
 
