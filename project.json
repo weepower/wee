@@ -28,7 +28,12 @@
 
 		],
 		"compile": {
-
+			"guide.min.css": "custom/guide.less"
+		},
+		"validate": {
+			"watch": false,
+			"csscomb": true,
+			"csslint": true
 		},
 		"legacy": {
 			"enable": true,
@@ -39,6 +44,15 @@
 			"build": [
 				"custom/ie8.less"
 			]
+		},
+		"guide": {
+			"enable": false,
+			"watch": true,
+			"paths": {
+				"patterns": "guide/patterns",
+				"template": "guide/template.html",
+				"target": "guide/index.html"
+			}
 		}
 	},
 	"script": {
@@ -68,7 +82,13 @@
 			"ie9.min.js": [
 				"polyfill/wee.slice.js",
 				"polyfill/wee.placeholder.js"
-			]
+			],
+			"guide.min.js": "custom/guide.js"
+		},
+		"validate": {
+			"watch": false,
+			"jscs": true,
+			"jshint": true
 		},
 		"sourceMaps": true
 	},
