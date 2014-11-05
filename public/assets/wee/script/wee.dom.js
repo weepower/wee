@@ -1,8 +1,64 @@
-// Wee 2.0.5 (weepower.com)
-// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
-
 Wee.fn.extend({
+	// Determine if specified element has specified class
+	// Returns boolean
+	$hasClass: function(sel, val) {
+		return this.$(sel).some(function(el) {
+			return new RegExp('\\b' + val + '\\b').test(el.className);
+		});
+	},
+	// Add specified class name to specified element
+	// Returns undefined
+	$addClass: function(sel, val) {
+		this.$each(sel, function(el) {
+			el.className = (el.className + ' ' + val.split(' ').filter(function(val) {
+				return ! Wee.$hasClass(el, val);
+			}).join(' ')).trim();
+		});
+	},
+	// Removes specified class from specified element
+	// Returns undefined
+	$removeClass: function(sel, val) {
+		this.$each(sel, function(el) {
+			val.split(' ').forEach(function(val) {
+				el.className = el.className.replace(
+					new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'
+				), ' ').trim();
+			});
+		});
+	},
+	// Get CSS value of first element or set matched elements CSS property with specified value
+	// Accepts either rule object or rule, value
+	// Returns string|undefined
+	$css: function(sel, a, b) {
+		var obj = this.$isObject(a);
+
+		if (b !== undefined || obj) {
+			this.$each(sel, function(el) {
+				obj ?
+					Object.keys(a).forEach(function(key) {
+						el.style[key] = a[key];
+					}) :
+					el.style[a] = b;
+			});
+		} else {
+			var el = this.$first(sel);
+
+			return this._legacy ?
+				el.currentStyle[a] :
+				getComputedStyle(el, null)[a];
+		}
+	},
+	// Get HTML value of first element or set matched elements HTML with specified value
+	// Returns string|undefined
+	$html: function(sel, val) {
+		if (val === undefined) {
+			return this.$first(sel).innerHTML;
+		}
+
+		this.$each(sel, function(el) {
+			el.innerHTML = val;
+		});
+	},
 	// Clone specified element
 	// Returns element array
 	$clone: function(sel) {
@@ -10,16 +66,16 @@ Wee.fn.extend({
 			return el.cloneNode(true);
 		});
 	},
-	// Show specified element
-	$show: function(sel) {
-		this.$each(sel, function(el) {
-			Wee.$removeClass(el, 'js-hide');
-		});
-	},
 	// Hide specified element
 	$hide: function(sel) {
 		this.$each(sel, function(el) {
 			Wee.$addClass(el, 'js-hide');
+		});
+	},
+	// Show specified element
+	$show: function(sel) {
+		this.$each(sel, function(el) {
+			Wee.$removeClass(el, 'js-hide');
 		});
 	},
 	// Toggle the display of a specified element
@@ -92,16 +148,17 @@ Wee.fn.extend({
 	},
 	// Get last match of specified element
 	// Returns element
-	$last: function(sel) {
-		var arr = [];
-
-		if (sel['_$_']) {
-			return sel[sel.length - 1];
+	$last: function(sel, context) {
+		return this.$eq(sel, -1, context);
+	},
+	// Get subset of matches from index range
+	// Returns element array
+	$slice: function(sel, start, end) {
+		if (! sel._$_) {
+			sel = this.$(sel);
 		}
 
-		var el = this.$(sel);
-
-		return Array.isArray(el) ? el[el.length - 1] : el;
+		return sel.slice(start, end);
 	},
 	// Determine if specified parent element contains specified child element
 	// Returns boolean
@@ -236,7 +293,7 @@ Wee.fn.extend({
 			var wrap = Wee.$parseHTML(html),
 				children = Wee.$children(el);
 
-			if (children.length == 0) {
+			if (children.length === 0) {
 				children = Wee.$contents(el)[0];
 			}
 
@@ -287,12 +344,12 @@ Wee.fn.extend({
 			var el = Wee.$first(sel);
 
 			if (el.nodeName == 'SELECT') {
-				var opt = this.$find(el, 'option'),
-					val = opt.map(function(a) {
-						if (a.selected) {
-							return a.value;
-						}
-					});
+				var opt = this.$find(el, 'option');
+				val = opt.map(function(a) {
+					if (a.selected) {
+						return a.value;
+					}
+				});
 
 				return el.multiple ? val : val[0];
 			}
@@ -303,7 +360,7 @@ Wee.fn.extend({
 		this.$each(sel, function(el) {
 			if (el.nodeName == 'SELECT') {
 				var opt = Wee.$find(el, 'option');
-					val = Wee.$toArray(val);
+				val = Wee.$toArray(val);
 
 				opt.forEach(function(a) {
 					if (val.indexOf(a.value) > -1) {
@@ -481,21 +538,31 @@ Wee.fn.extend({
 	// Get or set the width of a specified element, optionally accounting for margin
 	// Returns int
 	$width: function(sel, val) {
-		if (sel === Wee._win) {
-			return sel.innerWidth;
-		}
-
 		if (val === undefined || val === true) {
-			var el = this.$first(sel),
-				width = el.offsetWidth;
+			var el = this.$first(sel);
 
-			if (val === true) {
-				var style = el.currentStyle || getComputedStyle(el);
+			switch (el) {
+				case Wee._win:
+					return el.innerWidth;
+				case Wee._doc:
+					return Math.max(
+						Wee._body.scrollWidth,
+						Wee._body.offsetWidth,
+						Wee._html.clientWidth,
+						Wee._html.scrollWidth,
+						Wee._html.offsetWidth
+					);
+				default:
+					var width = el.offsetWidth;
 
-				width += parseInt(style.marginLeft) + parseInt(style.marginRight);
+					if (val === true) {
+						var style = el.currentStyle || getComputedStyle(el);
+
+						width += parseInt(style.marginLeft, 10) + parseInt(style.marginRight, 10);
+					}
+
+					return width;
 			}
-
-			return width;
 		}
 
 		this.$css(sel, 'width', val);
