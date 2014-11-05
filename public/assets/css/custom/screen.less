@@ -25,9 +25,12 @@ body {
 .footer {
 	.align(center);
 	.padding(top; 3);
+	.white();
 	a {
+		.white();
 		&:hover {
 			.underline();
+			.white();
 		}
 	}
 	&__license,
@@ -62,6 +65,7 @@ body {
 .heading {
 	.font-size(2.4);
 	.spaced();
+	.white();
 }
 .nav {
 	.margin(vertical; 10px; 5);
@@ -69,6 +73,11 @@ body {
 		.border(light; 60%);
 		.fill();
 		.transition(border);
+		&,
+		&:hover,
+		&:active {
+			.background(transparent);
+		}
 		&:hover {
 			.border(@white);
 		}
