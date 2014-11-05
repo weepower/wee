@@ -13,7 +13,7 @@ Wee.fn.extend({
 });
 
 (function(c) {
-	function get(sel, context) {
+	var Get = function(sel, context) {
 		if (sel) {
 			var el = Array.isArray(sel) ? sel : Wee.$toArray(Wee.$(sel, context)),
 				i = 0;
@@ -25,13 +25,13 @@ Wee.fn.extend({
 	}
 
 	Wee._win[WeeAlias] = function(sel, context) {
-		var o = new get(sel, context);
-			o.sel = sel;
+		var o = new Get(sel, context);
+		o.sel = sel;
 
 		return o;
 	}
 
-	Wee._win[WeeAlias].prototype = get.prototype = {
+	Wee._win[WeeAlias].prototype = Get.prototype = {
 		length: 0,
 		_$_: true,
 		// Utilities

@@ -39,10 +39,10 @@ Wee.fn.make('assets', {
 	ready: function(group, opt, poll) {
 		if (this.$get(group) === 0) {
 			var conf = Wee.$extend(this.$get(group + '-conf'), opt);
-				opt = {
-					args: conf.args,
-					scope: conf.scope
-				};
+			opt = {
+				args: conf.args,
+				scope: conf.scope
+			};
 
 			if (this.$get(group + '-fail') > 0 && conf.failure) {
 				Wee.$exec(conf.failure, opt);

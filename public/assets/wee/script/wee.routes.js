@@ -17,7 +17,9 @@ Wee.fn.make('routes', {
 			this.$set('routes', Wee.$extend(curr, routes));
 
 			if (init) {
-				this.run({routes: routes});
+				this.run({
+					routes: routes
+				});
 			}
 		}
 
@@ -63,7 +65,7 @@ Wee.fn.make('routes', {
 		var seg = this.$get('segs')[i],
 			keys = Object.keys(route),
 			x = 0;
-			i++;
+		i++;
 
 		// Match against patterns
 		for (; x < keys.length; x++) {
@@ -81,7 +83,7 @@ Wee.fn.make('routes', {
 				} else if (opt.substring(0, 1) == '$') {
 					// If the second character is / then test regex
 					if (opt.substring(1, 2) == '/') {
-						if (new RegExp(opt.substring(2).slice(0,-1)).test(seg)) {
+						if (new RegExp(opt.substring(2).slice(0, -1)).test(seg)) {
 							match = 1;
 						}
 					} else {
