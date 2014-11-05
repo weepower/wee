@@ -1,3 +1,17 @@
+#------------------------------------
+	# Maintenance
+#------------------------------------
+
+#RewriteCond %{REMOTE_ADDR} !^123.456.789.
+#RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+#RewriteCond $1 !^(assets) [NC]
+#RewriteRule ^(.*)$ /maintenance.html [R=307,L]
+
+
+#------------------------------------
+	# Setup
+#------------------------------------
+
 RewriteEngine On
 Options +FollowSymLinks -Indexes -MultiViews
 
@@ -36,27 +50,17 @@ Options +FollowSymLinks -Indexes -MultiViews
 
 # Force SSL
 #RewriteCond %{SERVER_PORT} 80
-#RewriteRule ^(.*)$ https://www.weepower.com/$1 [R=301,L]
-
-# Remove index files
-RewriteRule ^index\.html$ / [R=301,L]
-RewriteRule ^(.*)/index\.html$ /$1 [R=301,L]
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # Remove trailing slash
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [R=301,L]
 
+# Remove index files
+RewriteRule ^index\.html$ / [R=301,L]
+RewriteRule ^(.*)/index\.html$ /$1 [R=301,L]
+
 # Remove extension
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
 RewriteRule ^(.*)$ /$1.html [R=301,L]
-
-
-#------------------------------------
-	# Maintenance
-#------------------------------------
-
-#RewriteCond %{REMOTE_ADDR} !^123.456.789.
-#RewriteCond %{REQUEST_URI} !^/maintenance\.html$
-#RewriteCond $1 !^(assets) [NC]
-#RewriteRule ^(.*)$ /maintenance.html [R=307,L]
