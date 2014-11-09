@@ -54,7 +54,9 @@ var Wee = (function(w, d) {
 							var args = Wee._slice.call(arguments);
 
 							// Bind all additional arguments to private method call
-							args.length > 1 ? args.shift() : args = [];
+							args.length > 1 ?
+								args.shift() :
+								args = [];
 
 							return Private[func].apply(Private, args);
 						};
@@ -98,7 +100,9 @@ var Wee = (function(w, d) {
 							if (el == host) {
 								return key;
 							}
-						} else if (Wee.$exec(el, {args: [host]}) === true) {
+						} else if (Wee.$exec(el, {
+								args: [host]
+							}) === true) {
 							return key;
 						}
 					}
@@ -123,7 +127,7 @@ var Wee = (function(w, d) {
 			if (key) {
 				var split = this._storeData(key),
 					root = split[0];
-					key = split[1];
+				key = split[1];
 
 				if (root.hasOwnProperty(key)) {
 					return root[key]
@@ -162,20 +166,25 @@ var Wee = (function(w, d) {
 		$push: function(key, a, b) {
 			var split = this._storeData(key),
 				root = split[0];
-				key = split[1];
+
+			key = split[1];
 
 			if (! root.hasOwnProperty(key)) {
 				root[key] = b ? {} : [];
 			}
 
+			if (b && ! root[key].hasOwnProperty(a)) {
+				root[key][a] = Array.isArray(b) ? [] : {};
+			}
+
 			if (b) {
-				root[key][a] = b;
+				Array.isArray(b) ?
+					root[key][a] = root[key][a].concat(b) :
+					root[key][a] = b;
 			} else {
-				if (Array.isArray(a)) {
-					root[key] = root[key].concat(a);
-				} else {
+				Array.isArray(a) ?
+					root[key] = root[key].concat(a) :
 					root[key].push(a);
-				}
 			}
 
 			return root[key];
@@ -188,7 +197,7 @@ var Wee = (function(w, d) {
 			}
 
 			var segs = key.split(':');
-				key = segs[0];
+			key = segs[0];
 
 			if (! _store.hasOwnProperty(key)) {
 				_store[key] = [];
@@ -215,7 +224,7 @@ var Wee = (function(w, d) {
 
 				if (this.$isString(fn)) {
 					var segs = fn.split(':');
-						fn = Wee[segs[0]][segs.length > 1 ? segs[1] : 'init'];
+					fn = Wee[segs[0]][segs.length > 1 ? segs[1] : 'init'];
 
 					if (! opt.scope) {
 						conf.scope = Wee[segs[0]];
@@ -318,7 +327,7 @@ var Wee = (function(w, d) {
 						obj[key] = (this.$isObject(obj[key])) ?
 							this.$extend(obj[key], src[key]) :
 							src[key];
-					} catch(e) {
+					} catch (e) {
 						obj[key] = src[key];
 					}
 				} else {
@@ -450,19 +459,37 @@ var Wee = (function(w, d) {
 		},
 		// Get attribute of first element or set matched elements attribute with specified value
 		// Returns string|undefined
-		$attr: function(sel, key, val) {
-			if (val === _undefined) {
-				return this.$first(sel).getAttribute(key);
-			}
+		$attr: function(sel, a, b) {
+			var obj = this.$isObject(a);
 
-			this.$each(sel, function(el) {
-				el.setAttribute(key, val);
-			});
+			if (b !== undefined || obj) {
+				this.$each(sel, function(el) {
+					obj ?
+						Object.keys(a).forEach(function(key) {
+							el.setAttribute(key, a[key]);
+						}) :
+						el.setAttribute(a, b);
+				});
+			} else {
+				return this.$first(sel).getAttribute(a);
+			}
 		},
 		// Get data value of first element or set matched elements data with specified value
 		// Returns string|undefined
-		$data: function(sel, key, val) {
-			return this.$attr(sel, 'data-' + key, val);
+		$data: function(sel, a, b) {
+			if (this.$isObject(a)) {
+				var obj = {};
+
+				Object.keys(a).forEach(function(key) {
+					obj['data-' + key] = a[key];
+				});
+
+				a = obj;
+			} else {
+				a = 'data-' + a;
+			}
+
+			return this.$attr(sel, a, b);
 		},
 		// Add metadata variables to datastore
 		// Returns undefined
@@ -480,9 +507,13 @@ var Wee = (function(w, d) {
 		// Returns undefined
 		$setBind: function() {
 			Wee.$each('[data-bind]', function(el) {
-				var id = Wee.$data(el, 'bind');
+				var id = Wee.$data(el, 'bind'),
+					arr = id.slice(-2) == '[]';
 
-				Wee.$push('bind', id, el);
+				Wee.$push('bind',
+					arr ? id.slice(0, -2) : id,
+					arr ? [el] : el
+				);
 			});
 		},
 		// Fallback for non-existent chaining
@@ -511,7 +542,7 @@ var Wee = (function(w, d) {
 					Wee.$exec(fn);
 				});
 		},
-		// Toggle HTML JavaScript status class and set data variables
+		// Set data variables and bind elements
 		// Returns undefined
 		init: function() {
 			this.$setVars();
