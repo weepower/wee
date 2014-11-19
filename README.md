@@ -1,10 +1,10 @@
 # [Wee 2.1.0](http://www.weepower.com)
 
-Wee is an organized framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does it all with a tiny footprint.
+Wee is a development framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does it all with a tiny footprint.
 
 To read more, visit [weepower.com](http://www.weepower.com).
 
-#### Features include:
+#### Features
 
 Mobile-first CSS framework with reset, base, and Less mixin library < 4KB gzipped
 
@@ -60,7 +60,7 @@ To view the working Wee to-do list check out our public [Trello board](https://t
 
 ## Versioning
 
-Wee adheres to [Semantic Versioning](http://semver.org/) in the form of MAJOR.MINOR.PATCH. Regardless of version we always recommend thoroughly reviewing the [changelog](https://github.com/weepower/wee/blob/master/CHANGELOG.md) before updating.
+Wee adheres to [Semantic Versioning](http://semver.org/) in the form of MAJOR.MINOR.PATCH. Regardless of version we  recommend thoroughly reviewing the [changelog](https://github.com/weepower/wee/blob/master/CHANGELOG.md) before updating.
 
 ## Community
 

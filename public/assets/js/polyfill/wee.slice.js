@@ -18,7 +18,7 @@
 					arr.push(this.charAt(i));
 				}
 			} else {
-				for (i = 0; i < len; i++) {
+				for (; i < len; i++) {
 					arr.push(this[i]);
 				}
 			}

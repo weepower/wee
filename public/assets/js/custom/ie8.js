@@ -1,3 +1,3 @@
-// Add IE8- legacy JavaScript here
+// Add custom legacy JavaScript here
 
 var WeeSelector = Sizzle;
