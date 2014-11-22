@@ -1,41 +1,60 @@
-// routes.path(val, opt)
+module('Routes');
 
-module('routes');
+// Method: routes.path(val, opt)
 
-test('get path', function() {
-	strictEqual(Wee.routes.path(), '/index.html', 'Current path is correctly set to "/index.html".');
-});
-
-test('set path', function() {
+test('Set Path', 1, function() {
 	strictEqual(Wee.routes.path('/segment/value'), '/segment/value', 'Path was correctly set to "/segment/value".');
 });
 
-test('get set path', function() {
+test('Get Set Path', 1, function() {
+	Wee.routes.path('/segment/value');
 	strictEqual(Wee.routes.path(), '/segment/value', 'Path is still correctly set to "/segment/value".');
 });
 
-// routes.map(routes, init)
+// Method: routes.segments(i)
 
-test('get mapped routes', function() {
-	propEqual(Wee.routes.map(), {}, 'There are currently no mapped routes.');
-});
+// test('get all segments', function() {
+// 	// Wee.routes.path('/segment/value');
+// 	// propEqual(Wee.routes.segments(), ['segment', 'value'], 'Segment array is correctly set.');
+// });
 
-test('map routes', function() {
+// Method: routes.query(key)
+
+// test('get query', function() {
+// 	//propEqual(Wee.routes.query(), 'test', 'Query is correctly set.');
+// });
+
+// Method: routes.hash(val)
+
+// test('get hash', function() {
+// 	//propEqual(Wee.routes.hash(), 'test', 'Hash is correctly set.');
+// });
+
+// Method: routes.map(routes, init)
+
+// test('get mapped routes', function() {
+// 	//propEqual(Wee.routes.map(), {}, 'There are currently no mapped routes.');
+// });
+
+test('Map Routes', 1, function() {
 	propEqual(Wee.routes.map({
 		$root: function() {}
 	}), {
 		$root: function() {}
-	}, 'There route was correctly mapped.');
+	}, 'The route was correctly mapped.');
 });
 
-// routes.segments(i)
+// Method: routes.run(opt)
 
-test('get all segments', function() {
-	propEqual(Wee.routes.segments(), ['segment', 'value'], 'Segment array is correctly set.');
+test('Run Routes', function() {
+	Wee.routes.run({
+		path: '/test/route',
+		routes: {
+			'test': {
+				'route': function() {
+					ok(true, true, 'Route executed successfully.');
+				}
+			}
+		}
+	});
 });
-
-// routes.run(opt)
-
-// test('run routes', function() {
-// 	propEqual(Wee.routes.run(), , 'Routes were correctly evaluated.');
-// });

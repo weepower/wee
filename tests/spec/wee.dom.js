@@ -1,157 +1,229 @@
-// $clone(sel)
+// Method: $hasClass(sel, val)
 
+module('$hasClass');
 
+test('check', 2, function() {
+	Wee.$addClass('#qunit-fixture', 'test-class');
 
-// $show(sel)
+	ok(Wee.$hasClass('#qunit-fixture', 'test-class'), 'Test class was checked successfully.');
+	strictEqual(Wee.$hasClass('#qunit-fixture', 'another-class'), false, 'Another class was checked successfully.');
+});
 
+// Method: $addClass(sel, val)
 
+module('$addClass');
 
-// $hide(sel)
+test('check', 1, function() {
+	Wee.$addClass('#qunit-fixture', 'test-class');
 
+	ok(Wee.$hasClass('#qunit-fixture', 'test-class'), 'Test class was added successfully.');
+});
 
+// Method: $removeClass(sel, val)
 
-// $toggle(sel)
+module('$removeClass');
 
+test('check', 1, function() {
+	Wee.$addClass('#qunit-fixture', 'test-class');
+	Wee.$removeClass('#qunit-fixture', 'test-class');
 
+	strictEqual(Wee.$hasClass('#qunit-fixture', 'test-class'), false, 'Test class was removed successfully.');
+});
 
-// $children(sel, filter)
+// Method: $css(sel, a, b)
 
+module('$css');
 
+test('single', 1, function() {
+	Wee.$css('#qunit-fixture', 'fontSize', '10px');
 
-// $contents(sel)
+	strictEqual(Wee.$css('#qunit-fixture', 'fontSize'), '10px', 'Font size was set correctly.');
+});
 
+test('object', 2, function() {
+	Wee.$css('#qunit-fixture', {
+		fontWeight: 'bold',
+		marginTop: '10px'
+	});
 
+	strictEqual(Wee.$css('#qunit-fixture', 'fontWeight'), 'bold', 'Font weight was set correctly.');
+	strictEqual(Wee.$css('#qunit-fixture', 'marginTop'), '10px', 'Top margin was set correctly.');
+});
 
-// $siblings(sel, filter)
+// Method: $html(sel, val)
 
+module('$html');
 
+test('get', 1, function() {
+	Wee.$html('#qunit-fixture', '<h1>Testing</h1>');
 
-// $parent(sel)
+	strictEqual(Wee.$html('#qunit-fixture'), '<h1>Testing</h1>', 'HTML "<h1>Testing</h1>" was set correctly.');
+});
 
+// Method: $clone(sel)
 
+module('$clone');
 
-// $last(sel)
+// Method: $hide(sel)
 
+module('$hide');
 
+// Method: $show(sel)
 
-// $contains(sel, child)
+module('$show');
 
+// Method: $toggle(sel)
 
+module('$toggle');
 
-// $append(sel, child)
+// Method: $children(sel, filter)
 
+module('$children');
 
+// Method: $contents(sel)
 
-// $prepend(sel, child)
+module('$contents');
 
+// Method: $siblings(sel, filter)
 
+module('$siblings');
 
-// $before(sel, pos, rem)
+// Method: $parent(sel)
 
+module('$parent');
 
+// Method: $last(sel)
 
-// $insertBefore(prev, sel)
+module('$last');
 
+// Method: $slice(sel, start, end)
 
+module('$slice');
 
-// $after(sel, pos, rem)
+// Method: $contains(sel, child)
 
+module('$contains');
 
+// Method: $append(sel, child)
 
-// $insertAfter(next, sel)
+module('$append');
 
+// Method: $prepend(sel, child)
 
+module('$prepend');
 
-// $replaceWith(sel, pos)
+// Method: $before(sel, pos, rem)
 
+module('$before');
 
+// Method: $insertBefore(prev, sel)
 
-// $remove(sel)
+module('$insertBefore');
 
+// Method: $after(sel, pos, rem)
 
+module('$after');
 
-// $empty(sel)
+// Method: $insertAfter(next, sel)
 
+module('$insertAfter');
 
+// Method: $replaceWith(sel, pos)
 
-// $wrap(sel, html)
+module('$replaceWith');
 
+// Method: $remove(sel)
 
+module('$remove');
 
-// $wrapInner(sel, html)
+// Method: $empty(sel)
 
+module('$empty');
 
+// Method: $wrap(sel, html)
 
-// $prop(sel, key, val)
+module('$wrap');
 
+// Method: $wrapInner(sel, html)
 
+module('$wrapInner');
 
-// $removeAttr(sel, key)
+// Method: $prop(sel, key, val)
 
+module('$prop');
 
+// Method: $removeAttr(sel, key)
 
-// $text(sel, val)
+module('$removeAttr');
 
+// Method: $text(sel, val)
 
+module('$text');
 
-// $val(sel, val)
+// Method: $val(sel, val)
 
+module('$val');
 
+// Method: $find(sel, filter)
 
-// $find(sel, filter)
+module('$find');
 
+// Method: $next(sel, filter, opt)
 
+module('$next');
 
-// $next(sel, filter, opt)
+// Method: $prev(sel, filter, opt)
 
+module('$prev');
 
+// Method: $filter(sel, filter, opt)
 
-// $prev(sel, filter, opt)
+module('$filter');
 
+// Method: $not(sel, filter, opt)
 
+module('$not');
 
-// $filter(sel, filter, opt)
+// Method: $is(sel, filter, opt)
 
+module('$is');
 
+// Method: $index(sel)
 
-// $not(sel, filter, opt)
+module('$index');
 
+// Method: $closest(sel, filter, context)
 
+module('$closest');
 
-// $is(sel, filter, opt)
+// Method: $parents(sel, filter)
 
+module('$parents');
 
+// Method: $toggleClass(sel, val)
 
-// $index(sel)
+module('$toggleClass');
 
+// Method: $parseHTML(html, obj)
 
+module('$parseHTML');
 
-// $closest(sel, filter)
+// Method: $position(sel)
 
+module('$position');
 
+// Method: $offset(sel)
 
-// $toggleClass(sel, val)
+module('$offset');
 
+// Method: $width(sel, val)
 
+module('$width');
 
-// $parseHTML(html, obj)
+// Method: $height(sel, val)
 
+module('$height');
 
+// Method: $scrollTop(sel, val)
 
-// $position(sel)
-
-
-
-// $offset(sel)
-
-
-
-// $width(sel, val)
-
-
-
-// $height(sel, val)
-
-
-
-// $scrollTop(sel, val)
+module('$scrollTop');

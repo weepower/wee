@@ -1,34 +1,20 @@
-// events.map(evts, a, b)
+module('Events');
+
+// Method: events.on(sel, a, b, c)
 
 
 
-// events.bind(evts, opt)
+// Method: events.one(sel, a, b, c)
 
 
 
-// events.unbind(id, evt)
+// Method: events.off(sel, evt, fn)
 
 
 
-// events.fire(name, evt)
+// Method: events.bound(sel, evt, fn)
 
 
 
-// events.on(sel, a, b, c)
-
-
-
-// events.one(sel, a, b, c)
-
-
-
-// events.off(sel, evt, fn)
-
-
-
-// events.bound(sel, evt, fn)
-
-
-
-// events.trigger(sel, evt)
+// Method: events.trigger(sel, evt)
 

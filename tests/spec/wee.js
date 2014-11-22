@@ -1,10 +1,6 @@
-// fn.make(name, pub, priv)
+// Method: fn.make(name, pub, priv)
 
-module('fn.make', {
-	setup: function() {
-
-	}
-});
+module('fn.make');
 
 test('create', 1, function() {
 	Wee.fn.make('controller', {
@@ -16,7 +12,7 @@ test('create', 1, function() {
 	strictEqual(Wee.controller.test(), 'response', 'Controller function response correctly returned.');
 });
 
-// fn.extend(a, b, c)
+// Method: fn.extend(a, b, c)
 
 module('fn.extend');
 
@@ -30,7 +26,7 @@ test('extend', 1, function() {
 	strictEqual(Wee.controller.test2(), 'response', 'Controller extended successfully.');
 });
 
-// $env(obj, def)
+// Method: $env(obj, def)
 
 module('$env');
 
@@ -47,7 +43,7 @@ test('settings', 1, function() {
 	strictEqual(Wee.$env(), 'here', 'Default environment is correctly set to "here".');
 });
 
-// $envSecure(url)
+// Method: $envSecure(url)
 
 module('$envSecure');
 
@@ -59,9 +55,9 @@ test('override', 1, function() {
 	ok(Wee.$envSecure('https://www.weepower.com'), 'The environment is correctly identified as secure.');
 });
 
-// $get(key, def, set, opt)
-// $set(key, val, opt)
-// $push(key, a, b)
+// Method: $get(key, def, set, opt)
+// Method: $set(key, val, opt)
+// Method: $push(key, a, b)
 
 module('$get/$set/$push');
 
@@ -100,7 +96,7 @@ test('get with set default string', 2, function() {
 	strictEqual(Wee.$get('set-var-123'), 'string', 'Variable "set-var-123" is correctly set to "string".');
 });
 
-// $exec(fn, opt)
+// Method: $exec(fn, opt)
 
 module('$exec');
 
@@ -137,7 +133,7 @@ test('module callback', 1, function() {
 	}), 'value', 'Module callback with argument was executed correctly.');
 });
 
-// $isArray(obj)
+// Method: $isArray(obj)
 
 module('$isArray');
 
@@ -148,7 +144,7 @@ test('check different types against array', 4, function() {
 	ok(Wee.$isArray(['string']), 'Array "[\'string\']" is an array.');
 });
 
-// $inArray(obj, el)
+// Method: $inArray(obj, el)
 
 module('$inArray');
 
@@ -156,7 +152,7 @@ test('check if array is array', 1, function() {
 	strictEqual(Wee.$isArray(['string']), true, 'Array "[\'string\']" is an array.');
 });
 
-// $toArray(obj)
+// Method: $toArray(obj)
 
 module('$toArray');
 
@@ -167,7 +163,7 @@ test('convert array to array', 1, function() {
 	deepEqual(Wee.$toArray(['string']), ['string'], 'Array ["string"] is still ["string"].');
 });
 
-// $isString(obj)
+// Method: $isString(obj)
 
 module('$isString');
 
@@ -178,7 +174,7 @@ test('check different types against string', 4, function() {
 	ok(Wee.$isString('string'), 'Variable "string" is a string.');
 });
 
-// $isFunction(obj)
+// Method: $isFunction(obj)
 
 module('$isFunction');
 
@@ -189,7 +185,7 @@ test('check different types against function', 4, function() {
 	ok(Wee.$isFunction(function test() {}), 'Function "test()" is a function.');
 });
 
-// $isObject(obj)
+// Method: $isObject(obj)
 
 module('$isObject');
 
@@ -200,7 +196,7 @@ test('check different types against object', 4, function() {
 	ok(Wee.$isObject({string: 'string'}), 'Object "string" is an object.');
 });
 
-// $getKeys(obj)
+// Method: $getKeys(obj)
 
 module('$getKeys');
 
@@ -212,7 +208,7 @@ test('check for properly set keys', 1, function() {
 	}), ['key1', 'key2', 'key3'], 'Object keys properly returned.');
 });
 
-// $serialize(obj)
+// Method: $serialize(obj)
 
 module('$serialize');
 
@@ -224,7 +220,7 @@ test('check for properly serialized object', 1, function() {
 	}), 'key1=val1&key2=val2&key3=val3', 'Object serialization properly returned.');
 });
 
-// $extend(obj, src, deep)
+// Method: $extend(obj, src, deep)
 
 module('$extend');
 
@@ -266,7 +262,7 @@ test('extend deep', 1, function() {
 	deepEqual(Wee.$extend(obj, src, true), result, 'Objects merged recursively.');
 });
 
-// $merge(arr, arr2, dup)
+// Method: $merge(arr, arr2, dup)
 
 module('$merge');
 
@@ -285,7 +281,7 @@ test('combine and deduplicate', 1, function() {
 	deepEqual(Wee.$merge(arr, arr2, true), [1, 2, 3, 4, 5, 6], 'Arrays merged with duplicates removed.');
 });
 
-// $unique(arr)
+// Method: $unique(arr)
 
 module('$unique');
 
@@ -295,7 +291,7 @@ test('check for unique values', 1, function() {
 	deepEqual(Wee.$unique(arr), [1, 2, 3, 4, 5], 'Only unique elements were correctly returned.');
 });
 
-// $(sel, context)
+// Method: $(sel, context)
 
 module('$');
 
@@ -309,93 +305,77 @@ test('select', 2, function() {
 	strictEqual(Wee.$('.testing').length, 1, 'Element with class "testing" was selected successfully.');
 });
 
-// $eq(sel, i, context)
+// Method: $eq(sel, i, context)
 
 module('$eq');
 
+test('select index', 1, function() {
+	Wee.$html('#qunit-fixture',
+		'<div class="testing">1</div>' +
+		'<div class="testing">2</div>' +
+		'<div class="testing">3</div>'
+	);
 
+	var el = Wee.$eq('.testing', 1);
 
-// $first(sel, context)
+	strictEqual(Wee.$text(el), '2', 'Element with index 1 was selected successfully.');
+});
+
+// Method: $first(sel, context)
 
 module('$first');
 
+test('select first', 1, function() {
+	Wee.$html('#qunit-fixture',
+		'<div class="testing">1</div>' +
+		'<div class="testing">2</div>' +
+		'<div class="testing">3</div>'
+	);
 
+	var el = Wee.$first('.testing');
 
-// $each(sel, fn, opt)
+	strictEqual(Wee.$text(el), '1', 'First element was selected successfully.');
+});
+
+// Method: $each(sel, fn, opt)
 
 module('$each');
 
+test('iterate selection', 1, function() {
+	Wee.$html('#qunit-fixture',
+		'<div class="testing">1</div>' +
+		'<div class="testing">2</div>' +
+		'<div class="testing">3</div>'
+	);
 
+	var total = 0;
 
-// $map(sel, fn)
+	Wee.$each('.testing', function(el) {
+		total += parseInt(Wee.$text(el), 10);
+	});
+
+	strictEqual(total, 6, 'Elements successfully iterated.');
+});
+
+// Method: $map(sel, fn)
 
 module('$map');
 
+test('map selection', 1, function() {
+	Wee.$html('#qunit-fixture',
+		'<div class="testing">1</div>' +
+		'<div class="testing">2</div>' +
+		'<div class="testing">3</div>'
+	);
 
-
-// $hasClass(sel, val)
-
-module('$hasClass');
-
-test('check', 2, function() {
-	Wee.$addClass('#qunit-fixture', 'test-class');
-
-	ok(Wee.$hasClass('#qunit-fixture', 'test-class'), 'Test class was checked successfully.');
-	strictEqual(Wee.$hasClass('#qunit-fixture', 'another-class'), false, 'Another class was checked successfully.');
-});
-
-// $addClass(sel, val)
-
-module('$addClass');
-
-test('check', 1, function() {
-	Wee.$addClass('#qunit-fixture', 'test-class');
-
-	ok(Wee.$hasClass('#qunit-fixture', 'test-class'), 'Test class was added successfully.');
-});
-
-// $removeClass(sel, val)
-
-module('$removeClass');
-
-test('check', 1, function() {
-	Wee.$addClass('#qunit-fixture', 'test-class');
-	Wee.$removeClass('#qunit-fixture', 'test-class');
-
-	strictEqual(Wee.$hasClass('#qunit-fixture', 'test-class'), false, 'Test class was removed successfully.');
-});
-
-// $css(sel, a, b)
-
-module('$css');
-
-test('single', 1, function() {
-	Wee.$css('#qunit-fixture', 'fontSize', '10px');
-
-	strictEqual(Wee.$css('#qunit-fixture', 'fontSize'), '10px', 'Font size was set correctly.');
-});
-
-test('object', 2, function() {
-	Wee.$css('#qunit-fixture', {
-		fontWeight: 'bold',
-		marginTop: '10px'
+	var values = Wee.$map('.testing', function(el) {
+		return parseInt(Wee.$html(el), 10);
 	});
 
-	strictEqual(Wee.$css('#qunit-fixture', 'fontWeight'), 'bold', 'Font weight was set correctly.');
-	strictEqual(Wee.$css('#qunit-fixture', 'marginTop'), '10px', 'Top margin was set correctly.');
+	deepEqual(values, [1, 2, 3], 'Elements successfully iterated.');
 });
 
-// $html(sel, val)
-
-module('$html');
-
-test('get', 1, function() {
-	Wee.$html('#qunit-fixture', '<h1>Testing</h1>');
-
-	strictEqual(Wee.$html('#qunit-fixture'), '<h1>Testing</h1>', 'HTML "<h1>Testing</h1>" was set correctly.');
-});
-
-// $attr(sel, key, val)
+// Method: $attr(sel, key, val)
 
 module('$attr');
 
@@ -405,7 +385,7 @@ test('get', 1, function() {
 	strictEqual(Wee.$attr('#qunit-fixture', 'test'), 'value', 'Attribute "test" was set correctly.');
 });
 
-// $data(sel, key, val)
+// Method: $data(sel, key, val)
 
 module('$data');
 
@@ -415,7 +395,7 @@ test('get', 1, function() {
 	strictEqual(Wee.$data('#qunit-fixture', 'test'), 'value', 'Data attribute "test" was set correctly.');
 });
 
-// $setVars()
+// Method: $setVars()
 
 module('$setVars');
 
@@ -433,4 +413,18 @@ test('get', 3, function() {
 	strictEqual(Wee.$get('test-var'), 'Test Value', 'Meta variable "test-var" was set correctly.');
 	strictEqual(Wee.$get('test:test-var'), 'Test Value', 'Namespaced meta variable "test:test-var" was set correctly.');
 	deepEqual(Wee.$get('test-arr'), ['One', 'Two', 'Three'], 'Meta array "test-arr" was set correctly.');
+});
+
+// Method: $setRef()
+
+module('$setRef');
+
+test('set', 1, function() {
+	Wee.$html('#qunit-fixture', '<div data-ref="testElement">1</div>');
+
+	Wee.$setRef();
+
+	var el = Wee.$('ref:testElement');
+
+	strictEqual(Wee.$text(el), '1', 'Reference element was successfully selected.');
 });
