@@ -2,41 +2,56 @@
 	'use strict';
 
 	W.fn.make('routes', {
-		// Get currently bound path or set path with a specified value
-		// Accepts optional options to pass through to get/set
+		// Get currently bound URI values or set URI with a specified string or value object
+		// Returns object
+		uri: function(val) {
+			if (val) {
+				if (W.$isObject(val)) {
+					return this.$set('uri', W.$extend(this.uri(), val));
+				} else {
+					var a = W._doc.createElement('a'),
+						query = {},
+						i = 0;
+					a.href = val;
+
+					var arr = a.search.replace(/^\?/, '').split('&');
+
+					for (; i < arr.length; i++) {
+						var split = arr[i].split('=');
+						query[split[0]] = split[1];
+					}
+
+					return this.$set('uri', {
+						path: this.$get('path', a.pathname),
+						query: query,
+						hash: a.hash.substring(1)
+					});
+				}
+			} else {
+				return this.$get('uri', this.uri(L), true);
+			}
+		},
+		// Get currently bound path or set path with a specified string
+		// Optionally accepts options to pass through to get/set
 		// Returns string
 		path: function(val, opt) {
-			return val ?
-				this.$set('path', val, opt) :
-				this.$get('path', L.pathname, true, opt);
+			return (
+				val ?
+					this.uri({
+						path: this.$set('path', val, opt)
+					}) :
+					this.$get('path', this.uri(), true, opt)
+			).path;
 		},
-		// Get all segments or single segment at index
+		// Get all segments or single segment at index integer
 		// Returns array of segment strings or string if index specified
 		segments: function(i) {
 			var segs = W.$toArray(this.path().replace(/^\/|\/$/g, '').split('/'));
 			return i !== U ? (segs[i] || '') : segs;
 		},
-		// Get the current document query values
-		// Returns string
-		query: function(key) {
-			var obj = L.search.replace(/(^\?)/, '').split('&').map(function(n) {
-				return n = n.split('='), this[n[0]] = n[1], this;
-			}.bind({}))[0];
-			return key !== U ? (obj[key] || '') : obj;
-		},
-		// Get the current document hash or set it to specified value
-		// Returns string
-		hash: function(val) {
-			if (val) {
-				L.hash = val;
-				return val;
-			}
-
-			return L.hash.substring(1);
-		},
 		// Retrieve or add route endpoints to route storage
-		// Optionally run the rules by setting init to true
-		// Returns
+		// Immediately evaluate the map by setting init to true
+		// Returns object
 		map: function(routes, init) {
 			var curr = this.$get('routes', {});
 
@@ -66,7 +81,7 @@
 			if (conf.routes) {
 				var segs = this.segments();
 
-				this.$private('process', conf.routes, 0, this.$set('segs', segs, {}).length);
+				this.$private('process', conf.routes, 0, this.$set('segs', segs).length);
 
 				// Execute queued init functions on last iteration
 				var any = this.$get('any'),
@@ -139,7 +154,7 @@
 						}
 					}
 
-					// If matched execute or process recursively
+					// If matched process recursively or execute if complete
 					if (match) {
 						if (W.$isObject(child)) {
 							this.process(child, i, total);
