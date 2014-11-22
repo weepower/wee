@@ -1,8 +1,12 @@
-Wee.$chain({
-	parse: function(obj, opt) {
-		Wee.$each(this, function(el) {
-			Wee.$html(el, Wee.data.parse(Wee.$html(el), obj, opt));
-		});
-		return this;
-	}
-});
+(function(W, D) {
+	'use strict';
+
+	W.$chain({
+		parse: function(obj, opt) {
+			W.$each(this, function(el) {
+				W.$html(el, D.parse(W.$html(el), obj, opt));
+			});
+			return this;
+		}
+	});
+})(Wee, Wee.data);

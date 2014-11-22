@@ -1,73 +1,69 @@
-var WeeAlias = WeeAlias || '$';
+(function(W, U) {
+	'use strict';
 
-Wee.fn.extend({
-	$chain: function(a, b) {
-		var p = Wee._win[WeeAlias].prototype;
+	var WeeAlias = WeeAlias || '$';
 
-		Wee.$isString(a) ?
-			p[a] = b :
-			Object.keys(a).forEach(function(key) {
-				p[key] = a[key];
-			});
-	}
-});
+	W.fn.extend({
+		$chain: function(a, b) {
+			var p = W._win[WeeAlias].prototype;
 
-(function(c) {
-	var Get = function(sel, context) {
-		if (sel) {
-			var el = Array.isArray(sel) ? sel : Wee.$toArray(Wee.$(sel, context)),
-				i = 0;
+			if (W.$isString(a)) {
+				p[a] = b;
+			} else {
+				var keys = Object.keys(a),
+					i = 0;
 
-			for (; i < el.length; i++) {
-				c.call(this, el[i]);
+				for (; i < keys.length; i++) {
+					var key = keys[i];
+					p[key] = a[key];
+				}
 			}
 		}
-	}
+	});
 
-	Wee._win[WeeAlias] = function(sel, context) {
-		var o = new Get(sel, context);
-		o.sel = sel;
+	(function(A) {
+		var Get = function(sel, context) {
+			if (sel) {
+				var els = Array.isArray(sel) ? sel : W.$toArray(W.$(sel, context)),
+					i = 0;
 
-		return o;
-	}
-
-	Wee._win[WeeAlias].prototype = Get.prototype = {
-		length: 0,
-		_$_: true,
-		// Utilities
-		reverse: function() {
-			var cp = Wee.$extend({}, this),
-				len = this.length,
-				x = len,
-				i = 0;
-
-			for (; i < len; i++) {
-				x--;
-				this[i] = cp[x];
+				for (; i < els.length; i++) {
+					A.call(this, els[i]);
+				}
 			}
+		};
 
-			return this;
-		},
-		// Core
-		each: function(fn, opt) {
-			Wee.$each(this, fn, opt);
-		},
-		map: function(fn) {
-			return Wee.$map(this, fn);
-		},
-		attr: function(key, val) {
-			var r = Wee.$attr(this, key, val);
-			return val !== undefined ? this : r;
-		},
-		eq: function(i) {
-			return $(Wee.$eq(this, i));
-		},
-		first: function() {
-			return $(Wee.$eq(this, 0));
-		},
-		data: function(key, val) {
-			var r = Wee.$data(this, key, val);
-			return val !== undefined ? this : r;
-		}
-	}
-})([].push);
+		W._win[WeeAlias] = function(sel, context) {
+			var o = new Get(sel, context);
+			o.sel = sel;
+
+			return o;
+		};
+
+		W._win[WeeAlias].prototype = Get.prototype = {
+			_$_: true,
+			length: 0,
+			// Core
+			each: function(fn, opt) {
+				W.$each(this, fn, opt);
+			},
+			map: function(fn) {
+				return W.$map(this, fn);
+			},
+			attr: function(key, val) {
+				var r = W.$attr(this, key, val);
+				return val !== U ? this : r;
+			},
+			eq: function(i) {
+				return $(W.$eq(this, i));
+			},
+			first: function() {
+				return this.eq(0);
+			},
+			data: function(key, val) {
+				var r = W.$data(this, key, val);
+				return val !== U ? this : r;
+			}
+		};
+	})([].push);
+})(Wee, undefined);
