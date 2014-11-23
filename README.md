@@ -1,4 +1,4 @@
-# [Wee 2.1.0-beta](http://www.weepower.com)
+# [Wee 2.1.0-beta.2](http://www.weepower.com)
 
 Wee is a development framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does it all with a tiny footprint.
 
@@ -26,7 +26,7 @@ JavaScript toolset to build scalable, well-organized browser functionality < 9KB
 * **Polyfill support** for HTML5, SVG images, input placeholders, and ES5
 * **Sourcemap output** to line match against unminified code
 
-Grunt build process configured through a simple JSON file to compile, optimize, and minify your project
+Grunt process configured through a simple JSON file to compile, optimize, and minify your project
 
 * **Built-in server** for static development
 * **Live reloading** of static assets and markup through proxy server

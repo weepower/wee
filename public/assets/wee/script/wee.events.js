@@ -50,7 +50,7 @@
 					var key = keys[i],
 						evts = sel[key];
 
-					this._bind(key, evts, a);
+					this.$private('bind', key, evts, a);
 				}
 			} else {
 				var evts = [];
@@ -68,7 +68,7 @@
 					sel = c.delegate;
 				}
 
-				this._bind(sel, evts, c);
+				this.$private('bind', sel, evts, c);
 			}
 		},
 		// Bind specified function to specified element and event for single execution
@@ -94,21 +94,27 @@
 				obj[a] = b;
 			}
 
-			for (var evt in obj) {
-				var fn = obj[evt];
+			for (var key in obj) {
+				var evts = key.split(' '),
+					i = 0;
 
-				W.$each(this.bound(sel, evt, fn), function(e) {
-					W._legacy ?
-						e.el.detachEvent('on' + e.evt, e.cb) :
-						e.el.removeEventListener(e.evt, e.cb);
+				for (; i < evts.length; i++) {
+					var evt = evts[i],
+						fn = obj[evt];
 
-					// Remove object from the bound array
-					var bound = this.$get('evts');
+					W.$each(this.bound(sel, evt, fn), function(e) {
+						W._legacy ?
+							e.el.detachEvent('on' + e.evt, e.cb) :
+							e.el.removeEventListener(e.evt, e.cb);
 
-					bound.splice(bound.indexOf(e), 1);
-				}, {
-					scope: this
-				});
+						// Remove object from the bound array
+						var bound = this.$get('evts');
+
+						bound.splice(bound.indexOf(e), 1);
+					}, {
+						scope: this
+					});
+				}
 			}
 		},
 		// Get currently bound events to optional specified element and event|function
@@ -149,92 +155,110 @@
 					el.fireEvent('on' + evt);
 				}
 			});
-		},
-		_bind: function(els, evts, c) {
+		}
+	}, {
+		bind: function(els, obj, c) {
 			var scope = this;
 
 			// For each element attach events
 			W.$each(els, function(el) {
 				// Loop through object events
-				for (var evt in evts) {
-					var conf = W.$extend({
-							args: [],
-							one: false,
-							scope: el
-						}, c),
-						fn = evts[evt],
-						ev = evt,
-						f = fn;
+				for (var key in obj) {
+					var evts = key.split(' '),
+						i = 0;
 
-					if (evt == 'mouseenter' || evt == 'mouseleave') {
-						conf.args.unshift(fn);
+					for (; i < evts.length; i++) {
+						var conf = W.$extend({
+								args: [],
+								one: false,
+								scope: el
+							}, c),
+							fn = obj[key],
+							evt = evts[i],
+							ev = evt,
+							f = fn;
 
-						fn = 'events:_mouseEvent';
-						evt = 'mouse' + ((evt == 'mouseenter') ? 'over' : 'out');
+						if (evt == 'mouseenter' || evt == 'mouseleave') {
+							conf.args.unshift(fn);
 
-						conf.args.unshift(0, c && c.targ ? c.targ : el);
-					} else {
-						conf.args.unshift(0, el);
-					}
+							fn = scope.mouseEvent;
+							evt = 'mouse' + ((evt == 'mouseenter') ? 'over' : 'out');
 
-					(function(el, evt, fn, f, conf) {
-						var cb = function(e) {
-							if (W._legacy) {
-								e.preventDefault = function() {
-									e.returnValue = false;
-								};
-							}
+							conf.args.unshift(0, c && c.targ ? c.targ : el);
+						} else {
+							conf.args.unshift(0, el);
+						}
 
-							conf.args[0] = e;
-
-							// If watch within parent make sure the target matches the selector
-							if (conf.targ) {
-								var t = conf.targ,
-									sel = t._$_ ? t.sel : t;
-								t = W.$toArray(W.$(sel));
-
-								if (! t.some(function(par) {
-									return par.contains(e.target);
-								})) {
-									return false;
+						(function(el, evt, fn, f, conf) {
+							var cb = function(e) {
+								if (W._legacy) {
+									e.preventDefault = function() {
+										e.returnValue = false;
+									};
 								}
+
+								conf.args[0] = e;
+
+								// If watch within parent make sure the target matches the selector
+								if (conf.targ) {
+									var t = conf.targ,
+										sel = t._$_ ? t.sel : t;
+									t = W.$toArray(W.$(sel));
+
+									if (! t.some(function(par) {
+										return par.contains(e.target);
+									})) {
+										return false;
+									}
+								}
+
+								W.$exec(fn, conf);
+
+								// If the event is to be executed once unbind it immediately
+								if (conf.one) {
+									scope.$public.off(el, evt, f);
+								}
+							};
+
+							// Ensure the specified element, event, and function combination hasn't already been bound
+							if (evt != 'init' && scope.$public.bound(el, ev, f).length < 1) {
+								W._legacy ?
+									el.attachEvent('on' + evt, cb) :
+									el.addEventListener(evt, cb);
+
+								scope.$push('evts', {
+									el: el,
+									ev: ev,
+									evt: evt,
+									cb: cb,
+									fn: f
+								});
 							}
 
-							W.$exec(fn, conf);
-
-							// If the event is to be executed once unbind it immediately
-							if (conf.one) {
-								scope.off(el, evt, f);
+							if (evt == 'init' || conf.init === true) {
+								cb();
 							}
-						};
-
-						// Ensure the specified element, event, and function combination hasn't already been bound
-						if (evt != 'init' && scope.bound(el, ev, f).length < 1) {
-							W._legacy ?
-								el.attachEvent('on' + evt, cb) :
-								el.addEventListener(evt, cb);
-
-							scope.$push('evts', {
-								el: el,
-								ev: ev,
-								evt: evt,
-								cb: cb,
-								fn: f
-							});
-						}
-
-						if (evt == 'init' || conf.init === true) {
-							cb();
-						}
-					})(el, evt, fn, f, conf);
+						})(el, evt, fn, f, conf);
+					}
 				}
 			});
 		},
 		// Ensure mouse has actually entered or left root element before firing event
-		_mouseEvent: function(e, parent, fn) {
-			var child = e.relatedTarget;
+		mouseEvent: function(e, parent, fn) {
+			var child = e.relatedTarget,
+				checkParent = function(parent, child) {
+					if (parent !== child) {
+						while (child && child !== parent) {
+							child = child.parentNode;
+						}
 
-			if (child === parent || this._checkParent(parent, child)) {
+						return child === parent;
+					}
+
+					return false;
+				};
+
+			if (child === parent || checkParent(parent, child)) {
 				return;
 			}
 
@@ -245,18 +269,6 @@
 				args: args,
 				scope: this
 			});
-		},
-		// Compare parent element to child element
-		_checkParent: function(parent, child) {
-			if (parent !== child) {
-				while (child && child !== parent) {
-					child = child.parentNode;
-				}
-
-				return child === parent;
-			}
-
-			return false;
 		}
 	});
 })(Wee);
