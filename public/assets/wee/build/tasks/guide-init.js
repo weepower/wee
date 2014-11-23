@@ -3,8 +3,8 @@ module.exports = function(grunt) {
 		var Wee = require('../core.js'),
 			guide = project.style.guide;
 
-		if (guide.enable == true) {
-			if (guide.watch == true) {
+		if (guide.enable === true) {
+			if (guide.watch === true) {
 				// Set paths
 				var templatePath = Wee.buildPath(guide.paths.template, config.assetPath),
 					patternPath = Wee.buildPath(guide.paths.patterns, config.assetPath);

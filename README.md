@@ -1,4 +1,4 @@
-# [Wee 2.1.0](http://www.weepower.com)
+# [Wee 2.1.0-beta](http://www.weepower.com)
 
 Wee is a development framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does it all with a tiny footprint.
 
@@ -14,7 +14,7 @@ Mobile-first CSS framework with reset, base, and Less mixin library < 4KB gzippe
 * **Structured breakpoints** for your keep you responsive rules organized
 * **Legacy patching** to make sure everything works in IE8
 
-JavaScript toolset to build scalable, well-organized browser functionality < 8KB gzipped
+JavaScript toolset to build scalable, well-organized browser functionality < 9KB gzipped
 
 * **Foundation** of utilities, helpers, and module structure
 * **Chainable DOM** traversal and manipulation library

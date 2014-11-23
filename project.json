@@ -1,6 +1,6 @@
 {
-	"name": "Wee",
-	"description": "Your blueprint for modern web development.",
+	"name": "Project Name",
+	"description": "Project description.",
 	"paths": {
 		"root": "public",
 		"assets": "assets"
@@ -32,8 +32,8 @@
 		},
 		"validate": {
 			"watch": false,
-			"csscomb": true,
-			"csslint": true
+			"csscomb": false,
+			"csslint": false
 		},
 		"legacy": {
 			"enable": true,
@@ -46,8 +46,8 @@
 			]
 		},
 		"guide": {
-			"enable": false,
-			"watch": true,
+			"enable": true,
+			"watch": false,
 			"paths": {
 				"patterns": "guide/patterns",
 				"template": "guide/template.html",
@@ -86,7 +86,7 @@
 			"guide.min.js": "custom/guide.js"
 		},
 		"validate": {
-			"watch": false,
+			"watch": true,
 			"jscs": true,
 			"jshint": true
 		},

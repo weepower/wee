@@ -194,8 +194,8 @@ module.exports = function(grunt) {
 					event: [
 						'added',
 						'deleted'
-					],
-				},
+					]
+				}
 			},
 			styleBuildUpdate: {
 				files: [
@@ -209,8 +209,8 @@ module.exports = function(grunt) {
 				options: {
 					event: [
 						'changed'
-					],
-				},
+					]
+				}
 			},
 			styleConcat: {
 				files: [
@@ -234,7 +234,11 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.event.on('watch', function(action, filepath, target) {
-		Wee.validate(action, filepath, target);
-	});
+	if (project.script.validate.watch || project.style.validate.watch) {
+		grunt.event.on('watch', function(action, filepath) {
+			if (action !== 'deleted') {
+				Wee.validate(config, grunt, filepath);
+			}
+		});
+	}
 };

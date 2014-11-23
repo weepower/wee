@@ -14,9 +14,7 @@ module.exports = function(grunt) {
 			responsive: ''
 		};
 
-		var weeStyleRoot = config.assetPath + '/wee/style',
-			styleFeatures = project.style.core,
-			styleSettings = {};
+		var styleFeatures = project.style.core;
 
 		// Core style features
 		style.vars = {

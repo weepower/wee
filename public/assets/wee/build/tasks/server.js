@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 			staticConfig = serverConfig.tasks.static;
 
 		grunt.config.set('browserSync.options.server', {
-			baseDir: project.paths.root,
+			baseDir: project.paths.root
 		});
 
 		grunt.config.set('browserSync.options.port', serverConfig.port);

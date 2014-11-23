@@ -1,28 +1,37 @@
 // Wee (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
+// DO NOT MODIFY
 
 'use strict';
 
 module.exports = function(grunt) {
-	var configFile = './' + (grunt.option('config') || 'project.json'),
-		project = JSON.parse(grunt.file.read(configFile)),
-		assetPath = (project.paths.root !== '') ?
+	var configFile = './' + (grunt.option('config') || 'project.json');
+
+	global.project = JSON.parse(grunt.file.read(configFile));
+
+	var assetPath = (project.paths.root !== '') ?
 			project.paths.root + '/' + project.paths.assets :
 			project.assets;
 
 
-	//------------------------------------
+	// ------------------------------------
+		// Load Modules
+	// ------------------------------------
+
+	global.jscs = require('jscs');
+
+
+	// ------------------------------------
 		// Load Tasks
-	//------------------------------------
+	// ------------------------------------
 
 	require('./' + assetPath + '/wee/build/config.js')(grunt);
 	grunt.loadTasks(assetPath + '/wee/build/tasks');
 
 
-	//------------------------------------
+	// -------------------------------------
 		// Load Plugins
-	//------------------------------------
+	// -------------------------------------
 
 	grunt.loadNpmTasks('grunt-browser-sync');
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -33,9 +42,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-newer');
 	grunt.loadNpmTasks('grunt-notify');
 
-	//------------------------------------
+	// -----------------------------------
 		// Grunt Tasks
-	//------------------------------------
+	// -----------------------------------
 
 	grunt.registerTask('default', [
 		'init',

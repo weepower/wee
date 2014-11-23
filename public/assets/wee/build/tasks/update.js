@@ -43,7 +43,7 @@ module.exports = function(grunt) {
 									console.log('Success');
 								});
 							});
-						}).on('error', function(err) {
+						}).on('error', function() {
 							fs.unlink(dest);
 							grunt.log.error('Unable to download latest version.');
 						});
@@ -82,6 +82,6 @@ module.exports = function(grunt) {
 			grunt.log.error(e);
 
 			done();
-		});;
+		});
 	});
 };

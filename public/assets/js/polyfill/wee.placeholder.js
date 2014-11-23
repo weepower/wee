@@ -1,18 +1,19 @@
 // Wee Placeholder 1.0.1 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
+// DO NOT MODIFY
 
 (function(w, d) {
 	'use strict';
 
 	w.attachEvent('onload', function() {
-		var arr = d.querySelectorAll('input[placeholder], textarea[placeholder]'),
-			len = arr.length,
+		var sel = 'input[placeholder], textarea[placeholder]',
+			inputs = d.querySelectorAll(sel),
+			forms = d.querySelectorAll('form'),
 			i = 0;
 
-		for (; i < len; i++) {
+		for (; i < inputs.length; i++) {
 			(function() {
-				var el = arr[i],
+				var el = inputs[i],
 					val = el.getAttribute('placeholder');
 
 				if (el.value === '') {
@@ -33,28 +34,23 @@
 			})();
 		}
 
-		arr = d.querySelectorAll('form');
-		len = arr.length;
-		i = 0;
-
 		// Clear default placeholder values on form submit
-		for (; i < len; i++) {
+		for (i = 0; i < forms.length; i++) {
 			(function() {
-				var el = arr[i];
+				var el = forms[i];
 
 				el.onsubmit = function() {
-					var inputs = el.querySelectorAll('input[placeholder], textarea[placeholder]'),
-						xlen = inputs.length,
+					var inputs = el.querySelectorAll(sel),
 						x = 0;
 
-					for (; x < xlen; x++) {
+					for (; x < inputs.length; x++) {
 						var xel = inputs[x];
 
 						if (xel.value == xel.getAttribute('placeholder')) {
 							xel.value = '';
 						}
 					}
-				}
+				};
 			})();
 		}
 	});

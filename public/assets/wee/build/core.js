@@ -18,19 +18,19 @@ module.exports = Wee = {
 	getFiles: function(dir, ext, files) {
 		files = files || [];
 
-		if (typeof files === 'undefined') {
+		if (files === undefined) {
 			files = [];
 		}
 
 		var children = fs.readdirSync(dir);
 
 		for (var file in children) {
+			var match = children[file],
+				path = dir + '/' + children[file];
+
 			if (files.hasOwnProperty(path)) {
 				continue;
 			}
-
-			var match = children[file],
-				path = dir + '/' + children[file];
 
 			if (fs.statSync(path).isDirectory()) {
 				this.getFiles(path, ext, files);
@@ -47,7 +47,7 @@ module.exports = Wee = {
 	getMinifiedExtension: function(dest, src, ext) {
 		var dir = src.substring(0, src.lastIndexOf('/')),
 			filename = src.substring(src.lastIndexOf('/'), src.length);
-			filename = filename.substring(0, filename.lastIndexOf('.'));
+		filename = filename.substring(0, filename.lastIndexOf('.'));
 
 		return dest + '/' + dir + filename + ext;
 	},
@@ -75,7 +75,7 @@ module.exports = Wee = {
 					obj[key] = (this.$isObject(obj[key])) ?
 						this.$extend(obj[key], src[key]) :
 						src[key];
-				} catch(e) {
+				} catch (e) {
 					obj[key] = src[key];
 				}
 			} else {
@@ -92,7 +92,7 @@ module.exports = Wee = {
 
 		return temp.replace(this.pair, function(m, pre, tag, inner) {
 			var val = scope.getValue(data, tag, conf, index),
-				empty = val == undefined || val.length == 0,
+				empty = val === undefined || val.length === 0,
 				resp = '';
 
 			if (pre == '#' && ! empty && typeof val == 'object') {
@@ -104,9 +104,9 @@ module.exports = Wee = {
 					for (var key in val) {
 						// Merge in iterative data
 						var item = Wee.$extend({
-							'$key': key,
-							'$val': val[key],
-							'$i': i
+							$key: key,
+							$val: val[key],
+							$i: i
 						}, isObj ? val : val[key]);
 
 						resp += scope.render(inner, item, conf, i);
@@ -132,7 +132,7 @@ module.exports = Wee = {
 
 			var resp = scope.getValue(data, tag, opt, index);
 
-			return resp == undefined || typeof resp == 'object' ? '' : resp;
+			return resp === undefined || typeof resp == 'object' ? '' : resp;
 		});
 	},
 	getValue: function(data, key, conf, x) {
@@ -175,57 +175,84 @@ module.exports = Wee = {
 		// Return fallback or empty string
 		return segs.length > 1 ? segs[1].trim() : '';
 	},
-	validate: function(action, filepath, target) {
+	validate: function(config, grunt, filepath) {
 		var ext = Wee.getExtension(filepath);
 
 		if (ext == 'js') {
-			var jscs = require('./node_modules/jscs/lib/checker'),
-				jshint = require('jshint').JSHINT,
-				js = grunt.file.read(filepath);
-
-			// Get config
-			var jscsJson = grunt.file.read('public/assets/wee/script/.jscsrc'),
-				jscsConfig = JSON.parse(jscsJson),
-				jshintJson = grunt.file.read('public/assets/wee/script/.jshintrc'),
-				jshintConfig = JSON.parse(jshintJson);
-
 			// JSHint
+			var js = grunt.file.read(filepath),
+				jshint = require('jshint').JSHINT,
+				jshintConfig = grunt.file.readJSON(config.assetPath + '/wee/script/.jshintrc');
+
 			if (! jshint(js, jshintConfig)) {
-				grunt.log.error('JSHint error(s) in ' + filepath + '.');
-
 				var out = jshint.data(),
-					errors = out.errors;
+					errors = out.errors,
+					total = errors.length;
 
-				for (var j = 0; j < errors.length; j++) {
-					grunt.log.ok(errors[j].line + ':' + errors[j].character + ' -> ' + errors[j].reason + ' -> ' + errors[j].evidence);
-				}
+				grunt.log.header('Script validation errors found');
 
-				// List globals
-				grunt.log.ok('Globals: ' + out.globals.join(', '));
+				grunt.log.error('JSHint error' +
+					((total > 1) ? 's' : '') + ' in ' + filepath + '.');
+
+				errors.forEach(function(message) {
+					Wee.logError(grunt, message.line  + ':' + message.character, message.reason, message.evidence);
+				});
+
+				grunt.log.writeln();
+				grunt.log.writeln();
 			}
 
 			// JSCS
-			// var checker = new jscs();
+			var jscsConfig = grunt.file.readJSON(config.assetPath + '/wee/script/.jscs.json'),
+				checker = new global.jscs();
 
-			// checker.registerDefaultRules();
-			// checker.configure(jscsConfig);
+			checker.registerDefaultRules();
+			checker.configure(jscsConfig);
 
-			// var errors = checker.checkString(js),
-			// 	errorList = errors.getErrorList();
+			var errors = checker.checkString(js),
+				errorList = errors.getErrorList(),
+				total = errorList.length;
 
-			// if (errorList.length > 0) {
-			// 	grunt.log.error('JSCS error(s) in ' + filepath + '.');
+			if (total > 0) {
+				grunt.log.error('JSCS error' +
+					((total > 1) ? 's' : '') + ' in ' + filepath + '.');
 
-			// 	errorList.forEach(function(error) {
-			// 		grunt.log.ok(errors.explainError(error));
-			// 	});
-			// }
+				errorList.forEach(function(message) {
+					Wee.logError(grunt, message.line  + ':' + message.column, message.rule, message.message);
+				});
+			}
 		} else if (ext == 'less' || ext == 'css') {
 			// CSSLint
+			var css = grunt.file.read(filepath),
+				csslint = require('csslint').CSSLint,
+				csslintConfig = grunt.file.readJSON(config.assetPath + '/wee/style/.csslintrc'),
+				result = csslint.verify(filepath, csslintConfig),
+				total = result.messages.length;
 
+			if (total) {
+				grunt.log.header('Style validation errors found');
+
+				grunt.log.error('CSSLint error' +
+					((total > 1) ? 's' : '') + ' in ' + filepath + '.');
+
+				result.messages.forEach(function(message) {
+					Wee.logError(grunt, message.line  + ':' + message.col, message.type, message.message);
+				});
+			}
 
 			// CSScomb
-
+			// var Comb = require('csscomb'),
+			// 	combConfig = grunt.file.readJSON(config.assetPath + '/wee/style/.csscomb.json'),
+			// 	comb = new Comb(combConfig);
+			//
+			// comb.processPath(file);
+			//
+			// grunt.log.header('Style successfully combed');
+			// 
+			// grunt.log.ok('CSScomb processing completed for ' + filepath + '.');
 		}
+	},
+	logError: function(grunt, pos, msg, details) {
+		grunt.log.writeln('['.cyan + pos + '] '.cyan + msg + ' ' + details.magenta);
 	}
 };

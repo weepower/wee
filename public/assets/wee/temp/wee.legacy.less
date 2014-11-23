@@ -1,0 +1,75 @@
+@import '../temp/wee.less'; // Core
+
+/*------------------------------------*\
+	# Normalization
+\*------------------------------------*/
+
+table {
+	white-space: normal;
+}
+button,
+input,
+select,
+textarea {
+	vertical-align: middle;
+}
+.inline-block () {
+	*display: inline;
+	zoom: 1;
+}
+.clear () {
+	*zoom: 1;
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Media Queries
+\*------------------------------------*/
+
+html {
+	font-family: "'@{ieBreakpoint}'";
+}
+
+.ie-body (@width) {
+	body {
+		min-width: @width;
+	}
+}
+
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 1) {
+	.ie-body(@mobileLandscapeWidth);
+	.mobile-landscape();
+}
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 2) {
+	.ie-body(@tabletPortraitWidth);
+	.tablet-portrait();
+}
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 3) {
+	.ie-body(@desktopSmallWidth);
+	.desktop-small();
+}
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 4) {
+	.ie-body(@desktopMediumWidth);
+	.desktop-medium();
+}
+.fallback (@ieBreakpoint) when (@ieBreakpoint > 5) {
+	.ie-body(@desktopLargeWidth);
+	.desktop-large();
+}
+
+.responsive () when (@responsiveEnabled = true) {
+	.fallback(@ieBreakpoint);
+}
+
+.responsive();
+
+// Framework
+
+@legacyMode: true;
+
+// Inject imports
+
+@import "../../css/custom/ie8.less";

@@ -1,19 +1,19 @@
 // Wee SVG 1.0.1 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY THIS FILE
+// DO NOT MODIFY
 
 (function(w, d) {
 	'use strict';
 
 	w.attachEvent('onload', function() {
-		var arr = d.getElementsByTagName('img'),
-			len = arr.length,
+		var imgs = d.getElementsByTagName('img'),
+			svgs = d.getElementsByTagName('svg'),
 			i = 0,
 			fb,
 			img;
 
-		for (; i < len; i++) {
-			img = arr[i];
+		for (; i < imgs.length; i++) {
+			img = imgs[i];
 
 			if (img.hasAttribute('src')) {
 				var ext = img.getAttribute('src').split('.').pop();
@@ -28,24 +28,19 @@
 			}
 		}
 
-		arr = d.getElementsByTagName('svg');
-		len = arr.length;
-		i = 0;
-
-		for (; i < len; i++) {
-			var svg = arr[i];
-				fb = svg.getAttribute('data-fallback');
+		for (i = 0; i < svgs.length; i++) {
+			var svg = svgs[i];
+			fb = svg.getAttribute('data-fallback');
 
 			if (fb !== null) {
 				img = d.createElement('img');
 
 				var attrs = svg.attributes,
-					alen = attrs.length,
 					x = 0;
 
 				img.src = fb;
 
-				for (; x < alen; x++) {
+				for (; x < attrs.length; x++) {
 					var attr = attrs.item(x);
 					img.setAttribute(attr.nodeName, attr.nodeValue);
 				}
