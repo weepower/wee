@@ -20,7 +20,6 @@ bower_components
 .idea
 .idea/
 .idea/*
-.jshintrc
 .settings
 .bundle
 mixture.json
