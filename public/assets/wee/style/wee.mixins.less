@@ -1398,7 +1398,7 @@
 .background (@color; @filename; @repeat) when (isstring(@repeat)), (iskeyword(@repeat)) {
 	background: @color url('@{imagePath}@{filename}') @repeat;
 }
-.background (@color; @opacity; @fallback: @color) when (isnumber(@opacity)) {
+.background (@color; @opacity; @fallback: @color) when (iscolor(@color)) and (isnumber(@opacity)) {
 	background-color: @fallback;
 	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
