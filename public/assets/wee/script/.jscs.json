@@ -18,7 +18,6 @@
 	"disallowMultipleLineBreaks": true,
 	"disallowMultipleLineStrings": true,
 	"disallowPaddingNewlinesInBlocks": true,
-	"disallowQuotedKeysInObjects": "allButReserved",
 	"disallowSpaceAfterPrefixUnaryOperators": [
 		"++",
 		"--",
