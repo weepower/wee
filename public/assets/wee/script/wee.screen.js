@@ -72,7 +72,7 @@
 						(sz && sz === size) ||
 						(mn && size >= mn && (init || prev < mn) && (! mx || size <= mx)) ||
 						(mx && size <= mx && (init || prev > mx) && (! mn || size >= mn))) {
-						this.$exec(evt.callback, {
+						W.$exec(evt.callback, {
 							args: [{
 								dir: init ? 0 : (size > prev ? 1 : -1),
 								size: size,

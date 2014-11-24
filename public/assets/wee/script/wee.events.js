@@ -13,11 +13,11 @@
 		// Bind against elements stored in the DOM reference
 		bind: function(evts, opt) {
 			var mapped = evts || this.$get('mapped');
-			evts = [];
 
-			if (evts) {
+			if (mapped) {
 				var keys = Object.keys(mapped),
 					i = 0;
+				evts = [];
 
 				for (; i < keys.length; i++) {
 					var key = keys[i];

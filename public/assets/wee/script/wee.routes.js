@@ -137,7 +137,7 @@
 								case '$root':
 									if (! seg) {
 										W.$exec(child, {
-											args: this.routes.segments(i - 2)
+											args: this.$public.segments(i - 2)
 										});
 									}
 									break;
