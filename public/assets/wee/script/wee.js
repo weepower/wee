@@ -537,12 +537,7 @@
 						ref = W.$data(el, 'bind');
 					}
 
-					var arr = ref.slice(-2) == '[]';
-
-					W.$push('ref',
-						arr ? ref.slice(0, -2) : ref,
-						arr ? [el] : el
-					);
+					W.$push('ref', ref, [el]);
 				});
 			},
 			// Fallback for non-existent chaining
