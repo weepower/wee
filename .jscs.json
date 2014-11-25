@@ -51,7 +51,6 @@
 	"disallowYodaConditions": true,
 	"requireBlocksOnNewline": true,
 	"requireCamelCaseOrUpperCaseIdentifiers": true,
-	"requireCapitalizedComments": true,
 	"requireCapitalizedConstructors": true,
 	"requireCommaBeforeLineBreak": true,
 	"requireCurlyBraces": [
