@@ -13,11 +13,11 @@
 		// Bind against elements stored in the DOM reference
 		bind: function(evts, opt) {
 			var mapped = evts || this.$get('mapped');
+			evts = [];
 
 			if (mapped) {
 				var keys = Object.keys(mapped),
 					i = 0;
-				evts = [];
 
 				for (; i < keys.length; i++) {
 					var key = keys[i];
@@ -89,32 +89,25 @@
 		off: function(sel, a, b) {
 			var obj = a;
 
-			if (W.$isString(a)) {
-				obj = [];
-				obj[a] = b;
-			}
+			if (a) {
+				if (W.$isString(a)) {
+					obj = [];
+					obj[a] = b;
+				}
 
-			for (var key in obj) {
-				var evts = key.split(' '),
-					i = 0;
+				for (var key in obj) {
+					var evts = key.split(' '),
+						i = 0;
 
-				for (; i < evts.length; i++) {
-					var evt = evts[i],
+					for (; i < evts.length; i++) {
+						var evt = evts[i],
 						fn = obj[evt];
 
-					W.$each(this.bound(sel, evt, fn), function(e) {
-						W._legacy ?
-							e.el.detachEvent('on' + e.evt, e.cb) :
-							e.el.removeEventListener(e.evt, e.cb);
-
-						// Remove object from the bound array
-						var bound = this.$get('evts');
-
-						bound.splice(bound.indexOf(e), 1);
-					}, {
-						scope: this
-					});
+						this.$private('off', sel, evt, fn);
+					}
 				}
+			} else {
+				this.$private('off', sel);
 			}
 		},
 		// Get currently bound events to optional specified element and event|function
@@ -267,6 +260,20 @@
 
 			W.$exec(fn, {
 				args: args,
+				scope: this
+			});
+		},
+		off: function(sel, evt, fn) {
+			W.$each(this.$public.bound(sel, evt, fn), function(e) {
+				W._legacy ?
+					e.el.detachEvent('on' + e.evt, e.cb) :
+					e.el.removeEventListener(e.evt, e.cb);
+
+				// Remove object from the bound array
+				var bound = this.$get('evts');
+
+				bound.splice(bound.indexOf(e), 1);
+			}, {
 				scope: this
 			});
 		}
