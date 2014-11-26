@@ -1357,7 +1357,6 @@
 \*------------------------------------*/
 
 .transition (@value) when (isstring(@value)) {
-	-moz-transition: ~'@{value}';
 	-webkit-backface-visibility: hidden;
 	-webkit-transition: ~'@{value}';
 	transition: ~'@{value}';
@@ -1548,8 +1547,6 @@
 	background-size: @width @height;
 }
 .background-clip (@value: border-box) {
-	-moz-background-clip: @value;
-	-webkit-background-clip: ~'@{value}';
 	background-clip: ~'@{value}';
 }
 .sprite (@color; @x: 0; @y: 0; @repeat: no-repeat; @filename: @spriteFilename) when (iscolor(@color)) {
@@ -1670,6 +1667,7 @@
 
 .filter (@value) when (isstring(@value)), (iskeyword(@value)) {
 	-webkit-filter: ~'@{value}';
+	filter: ~'@{value}';
 }
 .blur (@value: 2px) {
 	.filter('blur(@{value})');
@@ -1717,7 +1715,6 @@
 \*------------------------------------*/
 
 .animation (...) {
-	-moz-animation: @arguments;
 	-webkit-animation: @arguments;
 	animation: @arguments;
 }
