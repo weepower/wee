@@ -133,6 +133,11 @@ module.exports = function(grunt) {
 		},
 		watch: {
 			options: {
+				event: [
+					'added',
+					'changed',
+					'deleted'
+				],
 				spawn: false
 			},
 			images: {

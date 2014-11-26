@@ -10,11 +10,6 @@
 body {
 	.background(@white);
 }
-.logo {
-	path {
-		fill: @darkestGray;
-	}
-}
 
 
 
@@ -24,12 +19,49 @@ body {
 	# Header
 \*------------------------------------*/
 
-.header {
+.guide-header {
+	.align(center);
+}
+.heading {
+	.darkGray();
+}
+.filter {
+	.capitalize();
+	.spaced(4);
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Footer
+\*------------------------------------*/
+
+.guide-footer {
 	.align(center);
 }
 
 
 
-.heading {
-	.darkGray();
+
+
+/*------------------------------------*\
+	# Guide
+\*------------------------------------*/
+
+.guide-pattern {
+	.spaced(6);
+}
+.guide-pattern__input {
+	.background(none);
+	.padding(0);
+}
+.guide-pattern__output {
+
+}
+.hljs {
+	.background(@lightestGray);
+	.font-size(1.2);
+	.padding(1; 1.4; 1.2; 1.4);
 }

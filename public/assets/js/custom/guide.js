@@ -1,9 +1,8 @@
 // Add custom style guide JavaScript here
 
 Wee.fn.make('guide', {
-	init: function() {
-		// Init logic
+	_construct: function() {
+		// Initialize syntax highlighting
+		hljs.initHighlightingOnLoad();
 	}
 });
-
-Wee.ready('guide');

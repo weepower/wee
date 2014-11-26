@@ -64,7 +64,7 @@ module.exports = function(grunt) {
 					obj = Wee.$extend(obj, front);
 				}
 
-				obj.markup = results[3];
+				obj.markup = results[3].trim();
 				obj.$i = i;
 
 				root.unshift(obj);

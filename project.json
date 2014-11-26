@@ -47,7 +47,7 @@
 		},
 		"guide": {
 			"enable": true,
-			"watch": false,
+			"watch": true,
 			"paths": {
 				"patterns": "guide/patterns",
 				"template": "guide/template.html",
