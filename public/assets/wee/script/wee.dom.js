@@ -445,6 +445,10 @@
 				return W.$exec(filter, W.$extend({
 					scope: el
 				}, opt));
+			} else if (W.$isObject(filter)) {
+				return el === (filter._$_ ? filter[0] : filter);
+			} else if (W.$isArray(filter)) {
+				return el === filter[0];
 			} else {
 				var matches = el.matches || el.matchesSelector || el.msMatchesSelector ||
 						el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector;
