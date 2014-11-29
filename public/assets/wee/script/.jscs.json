@@ -65,6 +65,14 @@
 	"requireDotNotation": true,
 	"requireMultipleVarDecl": true,
 	"requireOperatorBeforeLineBreak": true,
+	"requirePaddingNewlinesBeforeKeywords": [
+		"do",
+		"for",
+		"if",
+		"switch",
+		"try",
+		"while"
+	],
 	"requirePaddingNewLinesInObjects": true,
 	"requireParenthesesAroundIIFE": true,
 	"requireSpaceAfterBinaryOperators": true,
@@ -89,6 +97,11 @@
 	"requireSpaceAfterLineComment": true,
 	"requireSpaceBeforeBinaryOperators": true,
 	"requireSpaceBeforeBlockStatements": true,
+	"requireSpaceBeforeKeywords": [
+		"else",
+		"catch",
+		"finally"
+	],
 	"requireSpaceBeforeObjectValues": true,
 	"requireSpacesInAnonymousFunctionExpression": {
 		"beforeOpeningCurlyBrace": true
