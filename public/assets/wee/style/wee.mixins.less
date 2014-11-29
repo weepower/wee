@@ -1398,7 +1398,9 @@
 	background: @color url('@{imagePath}@{filename}') @repeat;
 }
 .background (@color; @opacity; @fallback: @color) when (iscolor(@color)) and (isnumber(@opacity)) {
-	background-color: @fallback;
+	.check () when (iscolor(@fallback)) {
+		background-color: @fallback;
+	}
 	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		background-color: rgba(red(@color), green(@color), blue(@color), (@opacity / 100));
@@ -1414,34 +1416,11 @@
 .background (@color; @filename; @x; @y: 0; @repeat: no-repeat) when (isnumber(@x)) {
 	background: @color url('@{imagePath}@{filename}') @x @y @repeat;
 }
-.background (light; @opacity: @defaultOpacity; @fallback: @white) when (@opacity > 1)
-		and not (ispercentage(@opacity)) {
-	background-color: @fallback;
-	.check () when (@opacity > 1)
-			and not (ispercentage(@opacity)) {
-		background-color: rgba(255, 255, 255, (@opacity / 100));
-	}
-	.check () when (@opacity < 1) {
-		background-color: rgba(255, 255, 255, @opacity);
-	}
-	.check () when (ispercentage(@opacity)) {
-		background-color: rgba(255, 255, 255, unit((@opacity / 100)));
-	}
-	.check();
+.background (light; @opacity: @defaultOpacity; @fallback: @white) {
+	.background (@white; @opacity; @fallback);
 }
 .background (dark; @opacity: @defaultOpacity; @fallback: @black) {
-	background-color: @fallback;
-	.check () when (@opacity > 1)
-			and not (ispercentage(@opacity)) {
-		background-color: rgba(0, 0, 0, (@opacity / 100));
-	}
-	.check () when (@opacity < 1) {
-		background-color: rgba(0, 0, 0, @opacity);
-	}
-	.check () when (ispercentage(@opacity)) {
-		background-color: rgba(0, 0, 0, unit((@opacity / 100)));
-	}
-	.check();
+	.background (@black; @opacity; @fallback);
 }
 .background-color (@color: @bodyBackground) {
 	background-color: @color;
