@@ -441,7 +441,7 @@
 					els = W._selArray(sel, conf),
 					i = 0;
 
-				if (conf.reverse) {
+				if (conf.reverse && ! els._$_) {
 					els = els.reverse();
 				}
 
