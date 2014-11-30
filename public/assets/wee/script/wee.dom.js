@@ -1,7 +1,5 @@
-(function(W) {
+(function(W, U) {
 	'use strict';
-
-	var _undefined;
 
 	W.fn.extend({
 		// Determine if specified element has specified class
@@ -35,7 +33,7 @@
 		$css: function(sel, a, b) {
 			var obj = W.$isObject(a);
 
-			if (b !== _undefined || obj) {
+			if (b !== U || obj) {
 				W.$each(sel, function(el) {
 					obj ?
 						Object.keys(a).forEach(function(key) {
@@ -54,7 +52,7 @@
 		// Get HTML value of first element or set matched elements HTML with specified value
 		// Returns string|undefined
 		$html: function(sel, val) {
-			if (val === _undefined) {
+			if (val === U) {
 				return W.$first(sel).innerHTML;
 			}
 
@@ -255,8 +253,12 @@
 		},
 		// Insert specified element after specified element
 		$insertAfter: function(next, sel) {
-			W.$each(sel, function(el) {
+			W.$each(sel, function(el, i) {
 				W.$each(next, function(cel) {
+					if (i > 0) {
+						cel = W.$clone(cel)[0];
+					}
+
 					el.parentNode.insertBefore(cel, el.nextSibling);
 				});
 			});
@@ -309,7 +311,7 @@
 		},
 		// Get property of specified element or set property with specified value
 		$prop: function(sel, key, val) {
-			if (val !== _undefined) {
+			if (val !== U) {
 				W.$each(sel, function(el) {
 					el[key] = val;
 				});
@@ -328,14 +330,14 @@
 		// Get text value of specified element or set text with specified value
 		// Returns string
 		$text: function(sel, val) {
-			if (val === _undefined) {
+			if (val === U) {
 				return W.$map(sel, function(el) {
 					return (el.textContent || el.innerText).trim();
 				}).join('');
 			}
 
 			W.$each(sel, function(el) {
-				el.textContent === _undefined ?
+				el.textContent === U ?
 					el.innerText = val :
 					el.textContent = val;
 			});
@@ -343,7 +345,7 @@
 		// Get value of specified element or set specified value
 		// Returns string
 		$val: function(sel, val) {
-			if (val === _undefined) {
+			if (val === U) {
 				var el = W.$first(sel);
 
 				if (el.nodeName == 'SELECT') {
@@ -393,10 +395,10 @@
 
 			W.$each(sel, function(el) {
 				var nodes = W.$children(W.$parent(el)),
-					index = W.$index(el);
+					index = W.$index(el) + 1;
 
 				nodes.forEach(function(el, i) {
-					if (i > index && (! filter || filter && W.$is(el, filter, opt))) {
+					if (i === index && (! filter || filter && W.$is(el, filter, opt))) {
 						arr.push(el);
 					}
 				});
@@ -411,10 +413,10 @@
 
 			W.$each(sel, function(el) {
 				var nodes = W.$children(W.$parent(el)),
-					index = nodes.length - W.$index(el) - 1;
+					index = W.$index(el) - 1;
 
-				nodes.reverse().forEach(function(el, i) {
-					if (i > index && (! filter || filter && W.$is(el, filter, opt))) {
+				nodes.forEach(function(el, i) {
+					if (i === index && (! filter || filter && W.$is(el, filter, opt))) {
 						arr.push(el);
 					}
 				});
@@ -565,14 +567,14 @@
 			var rect = W.$first(sel).getBoundingClientRect();
 
 			return {
-				top: rect.top + W._body.scrollTop,
-				left: rect.left + W._body.scrollLeft
+				top: rect.top + Wee._win.pageYOffset,
+				left: rect.left + Wee._win.pageXOffset
 			};
 		},
 		// Get or set the width of a specified element, optionally accounting for margin
 		// Returns int
 		$width: function(sel, val) {
-			if (val === _undefined || val === true) {
+			if (val === U || val === true) {
 				var el = W.$first(sel);
 
 				switch (el) {
@@ -603,7 +605,7 @@
 		// Get or set the height of an element, optionally accounting for margin
 		// Returns int
 		$height: function(sel, val) {
-			if (val === _undefined || val === true) {
+			if (val === U || val === true) {
 				var el = W.$first(sel);
 
 				switch (el) {
@@ -634,12 +636,9 @@
 		// Get or set the top scroll position of an element
 		// Returns int
 		$scrollTop: function(sel, val) {
-			if (val === _undefined) {
-				var el = W.$first(sel);
-
-				return el.pageYOffset !== _undefined ?
-					W._win.pageYOffset :
-					(W._html || W._body).scrollTop;
+			if (val === U) {
+				var el = sel ? W.$first(sel) : Wee._win;
+				return el.pageYOffset !== U ? el.pageYOffset : el.scrollTop;
 			}
 
 			W.$each(sel, function(el) {
@@ -647,4 +646,4 @@
 			});
 		}
 	});
-})(Wee);
+})(Wee, undefined);
