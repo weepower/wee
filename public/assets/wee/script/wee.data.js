@@ -1,4 +1,4 @@
-(function(W) {
+(function(W, U) {
 	'use strict';
 
 	W.fn.make('data', {
@@ -147,7 +147,7 @@
 
 			return temp.replace(this.pair, function(m, pre, tag, inner) {
 				var val = scope.getValue(data, tag, conf, index),
-					empty = val === undefined || val.length === 0,
+					empty = val === U || val.length === 0,
 					resp = '';
 
 				if (pre == '#' && ! empty && typeof val == 'object') {
@@ -190,7 +190,7 @@
 
 				var resp = scope.getValue(data, tag, opt, index);
 
-				return resp === undefined || typeof resp == 'object' ? '' : resp;
+				return resp === U || typeof resp == 'object' ? '' : resp;
 			});
 		},
 		getValue: function(data, key, conf, x) {
@@ -217,14 +217,14 @@
 
 					if (typeof data == 'string') {
 						// Encode tags by default
-						return conf.escape ? data
-							.replace(/&amp;/g, '&')
-							.replace(/&/g, '&amp;')
-							.replace(/</g, '&lt;')
-							.replace(/>/g, '&gt;')
-							.replace(/"/g, '&quot;') :
+						return conf.escape ?
+							data.replace(/&amp;/g, '&')
+								.replace(/&/g, '&amp;')
+								.replace(/</g, '&lt;')
+								.replace(/>/g, '&gt;')
+								.replace(/"/g, '&quot;') :
 							data;
-					} else if (data !== undefined) {
+					} else if (data !== U) {
 						return data;
 					}
 				}
@@ -234,4 +234,4 @@
 			return segs.length > 1 ? segs[1].trim() : '';
 		}
 	});
-})(Wee);
+})(Wee, undefined);

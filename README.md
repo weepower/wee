@@ -1,4 +1,4 @@
-# [Wee 2.1.0-beta.4](http://www.weepower.com)
+# [Wee 2.1.0-beta.5](http://www.weepower.com)
 
 Wee is a development framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does it all with a tiny footprint.
 
@@ -35,7 +35,7 @@ Grunt process configured through a simple JSON file to compile, optimize, and mi
 * **Validation** for CSS and JavaScript against quality and formatting rules
 * **Legacy compiling** to concatenate media queries and convert rem units
 
-Structure baseline of markup, icons, and supporting files to serve as a front-end roadmap
+Structure baseline of markup, icons, and supporting files to serve as a front-end blueprint
 
 ## Quick Start
 
@@ -52,11 +52,11 @@ To view the working Wee to-do list check out our public [Trello board](https://t
 #### Minimum browser support
 
 * Android 4.1
-* Chrome 27
+* Chrome 30
 * Internet Explorer 8
-* iOS Safari 4
-* Mozilla Firefox 20
-* Safari 5.1
+* iOS Safari 5.1
+* Mozilla Firefox 24
+* Safari 6
 
 ## Versioning
 

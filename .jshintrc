@@ -14,6 +14,8 @@
 	"predef": {
 		"$": false,
 		"define": false,
+		"module": false,
+		"require": false,
 		"Wee": false
 	},
 	"latedef": true,

@@ -1,7 +1,7 @@
 {
 	"name": "wee",
-	"version": "2.1.0-beta.4",
-	"description": "Your blueprint for modern web development.",
+	"version": "2.1.0-beta.5",
+	"description": "Blueprint for modern web development",
 	"homepage": "http://www.weepower.com",
 	"keywords": [
 		"css",
@@ -37,7 +37,7 @@
 		"csscomb": "~3.0.4",
 		"csslint": "~0.10.0",
 		"js-yaml": "~3.2.3",
-		"jscs": "~1.7.3",
+		"jscs": "~1.8.1",
 		"jshint": "~2.5.10"
 	}
 }
