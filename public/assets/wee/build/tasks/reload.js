@@ -1,8 +1,10 @@
+/* global config, project, reloadPaths */
+
 module.exports = function(grunt) {
 	grunt.registerTask('reload', function() {
 		var reloadConfig = project.server.reload;
 
-		if (reloadConfig.enable == true) {
+		if (reloadConfig.enable === true) {
 			var reloadWatch = reloadConfig.watch,
 				reloadExtensions = reloadWatch.extensions.join();
 
@@ -16,7 +18,7 @@ module.exports = function(grunt) {
 			}
 
 			// Add root to watchlist
-			if (reloadWatch.root == true) {
+			if (reloadWatch.root === true) {
 				reloadPaths.push(project.paths.root + '/**/*.' + reloadExtensions);
 			}
 

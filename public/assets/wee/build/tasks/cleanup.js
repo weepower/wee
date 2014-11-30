@@ -1,3 +1,5 @@
+/* global config, project */
+
 module.exports = function(grunt) {
 	var fs = require('fs');
 

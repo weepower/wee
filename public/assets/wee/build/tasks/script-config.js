@@ -1,3 +1,5 @@
+/* global config, project, script */
+
 module.exports = function(grunt) {
 	grunt.registerTask('configScript', function() {
 		var Wee = require('../core.js');
@@ -107,7 +109,7 @@ module.exports = function(grunt) {
 		}
 
 		// Source maps
-		if (project.script.sourceMaps == true) {
+		if (project.script.sourceMaps === true) {
 			grunt.config.set('uglify.options.sourceMap', true);
 			grunt.config.set('uglify.options.sourceMapName', function(dest) {
 				dest = dest.replace(script.rootPath + '/', '')

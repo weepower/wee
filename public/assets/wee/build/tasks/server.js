@@ -1,3 +1,5 @@
+/* global project */
+
 module.exports = function(grunt) {
 	grunt.registerTask('server', function() {
 		var serverConfig = project.server,

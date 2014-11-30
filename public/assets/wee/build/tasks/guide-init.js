@@ -7,17 +7,21 @@ module.exports = function(grunt) {
 			if (guide.watch === true) {
 				// Set paths
 				var templatePath = Wee.buildPath(guide.paths.template, config.assetPath),
+					targetPath = Wee.buildPath(guide.paths.target, config.assetPath),
 					patternPath = Wee.buildPath(guide.paths.patterns, config.assetPath);
 
-				// Reload patterns
-				reloadPaths.push(patternPath + '/**/*.html');
+				// Reload rendered target
+				reloadPaths.push(targetPath);
+				reloadPaths.push('!' + templatePath);
+				reloadPaths.push('!' + patternPath + '/**/*.html');
 
 				// Watch for guide updates
 				grunt.config.merge({
 					watch: {
 						guide: {
 							files: [
-								templatePath
+								templatePath,
+								patternPath + '/**/*.html'
 							],
 							tasks: [
 								'buildGuide'

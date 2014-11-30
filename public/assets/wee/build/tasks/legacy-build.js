@@ -11,12 +11,13 @@ module.exports = function(grunt) {
 				legacyTemp = config.tempPath + '/wee.legacy.less',
 				less = grunt.file.read(weeStyleRoot + '/wee.legacy.less'),
 				legacyImports = [],
-				inject = '';
+				inject = '',
+				i = 0;
 
 			legacy.dest = Wee.buildPath(legacy.dest, styleRoot);
 
 			// Build configured
-			for (var i = 0; i < legacy.build.length; i++) {
+			for (; i < legacy.build.length; i++) {
 				legacyImports.push('../..' + Wee.buildPath(legacy.build[i], styleRoot).replace(config.assetPath, ''));
 			}
 

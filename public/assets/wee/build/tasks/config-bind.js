@@ -1,3 +1,5 @@
+/* global config, modules, script, style */
+
 module.exports = function(grunt) {
 	grunt.registerTask('bindConfig', function() {
 		config.style = {

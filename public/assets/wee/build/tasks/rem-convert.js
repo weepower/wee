@@ -1,3 +1,5 @@
+/* global legacy */
+
 module.exports = function(grunt) {
 	grunt.registerTask('convertRem', function() {
 		var css = grunt.file.read(legacy.dest),

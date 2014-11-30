@@ -1,7 +1,7 @@
+/* global version */
+
 module.exports = function(grunt) {
 	grunt.registerTask('checkUpdates', function() {
-		var fs = require('fs');
-
 		var done = this.async(),
 			https = require('https');
 
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
 						// Run npm_update
 						var exec = require('child_process').exec;
 
-						exec('npm update', function(error, stdout, stderr) {
+						exec('npm update', function() {
 							grunt.log.ok('NPM modules have been updated.');
 						});
 

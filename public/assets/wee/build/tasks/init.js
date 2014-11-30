@@ -1,3 +1,5 @@
+/* global config, project */
+
 module.exports = function(grunt) {
 	grunt.registerTask('init', function() {
 		var configFile = './' + (grunt.option('config') || 'project.json');

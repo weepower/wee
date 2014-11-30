@@ -1,9 +1,11 @@
+/* global config, project */
+
 module.exports = function(grunt) {
 	grunt.registerTask('buildGuide', function() {
 		var Wee = require('../core.js'),
 			guide = project.style.guide;
 
-		if (guide.enable == true) {
+		if (guide.enable === true) {
 			var yaml = require('js-yaml'),
 				reg = /^(-{3}(?:\n|\r)([\w\W]+?)-{3})?([\w\W]*)*/;
 
@@ -51,7 +53,7 @@ module.exports = function(grunt) {
 					}
 				} else {
 					// Create root array if it doesn't exist
-					if (root['root'] === undefined) {
+					if (root.root === undefined) {
 						root['root'] = [];
 					}
 

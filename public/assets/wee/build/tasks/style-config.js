@@ -1,3 +1,5 @@
+/* global config, project, style */
+
 module.exports = function(grunt) {
 	grunt.registerTask('configStyle', function() {
 		var Wee = require('../core.js');

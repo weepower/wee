@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 	global.modules = {};
 	global.legacy = {};
 	global.reloadPaths = [];
+	global.legacyBuild = [];
 	global.version = '2.1.0';
 
 	grunt.initConfig({
