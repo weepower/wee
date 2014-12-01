@@ -8,8 +8,8 @@
 }
 .wee-container-min-width () when not (@minWidth = 0)
 		and not (@minWidth = false) {
-	html,
-	body {
+	body,
+	html {
 		.min-width(@minWidth);
 	}
 }
@@ -18,7 +18,7 @@ html {
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
 	font-family: '"1"';
-	.font-size(@rootFontSize);
+	font-size: @rootFontSize;
 }
 body {
 	color: @baseColor;
@@ -58,12 +58,12 @@ canvas,
 video {
 	display: inline-block;
 }
-.wee-abbr () when not (@abbrUnderline = none) {
-	.border(bottom; @baseColor; 1px; @abbrUnderline);
-}
 abbr[title] {
 	cursor: help;
-	.wee-abbr();
+	.check () when not (@abbrUnderline = none) {
+		.border(bottom; @baseColor; 1px; @abbrUnderline);
+	}
+	.check();
 }
 b,
 strong,
@@ -80,29 +80,29 @@ canvas {
 iframe {
 	.spaced()
 }
-.wee-figure () {
-	position: relative;
-	text-align: center;
-	.padding(@figurePadding);
-	.spaced();
-	img {
-		.spaced();
-	}
-	figcaption {
-		color: @figCaptionColor;
-		font-style: @figCaptionFontStyle;
-		.line-height(@figCaptionLineHeight);
-	}
-}
-.wee-figure () when not (@figureRounded = 0)
-		and not (@figureRounded = false) {
-	.rounded(@figureRounded);
-}
-.wee-figure () when not (@figureBorderColor = false) {
-	.border(@figureBorderColor);
-}
 figure {
-	.wee-figure();
+	.check () {
+		position: relative;
+		text-align: center;
+		.padding(@figurePadding);
+		.spaced();
+		img {
+			.spaced();
+		}
+		figcaption {
+			color: @figCaptionColor;
+			font-style: @figCaptionFontStyle;
+			.line-height(@figCaptionLineHeight);
+		}
+	}
+	.check () when not (@figureRounded = 0)
+			and not (@figureRounded = false) {
+		.rounded(@figureRounded);
+	}
+	.check () when not (@figureBorderColor = false) {
+		.border(@figureBorderColor);
+	}
+	.check();
 }
 img {
 	-ms-interpolation-mode: bicubic;
@@ -156,27 +156,27 @@ h6,
 }
 h1,
 .h1 {
-	.font-size(@h1);
+	font-size: @h1;
 }
 h2,
 .h2 {
-	.font-size(@h2);
+	font-size: @h2;
 }
 h3,
 .h3 {
-	.font-size(@h3);
+	font-size: @h3;
 }
 h4,
 .h4 {
-	.font-size(@h4);
+	font-size: @h4;
 }
 h5,
 .h5 {
-	.font-size(@h5);
+	font-size: @h5;
 }
 h6,
 .h6 {
-	.font-size(@h6);
+	font-size: @h6;
 }
 .subheading {
 	color: @subHeadingColor;
@@ -291,13 +291,13 @@ ul {
 	}
 	.check();
 }
-.wee-list-margin () when not (@listMarginLeft = 0)
-		and not (@listMarginLeft = false) {
-	.margin(left; @listMarginLeft);
-}
 ol,
 ul {
-	.wee-list-margin();
+	.check () when not (@listMarginLeft = 0)
+			and not (@listMarginLeft = false) {
+		.margin(left; @listMarginLeft);
+	}
+	.check();
 	ol,
 	ul {
 		margin-bottom: 0;
@@ -319,8 +319,8 @@ ol {
 nav {
 	ol,
 	ul {
-		margin: 0;
 		list-style: none;
+		margin: 0;
 		li {
 			margin-bottom: 0;
 		}

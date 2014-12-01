@@ -178,85 +178,62 @@ module.exports = Wee = {
 	validate: function(config, grunt, filepath) {
 		var ext = Wee.getExtension(filepath);
 
-		if (ext == 'js') {
-			if (project.script.validate.jshint) {
-				// JSHint
-				var js = grunt.file.read(filepath),
-					jshint = require('jshint').JSHINT,
-					jshintConfig = grunt.file.readJSON(config.assetPath + '/wee/script/.jshintrc');
+		if (filepath.indexOf('temp') == -1) {
+			if (ext == 'js') {
+				if (project.script.validate.jshint) {
+					// JSHint
+					var js = grunt.file.read(filepath),
+						jshint = require('jshint').JSHINT,
+						jshintConfig = grunt.file.readJSON(
+							project.script.validate.jshint === true ?
+								config.assetPath + '/wee/script/.jshintrc' :
+								project.script.validate.jshint
+							);
 
-				if (! jshint(js, jshintConfig)) {
-					var out = jshint.data(),
-						errors = out.errors,
-						total = errors.length;
+					if (! jshint(js, jshintConfig)) {
+						var out = jshint.data(),
+							errors = out.errors,
+							total = errors.length;
 
-					grunt.log.header('Script validation errors found');
+						grunt.log.header('Script validation errors found');
 
-					grunt.log.error('JSHint error' +
-						((total > 1) ? 's' : '') + ' in ' + filepath + '.');
+						grunt.log.error('JSHint error' +
+							((total > 1) ? 's' : '') + ' in ' + filepath + '.');
 
-					errors.forEach(function(message) {
-						Wee.logError(grunt, message.line  + ':' + message.character, message.reason, message.evidence);
-					});
+						errors.forEach(function(message) {
+							Wee.logError(grunt, message.line  + ':' + message.character, message.reason, message.evidence);
+						});
 
-					grunt.log.writeln();
-					grunt.log.writeln();
+						grunt.log.writeln();
+						grunt.log.writeln();
+					}
 				}
-			}
 
-			if (project.script.validate.jscs) {
-				// JSCS
-				var jscsConfig = grunt.file.readJSON(config.assetPath + '/wee/script/.jscs.json'),
-					checker = new global.jscs();
+				if (project.script.validate.jscs) {
+					// JSCS
+					var jscsConfig = grunt.file.readJSON(
+							project.script.validate.jscs === true ?
+								config.assetPath + '/wee/script/.jscs.json' :
+								project.script.validate.jshint
+						),
+						checker = new global.jscs();
 
-				checker.registerDefaultRules();
-				checker.configure(jscsConfig);
+					checker.registerDefaultRules();
+					checker.configure(jscsConfig);
 
-				var errors = checker.checkString(js),
-					errorList = errors.getErrorList(),
-					total = errorList.length;
+					var errors = checker.checkString(js),
+						errorList = errors.getErrorList(),
+						total = errorList.length;
 
-				if (total > 0) {
-					grunt.log.error('JSCS error' +
-						((total > 1) ? 's' : '') + ' in ' + filepath + '.');
+					if (total > 0) {
+						grunt.log.error('JSCS error' +
+							((total > 1) ? 's' : '') + ' in ' + filepath + '.');
 
-					errorList.forEach(function(message) {
-						Wee.logError(grunt, message.line  + ':' + message.column, message.rule, message.message);
-					});
+						errorList.forEach(function(message) {
+							Wee.logError(grunt, message.line  + ':' + message.column, message.rule, message.message);
+						});
+					}
 				}
-			}
-		} else if (ext == 'less' || ext == 'css') {
-			if (project.style.validate.csslint) {
-				// CSSLint
-				var css = grunt.file.read(filepath),
-					csslint = require('csslint').CSSLint,
-					csslintConfig = grunt.file.readJSON(config.assetPath + '/wee/style/.csslintrc'),
-					result = csslint.verify(filepath, csslintConfig),
-					total = result.messages.length;
-
-				if (total) {
-					grunt.log.header('Style validation errors found');
-
-					grunt.log.error('CSSLint error' +
-						((total > 1) ? 's' : '') + ' in ' + filepath + '.');
-
-					result.messages.forEach(function(message) {
-						Wee.logError(grunt, message.line  + ':' + message.col, message.type, message.message);
-					});
-				}
-			}
-
-			if (project.style.validate.csscomb) {
-				// CSScomb
-				// var Comb = require('csscomb'),
-				// 	combConfig = grunt.file.readJSON(config.assetPath + '/wee/style/.csscomb.json'),
-				// 	comb = new Comb(combConfig);
-				//
-				// comb.processPath(file);
-				//
-				// grunt.log.header('Style successfully combed');
-				//
-				// grunt.log.ok('CSScomb processing completed for ' + filepath + '.');
 			}
 		}
 	},

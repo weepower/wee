@@ -18,7 +18,9 @@ module.exports = function(grunt) {
 		// Load Modules
 	// ------------------------------------
 
-	global.jscs = require('jscs');
+	if (project.script.validate.jscs) {
+		global.jscs = require('jscs');
+	}
 
 
 	// ------------------------------------

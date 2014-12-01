@@ -30,11 +30,6 @@
 		"compile": {
 			"guide.min.css": "custom/guide.less"
 		},
-		"validate": {
-			"watch": false,
-			"csscomb": false,
-			"csslint": false
-		},
 		"legacy": {
 			"enable": true,
 			"watch": false,
@@ -87,8 +82,8 @@
 		},
 		"validate": {
 			"watch": true,
-			"jscs": true,
-			"jshint": true
+			"jscs": ".jscs.json",
+			"jshint": ".jshintrc"
 		},
 		"sourceMaps": true
 	},

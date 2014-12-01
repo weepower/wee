@@ -2447,26 +2447,23 @@
 .overflow (y; @value) {
 	overflow-y: @value;
 }
+.crop (@value: true) when (@value), (@value = both) {
+	overflow: hidden;
+}
 .crop (horizontal) {
 	overflow-x: hidden;
 }
 .crop (vertical) {
 	overflow-y: hidden;
 }
-.crop (@value: true) when (@value), (@value = both) {
-	overflow: hidden;
+.scroll (@value: true) when (@value), (@value = both) {
+	overflow: scroll;
 }
 .scroll (horizontal) {
 	overflow-x: scroll;
 }
 .scroll (vertical) {
 	overflow-y: scroll;
-}
-.scroll () {
-	overflow: scroll;
-}
-.scroll (both) {
-	overflow: scroll;
 }
 .fill (@value: true) when (@value), (@value = horizontal) {
 	width: 100%;
@@ -2477,9 +2474,6 @@
 .fill (both) {
 	width: 100%;
 	height: 100%;
-}
-.fill () {
-	width: 100%;
 }
 .no-clear () {
 	&::-ms-clear {

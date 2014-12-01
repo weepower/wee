@@ -2,20 +2,19 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY
 
-(function(w, d) {
+(function(N, D, U) {
 	'use strict';
 
 	var W = (function() {
-		var _store = {},
-			_undefined;
+		var _store = {};
 
 		return {
-			_body: d.body,
-			_doc: d,
-			_html: d.documentElement,
-			_legacy: d.getElementsByClassName ? false : true,
+			_body: D.body,
+			_doc: D,
+			_html: D.documentElement,
+			_legacy: D.getElementsByClassName ? false : true,
 			_slice: [].slice,
-			_win: w,
+			_win: N,
 
 			// Create namespaced controller with specified name, public object, and optional private object
 			// Returns undefined
@@ -40,7 +39,7 @@
 								},
 								// Destroy current controller
 								$destroy: function() {
-									if (Public._destruct !== _undefined) {
+									if (Public._destruct !== U) {
 										Public._destruct();
 									}
 
@@ -71,7 +70,7 @@
 
 						_store[name] = {};
 
-						if (Public._construct !== _undefined) {
+						if (Public._construct !== U) {
 							Public._construct();
 						}
 
@@ -126,7 +125,7 @@
 			// Optional url can be passed for evaluation
 			// Returns boolean
 			$envSecure: function(url) {
-				return (url || w.location.href).slice(0, 5) == 'https';
+				return (url || N.location.href).slice(0, 5) == 'https';
 			},
 			// Get public variable with optional default
 			// Accepts optional boolean to set default value if variable doesn't exist
@@ -140,7 +139,7 @@
 
 					if (root.hasOwnProperty(key)) {
 						return root[key];
-					} else if (def !== _undefined) {
+					} else if (def !== U) {
 						def = W.$isFunction(def) ?
 							def() :
 							(opt ? W.$exec(def, opt) : def);
@@ -384,16 +383,16 @@
 					}
 
 					// Use third-party selector engine if defined
-					if (w.WeeSelector !== _undefined) {
-						el = w.WeeSelector(sel, context);
+					if (N.WeeSelector !== U) {
+						el = N.WeeSelector(sel, context);
 					} else {
-						context = context !== _undefined ? W.$first(context) : d;
+						context = context !== U ? W.$first(context) : D;
 
 						// If selector doesn't have a space or [ assume its a simple selection
 						if (sel == 'window') {
-							return [w];
+							return [N];
 						} else if (sel == 'document') {
-							return [d];
+							return [D];
 						} else if (sel.indexOf(' ') > 0 || sel.indexOf(':') > -1 || sel.indexOf('[') > -1 || sel.indexOf('#') > -1 || sel.lastIndexOf('.') > 0) {
 							el = context.querySelectorAll(sel);
 						} else {
@@ -414,7 +413,7 @@
 
 				if (el === null) {
 					return el;
-				} else if (el.nodeType !== _undefined || el === w) {
+				} else if (el.nodeType !== U || el === N) {
 					return [el];
 				}
 
@@ -486,7 +485,7 @@
 			$attr: function(sel, a, b) {
 				var obj = W.$isObject(a);
 
-				if (b !== _undefined || obj) {
+				if (b !== U || obj) {
 					W.$each(sel, function(el) {
 						obj ?
 							Object.keys(a).forEach(function(key) {
@@ -555,19 +554,19 @@
 			// Returns undefined
 			ready: function(fn) {
 				W._legacy ?
-					d.attachEvent('onreadystatechange', function() {
-						if (d.readyState == 'complete') {
+					D.attachEvent('onreadystatechange', function() {
+						if (D.readyState == 'complete') {
 							W.$exec(fn);
 						}
 					}) :
-					d.addEventListener('DOMContentLoaded', function() {
+					D.addEventListener('DOMContentLoaded', function() {
 						W.$exec(fn);
 					});
 			}
 		};
 	})();
 
-	w.Wee = W;
+	N.Wee = W;
 
 	// Set data variables and bind elements
 	W.$setVars();
@@ -579,4 +578,4 @@
 			return Wee;
 		});
 	}
-})(this, document);
+})(this, document, undefined);

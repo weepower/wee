@@ -33,35 +33,38 @@ html {
 	font-family: "'@{ieBreakpoint}'";
 }
 
-.ie-body (@width) {
-	body {
-		min-width: @width;
-	}
-}
-
-.fallback (@ieBreakpoint) when (@ieBreakpoint > 1) {
-	.ie-body(@mobileLandscapeWidth);
-	.mobile-landscape();
-}
-.fallback (@ieBreakpoint) when (@ieBreakpoint > 2) {
-	.ie-body(@tabletPortraitWidth);
-	.tablet-portrait();
-}
-.fallback (@ieBreakpoint) when (@ieBreakpoint > 3) {
-	.ie-body(@desktopSmallWidth);
-	.desktop-small();
-}
-.fallback (@ieBreakpoint) when (@ieBreakpoint > 4) {
-	.ie-body(@desktopMediumWidth);
-	.desktop-medium();
-}
-.fallback (@ieBreakpoint) when (@ieBreakpoint > 5) {
-	.ie-body(@desktopLargeWidth);
-	.desktop-large();
-}
-
 .responsive () when (@responsiveEnabled = true) {
-	.fallback(@ieBreakpoint);
+	.check (@ieBreakpoint) when (@ieBreakpoint > 1) {
+		body {
+			min-width: @mobileLandscapeWidth;
+		}
+		.mobile-landscape();
+	}
+	.check (@ieBreakpoint) when (@ieBreakpoint > 2) {
+		body {
+			min-width: @tabletPortraitWidth;
+		}
+		.tablet-portrait();
+	}
+	.check (@ieBreakpoint) when (@ieBreakpoint > 3) {
+		body {
+			min-width: @desktopSmallWidth;
+		}
+		.desktop-small();
+	}
+	.check (@ieBreakpoint) when (@ieBreakpoint > 4) {
+		body {
+			min-width: @desktopMediumWidth;
+		}
+		.desktop-medium();
+	}
+	.check (@ieBreakpoint) when (@ieBreakpoint > 5) {
+		body {
+			min-width: @desktopLargeWidth;
+		}
+		.desktop-large();
+	}
+	.check(@ieBreakpoint);
 }
 
 .responsive();
