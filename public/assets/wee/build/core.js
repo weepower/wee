@@ -1,3 +1,5 @@
+/* global project */
+
 var fs = require('fs');
 
 module.exports = Wee = {
@@ -214,7 +216,7 @@ module.exports = Wee = {
 					var jscsConfig = grunt.file.readJSON(
 							project.script.validate.jscs === true ?
 								config.assetPath + '/wee/script/.jscs.json' :
-								project.script.validate.jshint
+								project.script.validate.jscs
 						),
 						checker = new global.jscs();
 

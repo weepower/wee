@@ -1,3 +1,5 @@
+/* global config, global, project */
+
 module.exports = function(grunt) {
 	global.config = {};
 	global.style = {};
