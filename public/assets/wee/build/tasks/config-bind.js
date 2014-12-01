@@ -11,11 +11,11 @@ module.exports = function(grunt) {
 		config.script = {
 			rootPath: script.rootPath,
 			files: script.files
-		}
+		};
 
 		config.modules = {
 			rootPath: modules.rootPath
-		}
+		};
 
 		// Set global config
 		grunt.config.set('config', config);

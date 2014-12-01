@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 		buildFiles.forEach(function(name) {
 			name = '../..' + name.replace(config.assetPath, '');
 
-			if (name.indexOf('/vendor/' !== -1)) {
+			if (name.indexOf('/vendor/') !== -1) {
 				imports.unshift(name);
 			} else {
 				imports.push(name);

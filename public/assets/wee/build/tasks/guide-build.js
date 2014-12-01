@@ -54,10 +54,10 @@ module.exports = function(grunt) {
 				} else {
 					// Create root array if it doesn't exist
 					if (root.root === undefined) {
-						root['root'] = [];
+						root.root = [];
 					}
 
-					root = root['root'];
+					root = root.root;
 				}
 
 				// If the YAML exists then extend it into the default

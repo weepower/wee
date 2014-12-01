@@ -1,3 +1,5 @@
+/* global config, project, reloadPaths */
+
 module.exports = function(grunt) {
 	grunt.registerTask('initGuide', function() {
 		var Wee = require('../core.js'),

@@ -1,4 +1,5 @@
 // Add custom style guide JavaScript here
+
 /* global hljs */
 
 Wee.fn.make('guide', {

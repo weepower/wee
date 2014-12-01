@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 		// Core Wee scripts
 		if (project.script.core.enable === true) {
 			var features = project.script.core.features,
-				weeScriptRoot = config.assetPath + '/wee/script/'
+				weeScriptRoot = config.assetPath + '/wee/script/';
 
 			// Primary base script
 			script.files.push(weeScriptRoot + 'wee.js');

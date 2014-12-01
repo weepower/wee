@@ -1,3 +1,5 @@
+/* global config, legacy, project */
+
 module.exports = function(grunt) {
 	grunt.registerTask('buildLegacy', function() {
 		var Wee = require('../core.js');
@@ -5,7 +7,7 @@ module.exports = function(grunt) {
 		legacy = project.style.legacy;
 
 		// Ensure legacy support is enabled
-		if (legacy.enable == true) {
+		if (legacy.enable === true) {
 			var styleRoot = config.assetPath + '/css',
 				weeStyleRoot = config.assetPath + '/wee/style',
 				legacyTemp = config.tempPath + '/wee.legacy.less',
@@ -57,8 +59,6 @@ module.exports = function(grunt) {
 			});
 
 			// Exclude legacy files from primary watch task
-			var watchedFiles = grunt.config.get('watch.styleCore.files');
-
 			grunt.config.merge({
 				watch: {
 					styleCore: {
@@ -69,7 +69,7 @@ module.exports = function(grunt) {
 				}
 			});
 
-			if (legacy.watch == true) {
+			if (legacy.watch === true) {
 				var watchedTasks = grunt.config.get('watch.styleCore.tasks');
 
 				// Recompile legacy on update of core file
