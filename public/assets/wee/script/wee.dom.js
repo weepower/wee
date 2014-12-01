@@ -637,8 +637,15 @@
 		// Returns int
 		$scrollTop: function(sel, val) {
 			if (val === U) {
-				var el = sel ? W.$first(sel) : Wee._win;
-				return el.pageYOffset !== U ? el.pageYOffset : el.scrollTop;
+				var el = sel ? W.$first(sel) : W._win;
+
+				if (W._legacy && el === W._win) {
+					el = W._html;
+				}
+
+				return el.pageYOffset !== U ?
+					el.pageYOffset :
+					el.scrollTop;
 			}
 
 			W.$each(sel, function(el) {
