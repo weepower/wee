@@ -382,18 +382,17 @@
 						return W.$get(sel);
 					}
 
-					// Use third-party selector engine if defined
-					if (N.WeeSelector !== U) {
+					if (sel == 'window') {
+						return [N];
+					} else if (sel == 'document') {
+						return [D];
+					} else if (N.WeeSelector !== U) { // Use third-party selector engine if defined
 						el = N.WeeSelector(sel, context);
 					} else {
 						context = context !== U ? W.$first(context) : D;
 
-						// If selector doesn't have a space or [ assume its a simple selection
-						if (sel == 'window') {
-							return [N];
-						} else if (sel == 'document') {
-							return [D];
-						} else if (sel.indexOf(' ') > 0 || sel.indexOf(':') > -1 || sel.indexOf('[') > -1 || sel.indexOf('#') > -1 || sel.lastIndexOf('.') > 0) {
+						// Check for advanced query triggers
+						if (sel.indexOf(' ') > 0 || sel.indexOf(':') > -1 || sel.indexOf('[') > -1 || sel.indexOf('#') > -1 || sel.lastIndexOf('.') > 0) {
 							el = context.querySelectorAll(sel);
 						} else {
 							var c = sel.charAt(0);
