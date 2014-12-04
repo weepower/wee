@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Unit Tests | Wee</title>
-<link rel="stylesheet" href="assets/qunit-1.15.0.css">
+<link rel="stylesheet" href="assets/qunit-1.16.0.css">
 <style>
 html {
 	font-family: '5';
 }
 </style>
+<!--[if lt IE 9]>
+<script src="/js/ie8.min.js"></script>
+<![endif]-->
+<!--[if lte IE 9]>
+<script src="/js/ie9.min.js"></script>
+<![endif]-->
 </head>
 <body>
 <h1 id="qunit-header">Wee</h1>
@@ -18,7 +24,7 @@ html {
 <h2 id="qunit-userAgent"></h2>
 <ol id="qunit-tests"></ol>
 <div id="qunit-fixture"></div>
-<script src="/assets/qunit-1.15.0.js"></script>
+<script src="/assets/qunit-1.16.0.js"></script>
 <script src="/testem.js"></script>
 <script src="/js/wee.js"></script>
 <script src="/js/wee.assets.js"></script>

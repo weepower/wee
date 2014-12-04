@@ -1,4 +1,4 @@
-# [Wee 2.1.0-beta.7](http://www.weepower.com)
+# [Wee 2.1.0-beta.8](http://www.weepower.com)
 
 Wee is a development framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does it all with a tiny footprint.
 

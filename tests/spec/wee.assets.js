@@ -1,11 +1,13 @@
-module('Assets');
+/* global QUnit */
+
+QUnit.module('Assets');
 
 // Method: assets.root(val)
 
-test('Set Root', 1, function() {
+QUnit.test('Set Root', 1, function(assert) {
 	Wee.assets.root('http://assets.weepower.com');
 
-	strictEqual(Wee.assets.root(), 'http://assets.weepower.com', 'Asset root set successfully.');
+	assert.strictEqual(Wee.assets.root(), 'http://assets.weepower.com', 'Asset root set successfully.');
 });
 
 // Method: assets.load(conf)

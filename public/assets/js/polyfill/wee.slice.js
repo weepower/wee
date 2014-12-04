@@ -7,7 +7,7 @@
 
 	try {
 		s.call(d.documentElement);
-	} catch(e) {
+	} catch (e) {
 		Array.prototype.slice = function(start, end) {
 			var arr = [],
 				len = this.length,

@@ -1,229 +1,231 @@
+/* global QUnit */
+
 // Method: $hasClass(sel, val)
 
-module('$hasClass');
+QUnit.module('$hasClass');
 
-test('check', 2, function() {
+QUnit.test('check', 2, function(assert) {
 	Wee.$addClass('#qunit-fixture', 'test-class');
 
-	ok(Wee.$hasClass('#qunit-fixture', 'test-class'), 'Test class was checked successfully.');
-	strictEqual(Wee.$hasClass('#qunit-fixture', 'another-class'), false, 'Another class was checked successfully.');
+	assert.ok(Wee.$hasClass('#qunit-fixture', 'test-class'), 'Test class was checked successfully.');
+	assert.strictEqual(Wee.$hasClass('#qunit-fixture', 'another-class'), false, 'Another class was checked successfully.');
 });
 
 // Method: $addClass(sel, val)
 
-module('$addClass');
+QUnit.module('$addClass');
 
-test('check', 1, function() {
+QUnit.test('check', 1, function(assert) {
 	Wee.$addClass('#qunit-fixture', 'test-class');
 
-	ok(Wee.$hasClass('#qunit-fixture', 'test-class'), 'Test class was added successfully.');
+	assert.ok(Wee.$hasClass('#qunit-fixture', 'test-class'), 'Test class was added successfully.');
 });
 
 // Method: $removeClass(sel, val)
 
-module('$removeClass');
+QUnit.module('$removeClass');
 
-test('check', 1, function() {
+QUnit.test('check', 1, function(assert) {
 	Wee.$addClass('#qunit-fixture', 'test-class');
 	Wee.$removeClass('#qunit-fixture', 'test-class');
 
-	strictEqual(Wee.$hasClass('#qunit-fixture', 'test-class'), false, 'Test class was removed successfully.');
+	assert.strictEqual(Wee.$hasClass('#qunit-fixture', 'test-class'), false, 'Test class was removed successfully.');
 });
 
 // Method: $css(sel, a, b)
 
-module('$css');
+QUnit.module('$css');
 
-test('single', 1, function() {
+QUnit.test('single', 1, function(assert) {
 	Wee.$css('#qunit-fixture', 'fontSize', '10px');
 
-	strictEqual(Wee.$css('#qunit-fixture', 'fontSize'), '10px', 'Font size was set correctly.');
+	assert.strictEqual(Wee.$css('#qunit-fixture', 'fontSize'), '10px', 'Font size was set correctly.');
 });
 
-test('object', 2, function() {
+QUnit.test('object', 2, function(assert) {
 	Wee.$css('#qunit-fixture', {
 		fontWeight: 'bold',
 		marginTop: '10px'
 	});
 
-	strictEqual(Wee.$css('#qunit-fixture', 'fontWeight'), 'bold', 'Font weight was set correctly.');
-	strictEqual(Wee.$css('#qunit-fixture', 'marginTop'), '10px', 'Top margin was set correctly.');
+	assert.strictEqual(Wee.$css('#qunit-fixture', 'fontWeight'), 'bold', 'Font weight was set correctly.');
+	assert.strictEqual(Wee.$css('#qunit-fixture', 'marginTop'), '10px', 'Top margin was set correctly.');
 });
 
 // Method: $html(sel, val)
 
-module('$html');
+QUnit.module('$html');
 
-test('get', 1, function() {
+QUnit.test('get', 1, function(assert) {
 	Wee.$html('#qunit-fixture', '<h1>Testing</h1>');
 
-	strictEqual(Wee.$html('#qunit-fixture'), '<h1>Testing</h1>', 'HTML "<h1>Testing</h1>" was set correctly.');
+	assert.strictEqual(Wee.$html('#qunit-fixture'), '<h1>Testing</h1>', 'HTML "<h1>Testing</h1>" was set correctly.');
 });
 
 // Method: $clone(sel)
 
-module('$clone');
+QUnit.module('$clone');
 
 // Method: $hide(sel)
 
-module('$hide');
+QUnit.module('$hide');
 
 // Method: $show(sel)
 
-module('$show');
+QUnit.module('$show');
 
 // Method: $toggle(sel)
 
-module('$toggle');
+QUnit.module('$toggle');
 
 // Method: $children(sel, filter)
 
-module('$children');
+QUnit.module('$children');
 
 // Method: $contents(sel)
 
-module('$contents');
+QUnit.module('$contents');
 
 // Method: $siblings(sel, filter)
 
-module('$siblings');
+QUnit.module('$siblings');
 
 // Method: $parent(sel)
 
-module('$parent');
+QUnit.module('$parent');
 
 // Method: $last(sel)
 
-module('$last');
+QUnit.module('$last');
 
 // Method: $slice(sel, start, end)
 
-module('$slice');
+QUnit.module('$slice');
 
 // Method: $contains(sel, child)
 
-module('$contains');
+QUnit.module('$contains');
 
 // Method: $append(sel, child)
 
-module('$append');
+QUnit.module('$append');
 
 // Method: $prepend(sel, child)
 
-module('$prepend');
+QUnit.module('$prepend');
 
 // Method: $before(sel, pos, rem)
 
-module('$before');
+QUnit.module('$before');
 
 // Method: $insertBefore(prev, sel)
 
-module('$insertBefore');
+QUnit.module('$insertBefore');
 
 // Method: $after(sel, pos, rem)
 
-module('$after');
+QUnit.module('$after');
 
 // Method: $insertAfter(next, sel)
 
-module('$insertAfter');
+QUnit.module('$insertAfter');
 
 // Method: $replaceWith(sel, pos)
 
-module('$replaceWith');
+QUnit.module('$replaceWith');
 
 // Method: $remove(sel)
 
-module('$remove');
+QUnit.module('$remove');
 
 // Method: $empty(sel)
 
-module('$empty');
+QUnit.module('$empty');
 
 // Method: $wrap(sel, html)
 
-module('$wrap');
+QUnit.module('$wrap');
 
 // Method: $wrapInner(sel, html)
 
-module('$wrapInner');
+QUnit.module('$wrapInner');
 
 // Method: $prop(sel, key, val)
 
-module('$prop');
+QUnit.module('$prop');
 
 // Method: $removeAttr(sel, key)
 
-module('$removeAttr');
+QUnit.module('$removeAttr');
 
 // Method: $text(sel, val)
 
-module('$text');
+QUnit.module('$text');
 
 // Method: $val(sel, val)
 
-module('$val');
+QUnit.module('$val');
 
 // Method: $find(sel, filter)
 
-module('$find');
+QUnit.module('$find');
 
 // Method: $next(sel, filter, opt)
 
-module('$next');
+QUnit.module('$next');
 
 // Method: $prev(sel, filter, opt)
 
-module('$prev');
+QUnit.module('$prev');
 
 // Method: $filter(sel, filter, opt)
 
-module('$filter');
+QUnit.module('$filter');
 
 // Method: $not(sel, filter, opt)
 
-module('$not');
+QUnit.module('$not');
 
 // Method: $is(sel, filter, opt)
 
-module('$is');
+QUnit.module('$is');
 
 // Method: $index(sel)
 
-module('$index');
+QUnit.module('$index');
 
 // Method: $closest(sel, filter, context)
 
-module('$closest');
+QUnit.module('$closest');
 
 // Method: $parents(sel, filter)
 
-module('$parents');
+QUnit.module('$parents');
 
 // Method: $toggleClass(sel, val)
 
-module('$toggleClass');
+QUnit.module('$toggleClass');
 
 // Method: $parseHTML(html, obj)
 
-module('$parseHTML');
+QUnit.module('$parseHTML');
 
 // Method: $position(sel)
 
-module('$position');
+QUnit.module('$position');
 
 // Method: $offset(sel)
 
-module('$offset');
+QUnit.module('$offset');
 
 // Method: $width(sel, val)
 
-module('$width');
+QUnit.module('$width');
 
 // Method: $height(sel, val)
 
-module('$height');
+QUnit.module('$height');
 
 // Method: $scrollTop(sel, val)
 
-module('$scrollTop');
+QUnit.module('$scrollTop');

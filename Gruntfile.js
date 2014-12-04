@@ -16,7 +16,6 @@
 				project.paths.root + '/' + project.paths.assets :
 				project.assets;
 
-
 		// ------------------------------------
 			// Load Modules
 		// ------------------------------------
@@ -25,14 +24,12 @@
 			global.jscs = require('jscs');
 		}
 
-
 		// ------------------------------------
 			// Load Tasks
 		// ------------------------------------
 
 		require('./' + assetPath + '/wee/build/config.js')(grunt);
 		grunt.loadTasks(assetPath + '/wee/build/tasks');
-
 
 		// -------------------------------------
 			// Load Plugins
