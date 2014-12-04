@@ -564,11 +564,12 @@
 		// Get the offset of a specified element
 		// Returns object
 		$offset: function(sel) {
-			var rect = W.$first(sel).getBoundingClientRect();
+			var rect = W.$first(sel).getBoundingClientRect(),
+				el = W._legacy ? W._html : W._win;
 
 			return {
-				top: rect.top + Wee._win.pageYOffset,
-				left: rect.left + Wee._win.pageXOffset
+				top: rect.top + (W._legacy ? el.scrollTop : el.pageYOffset),
+				left: rect.left + (W._legacy ? el.scrollLeft : el.pageXOffset)
 			};
 		},
 		// Get or set the width of a specified element, optionally accounting for margin
@@ -641,11 +642,10 @@
 
 				if (W._legacy && el === W._win) {
 					el = W._html;
+					return el.scrollTop;
 				}
 
-				return el.pageYOffset !== U ?
-					el.pageYOffset :
-					el.scrollTop;
+				return el.pageYOffset;
 			}
 
 			W.$each(sel, function(el) {
