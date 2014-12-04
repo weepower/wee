@@ -185,6 +185,9 @@
 						(function(el, evt, fn, f, conf) {
 							var cb = function(e) {
 								if (W._legacy) {
+									e = Wee._win.event;
+									e.target = e.srcElement;
+
 									e.preventDefault = function() {
 										e.returnValue = false;
 									};
