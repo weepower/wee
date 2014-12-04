@@ -14,11 +14,13 @@
 						i = 0;
 					a.href = val;
 
-					var arr = a.search.replace(/^\?/, '').split('&');
+					if (a.search !== '') {
+						var arr = a.search.replace(/^\?/, '').split('&');
 
-					for (; i < arr.length; i++) {
-						var split = arr[i].split('=');
-						query[split[0]] = split[1];
+						for (; i < arr.length; i++) {
+							var split = arr[i].split('=');
+							query[split[0]] = split[1];
+						}
 					}
 
 					return this.$set('uri', {
@@ -28,20 +30,20 @@
 					});
 				}
 			} else {
-				return this.$get('uri', this.uri(L), true);
+				return this.$get('uri', function() {
+					return W.routes.uri(L.href);
+				}, true);
 			}
 		},
 		// Get currently bound path or set path with a specified string
 		// Optionally accepts options to pass through to get/set
 		// Returns string
 		path: function(val, opt) {
-			return (
-				val ?
-					this.uri({
-						path: this.$set('path', val, opt)
-					}) :
-					this.$get('path', this.uri(), true, opt)
-			).path;
+			return val ?
+				this.uri({
+					path: this.$set('path', val, opt)
+				}).path :
+				this.$get('path', this.uri(), true, opt);
 		},
 		// Get all segments or single segment at index integer
 		// Returns array of segment strings or string if index specified
