@@ -61,7 +61,7 @@ QUnit.test('override', 1, function(assert) {
 // Method: $set(key, val, opt)
 // Method: $push(key, a, b)
 
-QUnit.module('$get/$set/$push');
+QUnit.module('$get, $set, $push');
 
 QUnit.test('get empty', 2, function(assert) {
 	assert.strictEqual(Wee.$get('var-123'), null, 'Variable "var-123" is currently null.');
@@ -306,7 +306,7 @@ QUnit.test('check for unique values', 1, function(assert) {
 QUnit.module('$');
 
 QUnit.test('select', 2, function(assert) {
-	Wee.$html('#qunit-fixture',
+	Wee.$html('#wee',
 		'<div id="testing"></div>' +
 		'<div class="testing"></div>'
 	);
@@ -320,7 +320,7 @@ QUnit.test('select', 2, function(assert) {
 QUnit.module('$eq');
 
 QUnit.test('select index', 1, function(assert) {
-	Wee.$html('#qunit-fixture',
+	Wee.$html('#wee',
 		'<div class="testing">1</div>' +
 		'<div class="testing">2</div>' +
 		'<div class="testing">3</div>'
@@ -336,7 +336,7 @@ QUnit.test('select index', 1, function(assert) {
 QUnit.module('$first');
 
 QUnit.test('select first', 1, function(assert) {
-	Wee.$html('#qunit-fixture',
+	Wee.$html('#wee',
 		'<div class="testing">1</div>' +
 		'<div class="testing">2</div>' +
 		'<div class="testing">3</div>'
@@ -352,7 +352,7 @@ QUnit.test('select first', 1, function(assert) {
 QUnit.module('$each');
 
 QUnit.test('iterate selection', 1, function(assert) {
-	Wee.$html('#qunit-fixture',
+	Wee.$html('#wee',
 		'<div class="testing">1</div>' +
 		'<div class="testing">2</div>' +
 		'<div class="testing">3</div>'
@@ -372,7 +372,7 @@ QUnit.test('iterate selection', 1, function(assert) {
 QUnit.module('$map');
 
 QUnit.test('map selection', 1, function(assert) {
-	Wee.$html('#qunit-fixture',
+	Wee.$html('#wee',
 		'<div class="testing">1</div>' +
 		'<div class="testing">2</div>' +
 		'<div class="testing">3</div>'
@@ -390,9 +390,9 @@ QUnit.test('map selection', 1, function(assert) {
 QUnit.module('$attr');
 
 QUnit.test('get', 1, function(assert) {
-	Wee.$attr('#qunit-fixture', 'test', 'value');
+	Wee.$attr('#wee', 'test', 'value');
 
-	assert.strictEqual(Wee.$attr('#qunit-fixture', 'test'), 'value', 'Attribute "test" was set correctly.');
+	assert.strictEqual(Wee.$attr('#wee', 'test'), 'value', 'Attribute "test" was set correctly.');
 });
 
 // Method: $data(sel, key, val)
@@ -400,9 +400,9 @@ QUnit.test('get', 1, function(assert) {
 QUnit.module('$data');
 
 QUnit.test('get', 1, function(assert) {
-	Wee.$data('#qunit-fixture', 'test', 'value');
+	Wee.$data('#wee', 'test', 'value');
 
-	assert.strictEqual(Wee.$data('#qunit-fixture', 'test'), 'value', 'Data attribute "test" was set correctly.');
+	assert.strictEqual(Wee.$data('#wee', 'test'), 'value', 'Data attribute "test" was set correctly.');
 });
 
 // Method: $setVars()
@@ -410,7 +410,7 @@ QUnit.test('get', 1, function(assert) {
 QUnit.module('$setVars');
 
 QUnit.test('get', 3, function(assert) {
-	Wee.$html('#qunit-fixture',
+	Wee.$html('#wee',
 		'<div data-set="test-var" data-value="Test Value"></div>' +
 		'<div data-set="test:test-var" data-value="Test Value"></div>' +
 		'<div data-set="test-arr[]" data-value="One"></div>' +
@@ -430,7 +430,7 @@ QUnit.test('get', 3, function(assert) {
 QUnit.module('$setRef');
 
 QUnit.test('set', 1, function(assert) {
-	Wee.$html('#qunit-fixture', '<div data-ref="testElement">1</div>');
+	Wee.$html('#wee', '<div data-ref="testElement">1</div>');
 
 	Wee.$setRef();
 

@@ -495,7 +495,7 @@
 
 			return W.$map(sel, function(el, i) {
 				return func ?
-					func(i, el) :
+					func(el, i) :
 					W.$is(el, filter, opt) ? el : false;
 			});
 		},
@@ -506,7 +506,7 @@
 
 			return W.$map(sel, function(el, i) {
 				return func ?
-					func(i, el) :
+					func(el, i) :
 					W.$is(el, filter, opt) ? false : el;
 			});
 		},

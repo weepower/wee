@@ -4,7 +4,7 @@ QUnit.module('Routes');
 
 // Method: routes.uri(val, opt)
 
-QUnit.test('URI Data', 3, function(assert) {
+QUnit.test('URI Data', 4, function(assert) {
 	var uriData = {
 		path: '/segment/value',
 		query: {
@@ -13,14 +13,9 @@ QUnit.test('URI Data', 3, function(assert) {
 		hash: 'test'
 	};
 
-	assert.deepEqual(Wee.routes.uri(), {
-		path: '/index.html',
-		query: {},
-		hash: ''
-	}, 'Default URI data is correctly set.');
-
+	assert.strictEqual(Wee.routes.uri().path, '/assets/wee/tests/index.html', 'Default URI path is correctly set.');
+	assert.strictEqual(Wee.routes.uri().hash, '', 'Default URI hash is correctly set.');
 	assert.deepEqual(Wee.routes.uri(uriData), uriData, 'URI data correctly set.');
-
 	assert.deepEqual(Wee.routes.uri(), uriData, 'URI data is still correctly set.');
 });
 

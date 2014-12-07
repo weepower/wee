@@ -8,10 +8,10 @@ QUnit.test('Request JSON', 1, function(assert) {
 	var done = assert.async();
 
 	Wee.data.request({
-		url: 'testem.json',
+		url: 'sample.json',
 		json: true,
 		success: function(data) {
-			assert.strictEqual(data.framework, 'qunit', 'JSON data requested successfully.');
+			assert.strictEqual(data.name, 'Wee', 'JSON data requested successfully.');
 			done();
 		}
 	});
@@ -21,11 +21,11 @@ QUnit.test('Request JSON & Parse', 1, function(assert) {
 	var done = assert.async();
 
 	Wee.data.request({
-		url: 'testem.json',
+		url: 'sample.json',
 		json: true,
-		template: '{{ framework }}',
+		template: '{{ name }}',
 		success: function(data) {
-			assert.strictEqual(data, 'qunit', 'JSON data requested and parsed successfully.');
+			assert.strictEqual(data, 'Wee', 'JSON data requested and parsed successfully.');
 			done();
 		}
 	});

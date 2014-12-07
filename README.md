@@ -1,4 +1,4 @@
-# [Wee 2.1.0-beta.8](http://www.weepower.com)
+# [Wee 2.1.0-beta.9](http://www.weepower.com)
 
 Wee is a development framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does it all with a tiny footprint.
 
@@ -56,7 +56,9 @@ To view the working Wee to-do list check out our public [Trello board](https://t
 * Internet Explorer 8
 * iOS Safari 5.1
 * Mozilla Firefox 24
-* Safari 6
+* Safari 6.1
+
+Automated testing generously provided by [BrowserStack](https://www.browserstack.com).
 
 ## Versioning
 
