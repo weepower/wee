@@ -14,17 +14,19 @@
 						i = 0;
 					a.href = val;
 
+					var path = this.$get('path', a.pathname, true);
+
 					if (a.search !== '') {
 						var arr = a.search.replace(/^\?/, '').split('&');
 
 						for (; i < arr.length; i++) {
 							var split = arr[i].split('=');
-							query[split[0]] = split[1];
+							query[split[0]] = split[1] == U ? '' : split[1];
 						}
 					}
 
 					return this.$set('uri', {
-						path: this.$get('path', a.pathname),
+						path: path.charAt(0) == '/' ? path : '/' + path,
 						query: query,
 						hash: a.hash.substring(1)
 					});
