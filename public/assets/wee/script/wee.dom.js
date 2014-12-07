@@ -2,29 +2,47 @@
 	'use strict';
 
 	W.fn.extend({
+		// Add specified class name to specified element
+		// Accepts either string or function value
+		// Returns undefined
+		$addClass: function(sel, val) {
+			var func = W.$isFunction(val);
+
+			W.$each(sel, function(el, i) {
+				var name = func ?
+						val.call(el, i, el.className) :
+						val;
+
+				if (name) {
+					el.className = (el.className + ' ' + name.split(' ').filter(function(name) {
+						return ! W.$hasClass(el, name);
+					}).join(' ')).trim();
+				}
+			});
+		},
+		// Removes specified class from specified element
+		// Accepts either string or function value
+		// Returns undefined
+		$removeClass: function(sel, val) {
+			var func = W.$isFunction(val);
+
+			W.$each(sel, function(el, i) {
+				var name = func ?
+						val.call(el, i, el.className) :
+						val;
+
+				if (name) {
+					el.className = el.className.replace(
+						new RegExp('(^| )' + name.split(' ').join('|') + '( |$)', 'gi'
+					), ' ').trim();
+				}
+			});
+		},
 		// Determine if specified element has specified class
 		// Returns boolean
 		$hasClass: function(sel, val) {
 			return W.$(sel).some(function(el) {
-				return new RegExp('\\b' + val + '\\b').test(el.className);
-			});
-		},
-		// Add specified class name to specified element
-		// Returns undefined
-		$addClass: function(sel, val) {
-			W.$each(sel, function(el) {
-				el.className = (el.className + ' ' + val.split(' ').filter(function(val) {
-					return ! W.$hasClass(el, val);
-				}).join(' ')).trim();
-			});
-		},
-		// Removes specified class from specified element
-		// Returns undefined
-		$removeClass: function(sel, val) {
-			W.$each(sel, function(el) {
-				el.className = el.className.replace(
-					new RegExp('(^|\\b)' + val.split(' ').join('|') + '(\\b|$)', 'gi'
-				), ' ').trim();
+				return new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className);
 			});
 		},
 		// Get CSS value of first element or set matched elements CSS property with specified value
@@ -56,8 +74,16 @@
 				return W.$first(sel).innerHTML;
 			}
 
-			W.$each(sel, function(el) {
-				el.innerHTML = val;
+			var func = W.$isFunction(val);
+
+			W.$each(sel, function(el, i) {
+				var html = func ?
+						val.call(el, i, el.innerHTML) :
+						val;
+
+				if (html !== false && html !== U) {
+					el.innerHTML = html;
+				}
 			});
 		},
 		// Clone specified element
@@ -110,7 +136,7 @@
 			var arr = [];
 
 			W.$each(sel, function(el) {
-				arr = arr.concat(W._nodeArray(el.childNodes));
+				arr = arr.concat(W._slice.call(el.childNodes));
 			});
 
 			return W.$unique(arr);
@@ -177,44 +203,62 @@
 		},
 		// Append specified child element to parent element
 		$append: function(sel, child) {
-			var str = W.$isString(child);
+			var func = W.$isFunction(child);
 
-			W.$each(sel, function(el) {
-				str ?
-					el.innerHTML = el.innerHTML + child :
-					W.$each(child, function(cel) {
-						el.appendChild(cel);
-					});
+			W.$each(sel, function(el, i) {
+				var app = func ?
+						child.call(el, i, el.innerHTML) :
+						child;
+
+				if (app) {
+					W.$isString(app) ?
+						el.innerHTML = el.innerHTML + app :
+						W.$each(app, function(cel) {
+							el.appendChild(cel);
+						});
+				}
 			});
 		},
 		// Prepend specified child element to specified parent element
 		$prepend: function(sel, child) {
-			var str = W.$isString(child);
+			var func = W.$isFunction(child);
 
-			W.$each(sel, function(el) {
-				str ?
-					el.innerHTML = child + el.innerHTML :
-					W.$each(child, function(cel) {
-						el.insertBefore(cel, el.firstChild);
-					});
+			W.$each(sel, function(el, i) {
+				var pre = func ?
+						child.call(el, i, el.innerHTML) :
+						child;
+
+				if (pre) {
+					W.$isString(pre) ?
+						el.innerHTML = child + el.innerHTML :
+						W.$each(child, function(cel) {
+							el.insertBefore(cel, el.firstChild);
+						});
+				}
 			});
 		},
 		// Insert specified element before specified element
 		$before: function(sel, pos, rem) {
-			var str = W.$isString(pos);
+			var func = W.$isFunction(pos);
 
 			W.$each(sel, function(el, i) {
-				str ?
-					el.insertAdjacentHTML('beforebegin', pos) :
-					W.$each(pos, function(cel) {
-						if (i > 0) {
-							cel = W.$clone(cel)[0];
-						}
+				var bef = func ?
+						pos.call(el, i, pos.innerHTML) :
+						pos;
 
-						el.parentNode.insertBefore(cel, el);
-					}, {
-						reverse: true
-					});
+				if (bef) {
+					W.$isString(bef) ?
+						el.insertAdjacentHTML('beforebegin', bef) :
+						W.$each(bef, function(cel) {
+							if (i > 0) {
+								cel = W.$clone(cel)[0];
+							}
+
+							el.parentNode.insertBefore(cel, el);
+						}, {
+							reverse: true
+						});
+				}
 
 				if (rem) {
 					W.$remove(el);
@@ -231,20 +275,26 @@
 		},
 		// Insert specified element after specified element
 		$after: function(sel, pos, rem) {
-			var str = W.$isString(pos);
+			var func = W.$isFunction(pos);
 
 			W.$each(sel, function(el, i) {
-				str ?
-					el.insertAdjacentHTML('afterend', pos) :
-					W.$each(pos, function(cel) {
-						if (i > 0) {
-							cel = W.$clone(cel)[0];
-						}
+				var aft = func ?
+						pos.call(el, i, el.innerHTML) :
+						pos;
 
-						el.parentNode.insertBefore(cel, el.nextSibling);
-					}, {
-						reverse: true
-					});
+				if (aft) {
+					W.$isString(aft) ?
+						el.insertAdjacentHTML('afterend', aft) :
+						W.$each(aft, function(cel) {
+							if (i > 0) {
+								cel = W.$clone(cel)[0];
+							}
+
+							el.parentNode.insertBefore(cel, el.nextSibling);
+						}, {
+							reverse: true
+						});
+				}
 
 				if (rem) {
 					W.$remove(el);
@@ -268,9 +318,11 @@
 			W.$after(sel, pos, true);
 		},
 		// Remove specified element from document
-		$remove: function(sel) {
+		$remove: function(sel, context) {
 			W.$each(sel, function(el) {
 				el.parentNode.removeChild(el);
+			}, {
+				context: context
 			});
 		},
 		// Remove child nodes from specified element
@@ -310,15 +362,21 @@
 			});
 		},
 		// Get property of specified element or set property with specified value
-		$prop: function(sel, key, val) {
-			if (val !== U) {
+		$prop: function(sel, a, b) {
+			var obj = W.$isObject(a);
+
+			if (b !== U || obj) {
 				W.$each(sel, function(el) {
-					el[key] = val;
+					obj ?
+					Object.keys(a).forEach(function(key) {
+						el[key] = a[key];
+					}) :
+					el[a] = b;
 				});
 			} else {
 				var el = W.$first(sel);
 
-				return el[key];
+				return el[a];
 			}
 		},
 		// Remove specified attribute of specified element
@@ -336,10 +394,16 @@
 				}).join('');
 			}
 
-			W.$each(sel, function(el) {
+			var func = W.$isFunction(val);
+
+			W.$each(sel, function(el, i) {
+				var text = func ?
+						val.call(el, i, (el.textContent || el.innerText).trim()) :
+						val;
+
 				el.textContent === U ?
-					el.innerText = val :
-					el.textContent = val;
+					el.innerText = text :
+					el.textContent = text;
 			});
 		},
 		// Get value of specified element or set specified value
@@ -427,15 +491,23 @@
 		// Return a subset of elements based on a specified filter from a specified element
 		// Returns element array
 		$filter: function(sel, filter, opt) {
-			return W.$map(sel, function(el) {
-				return W.$is(el, filter, opt) ? el : false;
+			var func = W.$isFunction(filter);
+
+			return W.$map(sel, function(el, i) {
+				return func ?
+					func(i, el) :
+					W.$is(el, filter, opt) ? el : false;
 			});
 		},
 		// Return a subset of elements based on a specified exclusion filter from a specified element
 		// Returns element array
 		$not: function(sel, filter, opt) {
-			return W.$map(sel, function(el) {
-				return W.$is(el, filter, opt) ? false : el;
+			var func = W.$isFunction(filter);
+
+			return W.$map(sel, function(el, i) {
+				return func ?
+					func(i, el) :
+					W.$is(el, filter, opt) ? false : el;
 			});
 		},
 		// Determines if a particular element matches a specified criteria
@@ -531,13 +603,17 @@
 			return W.$unique(arr);
 		},
 		// Toggle the display of a specified element
-		$toggleClass: function(sel, val) {
-			W.$each(sel, function(el) {
-				val.split(' ').forEach(function(val) {
-					W.$hasClass(el, val) ?
-						W.$removeClass(el, val) :
-						W.$addClass(el, val);
-				});
+		$toggleClass: function(sel, val, toggle) {
+			var func = W.$isFunction(val);
+
+			W.$each(sel, function(el, i) {
+				func ?
+					val.call(el, i, el.className) :
+					val.split(' ').forEach(function(val) {
+						toggle === false ||  W.$hasClass(el, val) ?
+							W.$removeClass(el, val) :
+							W.$addClass(el, val);
+					});
 			});
 		},
 		// Convert specified HTML string to a DOM object and optionally converts it to a Wee DOM object

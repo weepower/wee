@@ -98,8 +98,8 @@
 		replaceWith: function(sel) {
 			return W.$replaceWith(this, sel);
 		},
-		remove: function() {
-			W.$remove(this);
+		remove: function(filter) {
+			W.$remove(filter, this);
 			return this;
 		},
 		empty: function() {
@@ -151,8 +151,8 @@
 		parents: function(filter) {
 			return $(W.$parents(this, filter));
 		},
-		toggleClass: function(val) {
-			W.$toggleClass(this, val);
+		toggleClass: function(val, toggle) {
+			W.$toggleClass(this, val, toggle);
 			return this;
 		},
 		position: function() {
