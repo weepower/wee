@@ -2465,6 +2465,9 @@
 .scroll (vertical) {
 	overflow-y: scroll;
 }
+.fill (@value) when (iscolor(@value)) {
+	fill: @value;
+}
 .fill (@value: true) when (@value), (@value = horizontal) {
 	width: 100%;
 }
