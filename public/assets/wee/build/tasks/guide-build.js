@@ -1,4 +1,4 @@
-/* global config, project */
+/* global config, global, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildGuide', function() {
@@ -75,6 +75,12 @@ module.exports = function(grunt) {
 			var parsed = Wee.parse(template, data);
 
 			grunt.file.write(targetPath, parsed);
+
+			var browserSync = require(global.nodePath + '/grunt-browser-sync/node_modules/browser-sync');
+
+			setTimeout(function() {
+				browserSync.reload();
+			}, 800);
 		}
 	});
 };

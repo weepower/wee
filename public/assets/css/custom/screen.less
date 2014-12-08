@@ -7,16 +7,16 @@
 
 html,
 body {
-	.height(100%);
+	.fill(vertical);
 }
 .container {
 	.max-width(80);
 }
 .top {
-	.background-gradient(#006e8c; #006e8c; #008289; 135);
-	.margin(bottom; -12.5);
+	.background-gradient(@colorBlue; @colorBlue; @colorTeal; 135);
 	.min-height(100%);
 	.padding(vertical; 8%);
+	.spaced(-12.5);
 	&:after {
 		.block();
 		.content();
@@ -65,8 +65,14 @@ body {
 
 .logo {
 	.align(middle);
-	.inline-block(10.5; 3.5);
 	.spaced(1.2);
+	&:hover {
+		.opacity(90%);
+	}
+	&,
+	svg {
+		.inline-block(10.5; 3.5);
+	}
 }
 .heading {
 	.font-size(2.3);
@@ -86,10 +92,10 @@ body {
 			.background(transparent);
 		}
 		&:hover {
-			.background(light; 5%; #008289);
+			.background(light; 5%; @colorTeal);
 		}
 		&:active {
-			.background(light; 10%; #008289);
+			.background(light; 10%; @colorTeal);
 		}
 	}
 }

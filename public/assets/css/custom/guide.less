@@ -8,21 +8,9 @@
 \*------------------------------------*/
 
 .guide-top {
-	.background-gradient(#006e8c; #006e8c; #008289; 135);
+	.background-gradient(@colorBlue; @colorBlue; @colorTeal; 135);
 	.padding(vertical; 4%);
 	.spaced(5);
-}
-
-
-
-
-
-/*------------------------------------*\
-	# Footer
-\*------------------------------------*/
-
-.guide-footer {
-	.align(center);
 }
 
 
@@ -38,8 +26,8 @@
 }
 .jump {
 	.font(@headingFont; 1.3);
-	.uppercase();
 	.spaced(4);
+	.uppercase();
 	&__label {
 		.font-weight(700);
 		.inline-block();
@@ -47,7 +35,7 @@
 	}
 	&__links {
 		.inline-block();
-		.inline-list(.6);
+		.inline-list(.8);
 		li {
 			.padding(bottom; .2);
 			&.is-active {
@@ -93,4 +81,94 @@ code.hljs {
 	.background(@lightestGray);
 	.font-size(1.1);
 	.padding(1; 1.4; 1.2; 1.4);
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Colors
+\*------------------------------------*/
+
+.color {
+	.align(center);
+	.font-size(1.2);
+	.inline-block();
+	.margin(right; 1);
+	.spaced(2);
+	&:before {
+		.black();
+		.block(10; 4);
+		.border();
+		.line-height(4);
+		.rounded();
+	}
+	&--white {
+		&:before {
+			.background(@white);
+			.border-color(mix(@white, #000, 90%));
+			.content(@white);
+		}
+	}
+	&--lightestgray {
+		&:before {
+			.background(@lightestGray);
+			.border-color(mix(@lightestGray, #000, 90%));
+			.content(@lightestGray);
+		}
+	}
+	&--lightergray {
+		&:before {
+			.background(@lighterGray);
+			.border-color(mix(@lighterGray, #000, 90%));
+			.content(@lighterGray);
+		}
+	}
+	&--lightgray {
+		&:before {
+			.background(@lightGray);
+			.border-color(mix(@lightGray, #000, 90%));
+			.content(@lightGray);
+		}
+	}
+	&--gray {
+		&:before {
+			.background(@gray);
+			.border-color(mix(@gray, #000, 90%));
+			.content(@gray);
+			.white();
+		}
+	}
+	&--darkgray {
+		&:before {
+			.background(@darkGray);
+			.border-color(mix(@darkGray, #000, 90%));
+			.content(@darkGray);
+			.white();
+		}
+	}
+	&--darkergray {
+		&:before {
+			.background(@darkerGray);
+			.border-color(mix(@darkerGray, #000, 90%));
+			.content(@darkerGray);
+			.white();
+		}
+	}
+	&--darkestgray {
+		&:before {
+			.background(@darkestGray);
+			.border-color(mix(@darkestGray, #000, 90%));
+			.content(@darkestGray);
+			.white();
+		}
+	}
+	&--black {
+		&:before {
+			.background(@black);
+			.content(@black);
+			.white();
+		}
+	}
 }
