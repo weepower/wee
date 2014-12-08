@@ -1,4 +1,4 @@
-/* global project */
+/* global global, project */
 
 var fs = require('fs');
 
@@ -182,10 +182,11 @@ module.exports = Wee = {
 
 		if (filepath.indexOf('temp') == -1) {
 			if (ext == 'js') {
+				var js = grunt.file.read(filepath);
+
 				if (project.script.validate.jshint) {
 					// JSHint
-					var js = grunt.file.read(filepath),
-						jshint = require('jshint').JSHINT,
+					var jshint = require('jshint').JSHINT,
 						jshintConfig = grunt.file.readJSON(
 							project.script.validate.jshint === true ?
 								config.assetPath + '/wee/script/.jshintrc' :

@@ -2,7 +2,7 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY
 
-/* global global, project */
+/* global __dirname, global, project */
 
 (function() {
 	'use strict';
@@ -10,6 +10,7 @@
 	module.exports = function(grunt) {
 		var configFile = './' + (grunt.option('config') || 'project.json');
 
+		global.nodePath = __dirname + '/node_modules';
 		global.project = JSON.parse(grunt.file.read(configFile));
 
 		var assetPath = (project.paths.root !== '') ?

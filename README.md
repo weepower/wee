@@ -1,45 +1,46 @@
-# [Wee 2.1.0-beta.9](http://www.weepower.com)
+# [Wee 2.1.0-beta.10](http://www.weepower.com)
 
-Wee is a development framework for building complex web projects. It bundles many of the components developers need to architect and produce responsive, interactive websites and apps. True to its name, Wee does it all with a tiny footprint.
+Wee is a front-end development framework for building full featured web projects. It bundles many of the components developers need to architect and build responsive, interactive websites and apps.
 
 To read more, visit [weepower.com](http://www.weepower.com).
 
-#### Features
+### Features
 
-Mobile-first CSS framework with reset, base, and Less mixin library < 4KB gzipped
+Mobile-first CSS framework with reset, base, and Less mixin library < *4KB gzipped*
 
-* **Central configuration** for styling the baseline of your brand
-* **Feature toggling** for major components to keep your payload minimal
-* **Baseline print styling** to format printed pages (optional)
-* **Structured breakpoints** for your keep you responsive rules organized
-* **Legacy patching** to make sure everything works in IE8
+* **Central configuration** for project normalization and branding
+* **Feature toggling** of major components to minimize overhead
+* **Structured breakpoints** to keep your responsive logic organized
+* **Legacy rules** to ensure basic IE8 compatibility
+* **Print styling** to generate print optimized pages
 
-JavaScript toolset to build scalable, well-organized browser functionality < 9KB gzipped
+JavaScript toolset to build scalable, organized client-side interaction < *9KB gzipped*
 
 * **Foundation** of utilities, helpers, and module structure
-* **Chainable DOM** traversal and manipulation library
+* **Chainable DOM** traversal and manipulation with familiar API
 * **Routing library** to flexibly associate paths to actions
-* **Event binding** to attach functionality to elements
-* **Resource loading** for JavaScript, CSS, and images along with callbacks
-* **Data request and binding** functions
-* **Breakpoint watching** system for efficient media query callbacks
-* **Polyfill support** for HTML5, SVG images, input placeholders, and ES5
-* **Sourcemap output** to line match against unminified code
+* **Event handing** to bind functionality to elements
+* **Data loading** for Ajax and JSON interaction
+* **Template rendering** to parse complex data structures
+* **Resource loading** for JavaScript, CSS, and images
+* **Breakpoint watching** for efficient media query callbacks
+* **Polyfill support** for HTML5, ES5, SVG images, and input placeholders
 
-Grunt process configured through a simple JSON file to compile, optimize, and minify your project
+JSON-configured Grunt process to compile, optimize, and minify your project
 
 * **Built-in server** for static development
-* **Live reloading** of static assets and markup through proxy server
-* **Ghost mode** to sync testing across multiple browsers
-* **Style guide generator** for a living visual presentation
-* **Validation** for JavaScript against quality and formatting rules
-* **Legacy compiling** to concatenate media queries and convert rem units
+* **Live reloading** of static assets and markup
+* **Ghost mode** to sync interaction across multiple browsers
+* **Style guide generator** for a living visual project snapshot
+* **Sourcemap output** to line match unminified JavaScript
+* **Legacy build** to concatenate media queries and convert rem units
+* **Validation** of JavaScript against code quality and formatting rules
 
-Structure baseline of markup, icons, and supporting files to serve as a front-end blueprint
+Structured foundation of markup, icons, and supporting files
 
 ## Quick Start
 
-Get started with Wee using one of these methods:
+Get started using one of these methods:
 
 * [Download the latest release](https://github.com/weepower/wee/archive/master.zip) or
 * Clone the repository from `git clone git://github.com/weepower/wee.git`
@@ -47,9 +48,9 @@ Get started with Wee using one of these methods:
 ## Bugs
 
 Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).
-To view the working Wee to-do list check out our public [Trello board](https://trello.com/b/7KbnQra9/wee).
+To view the working to-do list check out our public [Trello board](https://trello.com/b/7KbnQra9/wee).
 
-#### Minimum browser support
+##### Minimum tested browser support
 
 * Android 4.1
 * Chrome 30
