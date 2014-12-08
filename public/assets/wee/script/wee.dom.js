@@ -52,12 +52,16 @@
 			var obj = W.$isObject(a);
 
 			if (b !== U || obj) {
-				W.$each(sel, function(el) {
+				var func = ! obj && W.$isFunction(b);
+
+				W.$each(sel, function(el, i) {
 					obj ?
 						Object.keys(a).forEach(function(key) {
 							el.style[key] = a[key];
 						}) :
-						el.style[a] = b;
+						el.style[a] = func ?
+							b.call(el, i, el.style[a]) :
+							b;
 				});
 			} else {
 				var el = W.$first(sel);
@@ -335,8 +339,14 @@
 		},
 		// Wrap HTML around specified element
 		$wrap: function(sel, html) {
-			W.$each(sel, function(el) {
-				var wrap = W.$parseHTML(html);
+			var func = W.$isFunction(html);
+
+			W.$each(sel, function(el, i) {
+				var wrap = W.$parseHTML(
+					func ?
+						html.call(el, i) :
+						html
+				);
 
 				W.$each(wrap, function(cel) {
 					cel.appendChild(el.cloneNode(true));
@@ -346,8 +356,14 @@
 		},
 		// Wrap HTML around the content of specified element
 		$wrapInner: function(sel, html) {
-			W.$each(sel, function(el) {
-				var wrap = W.$parseHTML(html),
+			var func = W.$isFunction(html);
+
+			W.$each(sel, function(el, i) {
+				var wrap = W.$parseHTML(
+						func ?
+							html.call(el, i) :
+							html
+					),
 					children = W.$children(el);
 
 				if (children.length === 0) {
@@ -366,12 +382,16 @@
 			var obj = W.$isObject(a);
 
 			if (b !== U || obj) {
-				W.$each(sel, function(el) {
+				var func = ! obj && W.$isFunction(b);
+
+				W.$each(sel, function(el, i) {
 					obj ?
-					Object.keys(a).forEach(function(key) {
-						el[key] = a[key];
-					}) :
-					el[a] = b;
+						Object.keys(a).forEach(function(key) {
+							el[key] = a[key];
+						}) :
+						el[a] = func ?
+							b.call(el, i, el[a]) :
+							b;
 				});
 			} else {
 				var el = W.$first(sel);
@@ -426,7 +446,9 @@
 				return el.value;
 			}
 
-			W.$each(sel, function(el) {
+			var func = W.$isFunction(val);
+
+			W.$each(sel, function(el, i) {
 				if (el.nodeName == 'SELECT') {
 					var opt = W.$find(el, 'option');
 					val = W.$toArray(val);
@@ -437,7 +459,9 @@
 						}
 					});
 				} else {
-					el.value = val;
+					el.value = func ?
+						val.call(el, i, el.value) :
+						val;
 				}
 			});
 		},
@@ -651,64 +675,90 @@
 		// Get or set the width of a specified element, optionally accounting for margin
 		// Returns int
 		$width: function(sel, val) {
-			if (val === U || val === true) {
+			var func = val && W.$isFunction(val),
+				width;
+
+			if (val === U || val === true || func) {
 				var el = W.$first(sel);
 
 				switch (el) {
 					case W._win:
-						return el.innerWidth;
+						width = el.innerWidth;
+						break;
 					case W._doc:
-						return Math.max(
+						width = Math.max(
 							W._body.offsetWidth,
 							W._body.scrollWidth,
 							W._html.clientWidth,
 							W._html.offsetWidth,
 							W._html.scrollWidth
 						);
+						break;
 					default:
-						var width = el.offsetWidth;
+						width = el.offsetWidth;
 
 						if (val === true) {
 							var style = el.currentStyle || getComputedStyle(el);
 							width += parseInt(style.marginLeft, 10) + parseInt(style.marginRight, 10);
 						}
 
-						return width;
+						break;
+				}
+
+				if (! func) {
+					return width;
 				}
 			}
 
-			W.$css(sel, 'width', val);
+			W.$each(sel, function(el, i) {
+				W.$css(el, 'width', func ?
+					val.call(el, i, width) :
+					val
+				);
+			});
 		},
 		// Get or set the height of an element, optionally accounting for margin
 		// Returns int
 		$height: function(sel, val) {
-			if (val === U || val === true) {
+			var func = val && W.$isFunction(val),
+				height;
+
+			if (val === U || val === true || func) {
 				var el = W.$first(sel);
 
 				switch (el) {
 					case W._win:
-						return el.innerHeight;
+						height = el.innerHeight;
+						break;
 					case W._doc:
-						return Math.max(
+						height = Math.max(
 							W._body.offsetHeight,
 							W._body.scrollHeight,
 							W._html.clientHeight,
 							W._html.offsetHeight,
 							W._html.scrollHeight
 						);
+						break;
 					default:
-						var height = el.offsetHeight;
+						height = el.offsetHeight;
 
 						if (val === true) {
 							var style = el.currentStyle || getComputedStyle(el);
 							height += parseInt(style.marginTop) + parseInt(style.marginBottom);
 						}
+				}
 
-						return height;
+				if (! func) {
+					return height;
 				}
 			}
 
-			W.$css(sel, 'height', val);
+			W.$each(sel, function(el, i) {
+				W.$css(el, 'height', func ?
+					val.call(el, i, height) :
+					val
+				);
+			});
 		},
 		// Get or set the top scroll position of an element
 		// Returns int
