@@ -42,12 +42,8 @@
 		},
 		"guide": {
 			"enable": true,
-			"watch": false,
-			"paths": {
-				"patterns": "guide/patterns",
-				"template": "guide/template.html",
-				"target": "guide/index.html"
-			}
+			"watch": true,
+			"config": "guide/config.json"
 		}
 	},
 	"script": {
