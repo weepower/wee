@@ -45,7 +45,7 @@
 				this.uri({
 					path: this.$set('path', val, opt)
 				}).path :
-				this.$get('path', this.uri(), true, opt);
+				this.$get('path', this.uri().path, true, opt);
 		},
 		// Get all segments or single segment at index integer
 		// Returns array of segment strings or string if index specified
