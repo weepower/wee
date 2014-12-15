@@ -1,30 +1,46 @@
-/* global config, project, reloadPaths */
+/* global config, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('initGuide', function() {
 		var Wee = require('../core.js'),
 			guide = project.style.guide;
 
-		if (guide.enable === true) {
-			if (guide.watch === true) {
-				// Set paths
-				var templatePath = Wee.buildPath(guide.paths.template, config.assetPath),
-					targetPath = Wee.buildPath(guide.paths.target, config.assetPath),
-					patternPath = Wee.buildPath(guide.paths.patterns, config.assetPath);
+		if (guide.watch === true) {
+			// Set paths
+			var configPath = Wee.buildPath(guide.config, config.assetPath),
+				settings = JSON.parse(grunt.file.read(configPath)),
+				rootPath = configPath.split('/'),
+				compile = settings.compile,
+				defaultTemplate = settings.defaults.template,
+				watchFiles = [];
 
-				// Reload rendered target
-				reloadPaths.push(targetPath);
-				reloadPaths.push('!' + templatePath);
-				reloadPaths.push('!' + patternPath + '/**/*.html');
+			rootPath.pop();
 
+			rootPath = rootPath.join('/');
+
+			Object.keys(compile).forEach(function(key) {
+				var block = compile[key],
+					patterns = block.patterns,
+					root = block.root || '',
+					template = Wee.buildPath(block.template || defaultTemplate, rootPath);
+
+				watchFiles.push(template);
+
+				patterns.forEach(function(name) {
+					var path = Wee.buildPath(root + name, rootPath);
+
+					watchFiles.push(path);
+				});
+			});
+
+			watchFiles = Wee.$unique(watchFiles);
+
+			if (watchFiles.length > 0) {
 				// Watch for guide updates
 				grunt.config.merge({
 					watch: {
-						guide: {
-							files: [
-								templatePath,
-								patternPath + '/**/*.html'
-							],
+						guideBuild: {
+							files: watchFiles,
 							tasks: [
 								'buildGuide'
 							]
@@ -32,8 +48,8 @@ module.exports = function(grunt) {
 					}
 				});
 			}
-
-			grunt.task.run('buildGuide');
 		}
+
+		grunt.task.run('buildGuide');
 	});
 };

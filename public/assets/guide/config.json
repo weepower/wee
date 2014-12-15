@@ -1,0 +1,49 @@
+{
+	"defaults": {
+		"template": "templates/default.html"
+	},
+	"compile": {
+		"general": {
+			"target": "index.html",
+			"root": "patterns/general/",
+			"patterns": [
+				"breakpoints.html",
+				"grayscale.html"
+			]
+		},
+		"elements": {
+			"target": "elements.html",
+			"root": "patterns/elements/",
+			"patterns": [
+				"table.html",
+				"figure.html",
+				"code.html"
+			]
+		},
+		"forms": {
+			"target": "forms.html",
+			"root": "patterns/forms/",
+			"patterns": [
+				"inputs.html",
+				"selects.html",
+				"buttons.html"
+			]
+		},
+		"typography": {
+			"target": "typography.html",
+			"root": "patterns/typography/",
+			"patterns": [
+				"fonts.html",
+				"paragraph.html",
+				"headings.html",
+				"subheadings.html",
+				"inline.html",
+				"unordered.html",
+				"ordered.html",
+				"description.html",
+				"blockquote.html",
+				"address.html"
+			]
+		}
+	}
+}

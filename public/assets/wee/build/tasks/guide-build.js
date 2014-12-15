@@ -3,84 +3,132 @@
 module.exports = function(grunt) {
 	grunt.registerTask('buildGuide', function() {
 		var Wee = require('../core.js'),
-			guide = project.style.guide;
-
-		if (guide.enable === true) {
-			var yaml = require('js-yaml'),
-				reg = /^(-{3}(?:\n|\r)([\w\W]+?)-{3})?([\w\W]*)*/;
-
-			// Set paths
-			var templatePath = Wee.buildPath(guide.paths.template, config.assetPath),
-				targetPath = Wee.buildPath(guide.paths.target, config.assetPath),
-				patternPath = Wee.buildPath(guide.paths.patterns, config.assetPath);
-
-			// Get files
-			var template = grunt.file.read(templatePath),
-				patterns = Wee.getFiles(patternPath, 'html');
-
-			// Set base data
-			var data = {
+			yaml = require('js-yaml'),
+			marked = require('marked'),
+			browserSync = require(global.rootPath + '/node_modules/grunt-browser-sync/node_modules/browser-sync'),
+			guide = project.style.guide,
+			reg = /^(-{3}(?:\n|\r)([\w\W]+?)-{3})?([\w\W]*)*/,
+			configPath = Wee.buildPath(guide.config, config.assetPath),
+			settings = JSON.parse(grunt.file.read(configPath)),
+			rootPath = configPath.split('/'),
+			compile = settings.compile,
+			defaultTemplate = settings.defaults.template,
+			data = {
 				name: project.name,
 				description: project.description,
-				guide: {
-
-				}
+				compile: compile,
+				patterns: []
 			};
 
+		rootPath.pop();
+		rootPath = rootPath.join('/');
+
+		Object.keys(compile).forEach(function(key) {
+			var block = compile[key],
+				patterns = block.patterns,
+				root = block.root || '',
+				template = grunt.file.read(Wee.buildPath(block.template || defaultTemplate, rootPath)),
+				target = Wee.buildPath(block.target, rootPath);
+
+			data.patterns = [];
+
 			patterns.forEach(function(name, i) {
-				var pattern = grunt.file.read(name),
-					results = reg.exec(pattern),
-					root = data.guide,
-					obj = {
-						name: name.replace(/^.*[\\\/]/, '').split('.')[0]
-					};
+				var pattern = '';
 
-				// Determine path
-				var relative = name.replace(patternPath + '/', '').split('/'),
-					len = relative.length;
+				if (name.substring(0, 5) == 'https') {
+				// 	var https = require('https');
+				//
+				// 	https.get(name, function(response) {
+				// 		var body = '';
+				//
+				// 		response.on('data', function(d) {
+				// 			body += d;
+				// 		});
+				//
+				// 		response.on('end', function() {
+				// 			pattern = body;
+				// 			done();
+				// 		});
+				// 	});
+				} else if (name.substring(0, 4) == 'http') {
+				// 	var http = require('http');
+				//
+				// 	http.get(name, function(response) {
+				// 		var body = '';
+				//
+				// 		response.on('data', function(d) {
+				// 			body += d;
+				// 		});
+				//
+				// 		response.on('end', function() {
+				// 			pattern = body;
+				// 			console.log(body);
+				// 			done();
+				// 		});
+				// 	});
+				} else if (name.substring(0, 2) == '//') {
+				// 	pattern = '';
+				} else {
+					var path = Wee.buildPath(root + name, rootPath);
 
-				if (len > 1) {
-					for (var x = 0; x < (len - 1); x++) {
-						var level = relative[x];
+					pattern = grunt.file.read(path);
+				}
 
-						// Create nested array if it doesn't exist
-						if (root[level] === undefined) {
-							root[level] = [];
+				var obj = {
+					name: name.replace(/^.*[\\\/]/, '').split('.')[0],
+					blocks: []
+				};
+
+				if (pattern.substring(0, 3) == '---') {
+					var results = reg.exec(pattern);
+
+					// If the YAML exists then extend it into the default
+					if (results[2] !== undefined) {
+						var front = yaml.load(results[2]);
+						obj = Wee.$extend(obj, front);
+					}
+
+					obj.markup = results[3].trim();
+				} else {
+					obj.markup = pattern;
+				}
+
+				var codeReg = /`{3}[a-z]+[\s\S]*?`{3}/g,
+					codeBlocks = obj.markup.match(codeReg);
+
+				if (codeBlocks && codeBlocks.length > 0) {
+					codeBlocks.forEach(function(block) {
+						var segs = block.match(/`{3}(.*)+/)[0].replace('```', '').split('|'),
+							code = block.replace(/`{3}(.+)?/g, ''),
+							lang = segs[0] || 'html';
+
+						if (segs.indexOf('hideBlock') == -1) {
+							obj.blocks.push({
+								lang: lang,
+								code: code.trim()
+							});
 						}
 
-						// Set current root to nested level
-						root = root[level];
-					}
-				} else {
-					// Create root array if it doesn't exist
-					if (root.root === undefined) {
-						root.root = [];
-					}
-
-					root = root.root;
+						if (segs.indexOf('hide') !== -1) {
+							obj.markup = obj.markup.replace(block, '');
+						} else {
+							obj.markup = obj.markup.replace(block, code);
+						}
+					});
 				}
 
-				// If the YAML exists then extend it into the default
-				if (results[2] !== undefined) {
-					var front = yaml.load(results[2]);
-					obj = Wee.$extend(obj, front);
-				}
+				obj.markup = marked(obj.markup);
 
-				obj.markup = results[3].trim();
 				obj.$i = i;
 
-				root.unshift(obj);
+				data.patterns.push(obj);
 			});
 
-			var parsed = Wee.parse(template, data);
+			grunt.file.write(target, Wee.parse(template, data));
+		});
 
-			grunt.file.write(targetPath, parsed);
-
-			var browserSync = require(global.nodePath + '/grunt-browser-sync/node_modules/browser-sync');
-
-			setTimeout(function() {
-				browserSync.reload();
-			}, 800);
-		}
+		setTimeout(function() {
+			browserSync.reload();
+		}, 800);
 	});
 };

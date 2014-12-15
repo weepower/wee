@@ -87,46 +87,61 @@ module.exports = Wee = {
 
 		return obj;
 	},
-	pair: /{{([#^@]?)+(.+?)}}([\s\S]+?){{\/\1\2}}/g,
+	$unique: function(arr) {
+		return arr.reverse().filter(function(e, i, arr) {
+			return arr.indexOf(e, i + 1) === -1;
+		}).reverse();
+	},
+	pair: /{{(#)(.+?)}}([\s\S]+?){{\/\1\2}}/g,
 	single: /{{(.+?)}}/g,
 	render: function(temp, data, conf, index) {
 		var scope = this;
 
 		return temp.replace(this.pair, function(m, pre, tag, inner) {
+			var segs = tag.match(/(?:[^|]|\|\|)+/g),
+				len = segs.length,
+				filter = len > 1 ? segs[len - 1] : '';
+			tag = segs[0];
+
 			var val = scope.getValue(data, tag, conf, index),
 				empty = val === undefined || val.length === 0,
 				resp = '';
 
-			if (pre == '#' && ! empty && typeof val == 'object') {
+			if (filter === '' && ! empty && typeof val == 'object') {
 				// Loop through objects and arrays
 				if (typeof val == 'object') {
 					var isObj = Wee.$isObject(val),
-						i = 0;
+						keys = Object.keys(val),
+						i = 0,
+						x = 0;
 
-					for (var key in val) {
-						// Merge in iterative data
-						var item = Wee.$extend({
-							$key: key,
-							$val: val[key],
-							$i: i
-						}, isObj ? val : val[key]);
+					for (; i < keys.length; i++) {
+						// Merge iterative data
+						var key = keys[i],
+							item = Wee.$extend({
+								$key: key,
+								$val: val[key],
+								$i: x
+							}, isObj ? val : val[key]);
 
-						resp += scope.render(inner, item, conf, i);
+						resp += scope.render(inner, item, conf, x);
 
-						i++;
+						x++;
 					}
 				}
-			} else if ((pre == '^' && empty) || (pre == '@' && ! empty)) {
+			} else if ((filter == 'notEmpty' && ! empty) || (filter == 'empty' && empty)) {
 				return scope.render(inner, data, conf);
 			}
 
 			return resp;
 		}).replace(this.single, function(m, tag) {
-			var opt = conf;
+			var opt = conf,
+				segs = tag.match(/(?:[^|]|\|\|)+/g),
+				len = segs.length,
+				filter = len > 1 ? segs[len - 1] : '';
+			tag = segs[0];
 
-			// With % prefix output raw
-			if (tag.charAt(0) == '%') {
-				tag = tag.substring(1);
+			if (filter == 'raw') {
 				opt = Wee.$extend({
 					escape: false
 				});
@@ -147,29 +162,29 @@ module.exports = Wee = {
 		// Loop through object segments
 		for (; i <= len; i++) {
 			key = resp[i];
-			var obj = data[key];
+			data = data[key];
 
 			// Return value on last segment
 			if (i === len) {
 				if (key.charAt(0) == '&') {
-					obj = conf.data[key.substring(1)];
+					data = conf.data[key.substring(1)];
 				}
 
 				if (typeof data == 'function') {
-					obj = data(orig, conf.data, x);
+					data = data(orig, conf.data, x);
 				}
 
-				if (typeof obj == 'string') {
+				if (typeof data == 'string') {
 					// Encode tags by default
-					return conf.escape ? obj
-						.replace(/&amp;/g, '&')
-						.replace(/&/g, '&amp;')
-						.replace(/</g, '&lt;')
-						.replace(/>/g, '&gt;')
-						.replace(/"/g, '&quot;') :
-						obj;
-				} else if (obj !== undefined) {
-					return obj;
+					return conf.escape ?
+						data.replace(/&amp;/g, '&')
+							.replace(/&/g, '&amp;')
+							.replace(/</g, '&lt;')
+							.replace(/>/g, '&gt;')
+							.replace(/"/g, '&quot;') :
+						data;
+				} else if (data !== undefined) {
+					return data;
 				}
 			}
 		}
@@ -186,15 +201,14 @@ module.exports = Wee = {
 
 				if (project.script.validate.jshint) {
 					// JSHint
-					var jshint = require('jshint').JSHINT,
-						jshintConfig = grunt.file.readJSON(
+					var jshintConfig = grunt.file.readJSON(
 							project.script.validate.jshint === true ?
 								config.assetPath + '/wee/script/.jshintrc' :
 								project.script.validate.jshint
-							);
+						);
 
-					if (! jshint(js, jshintConfig)) {
-						var out = jshint.data(),
+					if (! global.jshint(js, jshintConfig)) {
+						var out = global.jshint.data(),
 							errors = out.errors,
 							total = errors.length;
 

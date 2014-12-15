@@ -140,17 +140,22 @@
 			}, opt), 0);
 		}
 	}, {
-		pair: /{{([#^@]?)+(.+?)}}([\s\S]+?){{\/\1\2}}/g,
+		pair: /{{#(.+?)}}([\s\S]+?){{\/#\1}}/g,
 		single: /{{(.+?)}}/g,
 		render: function(temp, data, conf, index) {
 			var scope = this;
 
-			return temp.replace(this.pair, function(m, pre, tag, inner) {
+			return temp.replace(this.pair, function(m, tag, inner) {
+				var segs = tag.match(/(?:[^|]|\|\|)+/g),
+					len = segs.length,
+					filter = len > 1 ? segs[len - 1] : '';
+				tag = segs[0];
+
 				var val = scope.getValue(data, tag, conf, index),
 					empty = val === U || val.length === 0,
 					resp = '';
 
-				if (pre == '#' && ! empty && typeof val == 'object') {
+				if (filter === '' && ! empty && typeof val == 'object') {
 					// Loop through objects and arrays
 					if (typeof val == 'object') {
 						var isObj = W.$isObject(val),
@@ -159,7 +164,7 @@
 							x = 0;
 
 						for (; i < keys.length; i++) {
-							// Merge in iterative data
+							// Merge iterative data
 							var key = keys[i],
 								item = W.$extend({
 									$key: key,
@@ -172,17 +177,19 @@
 							x++;
 						}
 					}
-				} else if ((pre == '^' && empty) || (pre == '@' && ! empty)) {
+				} else if ((filter == 'notEmpty' && ! empty) || (filter == 'empty' && empty)) {
 					return scope.render(inner, data, conf);
 				}
 
 				return resp;
 			}).replace(this.single, function(m, tag) {
-				var opt = conf;
+				var opt = conf,
+					segs = tag.match(/(?:[^|]|\|\|)+/g),
+					len = segs.length,
+					filter = len > 1 ? segs[len - 1] : '';
+				tag = segs[0];
 
-				// With % prefix output raw
-				if (tag.charAt(0) == '%') {
-					tag = tag.substring(1);
+				if (filter == 'raw') {
 					opt = W.$extend({
 						escape: false
 					});

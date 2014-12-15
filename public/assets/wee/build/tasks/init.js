@@ -1,10 +1,8 @@
-/* global config, project */
+/* global config, global, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('init', function() {
-		var configFile = './' + (grunt.option('config') || 'project.json');
-
-		project = JSON.parse(grunt.file.read(configFile));
+		global.project = grunt.file.readJSON(global.configPath);
 
 		// Reset config object
 		config = {
@@ -12,7 +10,7 @@ module.exports = function(grunt) {
 		};
 
 		// Set project file paths
-		config.filePath = configFile;
+		config.configPath = configPath;
 
 		config.assetPath = (project.paths.root !== '') ?
 			project.paths.root + '/' + project.paths.assets :

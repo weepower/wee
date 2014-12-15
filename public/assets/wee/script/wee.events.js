@@ -42,19 +42,19 @@
 		// Bind specified function to specified element and event
 		// Options include arguments, context, one, scope, and delegate
 		on: function(sel, a, b, c) {
+			var evts = [];
+
 			if (W.$isObject(sel) && ! sel._$_) {
 				var keys = Object.keys(sel),
 					i = 0;
 
 				for (; i < keys.length; i++) {
-					var key = keys[i],
-						evts = sel[key];
+					var key = keys[i];
+					evts = sel[key];
 
 					this.$private('bind', key, evts, a);
 				}
 			} else {
-				var evts = [];
-
 				if (W.$isString(a)) {
 					evts[a] = b;
 				} else {
