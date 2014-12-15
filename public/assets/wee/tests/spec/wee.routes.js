@@ -56,12 +56,22 @@ QUnit.test('Map Routes', 1, function(assert) {
 // Method: routes.run(opt)
 
 QUnit.test('Run Routes', function(assert) {
+	Wee.routes.map({
+		'$any': function() {
+			return 'any';
+		}
+	});
+
+	assert.strictEqual(Wee.routes.run(), undefined, 'Any route executed successfully.');
+});
+
+QUnit.test('Run Routes', function(assert) {
 	Wee.routes.run({
 		path: '/test/route',
 		routes: {
 			'test': {
 				'route': function() {
-					assert.ok(true, true, 'Route executed successfully.');
+					assert.ok(true, true, 'Specific route executed successfully.');
 				}
 			}
 		}
