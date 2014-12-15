@@ -1,5 +1,13 @@
 /* global config, global, project */
 
+if (project.script.validate.jshint) {
+	global.jshint = require('jshint').JSHINT;
+}
+
+if (project.script.validate.jscs) {
+	global.jscs = require('jscs');
+}
+
 module.exports = function(grunt) {
 	global.config = {};
 	global.style = {};
@@ -226,7 +234,7 @@ module.exports = function(grunt) {
 			},
 			project: {
 				files: [
-					'<%= config.filePath %>',
+					'<%= config.configPath %>',
 					'<%= config.modules.rootPath %>/*/module.json'
 				],
 				tasks: [
@@ -237,11 +245,70 @@ module.exports = function(grunt) {
 		}
 	});
 
-	if (project.script.validate.watch || project.style.validate.watch) {
+	if (global.project.script.validate.watch || global.project.style.validate.watch) {
 		grunt.event.on('watch', function(action, filepath) {
 			if (action !== 'deleted') {
 				Wee.validate(config, grunt, filepath);
 			}
 		});
 	}
+
+	// -------------------------------------
+	// Load Plugins
+	// -------------------------------------
+
+	grunt.loadNpmTasks('grunt-browser-sync');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-imagemin');
+	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-newer');
+	grunt.loadNpmTasks('grunt-notify');
+
+	// -----------------------------------
+	// Grunt Tasks
+	// -----------------------------------
+
+	grunt.registerTask('default', [
+		'init',
+		'cleanup',
+		'configStyle',
+		'configScript',
+		'configModules',
+		'configGuide',
+		'bindConfig',
+		'buildStyle',
+		'buildLegacy',
+		'uglify:core',
+		'uglify:lib',
+		'imagemin'
+	]);
+
+	// Build + Watch
+	grunt.registerTask('local', [
+		'default',
+		'reload',
+		'proxy',
+		'watch'
+	]);
+
+	// Build + Server + Open + Watch
+	grunt.registerTask('static', [
+		'default',
+		'reload',
+		'server',
+		'watch'
+	]);
+
+	// Validate
+	grunt.registerTask('validate', [
+		'init',
+		'runValidation'
+	]);
+
+	// Update
+	grunt.registerTask('update', [
+		'checkUpdates'
+	]);
 };
