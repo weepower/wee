@@ -1,7 +1,6 @@
-# [Wee 2.1.0-beta.11](http://www.weepower.com)
+# [Wee 2.1.0-beta.12](http://www.weepower.com)
 
-Wee is a front-end development framework for building full featured web projects. It bundles many of the components developers need to architect and build methodical, responsive websites and apps.
-
+Wee is a front-end development framework for methodically building complex, responsive web projects.  
 To read more, visit [weepower.com](http://www.weepower.com).
 
 ### Features

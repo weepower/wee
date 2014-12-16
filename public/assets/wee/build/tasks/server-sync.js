@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 
 		if (reloadConfig.enable === true) {
 			var reloadWatch = reloadConfig.watch,
-			reloadExtensions = reloadWatch.extensions.join();
+				reloadExtensions = reloadWatch.extensions.join();
 
 			if (reloadWatch.extensions.length > 1) {
 				reloadExtensions = '{' + reloadExtensions + '}';
@@ -20,11 +20,11 @@ module.exports = function(grunt) {
 
 			// Add root to watchlist
 			if (reloadWatch.root === true) {
-				reloadPaths.push(project.paths.root + '/**/*.' + reloadExtensions);
+				reloadPaths.unshift(project.paths.root + '/**/*.' + reloadExtensions);
 			}
 
 			// Bind BrowserSync watchlist
-			reloadPaths.push(config.assetPath + '/**/*.{min.css,min.js,gif,jpg,png,svg}');
+			reloadPaths.unshift(config.assetPath + '/**/*.{min.css,min.js,gif,jpg,png,svg}');
 
 			server.files = reloadPaths;
 		}

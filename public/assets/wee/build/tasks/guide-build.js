@@ -125,8 +125,6 @@ module.exports = function(grunt) {
 			grunt.file.write(target, Wee.parse(template, data));
 		});
 
-		setTimeout(function() {
-			browserSync.reload();
-		}, 800);
+		browserSync.reload();
 	});
 };

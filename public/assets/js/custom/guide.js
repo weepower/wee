@@ -24,8 +24,8 @@ Wee.fn.make('guide', {
 		Wee.assets.load({
 			root: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/',
 			files: [
-			'styles/default.min.css',
-			'highlight.min.js'
+				'styles/default.min.css',
+				'highlight.min.js'
 			],
 			success: function() {
 				hljs.initHighlightingOnLoad();

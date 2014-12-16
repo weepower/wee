@@ -11,7 +11,7 @@ Caddis / hello@caddis.co / twitter.com/caddisint
 #------------------------------------
 
 Standards: HTML5, CSS3, ARIA, Schema
-Components: Wee, Less.js
+Components: Wee, Less
 
 __  _  __ ____   ____
 \ \/ \/ // __ \_/ __ \

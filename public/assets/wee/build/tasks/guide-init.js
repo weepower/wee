@@ -29,6 +29,7 @@ module.exports = function(grunt) {
 					var path = Wee.buildPath(root + name, rootPath);
 
 					watchFiles.push(path);
+					reloadPaths.push('!' + path);
 				});
 			});
 
