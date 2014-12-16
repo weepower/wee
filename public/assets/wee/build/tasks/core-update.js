@@ -30,8 +30,7 @@ module.exports = function(grunt) {
 
 					if (grunt.option('install')) {
 						// Download latest tag
-						var fs = require('fs'),
-							dest = data.version + '.zip',
+						var dest = data.version + '.zip',
 							url = 'https://github.com/weepower/wee/archive/' + dest,
 							file = fs.createWriteStream(dest);
 
@@ -80,7 +79,6 @@ module.exports = function(grunt) {
 			});
 		}).on('error', function(e) {
 			grunt.log.error(e);
-
 			done();
 		});
 	});

@@ -1,8 +1,6 @@
-/* global config, project */
+/* global config, fs, project */
 
 module.exports = function(grunt) {
-	var fs = require('fs');
-
 	grunt.registerTask('cleanup', function() {
 		// Remove temp files
 		fs.readdirSync(config.tempPath).forEach(function(file) {

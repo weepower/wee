@@ -1,6 +1,4 @@
-/* global global, project */
-
-var fs = require('fs');
+/* global config, notifier, project */
 
 module.exports = Wee = {
 	// Build root or relative path
@@ -53,14 +51,6 @@ module.exports = Wee = {
 
 		return dest + '/' + dir + filename + ext;
 	},
-	// Parse specified data into specified template string
-	// Return string
-	parse: function(temp, data) {
-		return this.render(temp, data, {
-			data: data,
-			escape: true
-		}, 0);
-	},
 	// Determine if specified argument is an object
 	$isObject: function(obj) {
 		return obj && obj.constructor === Object;
@@ -91,6 +81,14 @@ module.exports = Wee = {
 		return arr.reverse().filter(function(e, i, arr) {
 			return arr.indexOf(e, i + 1) === -1;
 		}).reverse();
+	},
+	// Parse specified data into specified template string
+	// Return string
+	parse: function(temp, data) {
+		return this.render(temp, data, {
+			data: data,
+			escape: true
+		}, 0);
 	},
 	pair: /{{(#)(.+?)}}([\s\S]+?){{\/\1\2}}/g,
 	single: /{{(.+?)}}/g,
@@ -207,8 +205,8 @@ module.exports = Wee = {
 								project.script.validate.jshint
 						);
 
-					if (! global.jshint(js, jshintConfig)) {
-						var out = global.jshint.data(),
+					if (! jshint(js, jshintConfig)) {
+						var out = jshint.data(),
 							errors = out.errors,
 							total = errors.length;
 
@@ -233,7 +231,7 @@ module.exports = Wee = {
 								config.assetPath + '/wee/script/.jscs.json' :
 								project.script.validate.jscs
 						),
-						checker = new global.jscs();
+						checker = new jscs();
 
 					checker.registerDefaultRules();
 					checker.configure(jscsConfig);
@@ -255,6 +253,18 @@ module.exports = Wee = {
 		}
 	},
 	logError: function(grunt, pos, msg, details) {
+		this.notify({
+			title: 'Validation Error',
+			message: 'Check console for error details'
+		});
+
 		grunt.log.writeln('['.cyan + pos + '] '.cyan + msg + ' ' + details.magenta);
+	},
+	notify: function(data) {
+		notifier.notify({
+			title: data.title,
+			message: data.message,
+			icon: config.assetPath + '/wee/build/icon.png'
+		});
 	}
 };

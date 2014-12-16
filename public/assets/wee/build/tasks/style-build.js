@@ -2,16 +2,11 @@
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildStyle', function() {
-		var Wee = require('../core.js');
-
-		// Inject imports into core
 		var weeStyleRoot = config.assetPath + '/wee/style',
 			less = grunt.file.read(weeStyleRoot + '/wee.less'),
 			imports = [],
-			inject = '';
-
-		// Build directory style
-		var buildFiles = Wee.getFiles(style.rootPath + '/build', ['less', 'css']);
+			inject = '',
+			buildFiles = Wee.getFiles(style.rootPath + '/build', ['less', 'css']);
 
 		buildFiles.forEach(function(name) {
 			name = '../..' + name.replace(config.assetPath, '');

@@ -2,8 +2,7 @@
 
 module.exports = function(grunt) {
 	grunt.registerTask('initGuide', function() {
-		var Wee = require('../core.js'),
-			guide = project.style.guide;
+		var guide = project.style.guide;
 
 		if (guide.watch === true) {
 			// Set paths

@@ -6,8 +6,7 @@ module.exports = function(grunt) {
 
 		if (guide.enable === true) {
 			if (guide.watch === true) {
-				var Wee = require('../core.js'),
-					configPath = Wee.buildPath(guide.config, config.assetPath);
+				var configPath = Wee.buildPath(guide.config, config.assetPath);
 
 				// Watch for guide config updates
 				grunt.config.merge({

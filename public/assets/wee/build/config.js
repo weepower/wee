@@ -1,5 +1,14 @@
 /* global config, global, project */
 
+// -------------------------------------
+// Load Dependencies
+// -------------------------------------
+
+global.fs = require('fs');
+global.browserSync = require('browser-sync');
+global.notifier = require('node-notifier');
+global.Wee = require('./core.js');
+
 if (project.script.validate.jshint) {
 	global.jshint = require('jshint').JSHINT;
 }
@@ -8,10 +17,15 @@ if (project.script.validate.jscs) {
 	global.jscs = require('jscs');
 }
 
+// -------------------------------------
+// Configure Grunt
+// -------------------------------------
+
 module.exports = function(grunt) {
 	global.config = {};
 	global.style = {};
 	global.script = {};
+	global.server = {};
 	global.modules = {};
 	global.legacy = {};
 	global.reloadPaths = [];
@@ -108,40 +122,6 @@ module.exports = function(grunt) {
 				]
 			}
 		},
-		browserSync: {
-			options: {
-				notify: false,
-				open: 'external',
-				watchTask: true
-			}
-		},
-		notify: {
-			images: {
-				options: {
-					message: 'Images minified'
-				}
-			},
-			script: {
-				options: {
-					message: 'Script compiled'
-				}
-			},
-			style: {
-				options: {
-					message: 'Style compiled'
-				}
-			},
-			legacy: {
-				options: {
-					message: 'Legacy style compiled'
-				}
-			},
-			project: {
-				options: {
-					message: 'Project config updated'
-				}
-			}
-		},
 		watch: {
 			options: {
 				spawn: false
@@ -152,14 +132,14 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'newer:imagemin',
-					'notify:images'
+					'notifyImages'
 				]
 			},
 			scriptCore: {
 				files: '<%= config.script.files %>',
 				tasks: [
 					'uglify:core',
-					'notify:script'
+					'notifyScript'
 				]
 			},
 			scriptLib: {
@@ -169,7 +149,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'uglify:lib',
-					'notify:script'
+					'notifyScript'
 				]
 			},
 			styleCore: {
@@ -179,8 +159,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'less:core',
-					'concat:style',
-					'notify:style'
+					'concat:style'
 				]
 			},
 			styleLib: {
@@ -190,7 +169,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'less:lib',
-					'notify:style'
+					'notifyStyle'
 				]
 			},
 			styleBuild: {
@@ -199,7 +178,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'buildStyle',
-					'notify:style'
+					'notifyStyle'
 				],
 				options: {
 					event: [
@@ -215,7 +194,7 @@ module.exports = function(grunt) {
 				tasks: [
 					'less:core',
 					'concat:style',
-					'notify:style'
+					'notifyStyle'
 				],
 				options: {
 					event: [
@@ -229,7 +208,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'concat:style',
-					'notify:style'
+					'notifyStyle'
 				]
 			},
 			project: {
@@ -239,13 +218,14 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'default',
-					'notify:project'
+					'notifyCore'
 				]
 			}
 		}
 	});
 
-	if (global.project.script.validate.watch || global.project.style.validate.watch) {
+	// Watch for changes to validate
+	if (project.script.validate.watch || project.style.validate.watch) {
 		grunt.event.on('watch', function(action, filepath) {
 			if (action !== 'deleted') {
 				Wee.validate(config, grunt, filepath);
@@ -257,14 +237,12 @@ module.exports = function(grunt) {
 	// Load Plugins
 	// -------------------------------------
 
-	grunt.loadNpmTasks('grunt-browser-sync');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-newer');
-	grunt.loadNpmTasks('grunt-notify');
 
 	// -----------------------------------
 	// Grunt Tasks
@@ -288,16 +266,16 @@ module.exports = function(grunt) {
 	// Build + Watch
 	grunt.registerTask('local', [
 		'default',
-		'reload',
 		'proxy',
+		'sync',
 		'watch'
 	]);
 
 	// Build + Server + Open + Watch
 	grunt.registerTask('static', [
 		'default',
-		'reload',
 		'server',
+		'sync',
 		'watch'
 	]);
 

@@ -1,11 +1,9 @@
-/* global config, global, project */
+/* global browserSync, config, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildGuide', function() {
-		var Wee = require('../core.js'),
-			yaml = require('js-yaml'),
+		var yaml = require('js-yaml'),
 			marked = require('marked'),
-			browserSync = require(global.rootPath + '/node_modules/grunt-browser-sync/node_modules/browser-sync'),
 			guide = project.style.guide,
 			reg = /^(-{3}(?:\n|\r)([\w\W]+?)-{3})?([\w\W]*)*/,
 			configPath = Wee.buildPath(guide.config, config.assetPath),

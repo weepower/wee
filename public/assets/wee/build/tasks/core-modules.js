@@ -1,7 +1,5 @@
 module.exports = function(grunt) {
 	grunt.registerTask('configModules', function() {
-		var fs = require('fs');
-
 		// Set global config
 		modules = {
 			rootPath: config.assetPath + '/modules'
@@ -21,10 +19,8 @@ module.exports = function(grunt) {
 				// Ensure the module.json file exists
 				if (grunt.file.exists(configFile)) {
 					// Get module config
-					var module = JSON.parse(grunt.file.read(configFile));
-
-					// Setup module config
-					var moduleScript = [
+					var module = JSON.parse(grunt.file.read(configFile)),
+						moduleScript = [
 							path + '/module/script/*.js'
 						],
 						vars = JSON.parse(JSON.stringify(style.vars)),

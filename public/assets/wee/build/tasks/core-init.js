@@ -1,8 +1,8 @@
-/* global config, global, project */
+/* global config, configPath, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('init', function() {
-		global.project = grunt.file.readJSON(global.configPath);
+		project = grunt.file.readJSON(configPath);
 
 		// Reset config object
 		config = {

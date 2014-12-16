@@ -2,8 +2,6 @@
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildLegacy', function() {
-		var Wee = require('../core.js');
-
 		legacy = project.style.legacy;
 
 		// Ensure legacy support is enabled
@@ -79,7 +77,7 @@ module.exports = function(grunt) {
 							tasks: watchedTasks.concat([
 								'less:legacy',
 								'convertRem',
-								'notify:legacy'
+								'notifyLegacy'
 							])
 						}
 					}
@@ -95,7 +93,7 @@ module.exports = function(grunt) {
 							tasks: [
 								'less:legacy',
 								'convertRem',
-								'notify:legacy'
+								'notifyLegacy'
 							]
 						}
 					}
@@ -104,7 +102,7 @@ module.exports = function(grunt) {
 
 			grunt.task.run('less:legacy');
 			grunt.task.run('convertRem');
-			grunt.task.run('notify:legacy');
+			grunt.task.run('notifyLegacy');
 		}
 	});
 };

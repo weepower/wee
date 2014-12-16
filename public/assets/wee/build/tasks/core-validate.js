@@ -2,8 +2,7 @@
 
 module.exports = function(grunt) {
 	grunt.registerTask('runValidation', function() {
-		var Wee = require('../core.js'),
-			scriptPath = config.assetPath + '/js',
+		var scriptPath = config.assetPath + '/js',
 			scripts = Wee.getFiles(scriptPath, 'js');
 
 		// Validate scripts

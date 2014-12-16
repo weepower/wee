@@ -2,8 +2,6 @@
 
 module.exports = function(grunt) {
 	grunt.registerTask('configStyle', function() {
-		var Wee = require('../core.js');
-
 		// Set global config
 		style = {
 			rootPath: config.assetPath + '/css',

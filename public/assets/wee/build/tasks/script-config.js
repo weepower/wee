@@ -2,8 +2,6 @@
 
 module.exports = function(grunt) {
 	grunt.registerTask('configScript', function() {
-		var Wee = require('../core.js');
-
 		// Set global config
 		script = {
 			rootPath: config.assetPath + '/js',
