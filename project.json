@@ -42,7 +42,7 @@
 		},
 		"guide": {
 			"enable": true,
-			"watch": true,
+			"watch": false,
 			"config": "guide/config.json"
 		}
 	},

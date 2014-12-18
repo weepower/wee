@@ -35,7 +35,7 @@
 		<ol class="jump__links">
 			{{#compile}}
 			<li><a href="{{$val.target}}">{{$key}}</a></li>
-			{{/#compile}}
+			{{/compile}}
 		</ol>
 	</nav>
 	{{#patterns}}
@@ -43,14 +43,14 @@
 		<h3 class="guide-pattern__title"></a>{{name}}</h3>
 		{{#heading|notEmpty}}
 		<p class="guide-pattern__heading">{{heading}}</p>
-		{{/#heading|notEmpty}}
+		{{/heading|notEmpty}}
 		<div class="guide-pattern__output {{class}}">{{markup|raw}}</div>
 		{{#blocks}}
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="{{$val.lang}}">&lt;{{$val.lang}}/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="{{$val.lang}}">{{$val.code}}</code></pre>
-		{{/#blocks}}
+		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="{{lang}}">&lt;{{lang}}/&gt;</div>
+		<pre class="guide-pattern__input js-hide"><code class="{{lang}}">{{code}}</code></pre>
+		{{/blocks}}
 	</div>
-	{{/#patterns}}
+	{{/patterns}}
 </main>
 <script src="/assets/js/script.min.js"></script>
 <script src="/assets/js/guide.min.js"></script>
