@@ -28,57 +28,16 @@ module.exports = function(grunt) {
 						type = 'major update';
 					}
 
-					if (grunt.option('install')) {
-						// Download latest tag
-						var dest = data.version + '.zip',
-							url = 'https://github.com/weepower/wee/archive/' + dest,
-							file = fs.createWriteStream(dest);
-
-						https.get(url, function(response) {
-							response.pipe(file);
-
-							file.on('finish', function() {
-								file.close(function() {
-									console.log('Success');
-								});
-							});
-						}).on('error', function() {
-							fs.unlink(dest);
-							grunt.log.error('Unable to download latest version.');
-						});
-
-						// Extract to temp directory
-
-
-						// Replace Wee directory
-						// Replace Gruntfile.js
-						// Replace package.json
-						// Remove temp directory
-
-						// Run npm_update
-						var exec = require('child_process').exec;
-
-						exec('npm update', function() {
-							grunt.log.ok('NPM modules have been updated.');
-						});
-
-						grunt.log.ok('Wee has been successfully updated.');
-						grunt.log.ok('Run one of the Grunt build tasks to update your compiled code.');
-					} else {
-						grunt.log.ok('A new ' + type + ' is available.');
-						grunt.log.ok('Run "grunt update --install" to update to version ' + data.version + ' from ' + version + '.');
-						grunt.log.ok('Be sure to READ THE CHANGELOG (https://github.com/weepower/wee/blob/master/CHANGELOG.md) before updating.');
-
-						// Check modules
-					}
+					grunt.log.ok('A new ' + type + ' is available to ' + data.version + ' from ' + version + '.');
+					grunt.log.ok('Read the release notes at https://github.com/weepower/wee/releases before updating.');
 				} else {
-					grunt.log.ok('You are running the latest version of Wee, ' + version + '.');
+					grunt.log.ok('You are running the latest version ' + version + '.');
 				}
 
 				done();
 			});
 		}).on('error', function(e) {
-			grunt.log.error(e);
+			grunt.log.error('Error trying to access Wee repository at https://github.com/weepower/wee.');
 			done();
 		});
 	});
