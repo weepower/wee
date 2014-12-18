@@ -64,11 +64,11 @@ QUnit.test('Parse Template', 8, function(assert) {
 
 	assert.strictEqual(Wee.data.parse('{{firstName}} {{lastName}}', data), 'Keith Roberts', 'Two variables parsed successfully.');
 
-	assert.strictEqual(Wee.data.parse('{{#children|notEmpty}}Has children{{/#children|notEmpty}}', data), 'Has children', 'Children exist.');
+	assert.strictEqual(Wee.data.parse('{{#children|notEmpty}}Has children{{/children|notEmpty}}', data), 'Has children', 'Children exist.');
 
-	assert.strictEqual(Wee.data.parse('{{#cousins|notEmpty}}Has cousins{{/#cousins|notEmpty}}', data), '', 'There are no cousins.');
+	assert.strictEqual(Wee.data.parse('{{#cousins|notEmpty}}Has cousins{{/cousins|notEmpty}}', data), '', 'There are no cousins.');
 
-	assert.strictEqual(Wee.data.parse('{{#cousins|empty}}No cousins{{/#cousins|empty}}', data), 'No cousins', 'There are no cousins.');
+	assert.strictEqual(Wee.data.parse('{{#cousins|empty}}No cousins{{/cousins|empty}}', data), 'No cousins', 'There are no cousins.');
 
-	assert.strictEqual(Wee.data.parse('<ul>{{#children}}<li>{{firstName}}</li>{{/#children}}</ul>', data), '<ul><li>Tim</li><li>Kathy</li></ul>', 'Child variables parsed successfully.');
+	assert.strictEqual(Wee.data.parse('<ul>{{#children}}<li>{{firstName}}</li>{{/children}}</ul>', data), '<ul><li>Tim</li><li>Kathy</li></ul>', 'Child variables parsed successfully.');
 });
