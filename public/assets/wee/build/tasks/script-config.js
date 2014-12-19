@@ -56,6 +56,10 @@ module.exports = function(grunt) {
 			if (features.screen === true) {
 				script.files.push(weeScriptRoot + 'wee.screen.js');
 			}
+
+			if (features.view === true) {
+				script.files.push(weeScriptRoot + 'wee.view.js');
+			}
 		}
 
 		// Build/vendor directory scripts

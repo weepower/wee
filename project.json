@@ -56,7 +56,8 @@
 				"dom": true,
 				"events": true,
 				"routes": true,
-				"screen": true
+				"screen": true,
+				"view": true
 			}
 		},
 		"build": [
