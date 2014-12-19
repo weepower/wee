@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 
 		// Validate scripts
 		scripts.forEach(function(filepath) {
-			if (filepath.indexOf('.min.js') == -1) {
+			if (filepath.indexOf('polyfill') == -1 && filepath.indexOf('.min.js') == -1) {
 				Wee.validate(config, grunt, filepath);
 			}
 		});
