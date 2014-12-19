@@ -1,6 +1,6 @@
 {
 	"name": "wee",
-	"version": "2.1.0-beta.14",
+	"version": "2.1.0-rc.1",
 	"description": "Blueprint for modern web development",
 	"homepage": "http://www.weepower.com",
 	"keywords": [
@@ -35,7 +35,7 @@
 		"browser-sync": "~1.8.0",
 		"js-yaml": "~3.2.3",
 		"jscs": "~1.8.1",
-		"jshint": "~2.5.10",
+		"jshint": "~2.5.11",
 		"marked": "~0.3.2",
 		"node-notifier": "~4.0.3"
 	}
