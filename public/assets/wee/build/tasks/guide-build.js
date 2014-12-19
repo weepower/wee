@@ -33,39 +33,25 @@ module.exports = function(grunt) {
 			patterns.forEach(function(name, i) {
 				var pattern = '';
 
-				if (name.substring(0, 5) == 'https') {
-				// 	var https = require('https');
-				//
-				// 	https.get(name, function(response) {
-				// 		var body = '';
-				//
-				// 		response.on('data', function(d) {
-				// 			body += d;
-				// 		});
-				//
-				// 		response.on('end', function() {
-				// 			pattern = body;
-				// 			done();
-				// 		});
-				// 	});
-				} else if (name.substring(0, 4) == 'http') {
-				// 	var http = require('http');
-				//
-				// 	http.get(name, function(response) {
-				// 		var body = '';
-				//
-				// 		response.on('data', function(d) {
-				// 			body += d;
-				// 		});
-				//
-				// 		response.on('end', function() {
-				// 			pattern = body;
-				// 			console.log(body);
-				// 			done();
-				// 		});
-				// 	});
-				} else if (name.substring(0, 2) == '//') {
-				// 	pattern = '';
+				if (name.substring(0, 4) == 'http') {
+					var request = name.substring(4, 5) == 's' ?
+							require('https') :
+							require('http'),
+						done = this.async();
+
+					request.get(name, function(response) {
+						var body = '';
+
+						response.on('data', function(d) {
+							body += d;
+						});
+
+						response.on('end', function() {
+							pattern = body;
+							console.log(body);
+							done();
+						});
+					});
 				} else {
 					var path = Wee.buildPath(root + name, rootPath);
 
