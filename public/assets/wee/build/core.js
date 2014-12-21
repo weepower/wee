@@ -99,10 +99,10 @@ module.exports = Wee = {
 			var segs = tag.match(/(?:[^|]|\|\|)+/g),
 				len = segs.length,
 				filter = len > 1 ? segs[len - 1] : '';
-				tag = segs[0];
+			tag = segs[0];
 
 			var val = scope.getValue(data, prev, tag, conf, index),
-				empty = val === undefined || val.length === 0,
+				empty = val === false || val === undefined || val.length === 0,
 				resp = '';
 
 			if (filter === '' && ! empty && typeof val == 'object') {

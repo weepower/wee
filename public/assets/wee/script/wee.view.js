@@ -23,7 +23,7 @@
 				tag = segs[0];
 
 				var val = scope.getValue(data, prev, tag, conf, index),
-					empty = val === U || val.length === 0,
+					empty = val === false || val === U || val.length === 0,
 					resp = '';
 
 				if (filter === '' && ! empty && typeof val == 'object') {
