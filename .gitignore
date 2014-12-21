@@ -27,8 +27,7 @@ prepros.json
 codekit-config.json
 browserstack.json
 BrowserStackLocal
-/*.sublime-project
-*.sublime-workspace
+*.sublime-*
 
 
 #------------------------------------
@@ -49,3 +48,10 @@ Thumbs.db
 *.log
 *.lock
 *.vi
+
+
+#------------------------------------
+	# Gitkeep
+#------------------------------------
+
+!.gitkeep
