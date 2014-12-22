@@ -7,17 +7,21 @@ Wee.fn.make('guide', {
 		// Setup syntax highlighting
 		this.$private('highlightCode');
 
-		// Code toggle buttons
-		$('ref:toggle').on('click', this.toggleCode);
-	},
-	toggleCode: function(e, el) {
-		var $el = $(el);
-
-		if ($el.text() == 'x') {
-			$el.html('&lt;' + $el.data('lang') + '/&gt;').next().hide();
-		} else {
-			$el.text('x').next().show();
-		}
+		// Bind code toggle and selection
+		Wee.events.on({
+			'ref:code': {
+				dblclick: function(e, el) {
+					this.$private('selectCode', el);
+				}
+			},
+			'ref:toggle': {
+				click: function(e, el) {
+					this.$private('toggleCode', el);
+				}
+			}
+		}, {
+			scope: this
+		});
 	}
 }, {
 	highlightCode: function() {
@@ -31,5 +35,23 @@ Wee.fn.make('guide', {
 				hljs.initHighlightingOnLoad();
 			}
 		});
+	},
+	selectCode: function(el) {
+		var range = Wee._doc.createRange(),
+			sel = Wee._win.getSelection();
+
+		range.selectNodeContents(el);
+
+		sel.removeAllRanges();
+		sel.addRange(range);
+	},
+	toggleCode: function(el) {
+		var $el = $(el);
+
+		if ($el.text() == 'x') {
+			$el.html('&lt;' + $el.data('lang') + '/&gt;').next().hide();
+		} else {
+			$el.text('x').next().show();
+		}
 	}
 });
