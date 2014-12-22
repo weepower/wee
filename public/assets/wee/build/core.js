@@ -3,7 +3,7 @@
 module.exports = Wee = {
 	// Build root or relative path
 	buildPath: function(file, path) {
-		return file.slice(2) == './' ? file : this.concatPaths(path, file);
+		return file.substring(0, 2) == './' ? file : this.concatPaths(path, file);
 	},
 	// Join two file system paths
 	concatPaths: function(a, b) {
