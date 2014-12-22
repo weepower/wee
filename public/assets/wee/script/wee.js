@@ -543,11 +543,14 @@
 			// Convert selection to array
 			// Returns array
 			_selArray: function(sel, opt) {
+				if (sel._$_) {
+					return sel;
+				}
+
+				var el = W.$isString(sel) ? W.$(sel, opt.context) : sel;
 				opt = opt || {};
 
-				return sel._$_ ?
-					sel :
-					W.$toArray(W.$isString(sel) ? this.$(sel, opt.context) : sel);
+				return el ? W.$toArray(el) : [];
 			},
 			// Execute specified function when document is ready
 			// Returns undefined
