@@ -440,6 +440,10 @@
 	-webkit-user-select: @value;
 	user-select: @value;
 }
+.tab-size (@value: @codeBlockTabSize) {
+	-moz-tab-size: @codeBlockTabSize;
+	tab-size: @codeBlockTabSize;
+}
 
 
 
@@ -2506,11 +2510,13 @@
 	float: right;
 	.margin(.32em; false; @imageMarginBottom; @imageMarginSide);
 }
-.hide {
-	display: none;
-}
 .js-hide {
 	display: none !important;
+}
+
+// DEPRECATED
+.hide {
+	display: none;
 }
 .show {
 	display: inherit;
