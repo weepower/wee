@@ -22,11 +22,9 @@
 .wee-code();
 .wee-code-block () when (@codeEnabled = true) {
 	.rules () {
-		-moz-tab-size: @codeBlockTabSize;
-		tab-size: @codeBlockTabSize;
 		.background(@codeBlockBackground);
-		.padding(@codeBlockPaddingVertical; @codeBlockPaddingHorizontal);
 		.spaced();
+		.tab-size();
 		code {
 			.sub-rules () when not (@codeBorderColor = false) {
 				border: none;
@@ -34,8 +32,8 @@
 			background: none;
 			color: @codeBlockColor;
 			display: block;
-			padding: 0;
 			.font(@codeBlockFont; @codeBlockFontSize);
+			.padding(@codeBlockPaddingVertical; @codeBlockPaddingHorizontal);
 			.sub-rules();
 		}
 	}

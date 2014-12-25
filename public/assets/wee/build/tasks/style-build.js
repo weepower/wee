@@ -6,7 +6,12 @@ module.exports = function(grunt) {
 			less = grunt.file.read(weeStyleRoot + '/wee.less'),
 			imports = [],
 			inject = '',
-			buildFiles = Wee.getFiles(style.rootPath + '/build', ['less', 'css']);
+			buildFiles = grunt.file.expand({
+				cwd: style.rootPath + '/build'
+			}, [
+				'**/*.less',
+				'**/*.css'
+			]);
 
 		buildFiles.forEach(function(name) {
 			name = '../..' + name.replace(config.assetPath, '');
@@ -61,18 +66,16 @@ module.exports = function(grunt) {
 		// Add to concat array
 		style.concat.push(config.tempPath + '/wee.css');
 
-		// Compile lib style
-		grunt.task.run('less:lib');
+		// Run Grunt tasks
+		var tasks = [
+			'less:lib',
+			'less:core'
+		];
 
-		// Compile primary style
-		grunt.task.run('less:core');
+		tasks = tasks.concat(style.tasks);
 
-		// Compile additional style groups independently
-		style.tasks.forEach(function(task) {
-			grunt.task.run(task);
-		});
+		tasks.push('concat:style');
 
-		// Concatenate group output as necessary
-		grunt.task.run('concat:style');
+		grunt.task.run(tasks);
 	});
 };

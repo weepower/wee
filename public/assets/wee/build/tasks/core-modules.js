@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 				// Ensure the module.json file exists
 				if (grunt.file.exists(configFile)) {
 					// Get module config
-					var module = JSON.parse(grunt.file.read(configFile)),
+					var module = grunt.file.readJSON(configFile),
 						moduleScript = [
 							path + '/module/script/*.js'
 						],

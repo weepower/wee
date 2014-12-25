@@ -3,6 +3,7 @@
 
 	W.fn.make('events', {
 		// Add bindings to bound object with optional exec object and/or init boolean
+		// DEPRECATED
 		map: function(evts, a, b) {
 			this.$set('mapped', W.$extend(this.$get('mapped', {}), evts));
 
@@ -11,6 +12,7 @@
 			}
 		},
 		// Bind against elements stored in the DOM reference
+		// DEPRECATED
 		bind: function(evts, opt) {
 			var mapped = evts || this.$get('mapped');
 			evts = [];
@@ -28,10 +30,12 @@
 			}
 		},
 		// Remove bindings to bound object
+		// DEPRECATED
 		unbind: function(id, evt) {
 			this.off('ref:' + id, evt);
 		},
 		// Execute specific function by name and event
+		// DEPRECATED
 		fire: function(name, evt) {
 			var bound = this.$get('mapped');
 
@@ -72,6 +76,7 @@
 			}
 		},
 		// Bind specified function to specified element and event for single execution
+		// DEPRECATED
 		one: function(sel, a, b, c) {
 			if (W.$isString(a)) {
 				var obj = [];

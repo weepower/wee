@@ -3,13 +3,18 @@
 module.exports = function(grunt) {
 	grunt.registerTask('runValidation', function() {
 		var scriptPath = config.assetPath + '/js',
-			scripts = Wee.getFiles(scriptPath, 'js');
+			scripts = grunt.file.expand({
+				cwd: scriptPath,
+				filter: function(src) {
+					return src.indexOf('polyfill') == -1 && src.indexOf('.min.js') == -1;
+				}
+			}, '**/*.js');
 
 		// Validate scripts
-		scripts.forEach(function(filepath) {
-			if (filepath.indexOf('polyfill') == -1 && filepath.indexOf('.min.js') == -1) {
-				Wee.validate(config, grunt, filepath);
-			}
+		scripts.forEach(function(path) {
+			var script = Wee.concatPaths(scriptPath, path);
+
+			Wee.validate(config, grunt, script);
 		});
 	});
 };

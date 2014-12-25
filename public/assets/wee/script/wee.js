@@ -547,8 +547,8 @@
 					return sel;
 				}
 
-				var el = W.$isString(sel) ? W.$(sel, opt.context) : sel;
 				opt = opt || {};
+				var el = W.$isString(sel) ? W.$(sel, opt.context) : sel;
 
 				return el ? W.$toArray(el) : [];
 			},
