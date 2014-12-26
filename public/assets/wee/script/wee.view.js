@@ -7,7 +7,7 @@
 		render: function(temp, data, opt) {
 			return this.$private('process', temp, data, {}, W.$extend({
 				data: data,
-				escape: true
+				raw: false
 			}, opt), 0);
 		}
 	}, {
@@ -38,7 +38,7 @@
 									$key: key,
 									$val: el,
 									$i: i
-								}, isObj ? val : W.$isObject(el) ? el : {});
+								}, W.$isObject(el) ? el : (isObj ? val : {}));
 
 							resp += scope.process(inner, item, data, conf, i);
 
@@ -59,7 +59,7 @@
 
 				if (filter == 'raw') {
 					opt = W.$extend({
-						escape: false
+						raw: true
 					});
 				}
 
@@ -101,13 +101,13 @@
 
 						if (typeof data == 'string') {
 							// Encode tags by default
-							return conf.escape ?
+							return conf.raw ?
+								data :
 								data.replace(/&amp;/g, '&')
 									.replace(/&/g, '&amp;')
 									.replace(/</g, '&lt;')
 									.replace(/>/g, '&gt;')
-									.replace(/"/g, '&quot;') :
-								data;
+									.replace(/"/g, '&quot;');
 						} else if (data !== U) {
 							return data;
 						}
