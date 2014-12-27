@@ -144,7 +144,11 @@ QUnit.test('get', 1, function(assert) {
 
 QUnit.module('$siblings');
 
-// TODO
+QUnit.test('get', 1, function(assert) {
+	Wee.$html('#wee', '<span id="fixture-item"></span><span></span><span></span>');
+
+	assert.strictEqual(Wee.$siblings('#fixture-item').length, 2, 'Siblings selected successfully.');
+});
 
 // Method: $parent(sel)
 
@@ -227,7 +231,17 @@ QUnit.test('query', 1, function(assert) {
 
 QUnit.module('$insertBefore');
 
-// TODO
+QUnit.test('query', 1, function(assert) {
+	var $el = Wee.$parseHTML('<span class="testing"></span>');
+
+	Wee.$insertBefore($el, '#wee');
+
+	var $prev = Wee.$prev('#wee');
+
+	assert.ok(Wee.$hasClass($prev, 'testing'), 'Testing element added before successfully.');
+
+	Wee.$remove('.testing');
+});
 
 // Method: $after(sel, pos, rem)
 
@@ -247,12 +261,17 @@ QUnit.test('query', 1, function(assert) {
 
 QUnit.module('$insertAfter');
 
-// QUnit.test('query', 1, function(assert) {
-// 	Wee.$html('#wee', '<span class="testing"></span>');
-//
-// 	assert.ok(, 'Testing element selected successfully.');
-// 	assert.strictEqual(, false, 'Another element not available.');
-// });
+QUnit.test('query', 1, function(assert) {
+	var $el = Wee.$parseHTML('<span class="testing"></span>');
+
+	Wee.$insertAfter($el, '#wee');
+
+	var $next = Wee.$next('#wee');
+
+	assert.ok(Wee.$hasClass($next, 'testing'), 'Testing element added after successfully.');
+
+	Wee.$remove('.testing');
+});
 
 // Method: $replaceWith(sel, pos)
 
@@ -301,11 +320,11 @@ QUnit.test('query', 1, function(assert) {
 
 QUnit.module('$wrapInner');
 
-// QUnit.test('query', 1, function(assert) {
-// 	Wee.$wrapInner('#wee', '<span class="testing"></span>');
-//
-// 	assert.strictEqual(Wee.$children('#wee', '.testing').length, 1, 'Element wrapped successfully.');
-// });
+QUnit.test('query', 1, function(assert) {
+	Wee.$wrapInner('#wee', '<div id="testing"></div>');
+
+	assert.ok(Wee.$contains('#wee', '#testing'), 'Element wrapped successfully.');
+});
 
 // Method: $prop(sel, a, b)
 
@@ -447,7 +466,9 @@ QUnit.test('query', 1, function(assert) {
 
 // Method: $parents(sel, filter)
 
-// TODO
+QUnit.test('query', 1, function(assert) {
+	assert.strictEqual(Wee.$parents('#wee').length, 3, 'Parent elements retrieved successfully.');
+});
 
 // Method: $toggleClass(sel, val, toggle)
 
@@ -467,19 +488,39 @@ QUnit.test('query', 2, function(assert) {
 
 QUnit.module('$parseHTML');
 
-// TODO
+QUnit.test('query', 1, function(assert) {
+	var $el = Wee.$parseHTML('<span class="testing"><span class="child"></div></span>', true);
+
+	assert.ok(Wee.$contains($el, '.child'), 'HTML parsed successfully.');
+
+	Wee.$remove('.testing');
+});
 
 // Method: $position(sel)
 
 QUnit.module('$position');
 
-// TODO
+QUnit.test('query', 1, function(assert) {
+	assert.deepEqual(Wee.$position('#qunit-fixture'), {
+		top: -10000,
+		left: -10000
+	}, 'Position returned successfully.');
+
+	Wee.$remove('.testing');
+});
 
 // Method: $offset(sel)
 
 QUnit.module('$offset');
 
-// TODO
+QUnit.test('query', 1, function(assert) {
+	assert.deepEqual(Wee.$offset('#qunit-fixture'), {
+		top: -10000,
+		left: -10000
+	}, 'Offset returned successfully.');
+
+	Wee.$remove('.testing');
+});
 
 // Method: $width(sel, val)
 
@@ -505,4 +546,6 @@ QUnit.test('check', 1, function(assert) {
 
 QUnit.module('$scrollTop');
 
-// TODO
+QUnit.test('check', 1, function(assert) {
+	assert.strictEqual(Wee.$scrollTop(), 0, 'Scroll top value set successfully.');
+});

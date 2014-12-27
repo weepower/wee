@@ -4,7 +4,7 @@ QUnit.module('Data');
 
 // Method: data.request(opt)
 
-QUnit.test('Request JSON', 1, function(assert) {
+QUnit.test('request JSON', 1, function(assert) {
 	var done = assert.async();
 
 	Wee.data.request({
@@ -17,7 +17,7 @@ QUnit.test('Request JSON', 1, function(assert) {
 	});
 });
 
-QUnit.test('Request JSON & Parse', 1, function(assert) {
+QUnit.test('request JSON & render', 1, function(assert) {
 	var done = assert.async();
 
 	Wee.data.request({
@@ -25,7 +25,7 @@ QUnit.test('Request JSON & Parse', 1, function(assert) {
 		json: true,
 		template: '{{ name }}',
 		success: function(data) {
-			assert.strictEqual(data, 'Wee', 'JSON data requested and parsed successfully.');
+			assert.strictEqual(data, 'Wee', 'JSON data requested and rendered successfully.');
 			done();
 		}
 	});

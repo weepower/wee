@@ -2,9 +2,9 @@
 
 QUnit.module('View');
 
-// Method: vide.render(str, obj, opt)
+// Method: view.render(temp, data, opt)
 
-QUnit.test('Render Template', 8, function(assert) {
+QUnit.test('render template', 8, function(assert) {
 	var data = {
 		firstName: 'Keith',
 		lastName: 'Roberts',

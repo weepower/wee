@@ -6,11 +6,7 @@ QUnit.module('Events');
 
 // TODO
 
-// Method: events.one(sel, a, b, c)
-
-// TODO
-
-// Method: events.off(sel, evt, fn)
+// Method: events.off(sel, a, b)
 
 // TODO
 
