@@ -1,7 +1,7 @@
-# [Wee 2.1.0-rc.1](http://www.weepower.com)
+# [Wee 2.1.0-rc.2](https://www.weepower.com)
 
 Wee is a front-end framework for methodically building complex, responsive web projects.  
-To read more, visit [weepower.com](http://www.weepower.com).
+To read more, visit [weepower.com](https://www.weepower.com).
 
 ### Features
 
@@ -30,26 +30,23 @@ JSON-configured Grunt process to compile, optimize, and minify your project
 * **Built-in server** for static development
 * **Live reloading** of static assets and markup
 * **Ghost mode** to sync interaction across multiple browsers
-* **Style guide generator** for a living visual project snapshot
+* **Static site generator** perfect for living style guides
 * **Sourcemap output** to line match unminified JavaScript
 * **Legacy build** to concatenate media queries and convert rem units
 * **Validation** of JavaScript against code quality and formatting rules
 
 Structured foundation of markup, icons, and supporting files
 
-## Quick Start
+## Installation
 
 Get started using one of these methods:
 
 * [Download the latest release](https://github.com/weepower/wee/archive/master.zip) or
 * Clone the repository from `git clone git://github.com/weepower/wee.git`
 
-## Bugs
+## Compatibility
 
-Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).
-To view the working to-do list check out our public [Trello board](https://trello.com/b/7KbnQra9/wee).
-
-##### Minimum tested browser support
+The following indicates the earliest tested browser versions.
 
 * Android 4.1
 * Chrome 30
@@ -57,6 +54,11 @@ To view the working to-do list check out our public [Trello board](https://trell
 * iOS Safari 5.1
 * Mozilla Firefox 24
 * Safari 6.1
+
+## Bugs
+
+Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).  
+To view the working to-do list check out our public [Trello board](https://trello.com/b/7KbnQra9/wee).
 
 Automated testing generously provided by [BrowserStack](https://www.browserstack.com).
 
@@ -70,7 +72,7 @@ Keep track of development and news by following [@weecss on Twitter](https://twi
 
 ## License
 
-Copyright 2014 [Caddis Interactive, LLC](http://www.caddis.co)
+Copyright 2015 [Caddis Interactive, LLC](https://www.caddis.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

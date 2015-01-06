@@ -39,11 +39,6 @@
 			"build": [
 				"custom/ie8.less"
 			]
-		},
-		"guide": {
-			"enable": true,
-			"watch": false,
-			"config": "guide/config.json"
 		}
 	},
 	"script": {
@@ -83,6 +78,12 @@
 			"jshint": ".jshintrc"
 		},
 		"sourceMaps": true
+	},
+	"generator": {
+		"enable": true,
+		"build": [
+			"public/assets/guide/config.json"
+		]
 	},
 	"server": {
 		"ghostMode": true,
