@@ -367,14 +367,17 @@
 					children = W.$children(el);
 
 				if (children.length === 0) {
-					children = W.$contents(el)[0];
+					children = W.$html(el);
+
+					W.$empty(el);
+					W.$html(wrap, children);
+				} else {
+					W.$each(children, function(cel) {
+						wrap[0].appendChild(cel);
+					});
 				}
 
 				W.$append(el, wrap);
-
-				W.$each(children, function(cel) {
-					wrap.appendChild(el.removeChild(cel));
-				});
 			});
 		},
 		// Get property of specified element or set property with specified value
@@ -650,6 +653,40 @@
 			var children = W.$children(el);
 
 			return obj ? $(children) : children;
+		},
+		// Serialize specified form element
+		// Returns string
+		$serializeForm: function(sel) {
+			var arr = [],
+				el = W.$first(sel),
+				i = 0,
+				x = 0;
+
+			if (el.nodeName == 'FORM') {
+				for (; i < sel.elements.length; i++) {
+					var child = sel.elements[i];
+
+					if (child.name && child.type != 'file' && child.type != 'reset') {
+						if (child.type == 'select-multiple') {
+							for (; x < child.options.length; x++) {
+								if (child.options[x].selected) {
+									arr.push(child.name + '=' + encodeURIComponent(child.options[x].value).replace(/%20/g, '+'));
+								}
+							}
+						} else {
+							if (child.type != 'submit' && child.type != 'button') {
+								if ((child.type != 'checkbox' && child.type != 'radio') || el.checked) {
+									arr.push(child.name + '=' + encodeURIComponent(child.value).replace(/%20/g, '+'));
+								}
+							}
+						}
+					}
+				}
+
+				return arr.join('&');
+			}
+
+			return '';
 		},
 		// Get the position of a specified element
 		// Returns object

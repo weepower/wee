@@ -155,6 +155,9 @@
 			W.$toggleClass(this, val, toggle);
 			return this;
 		},
+		serialize: function() {
+			return W.$serializeForm(this);
+		},
 		position: function() {
 			return W.$position(this);
 		},
