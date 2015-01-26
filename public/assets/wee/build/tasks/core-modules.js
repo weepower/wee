@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 					// Build additional script
 					if (module.script && module.script.build) {
 						module.script.build.forEach(function(scriptPath) {
-							moduleScript.push(Wee.concatPaths(path, scriptPath));
+							moduleScript.push(path.join(path, scriptPath));
 						});
 					}
 
@@ -95,11 +95,10 @@ module.exports = function(grunt) {
 						}
 					}
 
-					less = grunt.template.process(less, {
-						data: {
-							imports: inject,
-							responsive: responsive
-						}
+					// Process import injection
+					less = Wee.view.render(less, {
+						imports: inject,
+						responsive: responsive
 					});
 
 					// Write temporary file
@@ -125,7 +124,7 @@ module.exports = function(grunt) {
 						less: obj
 					});
 
-					// Push task
+					// Push style task
 					style.tasks.push('less:' + name);
 
 					// Configure style watch task
@@ -168,7 +167,12 @@ module.exports = function(grunt) {
 						grunt.task.run('uglify:' + name);
 					}
 				} else {
-					grunt.fail.fatal('Missing module.json for ' + name + ' module.');
+					Wee.notify({
+						title: 'Module Error',
+						message: 'Missing module.json for "' + name + '" module.'
+					}, 'error');
+
+					grunt.fail.fatal('Missing module.json for "' + name + '" module.');
 				}
 			}
 		}

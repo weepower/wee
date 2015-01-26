@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 			formEnabled: (styleFeatures.forms === true) ? true : false,
 			tableEnabled: (styleFeatures.tables === true) ? true : false,
 			printEnabled: (styleFeatures.print === true) ? true : false
-		}
+		};
 
 		if (style.vars.buttonEnabled) {
 			style.imports.push('../style/components/wee.buttons.less');
@@ -84,20 +84,16 @@ module.exports = function(grunt) {
 		// Compile custom
 		for (var target in project.style.compile) {
 			var taskName = target.replace(/\./g, '-') + '-style',
-				sources = project.style.compile[target],
-				src = [];
+				sources = Wee.$toArray(project.style.compile[target]),
+				files = [];
 
-			if (sources instanceof Array) {
-				for (var source in sources) {
-					src.push(Wee.buildPath(sources[source], style.rootPath));
-				}
-			} else {
-				src = Wee.buildPath(sources, style.rootPath);
+			for (var path in sources) {
+				files.push(Wee.buildPath(style.rootPath, sources[path]));
 			}
 
 			// Merge watch config
 			grunt.config.set('watch.' + taskName, {
-				files: src,
+				files: files,
 				tasks: [
 					'less:' + taskName
 				]
@@ -106,12 +102,17 @@ module.exports = function(grunt) {
 			// Create Less task
 			grunt.config.set('less.' + taskName, {
 				files: [{
-					dest: Wee.buildPath(target, style.rootPath),
-					src: src
-				}]
+					dest: Wee.buildPath(style.rootPath, target),
+					src: files
+				}],
+				options: {
+					globalVars: {
+						weePath: '"' + config.tempPath + '/wee.less"'
+					}
+				}
 			});
 
-			// Push task
+			// Push style task
 			style.tasks.push('less:' + taskName);
 		}
 	});

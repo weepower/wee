@@ -1,21 +1,126 @@
-/* global config, global, project */
+/* global config, global, path, project */
 
 // -------------------------------------
 // Load Dependencies
 // -------------------------------------
 
+var LessCssClean = require('less-plugin-clean-css');
+
 global.fs = require('fs');
 global.browserSync = require('browser-sync');
-global.notifier = require('node-notifier');
-global.Wee = require('./core.js');
+global.Wee = require('../script/wee.js').Wee;
+global.path = require('path');
+global.jshint = require('jshint').JSHINT;
+global.JSCS = require('jscs');
 
-if (project.script.validate.jshint) {
-	global.jshint = require('jshint').JSHINT;
-}
+Wee.fn.extend({
+	// Build root or relative path
+	buildPath: function(path, file) {
+		return file.substring(0, 2) == './' ? file : global.path.join(path, file);
+	},
+	// Append minified extension
+	getMinifiedExtension: function(dest, src, ext) {
+		var dir = src.substring(0, src.lastIndexOf('/')),
+			filename = src.substring(src.lastIndexOf('/'), src.length);
+		filename = filename.substring(0, filename.lastIndexOf('.'));
 
-if (project.script.validate.jscs) {
-	global.jscs = require('jscs');
-}
+		return dest + '/' + dir + filename + ext;
+	},
+	validate: function(config, grunt, filepath) {
+		var ext = path.extname(filepath);
+
+		if (filepath.indexOf('temp') == -1 &&
+			filepath.indexOf('/vendor') == -1) {
+			if (ext == '.js') {
+				var js = grunt.file.read(filepath),
+					errors = [],
+					total = 0;
+
+				if (project.script.validate.jshint) {
+					// JSHint
+					var jshintConfig = grunt.file.readJSON(
+						project.script.validate.jshint === true ?
+							config.assetPath + '/wee/script/.jshintrc' :
+							project.script.validate.jshint
+					);
+
+					if (! jshint(js, jshintConfig)) {
+						var out = jshint.data();
+						errors = out.errors,
+						total = errors.length;
+
+						grunt.log.header('Script validation errors found');
+
+						grunt.log.error('JSHint error' +
+							((total > 1) ? 's' : '') + ' in ' + filepath + '.');
+
+						errors.forEach(function(message) {
+							Wee.logError(grunt, message.line  + ':' + message.character, message.reason, message.evidence);
+						});
+
+						grunt.log.writeln();
+						grunt.log.writeln();
+
+						this.notify({
+							title: 'JSHint Validation Error',
+							message: 'Check console for error details'
+						}, 'error');
+					}
+				}
+
+				if (project.script.validate.jscs) {
+					// JSCS
+					var jscsConfig = grunt.file.readJSON(
+							project.script.validate.jscs === true ?
+							config.assetPath + '/wee/script/.jscs.json' :
+							project.script.validate.jscs
+						),
+						checker = new JSCS();
+
+					checker.registerDefaultRules();
+					checker.configure(jscsConfig);
+
+					errors = checker.checkString(js);
+
+					var errorList = errors.getErrorList();
+					total = errorList.length;
+
+					if (total > 0) {
+						grunt.log.error('JSCS error' +
+							((total > 1) ? 's' : '') + ' in ' + filepath + '.');
+
+						errorList.forEach(function(message) {
+							Wee.logError(grunt, message.line  + ':' + message.column, message.rule, message.message);
+						});
+
+						this.notify({
+							title: 'JSCS Validation Error',
+							message: 'Check console for error details'
+						}, 'error');
+					}
+				}
+			}
+		}
+	},
+	logError: function(grunt, pos, msg, details) {
+		grunt.log.writeln('['.cyan + pos + '] '.cyan + msg + ' ' + (details || '').magenta);
+	},
+	notify: function(data, type) {
+		var notifier = require('node-notifier'),
+			iconPath = config.assetPath + '/wee/build/img/';
+		type = type || 'notice';
+
+		if (type == 'error') {
+			console.error(data.message);
+			data.icon = iconPath + 'error.png';
+		} else {
+			console.log(data.message);
+			data.icon = iconPath + 'notice.png';
+		}
+
+		notifier.notify(data);
+	}
+});
 
 // -------------------------------------
 // Configure Grunt
@@ -35,11 +140,13 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		less: {
 			options: {
-				cleancss: true,
 				modifyVars: '<%= config.style.vars %>',
 				strictMath: true,
 				paths: [
 					'<%= config.style.rootPath %>'
+				],
+				plugins: [
+					new LessCssClean()
 				]
 			},
 			core: {
@@ -132,14 +239,14 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'newer:imagemin',
-					'notifyImages'
+					'notify:images'
 				]
 			},
 			scriptCore: {
 				files: '<%= config.script.files %>',
 				tasks: [
 					'uglify:core',
-					'notifyScript'
+					'notify:script'
 				]
 			},
 			scriptLib: {
@@ -149,7 +256,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'uglify:lib',
-					'notifyScript'
+					'notify:script'
 				]
 			},
 			styleCore: {
@@ -169,7 +276,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'less:lib',
-					'notifyStyle'
+					'notify:style'
 				]
 			},
 			styleBuild: {
@@ -178,7 +285,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'buildStyle',
-					'notifyStyle'
+					'notify:style'
 				],
 				options: {
 					event: [
@@ -194,7 +301,7 @@ module.exports = function(grunt) {
 				tasks: [
 					'less:core',
 					'concat:style',
-					'notifyStyle'
+					'notify:style'
 				],
 				options: {
 					event: [
@@ -208,7 +315,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'concat:style',
-					'notifyStyle'
+					'notify:style'
 				]
 			},
 			project: {
@@ -218,14 +325,14 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'default',
-					'notifyCore'
+					'notify:project'
 				]
 			}
 		}
 	});
 
 	// Watch for changes to validate
-	if (project.script.validate.watch || project.style.validate.watch) {
+	if (project.script.validate.watch) {
 		grunt.event.on('watch', function(action, filepath) {
 			if (action !== 'deleted') {
 				Wee.validate(config, grunt, filepath);
@@ -254,7 +361,7 @@ module.exports = function(grunt) {
 		'configStyle',
 		'configScript',
 		'configModules',
-		'configGuide',
+		'configGenerator',
 		'bindConfig',
 		'buildStyle',
 		'buildLegacy',
@@ -283,6 +390,12 @@ module.exports = function(grunt) {
 	grunt.registerTask('validate', [
 		'init',
 		'runValidation'
+	]);
+
+	// Generate Site
+	grunt.registerTask('generate', [
+		'init',
+		'configGenerator'
 	]);
 
 	// Update

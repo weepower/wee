@@ -1,4 +1,4 @@
-/* global config, legacy, project */
+/* global config, legacy, legacyBuild, path, project, style */
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildLegacy', function() {
@@ -14,17 +14,17 @@ module.exports = function(grunt) {
 				inject = '',
 				i = 0;
 
-			legacy.dest = Wee.buildPath(legacy.dest, styleRoot);
+			legacy.dest = Wee.buildPath(styleRoot, legacy.dest);
 
 			// Build configured
-			for (; i < legacy.build.length; i++) {
-				legacyImports.push('../..' + Wee.buildPath(legacy.build[i], styleRoot).replace(config.assetPath, ''));
-			}
+			legacy.build.forEach(function(name) {
+				legacyImports.push('../../' + Wee.buildPath(styleRoot, name).replace(config.assetPath, ''));
+			});
 
 			if (legacyImports.length > 0) {
 				// Process template
 				legacyImports.forEach(function(val) {
-					if (Wee.getExtension(val) == 'css') {
+					if (path.extname(val) == '.css') {
 						inject += '@import (inline) "' + val + '";\n';
 					} else {
 						inject += '@import "' + val + '";\n';
@@ -32,10 +32,8 @@ module.exports = function(grunt) {
 				});
 			}
 
-			less = grunt.template.process(less, {
-				data: {
-					imports: inject
-				}
+			less = Wee.view.render(less, {
+				imports: inject
 			});
 
 			// Write temporary file
@@ -77,7 +75,7 @@ module.exports = function(grunt) {
 							tasks: watchedTasks.concat([
 								'less:legacy',
 								'convertRem',
-								'notifyLegacy'
+								'notify:legacy'
 							])
 						}
 					}
@@ -93,7 +91,7 @@ module.exports = function(grunt) {
 							tasks: [
 								'less:legacy',
 								'convertRem',
-								'notifyLegacy'
+								'notify:legacy'
 							]
 						}
 					}
@@ -102,7 +100,7 @@ module.exports = function(grunt) {
 
 			grunt.task.run('less:legacy');
 			grunt.task.run('convertRem');
-			grunt.task.run('notifyLegacy');
+			grunt.task.run('notify:legacy');
 		}
 	});
 };

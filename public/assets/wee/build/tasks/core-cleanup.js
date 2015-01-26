@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 			}
 		});
 
-		// Remove source maps
+		// Remove JavaScript source maps
 		if (project.script.sourceMaps === true) {
 			fs.readdirSync(config.paths.sourceMaps).forEach(function(file) {
 				fs.unlinkSync(config.paths.sourceMaps + file);

@@ -1,4 +1,4 @@
-/* global config, project, style */
+/* global config, path, project, style */
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildStyle', function() {
@@ -9,12 +9,12 @@ module.exports = function(grunt) {
 			buildFiles = grunt.file.expand({
 				cwd: style.rootPath + '/build'
 			}, [
-				'**/*.less',
-				'**/*.css'
+				'**/*.css',
+				'**/*.less'
 			]);
 
 		buildFiles.forEach(function(name) {
-			name = '../..' + name.replace(config.assetPath, '');
+			name = '../../css/build/' + name.replace(path.normalize(config.assetPath), '');
 
 			if (name.indexOf('/vendor/') !== -1) {
 				imports.unshift(name);
@@ -29,11 +29,11 @@ module.exports = function(grunt) {
 		];
 
 		project.style.build.forEach(function(name) {
-			name = Wee.buildPath(name, style.rootPath);
+			name = Wee.buildPath(style.rootPath, name);
 
 			buildArray.push(name);
 
-			name = '../..' + name.replace(config.assetPath, '');
+			name = '../../' + name.replace(path.normalize(config.assetPath), '');
 
 			imports.push(name);
 		});
@@ -45,19 +45,17 @@ module.exports = function(grunt) {
 
 		// Process template
 		style.imports.forEach(function(val) {
-			if (Wee.getExtension(val) == 'css') {
+			if (path.extname(val) == '.css') {
 				inject += '@import (inline) "' + val + '";\n';
 			} else {
 				inject += '@import "' + val + '";\n';
 			}
 		});
 
-		less = grunt.template.process(less, {
-			data: {
-				imports: inject,
-				print: style.print,
-				responsive: style.responsive
-			}
+		less = Wee.view.render(less, {
+			imports: inject,
+			print: style.print,
+			responsive: style.responsive
 		});
 
 		// Write temporary file

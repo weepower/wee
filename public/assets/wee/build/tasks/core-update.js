@@ -1,9 +1,10 @@
 /* global version */
 
 module.exports = function(grunt) {
+	var https = require('https');
+
 	grunt.registerTask('checkUpdates', function() {
-		var done = this.async(),
-			https = require('https');
+		var done = this.async();
 
 		https.get('https://raw.githubusercontent.com/weepower/wee/master/package.json', function(response) {
 			var json = '';
@@ -36,8 +37,8 @@ module.exports = function(grunt) {
 
 				done();
 			});
-		}).on('error', function(e) {
-			grunt.log.error('Error trying to access Wee repository at https://github.com/weepower/wee.');
+		}).on('error', function() {
+			grunt.log.error('Error trying to access repository at https://github.com/weepower/wee.');
 			done();
 		});
 	});

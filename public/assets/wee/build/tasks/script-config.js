@@ -1,10 +1,10 @@
-/* global config, project, script */
+/* global config, path, project, script */
 
 module.exports = function(grunt) {
 	grunt.registerTask('configScript', function() {
 		// Set global config
 		script = {
-			rootPath: config.assetPath + '/js',
+			rootPath: path.join(config.assetPath, '/js'),
 			files: [],
 			project: {}
 		};
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 		// Core Wee scripts
 		if (project.script.core.enable === true) {
 			var features = project.script.core.features,
-				weeScriptRoot = config.assetPath + '/wee/script/';
+				weeScriptRoot = path.join(config.assetPath, '/wee/script/');
 
 			// Primary base script
 			script.files.push(weeScriptRoot + 'wee.js');
@@ -27,10 +27,6 @@ module.exports = function(grunt) {
 
 			if (features.data === true) {
 				script.files.push(weeScriptRoot + 'wee.data.js');
-
-				if (features.chain === true) {
-					script.files.push(weeScriptRoot + 'chain/wee.chain.data.js');
-				}
 			}
 
 			if (features.dom === true) {
@@ -59,6 +55,10 @@ module.exports = function(grunt) {
 
 			if (features.view === true) {
 				script.files.push(weeScriptRoot + 'wee.view.js');
+
+				if (features.chain === true) {
+					script.files.push(weeScriptRoot + 'chain/wee.chain.view.js');
+				}
 			}
 		}
 
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 
 		// Project.config file build files
 		project.script.build.forEach(function(name) {
-			script.files.push(Wee.buildPath(name, script.rootPath));
+			script.files.push(Wee.buildPath(script.rootPath, name));
 		});
 
 		// Custom/script.js file
@@ -84,10 +84,10 @@ module.exports = function(grunt) {
 
 			if (sources instanceof Array) {
 				for (var source in sources) {
-					src.push(Wee.buildPath(sources[source], script.rootPath));
+					src.push(Wee.buildPath(script.rootPath, sources[source]));
 				}
 			} else {
-				src = Wee.buildPath(sources, script.rootPath);
+				src = Wee.buildPath(script.rootPath, sources);
 			}
 
 			// Merge watch config
@@ -101,7 +101,7 @@ module.exports = function(grunt) {
 			// Create uglify task
 			grunt.config.set('uglify.' + taskName, {
 				files: [{
-					dest: Wee.buildPath(target, script.rootPath),
+					dest: Wee.buildPath(script.rootPath, target),
 					src: src
 				}]
 			});
@@ -110,15 +110,18 @@ module.exports = function(grunt) {
 			grunt.task.run('uglify:' + taskName);
 		}
 
-		// Source maps
+		// Configure source maps
 		if (project.script.sourceMaps === true) {
 			grunt.config.set('uglify.options.sourceMap', true);
 			grunt.config.set('uglify.options.sourceMapName', function(dest) {
-				dest = dest.replace(script.rootPath + '/', '')
-					.replace(/\//g, '-')
+				var root = path.normalize(script.rootPath)
+				dest = path.normalize(dest)
+					.replace(root, '')
+					.replace(/^\\|\//, '')
+					.replace(/\\|\//g, '-')
 					.replace('.min.js', '');
 
-				return config.paths.sourceMaps + dest + '.js.map';
+				return path.join(config.paths.sourceMaps, dest + '.js.map');
 			});
 		}
 	});
