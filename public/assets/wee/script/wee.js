@@ -41,11 +41,11 @@
 									},
 									// Destroy current controller
 									$destroy: function() {
-										if (Public._destruct !== U) {
+										if (Public._destruct) {
 											Public._destruct();
 										}
 
-										if (Private._destruct !== U) {
+										if (Private._destruct) {
 											Private._destruct();
 										}
 
@@ -60,7 +60,7 @@
 
 							// If private object exists expose $call function for executing private methods
 							if (priv) {
-								Public.$private = function(func) {
+								Public.$private = function(fn) {
 									var args = W._slice.call(arguments);
 
 									// Bind all additional arguments to private method call
@@ -68,7 +68,7 @@
 										args.shift() :
 										args = [];
 
-									return Private[func].apply(Private, args);
+									return Private[fn].apply(Private, args);
 								};
 							}
 
@@ -108,19 +108,15 @@
 				// Returns string|undefined
 				$env: function(obj, def) {
 					if (obj) {
-						W.$set('env', function() {
+						W.$set('_env', function() {
 							var host = location.host;
 
 							Object.keys(obj).forEach(function(key) {
 								var el = obj[key];
 
-								if (W.$isString(el) && el.indexOf(':') == -1) {
-									if (el == host) {
-										return key;
-									}
-								} else if (W.$exec(el, {
+								if (el == host || (W._canExec(el) && W.$exec(el, {
 										args: [host]
-									}) === true) {
+									}) === true)) {
 									return key;
 								}
 							});
@@ -129,7 +125,7 @@
 						});
 					}
 
-					return W.$get('env', 'local');
+					return W.$get('_env', 'local');
 				},
 				// Determine if the current environment is secured over https
 				// Optional url can be passed for evaluation
@@ -150,9 +146,9 @@
 						if (root.hasOwnProperty(key)) {
 							return root[key];
 						} else if (def !== U) {
-							def = W.$isFunction(def) ?
-								def() :
-								(opt ? W.$exec(def, opt) : def);
+							def = W._canExec(def) ?
+								W.$exec(def, opt) || opt :
+								def;
 
 							if (set) {
 								W.$set(key, def);
@@ -171,9 +167,9 @@
 				// Returns mixed
 				$set: function(key, val, opt) {
 					var split = W._storeData(key),
-						set = W.$isFunction(val) ?
-							val() :
-							(opt ? W.$exec(val, opt) : val);
+						set = W._canExec(val) || opt ?
+							W.$exec(val, opt) :
+							val;
 
 					split[0][split[1]] = set;
 
@@ -184,21 +180,20 @@
 				$push: function(key, a, b) {
 					var split = W._storeData(key),
 						root = split[0];
-
 					key = split[1];
 
 					if (! root.hasOwnProperty(key)) {
-						root[key] = b ? {} : [];
+						root[key] = b !== U ? {} : [];
 					}
 
-					if (b && ! root[key].hasOwnProperty(a)) {
-						root[key][a] = Array.isArray(b) ? [] : {};
-					}
+					if (b !== U) {
+						var isArr = Array.isArray(b);
 
-					if (b) {
-						Array.isArray(b) ?
-							root[key][a] = root[key][a].concat(b) :
-							root[key][a] = b;
+						if (! root[key].hasOwnProperty(a)) {
+							root[key][a] = isArr ? [] : {};
+						}
+
+						root[key][a] = isArr ? root[key][a].concat(b) : b;
 					} else {
 						Array.isArray(a) ?
 							root[key] = root[key].concat(a) :
@@ -277,7 +272,7 @@
 				// Determine if specified argument is a string
 				// Returns boolean
 				$isString: function(obj) {
-					return obj && typeof obj == 'string';
+					return typeof obj == 'string';
 				},
 				// Determine if specified argument is a function
 				// Returns boolean
@@ -291,6 +286,7 @@
 				},
 				// Get keys from an object
 				// Returns array
+				// DEPRECATED
 				$getKeys: function(obj) {
 					return Object.keys(obj);
 				},
@@ -417,7 +413,7 @@
 							els = W._selArray(sel, conf),
 							i = 0;
 
-						if (conf.reverse && ! els._$_) {
+						if (conf.reverse && ! els._$) {
 							els = els.reverse();
 						}
 
@@ -514,17 +510,32 @@
 							ref = W.$data(el, 'bind');
 						}
 
-						ref.split(' ').forEach(function(val) {
+						ref.split(/\s+/).forEach(function(val) {
 							W.$push('ref', val, [el]);
 						});
 					});
 				},
 				// Fallback for non-existent chaining
 				$chain: function() {},
+				// Determine if value can be executed
+				// Returns boolean
+				_canExec: function(val) {
+					if (W.$isString(val) && val.indexOf(':') !== -1) {
+						var split = val.split(':'),
+							fn = split[0],
+							method = split[1];
+
+						if (W[fn] && W[fn][method]) {
+							val = W[fn][method];
+						}
+					}
+
+					return W.$isFunction(val);
+				},
 				// Convert selection to array
 				// Returns array
 				_selArray: function(sel, opt) {
-					if (sel._$_) {
+					if (sel._$) {
 						return sel;
 					}
 
@@ -560,7 +571,7 @@
 	// AMD setup
 	if (typeof define == 'function' && define.amd) {
 		define('wee', [], function() {
-			return Wee;
+			return W;
 		});
 	}
 })(this, undefined);

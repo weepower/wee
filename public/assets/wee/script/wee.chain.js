@@ -7,7 +7,7 @@
 		$chain: function(a, b) {
 			var p = W._win[WeeAlias].prototype;
 
-			if (W.$isString(a)) {
+			if (typeof a == 'string') {
 				p[a] = b;
 			} else {
 				var keys = Object.keys(a),
@@ -41,9 +41,8 @@
 		};
 
 		W._win[WeeAlias].prototype = Get.prototype = {
-			_$_: true,
+			_$: true,
 			length: 0,
-			// Core
 			each: function(fn, opt) {
 				W.$each(this, fn, opt);
 			},
@@ -63,6 +62,19 @@
 			data: function(key, val) {
 				var r = W.$data(this, key, val);
 				return val !== U ? this : r;
+			},
+			reverse: function() {
+				var cp = W.$extend({}, this),
+					len = this.length,
+					x = len,
+					i = 0;
+
+				for (; i < len; i++) {
+					x--;
+					this[i] = cp[x];
+				}
+
+				return this;
 			}
 		};
 	})([].push);

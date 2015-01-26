@@ -48,7 +48,7 @@
 		on: function(sel, a, b, c) {
 			var evts = [];
 
-			if (W.$isObject(sel) && ! sel._$_) {
+			if (W.$isObject(sel) && ! sel._$) {
 				var keys = Object.keys(sel),
 					i = 0;
 
@@ -190,7 +190,7 @@
 						(function(el, evt, fn, f, conf) {
 							var cb = function(e) {
 								if (W._legacy) {
-									e = Wee._win.event;
+									e = W._win.event;
 									e.target = e.srcElement;
 
 									e.preventDefault = function() {
@@ -203,7 +203,7 @@
 								// If watch within parent make sure the target matches the selector
 								if (conf.targ) {
 									var t = conf.targ,
-										sel = t._$_ ? t.sel : t;
+										sel = t._$ ? t.sel : t;
 									t = W.$toArray(W.$(sel));
 
 									if (! t.some(function(par) {

@@ -6,15 +6,17 @@
 		// Accepts either string or function value
 		// Returns undefined
 		$addClass: function(sel, val) {
-			var func = W.$isFunction(val);
+			var func = W._canExec(val);
 
 			W.$each(sel, function(el, i) {
 				var name = func ?
-						val.call(el, i, el.className) :
+						W.$exec(val, {
+							args: [el, i, el.className]
+						}) :
 						val;
 
 				if (name) {
-					el.className = (el.className + ' ' + name.split(' ').filter(function(name) {
+					el.className = (el.className + ' ' + name.split(/\s+/).filter(function(name) {
 						return ! W.$hasClass(el, name);
 					}).join(' ')).trim();
 				}
@@ -24,16 +26,18 @@
 		// Accepts either string or function value
 		// Returns undefined
 		$removeClass: function(sel, val) {
-			var func = W.$isFunction(val);
+			var func = W._canExec(val);
 
 			W.$each(sel, function(el, i) {
 				var name = func ?
-						val.call(el, i, el.className) :
+						W.$exec(val, {
+							args: [el, i, el.className]
+						}) :
 						val;
 
 				if (name) {
 					el.className = el.className.replace(
-						new RegExp('(^| )' + name.split(' ').join('|') + '( |$)', 'gi'
+						new RegExp('(^| )' + name.split(/\s+/).join('|') + '($| )', 'gi'
 					), ' ').trim();
 				}
 			});
@@ -42,7 +46,7 @@
 		// Returns boolean
 		$hasClass: function(sel, val) {
 			return W.$(sel).some(function(el) {
-				return new RegExp('(^| )' + val + '( |$)', 'gi').test(el.className);
+				return new RegExp('(^| )' + val + '($| )', 'gim').test(el.className);
 			});
 		},
 		// Get CSS value of first element or set matched elements CSS property with specified value
@@ -52,7 +56,7 @@
 			var obj = W.$isObject(a);
 
 			if (b !== U || obj) {
-				var func = ! obj && W.$isFunction(b);
+				var func = ! obj && W._canExec(b);
 
 				W.$each(sel, function(el, i) {
 					obj ?
@@ -60,7 +64,9 @@
 							el.style[key] = a[key];
 						}) :
 						el.style[a] = func ?
-							b.call(el, i, el.style[a]) :
+							W.$exec(b, {
+								args: [el, i, el.style[a]]
+							}) :
 							b;
 				});
 			} else {
@@ -78,11 +84,13 @@
 				return W.$first(sel).innerHTML;
 			}
 
-			var func = W.$isFunction(val);
+			var func = W._canExec(val);
 
 			W.$each(sel, function(el, i) {
 				var html = func ?
-						val.call(el, i, el.innerHTML) :
+						W.$exec(val, {
+							args: [el, i, el.innerHTML]
+						}) :
 						val;
 
 				if (html !== false && html !== U) {
@@ -99,15 +107,11 @@
 		},
 		// Hide specified element
 		$hide: function(sel) {
-			W.$each(sel, function(el) {
-				W.$addClass(el, 'js-hide');
-			});
+			W.$addClass(sel, 'js-hide');
 		},
 		// Show specified element
 		$show: function(sel) {
-			W.$each(sel, function(el) {
-				W.$removeClass(el, 'js-hide');
-			});
+			W.$removeClass(sel, 'js-hide');
 		},
 		// Toggle the display of a specified element
 		$toggle: function(sel) {
@@ -185,7 +189,7 @@
 		// Get subset of matches from index range
 		// Returns element array
 		$slice: function(sel, start, end) {
-			if (! sel._$_) {
+			if (! sel._$) {
 				sel = W._selArray(sel);
 			}
 
@@ -207,11 +211,13 @@
 		},
 		// Append specified child element to parent element
 		$append: function(sel, child) {
-			var func = W.$isFunction(child);
+			var func = W._canExec(child);
 
 			W.$each(sel, function(el, i) {
 				var app = func ?
-						child.call(el, i, el.innerHTML) :
+						W.$exec(child, {
+							args: [el, i, el.innerHTML]
+						}) :
 						child;
 
 				if (app) {
@@ -225,11 +231,13 @@
 		},
 		// Prepend specified child element to specified parent element
 		$prepend: function(sel, child) {
-			var func = W.$isFunction(child);
+			var func = W._canExec(child);
 
 			W.$each(sel, function(el, i) {
 				var pre = func ?
-						child.call(el, i, el.innerHTML) :
+						W.$exec(child, {
+							args: [el, i, el.innerHTML]
+						}) :
 						child;
 
 				if (pre) {
@@ -243,11 +251,13 @@
 		},
 		// Insert specified element before specified element
 		$before: function(sel, pos, rem) {
-			var func = W.$isFunction(pos);
+			var func = W._canExec(pos);
 
 			W.$each(sel, function(el, i) {
 				var bef = func ?
-						pos.call(el, i, pos.innerHTML) :
+						W.$exec(pos, {
+							args: [el, i, el.innerHTML]
+						}) :
 						pos;
 
 				if (bef) {
@@ -279,11 +289,13 @@
 		},
 		// Insert specified element after specified element
 		$after: function(sel, pos, rem) {
-			var func = W.$isFunction(pos);
+			var func = W._canExec(pos);
 
 			W.$each(sel, function(el, i) {
 				var aft = func ?
-						pos.call(el, i, el.innerHTML) :
+						W.$exec(pos, {
+							args: [el, i, el.innerHTML]
+						}) :
 						pos;
 
 				if (aft) {
@@ -339,12 +351,14 @@
 		},
 		// Wrap HTML around specified element
 		$wrap: function(sel, html) {
-			var func = W.$isFunction(html);
+			var func = W._canExec(html);
 
 			W.$each(sel, function(el, i) {
 				var wrap = W.$parseHTML(
 					func ?
-						html.call(el, i) :
+						W.$exec(html, {
+							args: [el, i]
+						}) :
 						html
 				);
 
@@ -356,12 +370,14 @@
 		},
 		// Wrap HTML around the content of specified element
 		$wrapInner: function(sel, html) {
-			var func = W.$isFunction(html);
+			var func = W._canExec(html);
 
 			W.$each(sel, function(el, i) {
 				var wrap = W.$parseHTML(
 						func ?
-							html.call(el, i) :
+							W.$exec(html, {
+								args: [el, i]
+							}) :
 							html
 					),
 					children = W.$children(el);
@@ -385,7 +401,7 @@
 			var obj = W.$isObject(a);
 
 			if (b !== U || obj) {
-				var func = ! obj && W.$isFunction(b);
+				var func = ! obj && W._canExec(b);
 
 				W.$each(sel, function(el, i) {
 					obj ?
@@ -393,7 +409,9 @@
 							el[key] = a[key];
 						}) :
 						el[a] = func ?
-							b.call(el, i, el[a]) :
+							W.$exec(b, {
+								args: [el, i, el[a]]
+							}) :
 							b;
 				});
 			} else {
@@ -417,11 +435,13 @@
 				}).join('');
 			}
 
-			var func = W.$isFunction(val);
+			var func = W._canExec(val);
 
 			W.$each(sel, function(el, i) {
 				var text = func ?
-						val.call(el, i, (el.textContent || el.innerText).trim()) :
+						W.$exec(val, {
+							args: [el, i, (el.textContent || el.innerText).trim()]
+						}) :
 						val;
 
 				el.textContent === U ?
@@ -435,21 +455,24 @@
 			if (val === U) {
 				var el = W.$first(sel);
 
-				if (el.nodeName == 'SELECT') {
-					var opt = W.$find(el, 'option');
-					val = opt.map(function(a) {
-						if (a.selected) {
-							return a.value;
-						}
-					});
+				if (el.type == 'select-multiple') {
+					var opt = el.options,
+						arr = [],
+						i = 0;
 
-					return el.multiple ? val : val[0];
+					for (; i < opt.length; i++) {
+						if (opt[i].selected) {
+							arr.push(opt[i].value);
+						}
+					}
+
+					return arr;
 				}
 
 				return el.value;
 			}
 
-			var func = W.$isFunction(val);
+			var func = W._canExec(val);
 
 			W.$each(sel, function(el, i) {
 				if (el.nodeName == 'SELECT') {
@@ -463,7 +486,9 @@
 					});
 				} else {
 					el.value = func ?
-						val.call(el, i, el.value) :
+						W.$exec(val, {
+							args: [el, i, el.value]
+						}) :
 						val;
 				}
 			});
@@ -482,29 +507,21 @@
 		// Get the next sibling of a specified element
 		// Returns element
 		$next: function(sel, filter, opt) {
-			var arr = [];
-
-			W.$each(sel, function(el) {
-				var nodes = W.$children(W.$parent(el)),
-					index = W.$index(el) + 1;
-
-				nodes.forEach(function(el, i) {
-					if (i === index && (! filter || filter && W.$is(el, filter, opt))) {
-						arr.push(el);
-					}
-				});
-			});
-
-			return arr;
+			return this._sibling(sel, 1, filter, opt);
 		},
 		// Get the previous sibling of a specified element
 		// Returns element
 		$prev: function(sel, filter, opt) {
+			return this._sibling(sel, -1, filter, opt);
+		},
+		// Return either direct previous or next sibling
+		// Returns element
+		_sibling: function(sel, dir, filter, opt) {
 			var arr = [];
 
 			W.$each(sel, function(el) {
 				var nodes = W.$children(W.$parent(el)),
-					index = W.$index(el) - 1;
+				index = W.$index(el) + dir;
 
 				nodes.forEach(function(el, i) {
 					if (i === index && (! filter || filter && W.$is(el, filter, opt))) {
@@ -518,7 +535,7 @@
 		// Return a subset of elements based on a specified filter from a specified element
 		// Returns element array
 		$filter: function(sel, filter, opt) {
-			var func = W.$isFunction(filter);
+			var func = W._canExec(filter);
 
 			return W.$map(sel, function(el, i) {
 				return func ?
@@ -529,7 +546,7 @@
 		// Return a subset of elements based on a specified exclusion filter from a specified element
 		// Returns element array
 		$not: function(sel, filter, opt) {
-			var func = W.$isFunction(filter);
+			var func = W._canExec(filter);
 
 			return W.$map(sel, function(el, i) {
 				return func ?
@@ -542,13 +559,17 @@
 		$is: function(sel, filter, opt) {
 			var el = W.$first(sel);
 
-			if (W.$isFunction(filter)) {
+			if (filter.indexOf('ref:') === 0) {
+				filter = $(filter);
+			}
+
+			if (W._canExec(filter)) {
 				return W.$exec(filter, W.$extend({
 					scope: el
 				}, opt));
 			} else if (W.$isObject(filter)) {
-				return el === (filter._$_ ? filter[0] : filter);
-			} else if (W.$isArray(filter)) {
+				return el === (filter._$ ? filter[0] : filter);
+			} else if (Array.isArray(filter)) {
 				return el === filter[0];
 			} else {
 				var matches = el.matches || el.matchesSelector || el.msMatchesSelector ||
@@ -631,13 +652,15 @@
 		},
 		// Toggle the display of a specified element
 		$toggleClass: function(sel, val, toggle) {
-			var func = W.$isFunction(val);
+			var func = W._canExec(val);
 
 			W.$each(sel, function(el, i) {
 				func ?
-					val.call(el, i, el.className) :
-					val.split(' ').forEach(function(val) {
-						toggle === false ||  W.$hasClass(el, val) ?
+					W.$exec(val, {
+						args: [el, i, el.className]
+					}) :
+					val.split(/\s+/).forEach(function(val) {
+						toggle === false || (toggle === U && W.$hasClass(el, val)) ?
 							W.$removeClass(el, val) :
 							W.$addClass(el, val);
 					});
@@ -657,27 +680,30 @@
 		// Serialize specified form element
 		// Returns string
 		$serializeForm: function(sel) {
-			var arr = [],
-				el = W.$first(sel),
-				i = 0,
-				x = 0;
+			var el = W.$first(sel);
 
 			if (el.nodeName == 'FORM') {
-				for (; i < sel.elements.length; i++) {
-					var child = sel.elements[i];
+				var arr = [],
+					i = 0,
+					x = 0;
 
-					if (child.name && child.type != 'file' && child.type != 'reset') {
-						if (child.type == 'select-multiple') {
-							for (; x < child.options.length; x++) {
-								if (child.options[x].selected) {
-									arr.push(child.name + '=' + encodeURIComponent(child.options[x].value).replace(/%20/g, '+'));
+				for (; i < el.elements.length; i++) {
+					var child = el.elements[i],
+						name = child.name,
+						type = child.type;
+
+					if (child.name && type != 'file' && type != 'reset') {
+						if (type == 'select-multiple') {
+							var opt = child.options;
+
+							for (; x < opt.length; x++) {
+								if (opt[x].selected) {
+									arr.push(name + '=' + encodeURIComponent(opt[x].value).replace(/%20/g, '+'));
 								}
 							}
 						} else {
-							if (child.type != 'submit' && child.type != 'button') {
-								if ((child.type != 'checkbox' && child.type != 'radio') || el.checked) {
-									arr.push(child.name + '=' + encodeURIComponent(child.value).replace(/%20/g, '+'));
-								}
+							if (type != 'submit' && type != 'button' && ((type != 'checkbox' && type != 'radio') || el.checked)) {
+								arr.push(name + '=' + encodeURIComponent(child.value).replace(/%20/g, '+'));
 							}
 						}
 					}
@@ -712,7 +738,7 @@
 		// Get or set the width of a specified element, optionally accounting for margin
 		// Returns int
 		$width: function(sel, val) {
-			var func = val && W.$isFunction(val),
+			var func = val && W._canExec(val),
 				width;
 
 			if (val === U || val === true || func) {
@@ -736,7 +762,7 @@
 
 						if (val === true) {
 							var style = el.currentStyle || getComputedStyle(el);
-							width += parseInt(style.marginLeft, 10) + parseInt(style.marginRight, 10);
+							width += parseInt(style.marginLeft) + parseInt(style.marginRight);
 						}
 
 						break;
@@ -749,7 +775,9 @@
 
 			W.$each(sel, function(el, i) {
 				W.$css(el, 'width', func ?
-					val.call(el, i, width) :
+					W.$exec(val, {
+						args: [el, i, width]
+					}) :
 					val
 				);
 			});
@@ -757,7 +785,7 @@
 		// Get or set the height of an element, optionally accounting for margin
 		// Returns int
 		$height: function(sel, val) {
-			var func = val && W.$isFunction(val),
+			var func = val && W._canExec(val),
 				height;
 
 			if (val === U || val === true || func) {
@@ -792,7 +820,9 @@
 
 			W.$each(sel, function(el, i) {
 				W.$css(el, 'height', func ?
-					val.call(el, i, height) :
+					W.$exec(val, {
+						args: [el, i, height]
+					}) :
 					val
 				);
 			});
@@ -803,12 +833,15 @@
 			if (val === U) {
 				var el = sel ? W.$first(sel) : W._win;
 
-				if (W._legacy && el === W._win) {
+				if (el === W._win) {
+					if (! W._legacy) {
+						return el.pageYOffset;
+					}
+
 					el = W._html;
-					return el.scrollTop;
 				}
 
-				return el.pageYOffset;
+				return el.scrollTop;
 			}
 
 			W.$each(sel, function(el) {

@@ -134,8 +134,8 @@
 		// Render specified data into specified template string
 		// Return string
 		// DEPRECATED
-		parse: function(temp, data, opt) {
-			return W.view.render(temp, data, opt);
+		parse: function(temp, data) {
+			return W.view.render(temp, data);
 		}
 	});
 })(Wee);
