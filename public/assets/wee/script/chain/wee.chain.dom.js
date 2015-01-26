@@ -76,7 +76,7 @@
 			return this;
 		},
 		prependTo: function(parent) {
-			W.$prepend(parent, this._reverse());
+			W.$prepend(parent, this.reverse());
 			return this;
 		},
 		before: function(pos) {
@@ -98,8 +98,8 @@
 		replaceWith: function(sel) {
 			return W.$replaceWith(this, sel);
 		},
-		remove: function(filter) {
-			W.$remove(filter, this);
+		remove: function() {
+			W.$remove(this);
 			return this;
 		},
 		empty: function() {
@@ -175,20 +175,6 @@
 		scrollTop: function(val) {
 			var r = W.$scrollTop(this, val);
 			return val === U || val === true ? r : this;
-		},
-		// Utilities
-		_reverse: function() {
-			var cp = W.$extend({}, this),
-				len = this.length,
-				x = len,
-				i = 0;
-
-			for (; i < len; i++) {
-				x--;
-				this[i] = cp[x];
-			}
-
-			return this;
 		}
 	});
 })(Wee, undefined);
