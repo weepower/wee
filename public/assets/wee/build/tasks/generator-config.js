@@ -3,9 +3,6 @@
 module.exports = function(grunt) {
 	grunt.registerTask('configGenerator', function() {
 		if (project.generator.enable === true) {
-			// Import view library
-			require('../../script/wee.view.js');
-
 			// Loop through static site config files
 			grunt.file.expand(project.generator.build).forEach(function(src, i) {
 				var json = grunt.file.readJSON(src),

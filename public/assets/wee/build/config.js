@@ -13,6 +13,9 @@ global.path = require('path');
 global.jshint = require('jshint').JSHINT;
 global.JSCS = require('jscs');
 
+// Import view library
+require('../script/wee.view.js');
+
 Wee.fn.extend({
 	// Build root or relative path
 	buildPath: function(path, file) {

@@ -82,7 +82,7 @@
 					}
 
 					resp += tag + '%' + tags[tag].i + (filter || '');
-				} else {
+				} else if (tags[tag]) {
 					resp += tag + '%' + tags[tag].o.pop();
 				}
 
