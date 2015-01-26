@@ -26,7 +26,7 @@
 					}
 
 					return this.$set('uri', {
-						path: path.charAt(0) == '/' ? path : '/' + path,
+						path: (path.charAt(0) == '/' ? '' : '/') + path,
 						query: query,
 						hash: a.hash.substring(1)
 					});
@@ -113,7 +113,7 @@
 			for (; x < keys.length; x++) {
 				var key = keys[x],
 					opts = key.split('||'),
-					match = 0,
+					match = false,
 					k = 0;
 
 				for (; k < opts.length; k++) {
@@ -121,7 +121,7 @@
 						child = route[key];
 
 					if (opt == seg) {
-						match = 1;
+						match = true;
 					} else if (opt.substring(0, 1) == '$') {
 						// If the second character is / then test regex
 						if (opt.substring(1, 2) == '/') {
