@@ -4,80 +4,226 @@
 	W.fn.make('view', {
 		// Render specified data into specified template string
 		// Return string
-		render: function(temp, data, opt) {
-			return this.$private('process', temp, data, {}, W.$extend({
-				data: data,
-				raw: false
-			}, opt), 0);
+		render: function(temp, data) {
+			return this.$private('render', temp, W.$extend({}, data, true));
+		},
+		// Add template conditional filters
+		addFilter: function(a, b) {
+			this.$private('extend', 'filters', a, b);
+		},
+		// Add template helper functions
+		addHelper: function(a, b) {
+			this.$private('extend', 'helpers', a, b);
+		},
+		// Add global template partials
+		addPartial: function(a, b) {
+			this.$private('extend', 'partials', a, b);
 		}
 	}, {
-		pair: /{{#(.+?)}}([\s\S]+?){{\/\1}}(?!.*{{\/\1}})/g,
-		single: /{{(.+?)}}/g,
-		process: function(temp, data, prev, conf, index) {
+		_construct: function() {
+			// Set tag regex
+			this.tags = /{{([#\/])([^{\|\n]+)(\|[^{\n]+)?}}/g;
+			this.partial = /{{> (.+?)}}/g;
+			this.pair = /{{#(.+?)(?:|\|([^}]*))}}([\s\S]*?){{\/\1}}/g;
+			this.single = /{{(.+?)}}/g;
+			this.ext = /(.[^\(]+)(?:\((.*)\))?/;
+
+			// Create extension objects
+			this.helpers = {};
+			this.partials = {};
+
+			// Add default filters
+			this.filters = {
+				is: function(val) {
+					return this.val == val;
+				},
+				not: function(val) {
+					return this.val != val;
+				},
+				isEmpty: function() {
+					return this.empty;
+				},
+				notEmpty: function() {
+					return ! this.empty;
+				}
+			};
+		},
+		extend: function(type, a, b) {
+			var obj = a;
+
+			if (W.$isString(a)) {
+				obj = [];
+				obj[a] = b;
+			}
+
+			W.$extend(this[type], obj);
+		},
+		render: function(temp, data) {
+			var scope = this,
+				tags = [];
+
+			// Make partial replacements
+			// Preprocess tags to allow for reliable tag matching
+			temp = temp.replace(this.partial, function(match, tag) {
+				var partial = scope.partials[tag];
+				return partial ? (W.$isFunction(partial) ? partial() : partial) : '';
+			}).replace(this.tags, function(m, pre, tag, filter) {
+				var resp = '{{' + pre;
+
+				if (pre == '#') {
+					if (tags[tag]) {
+						tags[tag].i++;
+						tags[tag].o.push(tags[tag].i);
+					} else {
+						tags[tag] = {
+							i: 1,
+							o: [1]
+						};
+					}
+
+					resp += tag + '%' + tags[tag].i + (filter || '');
+				} else {
+					resp += tag + '%' + tags[tag].o.pop();
+				}
+
+				return resp + '}}';
+			});
+
+			// Parse template tags
+			return this.parse(temp, data, {}, data, 0);
+		},
+		parse: function(temp, data, prev, init, index) {
 			var scope = this;
 
-			return temp.replace(this.pair, function(m, tag, inner) {
-				var segs = tag.match(/(?:[^|]|\|\|)+/g),
-					len = segs.length,
-					filter = len > 1 ? segs[len - 1] : '';
-				tag = segs[0];
-
-				var val = scope.getValue(data, prev, tag, conf, index),
-					empty = val === false || val === U || val.length === 0,
+			return temp.replace(this.pair, function(m, tag, filter, inner) {
+				tag = tag.replace(/%\d+/, '');
+				var val = scope.get(data, prev, tag, U, init, index),
+					empty = val === false || val == null || val.length === 0,
 					resp = '';
 
-				if (filter === '' && ! empty && typeof val == 'object') {
-					// Loop through objects and arrays
-					var isObj = W.$isObject(val),
-						i = 0;
+				if (filter) {
+					// Loop through tag filters
+					var cont = filter.split('|').every(function(el) {
+						var arr = el.match(scope.ext),
+							args = arr[2] !== U ? arr[2].split(',') : [];
+						el = arr[1];
+						filter = scope.filters[el];
 
-					for (var key in val) {
-						if (val.hasOwnProperty(key)) {
-							var el = val[key],
-								item = W.$extend({
-									$key: key,
-									$val: el,
-									$i: i
-								}, W.$isObject(el) ? el : (isObj ? val : {}));
+						if (filter) {
+							var rv = filter.apply({
+								val: val,
+								data: data,
+								root: init,
+								tag: tag,
+								inner: inner,
+								empty: empty
+							}, args);
 
-							resp += scope.process(inner, item, data, conf, i);
-
-							i++;
+							// If the filter response is true skip into interior
+							// If false abort the current process
+							if (rv === false) {
+								return false;
+							} else if (rv === true) {
+								resp = scope.parse(inner, data, prev, init, index);
+							}
 						}
+
+						return true;
+					});
+
+					if (cont === false) {
+						return '';
 					}
-				} else if ((filter == 'notEmpty' && ! empty) || (filter == 'empty' && empty)) {
-					return scope.process(inner, data, {}, conf);
+
+					val = scope.get(data, prev, tag, U, init, index);
+					empty = val === false || val == null || val.length === 0;
+				}
+
+				if (empty === false && resp === '') {
+					// Loop through objects and arrays
+					if (typeof val == 'object') {
+						var isObj = W.$isObject(val),
+							i = 0;
+
+						for (var key in val) {
+							if (val.hasOwnProperty(key)) {
+								var el = val[key],
+									item = W.$extend({
+										$key: key,
+										'.': el,
+										'#': i,
+										'##': i + 1
+									}, W.$isObject(el) ? el : (isObj ? val : {}));
+
+								resp += scope.parse(inner, item, data, init, i);
+
+								i++;
+							}
+						}
+					} else if (val !== false) {
+						resp = scope.parse(inner, W.$extend({
+							'.': val,
+							'#': 0,
+							'##': 1
+						}, data), data, init, 0);
+					} else {
+						resp = inner;
+					}
 				}
 
 				return resp;
-			}).replace(this.single, function(m, tag) {
-				var opt = conf,
-					segs = tag.match(/(?:[^|]|\|\|)+/g),
-					len = segs.length,
-					filter = len > 1 ? segs[len - 1] : '';
-				tag = segs[0];
+			}).replace(this.single, function(m, set) {
+				var split = set.split('||'),
+					fb = split[1],
+					segs = split[0].split('|'),
+					tag = segs[0].trim(),
+					val = scope.get(data, prev, tag, fb, init, index),
+					helpers = segs.length > 1 ? segs.slice(1) : segs;
 
-				if (filter == 'raw') {
-					opt = W.$extend({
-						raw: true
-					});
+				// Process helpers
+				helpers.forEach(function(el) {
+					var arr = el.match(scope.ext);
+
+					if (arr) {
+						var args = arr[2] !== U ? arr[2].split(',') : [];
+						el = arr[1].trim();
+						var helper = scope.helpers[el];
+
+						if (helper) {
+							val = helper.apply({
+								val: val,
+								data: data,
+								root: init,
+								tag: tag,
+								index: index,
+								helpers: helpers,
+								fallback: fb
+							}, args);
+						}
+					}
+				});
+
+				// Encode output by default
+				if (typeof val == 'string' && helpers.indexOf('raw') == -1) {
+					val = val.replace(/&amp;/g, '&')
+						.replace(/&/g, '&amp;')
+						.replace(/</g, '&lt;')
+						.replace(/>/g, '&gt;')
+						.replace(/"/g, '&quot;');
 				}
 
-				var resp = scope.getValue(data, prev, tag, opt, index);
-
-				return resp === U || typeof resp == 'object' ? '' : resp;
+				return val === U || typeof val == 'object' ? '' : val;
 			});
 		},
-		getValue: function(data, prev, key, conf, x) {
-			var segs = key.split('||'),
-				trim = segs[0].trim(),
-				resp = trim.split('.'),
+		get: function(data, prev, key, fb, init, x) {
+			var trim = key.trim(),
+				resp = trim == '.' ? key : key.split('.'),
 				orig = data,
 				i = 0;
 
 			// Alter context
 			if (resp[0] == '$root') {
-				data = conf.data;
+				data = init;
 				resp.shift();
 			} else if (trim.substring(0, 3) == '../') {
 				data = prev;
@@ -96,27 +242,20 @@
 					// Return value on last segment
 					if (i === len) {
 						if (typeof data == 'function') {
-							data = data(orig, conf.data, x);
+							data = data(orig, init, x);
 						}
 
-						if (typeof data == 'string') {
-							// Encode tags by default
-							return conf.raw ?
-								data :
-								data.replace(/&amp;/g, '&')
-									.replace(/&/g, '&amp;')
-									.replace(/</g, '&lt;')
-									.replace(/>/g, '&gt;')
-									.replace(/"/g, '&quot;');
-						} else if (data !== U) {
+						if (data !== U) {
 							return data;
 						}
 					}
+				} else {
+					break;
 				}
 			}
 
-			// Return fallback or empty string
-			return segs.length > 1 ? segs[1].trim() : '';
+			// Return fallback
+			return fb ? fb.trim() : fb;
 		}
 	});
 })(Wee, undefined);
