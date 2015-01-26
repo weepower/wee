@@ -8,9 +8,9 @@
 	w.attachEvent('onload', function() {
 		var imgs = d.getElementsByTagName('img'),
 			svgs = d.getElementsByTagName('svg'),
-			i = 0,
 			fb,
-			img;
+			img,
+			i = 0;
 
 		for (; i < imgs.length; i++) {
 			img = imgs[i];
@@ -34,11 +34,10 @@
 
 			if (fb !== null) {
 				img = d.createElement('img');
+				img.src = fb;
 
 				var attrs = svg.attributes,
 					x = 0;
-
-				img.src = fb;
 
 				for (; x < attrs.length; x++) {
 					var attr = attrs.item(x);

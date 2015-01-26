@@ -7,10 +7,11 @@
 
 	w.attachEvent('onload', function() {
 		var sel = 'input[placeholder], textarea[placeholder]',
-			inputs = d.querySelectorAll(sel),
 			forms = d.querySelectorAll('form'),
+			inputs = d.querySelectorAll(sel),
 			i = 0;
 
+		// Reset value to placeholder value on blur
 		for (; i < inputs.length; i++) {
 			(function() {
 				var el = inputs[i],
@@ -37,17 +38,17 @@
 		// Clear default placeholder values on form submit
 		for (i = 0; i < forms.length; i++) {
 			(function() {
-				var el = forms[i];
+				var form = forms[i];
 
-				el.onsubmit = function() {
-					var inputs = el.querySelectorAll(sel),
+				form.onsubmit = function() {
+					var inputs = form.querySelectorAll(sel),
 						x = 0;
 
 					for (; x < inputs.length; x++) {
-						var xel = inputs[x];
+						var el = inputs[x];
 
-						if (xel.value == xel.getAttribute('placeholder')) {
-							xel.value = '';
+						if (el.value == el.getAttribute('placeholder')) {
+							el.value = '';
 						}
 					}
 				};
