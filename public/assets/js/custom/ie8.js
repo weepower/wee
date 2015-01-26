@@ -3,4 +3,4 @@
 /* global Sizzle */
 /* exported WeeSelector */
 
-var WeeSelector = Sizzle;
+var WeeSelector = Sizzle; // Set IE8 to use Sizzle for compatibility

@@ -1,4 +1,5 @@
 {
+	"-W065": true,
 	"browser": true,
 	"camelcase": true,
 	"curly": true,
@@ -11,6 +12,10 @@
 	"maxerr": 20,
 	"newcap": true,
 	"noempty": true,
+	"latedef": true,
+	"loopfunc": true,
+	"nonbsp": true,
+	"nonew": true,
 	"predef": {
 		"$": false,
 		"define": false,
@@ -18,11 +23,6 @@
 		"require": false,
 		"Wee": false
 	},
-	"latedef": true,
-	"loopfunc": true,
-	"nonbsp": true,
-	"nonew": true,
 	"undef": true,
-	"unused": true,
-	"-W065": true
+	"unused": true
 }

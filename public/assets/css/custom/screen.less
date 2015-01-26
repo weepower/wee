@@ -12,21 +12,48 @@ body {
 .container {
 	.max-width(80);
 }
-.top {
-	.background-gradient(@colorBlue; @colorBlue; @colorTeal; 135);
-	.min-height(100%);
-	.padding(vertical; 8%);
-	.spaced(-12.5);
-	&:after {
-		.block();
-		.content();
+.layout {
+	&-top {
+		.background-gradient(@colorBlue; @colorBlue; @colorTeal; 150);
+		.min-height(100%);
+		.padding(vertical; 8%);
+		.spaced(-12.5);
+		&:after {
+			.block();
+			.content();
+			.height(12.5);
+		}
+	}
+	&-bottom {
 		.height(12.5);
+		.padding(top; 4);
 	}
 }
-.bottom {
-	.background();
-	.height(12.5);
-	.padding(top; 4);
+
+
+
+
+
+/*------------------------------------*\
+	# Header
+\*------------------------------------*/
+
+.logo {
+	.align(middle);
+	.spaced(1.2);
+	&:hover {
+		.opacity(90%);
+	}
+	&,
+	img {
+		.inline-block(10.5; 3.5);
+	}
+}
+.heading {
+	.color(@colorLightBlue);
+	.font-size(2.3);
+	.font-weight(300);
+	.spaced();
 }
 
 
@@ -38,9 +65,11 @@ body {
 \*------------------------------------*/
 
 .footer {
+	.color(@colorLightBlue);
 	a {
+		.color(@colorLighterBlue);
 		&:hover {
-			.underline();
+			.white();
 		}
 	}
 	&__license,
@@ -63,30 +92,27 @@ body {
 	# Index
 \*------------------------------------*/
 
-.logo {
-	.align(middle);
-	.spaced(1.2);
-	&:hover {
-		.opacity(90%);
+.page-index {
+	.logo,
+	.heading {
+		.transparent();
 	}
-	&,
-	img {
-		.inline-block(10.5; 3.5);
+	.logo {
+		.animation(fade-in .8s .5s ease-out forwards);
 	}
-}
-.heading {
-	.font-size(2.3);
-	.font-weight(300);
-	.opacity(75%);
-	.spaced();
-	.white();
+	.heading {
+		.animation(fade-in 1s .3s ease-out forwards);
+	}
 }
 .nav {
 	&__button {
-		.border(light; 75%; 2px);
+		.border(@colorLightBlue; 2px);
 		.fill();
 		.font(@headingFont; 1.3);
+		.margin(top; -1);
+		.rounded(2.5);
 		.spaced(1);
+		.transparent();
 		.uppercase();
 		& {
 			.background(transparent);
@@ -97,8 +123,27 @@ body {
 		&:active {
 			.background(light; 10%; @colorTeal);
 		}
+		&:first-child {
+			.animation(fade-in .5s .3s ease-out forwards, slide-in .5s .3s ease-out forwards;);
+		}
+		&:nth-child(2) {
+			.animation(fade-in .5s .5s ease-out forwards, slide-in .5s .5s ease-out forwards;);
+		}
+		&:last-child {
+			.animation(fade-in .5s .7s ease-out forwards, slide-in .5s .7s ease-out forwards;);
+		}
 	}
 }
+.keyframes(fade-in, {
+	.transparent();
+}, {
+	.opaque();
+});
+.keyframes(slide-in, {
+	.margin(top; -1);
+}, {
+	.margin(top; 0);
+});
 
 
 

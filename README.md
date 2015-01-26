@@ -1,4 +1,4 @@
-# [Wee 2.1.0-rc.2](https://www.weepower.com)
+# [Wee](https://www.weepower.com)
 
 Wee is a front-end framework for methodically building complex, responsive web projects.  
 To read more, visit [weepower.com](https://www.weepower.com).
@@ -7,33 +7,33 @@ To read more, visit [weepower.com](https://www.weepower.com).
 
 Mobile-first CSS framework with reset, base, and Less mixin library < *4KB gzipped*
 
-* **Central configuration** for project normalization and branding
-* **Feature toggling** of major components to minimize overhead
-* **Structured breakpoints** to keep your responsive logic organized
-* **Legacy rules** to ensure basic IE8 compatibility
-* **Print styling** to generate print optimized pages
+* **Central configuration** for style normalization
+* **Feature toggling** to minimize overhead
+* **Structured breakpoints** to keep responsive logic organized
+* **Legacy rules** for IE8 compatibility
+* **Print styling** to generate print-optimized pages
 
-JavaScript toolset to build scalable, organized client-side interaction < *9KB gzipped*
+JavaScript toolset to build scalable, organized client-side codebase < *10KB gzipped*
 
 * **Foundation** of utilities, helpers, and module structure
 * **Chainable DOM** traversal and manipulation with familiar API
-* **Routing library** to flexibly associate paths to actions
-* **Event handing** to bind functionality to elements
+* **Routing library** to flexibly associate endpoints to actions
+* **Event handing** to bind actions to elements
 * **Data loading** for Ajax and JSON interaction
 * **Template rendering** to parse complex data structures
 * **Resource loading** for JavaScript, CSS, and images
 * **Breakpoint watching** for efficient media query callbacks
-* **Polyfill support** for HTML5, ES5, SVG images, and input placeholders
+* **Polyfill support** for HTML5, ES5, SVG, and input placeholders
 
 JSON-configured Grunt process to compile, optimize, and minify your project
 
 * **Built-in server** for static development
-* **Live reloading** of static assets and markup
-* **Ghost mode** to sync interaction across multiple browsers
+* **Live reloading** of assets and markup
+* **Ghost mode** to mirror actions across multiple browsers
 * **Static site generator** perfect for living style guides
 * **Sourcemap output** to line match unminified JavaScript
-* **Legacy build** to concatenate media queries and convert rem units
-* **Validation** of JavaScript against code quality and formatting rules
+* **Legacy build** to concatenate breakpoints and convert rem units
+* **Validation** of JavaScript against JSCS and JSHint rules
 
 Structured foundation of markup, icons, and supporting files
 
@@ -64,11 +64,12 @@ Automated testing generously provided by [BrowserStack](https://www.browserstack
 
 ## Versioning
 
-Wee adheres to [Semantic Versioning](http://semver.org/) in the form of MAJOR.MINOR.PATCH. Regardless of version we  recommend thoroughly reviewing the [changelog](https://github.com/weepower/wee/blob/master/CHANGELOG.md) before updating.
+Wee adheres to [Semantic Versioning](http://semver.org/) in the form of MAJOR.MINOR.PATCH.  
+Regardless of version we recommend thoroughly reviewing the [release notes](https://github.com/weepower/wee/releases) before updating.
 
 ## Community
 
-Keep track of development and news by following [@weecss on Twitter](https://twitter.com/weecss).
+Keep track of development and news by following [@weecss](https://twitter.com/weecss) on Twitter.
 
 ## License
 
@@ -76,9 +77,7 @@ Copyright 2015 [Caddis Interactive, LLC](https://www.caddis.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-	http://www.apache.org/licenses/LICENSE-2.0
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,

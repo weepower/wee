@@ -28,6 +28,7 @@
 
 		],
 		"compile": {
+			"ie9.min.css": "custom/ie9.less",
 			"guide.min.css": "custom/guide.less"
 		},
 		"legacy": {

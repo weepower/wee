@@ -4,14 +4,16 @@
 	# Global
 \*------------------------------------*/
 
-.top {
-	.spaced(-9.5);
-	&:after {
+.layout {
+	&-top {
+		.spaced(-9.5);
+		&:after {
+			.height(9.5);
+		}
+	}
+	&-bottom {
 		.height(9.5);
 	}
-}
-.bottom {
-	.height(9.5);
 }
 
 

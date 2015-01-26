@@ -7,11 +7,11 @@
 
 // Inject imports
 
-<%= imports %>
+{{imports|raw}}
 
 // Responsive
 
-<%= responsive %>
+{{responsive|raw}}
 
 .wee-responsive () when (@responsive = true) and (@responsiveEnabled = true) and not (@legacyMode = true) {
 

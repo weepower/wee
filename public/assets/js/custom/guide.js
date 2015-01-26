@@ -1,4 +1,5 @@
 // Add custom style guide JavaScript here
+// Sample script below can be removed
 
 /* global hljs */
 
@@ -28,8 +29,8 @@ Wee.fn.make('guide', {
 		Wee.assets.load({
 			root: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/',
 			files: [
-				'styles/monokai_sublime.min.css',
-				'highlight.min.js'
+				'highlight.min.js',
+				'styles/monokai_sublime.min.css'
 			],
 			success: function() {
 				hljs.initHighlightingOnLoad();
