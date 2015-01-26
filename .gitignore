@@ -11,7 +11,7 @@
 
 node_modules
 bower_components
-wee/temp/*
+**/wee/temp
 
 
 #------------------------------------
@@ -19,8 +19,6 @@ wee/temp/*
 #------------------------------------
 
 .idea
-.idea/
-.idea/*
 .settings
 .bundle
 mixture.json
