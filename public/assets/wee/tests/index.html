@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Unit Tests | Wee</title>
-<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.16.0.css">
+<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.17.1.css">
 <style>
 html {
 	font-family: '5';
@@ -20,17 +20,23 @@ html {
 <body>
 <div id="qunit"></div>
 <div id="qunit-fixture"></div>
-<script src="//code.jquery.com/qunit/qunit-1.16.0.js"></script>
+<script src="//code.jquery.com/qunit/qunit-1.17.1.js"></script>
 <script src="setup.js"></script>
+<!-- Core -->
 <script src="../script/wee.js"></script>
 <script src="../script/wee.assets.js"></script>
-<script src="../script/wee.chain.js"></script>
 <script src="../script/wee.data.js"></script>
 <script src="../script/wee.dom.js"></script>
 <script src="../script/wee.events.js"></script>
 <script src="../script/wee.routes.js"></script>
 <script src="../script/wee.screen.js"></script>
 <script src="../script/wee.view.js"></script>
+<!-- Chaining -->
+<script src="../script/wee.chain.js"></script>
+<script src="../script/chain/wee.chain.dom.js"></script>
+<script src="../script/chain/wee.chain.events.js"></script>
+<script src="../script/chain/wee.chain.view.js"></script>
+<!-- Tests -->
 <script src="spec/wee.js"></script>
 <script src="spec/wee.assets.js"></script>
 <script src="spec/wee.chain.js"></script>
