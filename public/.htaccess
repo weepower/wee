@@ -66,15 +66,23 @@ ErrorDocument 404 /404.html
 #RewriteCond %{SERVER_PORT} 80
 #RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-# Remove multiple slashes
-RewriteCond %{REQUEST_URI} ^(.*)//(.*)$ [NC]
-RewriteRule . %1/%2 [R=301,L]
+# Remove trailing slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [R=301,L]
 
-# Remove index files
-RewriteRule ^index\.html$ / [R=301,L]
-RewriteRule ^(.*)/index\.html$ /$1 [R=301,L]
+# Remove multiple slashes
+RewriteCond %{THE_REQUEST} //
+RewriteRule ^(.*)$ /$1 [R=301,L]
+
+# Remove index reference
+RewriteCond %{REQUEST_URI} ^(.*/)index\.html$ [NC]
+RewriteRule . %1 [R=301,L]
 
 # Remove extension
+RewriteCond %{THE_REQUEST} ^GET\ (.*)\.html(.*)\ HTTP
+RewriteRule (.*)\.html$ $1$2 [R=301]
+
+# Rewrite extension
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^(.*)$ /$1.html [R=301,L]
+RewriteRule (.*) $1\.html [L]
