@@ -29,6 +29,15 @@
 			.sub-rules () when not (@codeBorderColor = false) {
 				border: none;
 			}
+			.sub-rules () when (@codeBlockWrap = true) {
+				white-space: -moz-pre-wrap;
+				white-space: pre-wrap;
+				word-wrap: break-word;
+			}
+			.sub-rules () when not (@codeBlockWrap = true) {
+				overflow: scroll;
+				white-space: pre;
+			}
 			background: none;
 			color: @codeBlockColor;
 			display: block;
