@@ -306,7 +306,7 @@
 
 
 /*------------------------------------*\
-	# Font Size
+	# Font Style
 \*------------------------------------*/
 
 .font-style (@value: normal) when not (@value = false) {
@@ -623,7 +623,9 @@
 	# Padding
 \*------------------------------------*/
 
-.padding (@value) when not (@value = false) {
+.padding (@value) when not (@value = false)
+		and not (@value = horizontal)
+		and not (@value = vertical) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		padding: @value;
 	}
@@ -779,35 +781,35 @@
 	}
 	.check();
 }
-.border (dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+.border (dark; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @black) {
 	.border(@fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border: @value @style rgba(0, 0, 0, (@opacity / 100));
 	}
-	.check (@opacity) when (@value < 1) {
+	.check () when (@value < 1) {
 		border: @value @style rgba(0, 0, 0, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+.border (light; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @white) {
 	.border(@fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border: @value @style rgba(255, 255, 255, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border: @value @style rgba(255, 255, 255, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (top; @color: @baseColor; @value: 1px; @style: solid) {
+.border (top; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
 	.check () when (@color = 0), (iskeyword(@color)) {
 		border-top: 0;
 	}
@@ -831,35 +833,35 @@
 	}
 	.check();
 }
-.border (top; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+.border (top; dark; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @black) {
 	.border(top; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-top: @value @style rgba(0, 0, 0, (@opacity / 100));
 	}
-	.check (@value) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-top: @value @style rgba(0, 0, 0, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-top: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (top; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+.border (top; light; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @white) {
 	.border(top; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
-			and not (ispercentage(@value)) {
+	.check () when (@opacity > 1)
+			and not (ispercentage(@opacity)) {
 		border-top: @value @style rgba(255, 255, 255, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-top: @value @style rgba(255, 255, 255, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-top: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (right; @color: @baseColor; @value: 1px; @style: solid) {
+.border (right; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
 	.check () when (@color = 0), (iskeyword(@color)) {
 		border-right: 0;
 	}
@@ -883,35 +885,35 @@
 	}
 	.check();
 }
-.border (right; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+.border (right; dark; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @black) {
 	.border(right; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-right: @value @style rgba(0, 0, 0, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-right: @value @style rgba(0, 0, 0, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-right: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (right; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+.border (right; light; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @white) {
 	.border(right; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-right: @value @style rgba(255, 255, 255, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-right: @value @style rgba(255, 255, 255, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-right: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (bottom; @color: @baseColor; @value: 1px; @style: solid) {
+.border (bottom; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
 	.check () when (@color = 0), (iskeyword(@color)) {
 		border-bottom: 0;
 	}
@@ -935,35 +937,35 @@
 	}
 	.check();
 }
-.border (bottom; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+.border (bottom; dark; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @black) {
 	.border(bottom; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-bottom: @value @style rgba(0, 0, 0, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-bottom: @value @style rgba(0, 0, 0, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-bottom: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (bottom; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+.border (bottom; light; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @white) {
 	.border(bottom; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-bottom: @value @style rgba(255, 255, 255, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-bottom: @value @style rgba(255, 255, 255, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-bottom: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (left; @color: @baseColor; @value: 1px; @style: solid) {
+.border (left; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)){
 	.check () when (@color = 0), (iskeyword(@color)) {
 		border-left: 0;
 	}
@@ -987,33 +989,33 @@
 	}
 	.check();
 }
-.border (left; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+.border (left; dark; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @black) {
 	.border(left; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-left: @value @style rgba(0, 0, 0, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-left: @value @style rgba(0, 0, 0, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-left: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (left; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+.border (left; light; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @white) {
 	.border(left; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-left: @value @style rgba(255, 255, 255, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-left: @value @style rgba(255, 255, 255, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-left: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
 .border (horizontal; @value) when (@value = 0), (iskeyword(@value)) {
 	.border(left; @value);
@@ -1023,81 +1025,81 @@
 	.border(left; @color; @value; @style);
 	.border(right; @color; @value; @style);
 }
-.border (horizontal; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+.border (horizontal; dark; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @black) {
 	.border(left; @fallback; @value; @style);
 	.border(right; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-left: @value @style rgba(0, 0, 0, (@opacity / 100));
 		border-right: @value @style rgba(0, 0, 0, (@opacity / 100));
 	}
-	.check (@opacity) when (@value < 1) {
+	.check () when (@value < 1) {
 		border-left: @value @style rgba(0, 0, 0, @opacity);
 		border-right: @value @style rgba(0, 0, 0, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-left: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
 		border-right: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (horizontal; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+.border (horizontal; light; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @white) {
 	.border(left; @fallback; @value; @style);
 	.border(right; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-left: @value @style rgba(255, 255, 255, (@opacity / 100));
 		border-right: @value @style rgba(255, 255, 255, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-left: @value @style rgba(255, 255, 255, @opacity);
 		border-right: @value @style rgba(255, 255, 255, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-left: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
 		border-right: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
 .border (vertical; @value) when (@value = 0), (iskeyword(@value)) {
 	.border(top; @value);
 	.border(bottom; @value);
 }
-.border (vertical; dark; @opacity: .2; @value: 1px; @style: solid; @fallback: @black) {
+.border (vertical; dark; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @black) {
 	.border(top; @fallback; @value; @style);
 	.border(bottom; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-top: @value @style rgba(0, 0, 0, (@opacity / 100));
 		border-bottom: @value @style rgba(0, 0, 0, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-top: @value @style rgba(0, 0, 0, @opacity);
 		border-bottom: @value @style rgba(0, 0, 0, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-top: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
 		border-bottom: @value @style rgba(0, 0, 0, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
-.border (vertical; light; @opacity: .2; @value: 1px; @style: solid; @fallback: @white) {
+.border (vertical; light; @opacity: @defaultOpacity; @value: 1px; @style: solid; @fallback: @white) {
 	.border(top; @fallback; @value; @style);
 	.border(bottom; @fallback; @value; @style);
-	.check (@opacity) when (@opacity > 1)
+	.check () when (@opacity > 1)
 			and not (ispercentage(@opacity)) {
 		border-top: @value @style rgba(255, 255, 255, (@opacity / 100));
 		border-bottom: @value @style rgba(255, 255, 255, (@opacity / 100));
 	}
-	.check (@opacity) when (@opacity < 1) {
+	.check () when (@opacity < 1) {
 		border-top: @value @style rgba(255, 255, 255, @opacity);
 		border-bottom: @value @style rgba(255, 255, 255, @opacity);
 	}
-	.check (@opacity) when (ispercentage(@opacity)) {
+	.check () when (ispercentage(@opacity)) {
 		border-top: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
 		border-bottom: @value @style rgba(255, 255, 255, unit((@opacity / 100)));
 	}
-	.check(@opacity);
+	.check();
 }
 .border (vertical; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
 	.border(bottom; @color; @value; @style);
@@ -1110,7 +1112,7 @@
 	.border(right; @color; @right; @style);
 	.border(top; @color; @top; @style);
 }
-.border-image (@filename; @slice: 100%; @width; 1; @outset: 0; @repeat: stretch) {
+.border-image (@filename; @slice: 100%; @width: 1; @outset: 0; @repeat: stretch) {
 	-webkit-border-image: url('@{imagePath}@{filename}') @slice @width @outset @repeat;
 	border-image: url('@{imagePath}@{filename}') @slice @width @outset @repeat;
 }
@@ -1136,13 +1138,13 @@
 	border-top-style: @style;
 }
 .border-style (right; @style) {
-	border-top-style: @style;
+	border-right-style: @style;
 }
 .border-style (bottom; @style) {
-	border-top-style: @style;
+	border-bottom-style: @style;
 }
 .border-style (left; @style) {
-	border-top-style: @style;
+	border-left-style: @style;
 }
 .border-width (@width) {
 	border-width: @width;
@@ -1169,9 +1171,13 @@
 \*------------------------------------*/
 
 .rounded (...) {
-	.background-clip();
+	background-clip: border-box;
 }
-.rounded (@value: 3px) when not (@value = false) {
+.rounded (@value: 3px) when not (@value = false)
+		and not (@value = top)
+		and not (@value = right)
+		and not (@value = bottom)
+		and not (@value = left) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		border-radius: @value;
 	}
@@ -1189,7 +1195,9 @@
 	}
 	.check();
 }
-.rounded (top; @value: 3px) when not (@value = false) {
+.rounded (top; @value: 3px) when not (@value = false)
+ 		and not (@value = right)
+		and not (@value = left) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		border-top-left-radius: @value;
 		border-top-right-radius: @value;
@@ -1267,7 +1275,9 @@
 	}
 	.check();
 }
-.rounded (bottom; @value: 3px) when not (@value = false) {
+.rounded (bottom; @value: 3px) when not (@value = false)
+		and not (@value = right)
+		and not (@value = left) {
 	.check () when not (isnumber(@value)), (@value = 0) {
 		border-bottom-right-radius: @value;
 		border-bottom-left-radius: @value;
@@ -1333,7 +1343,7 @@
 			and not (@value = 0) {
 		@temp: (@value * unit(1, @defaultUnit));
 		.check () when (isunit(@temp, rem)), (isunit(@value, rem)) {
-			border-top-right-radius: unit(@temp, rem);
+			border-top-left-radius: unit(@temp, rem);
 			border-bottom-left-radius: unit(@temp, rem);
 		}
 		.check () when not (isunit(@temp, rem))
@@ -1389,13 +1399,15 @@
 .background (@value) when (@value = 0) {
 	background: none;
 }
-.background (@value) when (isstring(@value)), (iskeyword(@value)) {
+.background (@value) when (isstring(@value)), (iskeyword(@value))
+ 		and not (@value = dark)
+		and not (@value = light) {
 	background: ~'@{value}';
 }
 .background (@color: @bodyBackground) when (iscolor(@color)) {
 	background: @color;
 }
-.background (@color; @filename) when not (iskeyword(@color)) {
+.background (@color; @filename) when not (iskeyword(@color)) and not (isnumber(@filename)) {
 	background: @color url('@{imagePath}@{filename}');
 }
 .background (@color; @filename; @repeat) when (isstring(@repeat)), (iskeyword(@repeat)) {
@@ -1480,7 +1492,7 @@
 	.background-image(@filename; @x; @y; @repeat; @attachment);
 	.background-size(@width; @height);
 }
-.background-gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2); @angle: 180) {
+.background-gradient (@color: @gray; @start: rgba(0, 0, 0, .8); @end: rgba(0, 0, 0, .2); @angle: 180) when (iscolor(@color)) and (iscolor(@start)) {
 	@deg: unit(@angle, deg);
 	@revDeg: unit(mod((450 - @angle), 360), deg);
 	background-color: @color;
@@ -1488,7 +1500,7 @@
 	.background('-webkit-linear-gradient(@{revDeg}, @{start}, @{end})');
 	.background('linear-gradient(@{deg}, @{start}, @{end})');
 }
-.background-gradient (@color: @gray; @spread; @angle: 180) when (ispercentage(@spread)) {
+.background-gradient (@color; @spread; @angle: 180) when (iscolor(@color)) and (ispercentage(@spread)) {
 	@lighter: lighten(@color, @spread);
 	@darker: darken(@color, @spread);
 	@deg: unit(@angle, deg);
@@ -1499,20 +1511,20 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{lighter}', endColorstr='@{darker}', GradientType=0);
 }
 .background-gradient (dark; @start: 0; @end: 1; @angle: 180) {
-	@start: rgba(0, 0, 0, @start);
-	@end: rgba(0, 0, 0, @end);
+	@startAlpha: rgba(0, 0, 0, @start);
+	@endAlpha: rgba(0, 0, 0, @end);
 	@deg: unit(@angle, deg);
 	@revDeg: unit(mod((450 - @angle), 360), deg);
-	.background('-webkit-linear-gradient(@{revDeg}, @{start}, @{end})');
-	.background('linear-gradient(@{deg}, @{start}, @{end})');
+	.background('-webkit-linear-gradient(@{revDeg}, @{startAlpha}, @{endAlpha})');
+	.background('linear-gradient(@{deg}, @{startAlpha}, @{endAlpha})');
 }
 .background-gradient (light; @start: 0; @end: 1; @angle: 180) {
-	@start: rgba(255, 255, 255, @start);
-	@end: rgba(255, 255, 255, @end);
+	@startAlpha: rgba(255, 255, 255, @start);
+	@endAlpha: rgba(255, 255, 255, @end);
 	@deg: unit(@angle, deg);
 	@revDeg: unit(mod((450 - @angle), 360), deg);
-	.background('-webkit-linear-gradient(@{revDeg}, @{start}, @{end})');
-	.background('linear-gradient(@{deg}, @{start}, @{end})');
+	.background('-webkit-linear-gradient(@{revDeg}, @{startAlpha}, @{endAlpha})');
+	.background('linear-gradient(@{deg}, @{startAlpha}, @{endAlpha})');
 }
 .background-attachment (...) {
 	background-attachment: @arguments;
@@ -1567,11 +1579,8 @@
 	# Colors
 \*------------------------------------*/
 
-.color (@color) {
+.color (@color: @baseColor) {
 	color: @color;
-}
-.baseColor () {
-	color: @baseColor;
 }
 .white () {
 	color: @white;
@@ -1677,7 +1686,7 @@
 	.filter('sepia(@{value})');
 }
 .drop-shadow (@value: '1px 1px 0 rgba(0, 0, 0, @{defaultOpacity})') when (isstring(@value)), (iskeyword(@value)) {
-	filter: drop-shadow(@value);
+	.filter('drop-shadow(@{value})');
 }
 .drop-shadow (@color; @x: 1px; @y: 1px; @blur: 0) when (iscolor(@color)) {
 	.drop-shadow('@{x} @{y} @{blur} @{color}');
@@ -1701,6 +1710,24 @@
 	-webkit-animation: @arguments;
 	animation: @arguments;
 }
+.keyframes (@name; @from; @to) {
+	@-webkit-keyframes ~'@{name}' {
+		0% {
+			@from();
+		}
+		100% {
+			@to();
+		}
+	}
+	@keyframes ~'@{name}' {
+		0% {
+			@from();
+		}
+		100% {
+			@to();
+		}
+	}
+}
 
 
 
@@ -1710,16 +1737,6 @@
 	# Blocks
 \*------------------------------------*/
 
-.block-row () {
-	display: block;
-	margin-left: 0;
-	width: auto;
-}
-.block-column () {
-	display: block;
-	margin-left: 0;
-	width: auto;
-}
 .centered-block (...) {
 	display: block;
 	margin-left: auto;
@@ -2101,7 +2118,7 @@
 	# Rows
 \*------------------------------------*/
 
-.row (@margin: @gridMargin) {
+.row (@margin: @gridMargin) when (ispercentage(@margin)) {
 	.clearfix();
 	.check () when not (@margin = false) {
 		.margin(left; (@margin * -1));
@@ -2109,7 +2126,7 @@
 	}
 	.check();
 }
-.row-modify (@margin: @gridMargin) {
+.row-modify (@margin: @gridMargin) when (ispercentage(@margin)) {
 	.margin(left; (@margin * -1));
 	.max-width((100% + @margin));
 }
@@ -2137,7 +2154,7 @@
 	float: left;
 	width: ((100% / @columns) * @share);
 }
-.column (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) {
+.column (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) when (ispercentage(@margin)) {
 	float: left;
 	width: (((100% / @columns) * @share) - (@margin));
 	.margin(left; @margin);
@@ -2145,7 +2162,7 @@
 .column-modify (@share; @columns: @gridColumns) {
 	width: ((100% / @columns) * @share);
 }
-.column-modify (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) {
+.column-modify (spaced; @share; @columns: @gridColumns; @margin: @gridMargin) when (ispercentage(@margin)) {
 	width: (((100% / @columns) * @share) - (@margin));
 	.margin(left; @margin);
 }
@@ -2171,7 +2188,7 @@
 .column-offset (@share; @columns: @gridColumns) {
 	margin-left: ((100% / @columns) * @share);
 }
-.column-offset (spaced; @share; @columns: @gridColumns; @margin: (@gridMargin / 2)) {
+.column-offset (spaced; @share; @columns: @gridColumns; @margin: (@gridMargin / 2)) when (ispercentage(@margin)) {
 	margin-left: (((100% / @columns) * @share) + (@margin * 2));
 }
 
@@ -2302,9 +2319,6 @@
 .list-style (@value) {
 	list-style: @value;
 }
-.list-style-position (@value: outside) {
-	list-style-position: @value;
-}
 .list-position (@value: outside) {
 	list-style-position: @value;
 }
@@ -2385,16 +2399,16 @@
 \*------------------------------------*/
 
 .input-placeholder (@color: @inputPlaceholderColor) {
-	:-moz-placeholder {
+	&:-moz-placeholder {
 		color: @color;
 	}
-	::-moz-placeholder {
+	&::-moz-placeholder {
 		color: @color;
 	}
-	:-ms-input-placeholder {
+	&:-ms-input-placeholder {
 		color: @color;
 	}
-	::-webkit-input-placeholder {
+	&::-webkit-input-placeholder {
 		color: @color;
 	}
 }
@@ -2428,10 +2442,10 @@
 		.background(@background);
 		.color(@color);
 	}
-	::-moz-selection {
+	&::-moz-selection {
 		.check();
 	}
-	::selection {
+	&::selection {
 		.check();
 	}
 }
@@ -2514,7 +2528,50 @@
 	display: none !important;
 }
 
-// DEPRECATED
+
+
+
+
+/*------------------------------------*\
+	# Deprecated
+\*------------------------------------*/
+
+.list-style-position (@value: outside) {
+	list-style-position: @value;
+}
+.baseColor () {
+	color: @baseColor;
+}
+.centered () {
+	.centered(horizontal);
+}
+.centered (horizontal) {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+.centered (vertical) {
+	position: absolute;
+	&:before {
+		content: ' ';
+		display: inline-block;
+		height: 100%;
+		vertical-align: middle;
+	}
+}
+.centered (both) {
+	.centered();
+}
+.block-row () {
+	display: block;
+	margin-left: 0;
+	width: auto;
+}
+.block-column () {
+	display: block;
+	margin-left: 0;
+	width: auto;
+}
 .hide {
 	display: none;
 }
