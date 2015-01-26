@@ -1,15 +1,14 @@
 ---
-name: Unordered List
-heading: Use lists to represent groups of related data
+name: Ordered List
 ---
 
-```html
-<ul>
+---html|push|render---
+
+<ol>
 	<li>Lorem ipsum dolor
-		<ul>
+		<ol>
 			<li>Lorem ipsum dolor
 				<ul>
-					<li>Lorem ipsum dolor</li>
 					<li>Lorem ipsum dolor</li>
 				</ul>
 			</li>
@@ -19,9 +18,8 @@ heading: Use lists to represent groups of related data
 					<li>Lorem ipsum dolor</li>
 				</ol>
 			</li>
-		</ul>
+		</ol>
 	</li>
 	<li>Lorem ipsum dolor</li>
 	<li>Lorem ipsum dolor</li>
-</ul>
-```
+</ol>

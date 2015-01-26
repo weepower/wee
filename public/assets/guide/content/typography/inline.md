@@ -3,7 +3,8 @@ name: Inline
 heading: Miscellaneous inline text formatting
 ---
 
-```html
+---html|push|render---
+
 <ul>
 	<li><a href="#">This is a simple link</a></li>
 	<li><strong>Strong defines important text</strong></li>
@@ -26,4 +27,3 @@ heading: Miscellaneous inline text formatting
 	<li>The variable element, such as <var>x</var> / <var>y</var> = <var>z</var></li>
 	<li>The relative time is <time datetime="2014-02-14T08:00">2 weeks</time></li>
 </ul>
-```

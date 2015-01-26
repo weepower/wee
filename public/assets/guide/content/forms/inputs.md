@@ -2,7 +2,8 @@
 name: Input Fields
 ---
 
-```html
+---html|push|render---
+
 <input type="email" name="name" placeholder="Email Address" required>
 <div class="inline-field">
 	<label for="name2">Full Name</label>
@@ -14,4 +15,3 @@ name: Input Fields
 	<label for="textarea2">Inline Message</label>
 	<textarea name="textarea2" id="textarea2" placeholder="Short message here..."></textarea>
 </div>
-```

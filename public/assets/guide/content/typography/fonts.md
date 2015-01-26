@@ -2,7 +2,6 @@
 name: Fonts
 ---
 
-```html|hideBlock
 <ul>
 	<li class="font font--base">Base <span>@baseFont</span></li>
 	<li class="font font--heading">Heading <span>@headingFont</span></li>
@@ -17,4 +16,3 @@ name: Fonts
 	<li class="font font--legend">Legend <span>@legendFont</span></li>
 	<li class="font font--button">Button <span>@buttonFont</span></li>
 </ul>
-```

@@ -2,7 +2,6 @@
 name: Grayscale
 ---
 
-```html|hideBlock
 <ol class="colors">
 	<li class="color color--white">@white</li>
 	<li class="color color--lightestgray">@lightestGray</li>
@@ -14,4 +13,3 @@ name: Grayscale
 	<li class="color color--darkestgray">@darkestGray</li>
 	<li class="color color--black">@black</li>
 </ol>
-```

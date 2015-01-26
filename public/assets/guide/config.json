@@ -1,48 +1,71 @@
 {
-	"defaults": {
-		"template": "templates/default.html"
+	"name": "Project Style Guide",
+	"description": "Project style guide description.",
+	"config": {
+		"watch": true,
+		"minify": true,
+		"enhanceTypography": true,
+		"removeIndex": true,
+		"removeTrailingSlashes": true,
+		"paths": {
+			"templates": "templates",
+			"partials": "partials",
+			"extensions": "extensions"
+		}
 	},
-	"compile": {
+	"env": {
+		"prod": {
+
+		},
+		"default": {
+
+		}
+	},
+	"data": {
+		"heading": "Project design elements"
+	},
+	"sections": {
 		"general": {
+			"name": "General",
+			"template": "default",
 			"target": "index.html",
-			"root": "patterns/general/",
-			"patterns": [
-				"breakpoints.html",
-				"grayscale.html"
-			]
+			"content": "content/general/*.md"
 		},
 		"elements": {
+			"name": "Elements",
+			"template": "default",
 			"target": "elements.html",
-			"root": "patterns/elements/",
-			"patterns": [
-				"table.html",
-				"figure.html",
-				"code.html"
+			"content": [
+				"content/elements/table.md",
+				"content/elements/figure.md",
+				"content/elements/code.md"
 			]
 		},
 		"forms": {
+			"name": "Forms",
+			"template": "default",
 			"target": "forms.html",
-			"root": "patterns/forms/",
-			"patterns": [
-				"inputs.html",
-				"selects.html",
-				"buttons.html"
+			"content": [
+				"content/forms/inputs.md",
+				"content/forms/selects.md",
+				"content/forms/buttons.md"
 			]
 		},
 		"typography": {
+			"name": "Typography",
+			"template": "default",
 			"target": "typography.html",
-			"root": "patterns/typography/",
-			"patterns": [
-				"fonts.html",
-				"paragraph.html",
-				"headings.html",
-				"subheadings.html",
-				"inline.html",
-				"unordered.html",
-				"ordered.html",
-				"description.html",
-				"blockquote.html",
-				"address.html"
+			"content": [
+				"content/typography/fonts.md",
+				"content/typography/paragraph.md",
+				"content/typography/headings.md",
+				"content/typography/subheadings.md",
+				"content/typography/inline.md",
+				"content/typography/unordered.md",
+				"content/typography/ordered.md",
+				"content/typography/description.md",
+				"content/typography/blockquote.md",
+				"content/typography/address.md"
 			]
 		}
 	}

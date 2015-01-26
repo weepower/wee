@@ -3,7 +3,8 @@ name: Table
 heading: Tables should only with tabular data
 ---
 
-```html
+---html|push|render---
+
 <table itemscope itemtype="http://schema.org/Table">
 	<caption itemprop="about">Caption ipsum dolor sit amet</caption>
 	<thead>
@@ -33,4 +34,3 @@ heading: Tables should only with tabular data
 		</tr>
 	</tfoot>
 </table>
-```

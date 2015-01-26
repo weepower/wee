@@ -1,159 +1,18 @@
-<!DOCTYPE html>
-<html lang="en" itemscope itemtype="http://schema.org/WebPage">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Brand Style Guide | Project Name</title>
-<meta name="description" content="Project description.">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/assets/css/style.min.css">
-<link rel="stylesheet" href="/assets/css/guide.min.css">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,700">
-<!--[if lt IE 9]>
-<link rel="stylesheet" href="/assets/css/ie8.min.css">
-<script src="/assets/js/ie8.min.js"></script>
-<![endif]-->
-<!--[if lte IE 9]>
-<script src="/assets/js/ie9.min.js"></script>
-<![endif]-->
-</head>
-<body>
-<div class="guide-top">
-	<header role="banner" class="container">
-		<a href="/" rel="home" class="logo">
-			<svg viewBox="0 0 501.3 165.7" role="img" aria-label="Wee Framework" data-fallback="/assets/img/wee.png">
-				<path fill="#fff" d="M481.2 111c-39.2 23.3-67.8 38.3-84.2 7 33.8-24.3 74.1-64.4 54-98.1-31.1-52.3-101 6.9-101 79 0 8.4 1 16.5 3 24.2-28.5 17-56.2 20.9-69.8-5.1 33.8-24.3 74.1-64.4 54-98.1-31.2-52.3-101.1 6.8-101.1 79 0 3.7.2 7.3.6 10.8-4.3 1.2-8.1 1-11.4-.5-4.5-2.1-8.3-6.5-11.6-12.2 17.6-38 15.7-79.7-14.2-78.6-20 .7-23 24.4-20.1 40.9.9 6.7 3.1 19.2 7.6 32.1-4 15.4-19.9 53.6-47.2 40.9-29.4-13.7-10.7-49-6.4-90.9.9-8.3 4.2-19.5-7-21.4-1.4-.2-2.8-.4-4.1-.5-1.3-.1-2.6-.1-4-.1-9.1.3-18.8 4.5-18.3 12.9 3.3 51.6-13.6 106.9-39.9 99-28.5-8.6-27.3-52.9-17-81.4 7.5-21 10.4-23.1 16.2-34.4.5-1.7 2.8-6.9 2.7-7.5-.2-6.6-2.1-8-13.7-7.5-7.4.3-12.5.7-15.3 1.4-4.8 1.6-8.5 4.6-11.2 8.9-9.8 17.7-23.2 47.9-21.7 88.8 1.5 40.8 18.6 67.2 47.9 66.1 29.3-1.1 54.2-26.4 54.2-26.4s2.5 27.5 37 26.2c27.6-1 47.3-19.9 63-46.6 3.9 4.3 8.4 7.9 13.6 10.4 4.9 2.3 10.1 3.5 15.4 3.5 3.5 0 7.1-.5 10.7-1.5 5.8 11.8 23.3 34.4 58.1 34.4 25.1 0 48.3-12.9 63.1-23.2 9.1 11.1 25.3 23.2 50.8 23.2 40.3 0 75-39 82.7-47.7 7.4-8.4 8.7-21.3-15.4-7zm-177.2-77.3c27 10.8-8.6 51.3-32.5 64.6-4.8-23.8 5.5-75.4 32.5-64.6zm113.9 0c27 10.8-8.6 51.3-32.5 64.6-4.8-23.8 5.5-75.4 32.5-64.6z"></path>
-			</svg>
-		</a>
-		<h1 class="heading">Brand style guide</h1>
-	</header>
-</div>
-<main role="main" class="container">
-	<nav role="navigation" class="jump">
-		<span class="jump__label">View</span>
-		<ol class="jump__links">
-			
-			<li><a href="index.html">general</a></li>
-			
-			<li><a href="elements.html">elements</a></li>
-			
-			<li><a href="forms.html">forms</a></li>
-			
-			<li><a href="typography.html">typography</a></li>
-			
-		</ol>
-	</nav>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Fonts</h3>
-		
-		<div class="guide-pattern__output "><ul>
-    <li class="font font--base">Base <span>@baseFont</span></li>
-    <li class="font font--heading">Heading <span>@headingFont</span></li>
-    <li class="font font--description-title">Description Title <span>@dtFont</span></li>
-    <li class="font font--description">Description <span>@ddFont</span></li>
-    <li class="font font--quote">Quote <span>@quoteFont</span></li>
-    <li class="font font--cite">Cite <span>@citeFont</span></li>
-    <li class="font font--address">Address <span>@addressFont</span></li>
-    <li class="font font--code">Code <span>@codeFont</span></li>
-    <li class="font font--code-block">Code Block <span>@codeBlockFont</span></li>
-    <li class="font font--input">Input <span>@inputFont</span></li>
-    <li class="font font--legend">Legend <span>@legendFont</span></li>
-    <li class="font font--button">Button <span>@buttonFont</span></li>
-</ul>
-</div>
-		
-	</div>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Paragraph</h3>
-		
-		<div class="guide-pattern__output "><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nibh sapien, porttitor non nibh et, sodales cursus est. Cras nec tristique sem. Nam ex nulla, sagittis a facilisis ac, suscipit at justo. Etiam lectus massa, aliquam ornare ligula quis, tempus dictum odio. Duis ac porttitor sapien. Nulla a nibh in libero imperdiet tempor gravida non magna. Nullam pulvinar nibh sit amet blandit iaculis.</p>
-</div>
-		
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="html">&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nibh sapien, porttitor non nibh et, sodales cursus est. Cras nec tristique sem. Nam ex nulla, sagittis a facilisis ac, suscipit at justo. Etiam lectus massa, aliquam ornare ligula quis, tempus dictum odio. Duis ac porttitor sapien. Nulla a nibh in libero imperdiet tempor gravida non magna. Nullam pulvinar nibh sit amet blandit iaculis.&lt;/p&gt;</code></pre>
-		
-	</div>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Headings</h3>
-		
-		<p class="guide-pattern__heading">Heading tags are important for establishing importance heirarchy</p>
-		
-		<div class="guide-pattern__output headings"><p><h1>Heading <small>.h1</small></h1></p>
-<p><h2>Heading <small>.h2</small></h2></p>
-<p><h3>Heading <small>.h3</small></h3></p>
-<p><h4>Heading <small>.h4</small></h4></p>
-<p><h5>Heading <small>.h5</small></h5></p>
-<h6>Heading <small>.h6</small></h6>
-</div>
-		
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="html">&lt;h1&gt;Heading &lt;small&gt;.h1&lt;/small&gt;&lt;/h1&gt;
+<!doctype html><html lang="en" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Typography | Project Style Guide | Wee</title><meta name="description" content=""><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/assets/css/style.min.css"><link rel="stylesheet" href="/assets/css/guide.min.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,700"><!--[if lt IE 9]><link rel="stylesheet" href="/assets/css/ie8.min.css">
+<script src="/assets/js/ie8.min.js"></script><![endif]--><!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.min.css">
+<script src="/assets/js/ie9.min.js"></script><![endif]--></head><body class="page-guide"><div class="layout-top"><header role="banner" class="container"><a href="/" rel="home" class="logo"><img src="/assets/img/wee.svg" alt="Wee Framework"></a><h1 class="heading">Project design elements</h1></header></div><main role="main" class="container"><nav role="navigation" class="jump"><ol class="jump__links"><li><a href="index.html">General</a></li><li><a href="elements.html">Elements</a></li><li><a href="forms.html">Forms</a></li><li class="is-active"><a href="typography.html">Typography</a></li></ol></nav><div class="guide-pattern"><h3 class="guide-pattern__title">Fonts</h3><div class="guide-pattern__output"><ul><li class="font font--base">Base <span>@baseFont</span></li><li class="font font--heading">Heading <span>@headingFont</span></li><li class="font font--description-title">Description Title <span>@dtFont</span></li><li class="font font--description">Description <span>@ddFont</span></li><li class="font font--quote">Quote <span>@quoteFont</span></li><li class="font font--cite">Cite <span>@citeFont</span></li><li class="font font--address">Address <span>@addressFont</span></li><li class="font font--code">Code <span>@codeFont</span></li><li class="font font--code-block">Code Block <span>@codeBlockFont</span></li><li class="font font--input">Input <span>@inputFont</span></li><li class="font font--legend">Legend <span>@legendFont</span></li><li class="font font--button">Button <span>@buttonFont</span></li></ul></div></div><div class="guide-pattern"><h3 class="guide-pattern__title">Paragraph</h3><div class="guide-pattern__output"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nibh sapien, porttitor non nibh et, sodales cursus est. Cras nec tristique sem. Nam ex nulla, sagittis a facilisis ac, suscipit at justo. Etiam lectus massa, aliquam ornare ligula quis, tempus dictum odio. Duis ac porttitor sapien. Nulla a nibh in libero imperdiet tempor gravida non magna. Nullam pulvinar nibh sit amet blandit iaculis.</p></div><div class="button guide-pattern__toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div><pre class="guide-pattern__input js-hide"><code class="html">&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nibh sapien, porttitor non nibh et, sodales cursus est. Cras nec tristique sem. Nam ex nulla, sagittis a facilisis ac, suscipit at justo. Etiam lectus massa, aliquam ornare ligula quis, tempus dictum odio. Duis ac porttitor sapien. Nulla a nibh in libero imperdiet tempor gravida non magna. Nullam pulvinar nibh sit amet blandit iaculis.&lt;/p&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Headings</h3><p class="guide-pattern__heading">Heading tags are important for establishing importance heirarchy</p><div class="guide-pattern__output headings"><p><h1>Heading <small>.h1</small></h1><h2>Heading <small>.h2</small></h2><h3>Heading <small>.h3</small></h3><h4>Heading <small>.h4</small></h4><h5>Heading <small>.h5</small></h5><h6>Heading <small>.h6</small></h6></p></div><div class="button guide-pattern__toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div><pre class="guide-pattern__input js-hide"><code class="html">&lt;h1&gt;Heading &lt;small&gt;.h1&lt;/small&gt;&lt;/h1&gt;
 &lt;h2&gt;Heading &lt;small&gt;.h2&lt;/small&gt;&lt;/h2&gt;
 &lt;h3&gt;Heading &lt;small&gt;.h3&lt;/small&gt;&lt;/h3&gt;
 &lt;h4&gt;Heading &lt;small&gt;.h4&lt;/small&gt;&lt;/h4&gt;
 &lt;h5&gt;Heading &lt;small&gt;.h5&lt;/small&gt;&lt;/h5&gt;
-&lt;h6&gt;Heading &lt;small&gt;.h6&lt;/small&gt;&lt;/h6&gt;</code></pre>
-		
-	</div>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Subheadings</h3>
-		
-		<div class="guide-pattern__output "><p><h1 class="subheading">Subheading One</h1></p>
-<p><h2 class="subheading">Subheading Two</h2></p>
-<p><h3 class="subheading">Subheading Three</h3></p>
-<p><h4 class="subheading">Subheading Four</h4></p>
-<p><h5 class="subheading">Subheading Five</h5></p>
-<h6 class="subheading">Subheading Six</h6>
-</div>
-		
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="html">&lt;h1 class=&quot;subheading&quot;&gt;Subheading One&lt;/h1&gt;
+&lt;h6&gt;Heading &lt;small&gt;.h6&lt;/small&gt;&lt;/h6&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Subheadings</h3><div class="guide-pattern__output"><p><h1 class="subheading">Subheading One</h1><h2 class="subheading">Subheading Two</h2><h3 class="subheading">Subheading Three</h3><h4 class="subheading">Subheading Four</h4><h5 class="subheading">Subheading Five</h5><h6 class="subheading">Subheading Six</h6></p></div><div class="button guide-pattern__toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div><pre class="guide-pattern__input js-hide"><code class="html">&lt;h1 class=&quot;subheading&quot;&gt;Subheading One&lt;/h1&gt;
 &lt;h2 class=&quot;subheading&quot;&gt;Subheading Two&lt;/h2&gt;
 &lt;h3 class=&quot;subheading&quot;&gt;Subheading Three&lt;/h3&gt;
 &lt;h4 class=&quot;subheading&quot;&gt;Subheading Four&lt;/h4&gt;
 &lt;h5 class=&quot;subheading&quot;&gt;Subheading Five&lt;/h5&gt;
-&lt;h6 class=&quot;subheading&quot;&gt;Subheading Six&lt;/h6&gt;</code></pre>
-		
-	</div>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Inline</h3>
-		
-		<p class="guide-pattern__heading">Miscellaneous inline text formatting</p>
-		
-		<div class="guide-pattern__output "><ul>
-    <li><a href="#">This is a simple link</a></li>
-    <li><strong>String defines important text</strong></li>
-    <li><em>The em tag renders as emphasized text</em></li>
-    <li>The <b>b tag</b> visually weights text without added importance</li>
-    <li>The <i>i tag</i> visually differentiates text without emphasis</li>
-    <li>The <u>u tag</u> renders text with an underline</li>
-    <li><s>This text has a strikethrough</s></li>
-    <li><del>This is deleted text</del> and <ins>this text is inserted</ins></li>
-    <li>Superscript<sup>&trade;</sup></li>
-    <li>Subscript for things like H<sub>2</sub>O</li>
-    <li><small>Small text is small for for fine print</small></li>
-    <li><abbr title="Cascading Style Sheets">CSS</abbr> is a style sheet language</li>
-    <li><q cite="https://www.weepower.com">This inline quote has a cite reference</q></li>
-    <li><cite>This is a citation</cite></li>
-    <li>The <dfn>dfn tag</dfn> renders a definition</li>
-    <li>The <mark>mark tag</mark> highlights specific text</li>
-    <li>Styling <code>inline code</code> is easy</li>
-    <li><samp>This is sample output</samp></li>
-    <li>The variable element, such as <var>x</var> / <var>y</var> = <var>z</var></li>
-    <li>The relative time is <time datetime="2014-02-14T08:00">2 weeks</time></li>
-</ul>
-</div>
-		
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="html">&lt;ul&gt;
+&lt;h6 class=&quot;subheading&quot;&gt;Subheading Six&lt;/h6&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Inline</h3><p class="guide-pattern__heading">Miscellaneous inline text formatting</p><div class="guide-pattern__output"><ul><li><a href="#">This is a simple link</a></li><li><strong>Strong defines important text</strong></li><li><em>The em tag renders as emphasized text</em></li><li>The <b>b tag</b> visually weights text without added importance</li><li>The <i>i tag</i> visually differentiates text without emphasis</li><li>The <u>u tag</u> renders text with an underline</li><li><s>This text has a strikethrough</s></li><li><del>This is deleted text</del> and <ins>this text is inserted</ins></li><li>Superscript<sup>&trade;</sup></li><li>Subscript for things like H<sub>2</sub>O</li><li><small>Small text is small for fine print</small></li><li><abbr title="Cascading Style Sheets">CSS</abbr> is a style sheet language</li><li><q cite="https://www.weepower.com">This inline quote has a cite reference</q></li><li><cite>This is a citation</cite></li><li>The <dfn>dfn tag</dfn> renders a definition</li><li>The <mark>mark tag</mark> highlights specific text</li><li>Styling <code>inline code</code> is easy</li><li><samp>This is sample output</samp></li><li>The variable element, such as <var>x</var> / <var>y</var> = <var>z</var></li><li>The relative time is <time datetime="2014-02-14T08:00">2 weeks</time></li></ul></div><div class="button guide-pattern__toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div><pre class="guide-pattern__input js-hide"><code class="html">&lt;ul&gt;
 	&lt;li&gt;&lt;a href=&quot;#&quot;&gt;This is a simple link&lt;/a&gt;&lt;/li&gt;
-	&lt;li&gt;&lt;strong&gt;String defines important text&lt;/strong&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strong&gt;Strong defines important text&lt;/strong&gt;&lt;/li&gt;
 	&lt;li&gt;&lt;em&gt;The em tag renders as emphasized text&lt;/em&gt;&lt;/li&gt;
 	&lt;li&gt;The &lt;b&gt;b tag&lt;/b&gt; visually weights text without added importance&lt;/li&gt;
 	&lt;li&gt;The &lt;i&gt;i tag&lt;/i&gt; visually differentiates text without emphasis&lt;/li&gt;
@@ -162,7 +21,7 @@
 	&lt;li&gt;&lt;del&gt;This is deleted text&lt;/del&gt; and &lt;ins&gt;this text is inserted&lt;/ins&gt;&lt;/li&gt;
 	&lt;li&gt;Superscript&lt;sup&gt;&amp;trade;&lt;/sup&gt;&lt;/li&gt;
 	&lt;li&gt;Subscript for things like H&lt;sub&gt;2&lt;/sub&gt;O&lt;/li&gt;
-	&lt;li&gt;&lt;small&gt;Small text is small for for fine print&lt;/small&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;small&gt;Small text is small for fine print&lt;/small&gt;&lt;/li&gt;
 	&lt;li&gt;&lt;abbr title=&quot;Cascading Style Sheets&quot;&gt;CSS&lt;/abbr&gt; is a style sheet language&lt;/li&gt;
 	&lt;li&gt;&lt;q cite=&quot;https://www.weepower.com&quot;&gt;This inline quote has a cite reference&lt;/q&gt;&lt;/li&gt;
 	&lt;li&gt;&lt;cite&gt;This is a citation&lt;/cite&gt;&lt;/li&gt;
@@ -172,39 +31,7 @@
 	&lt;li&gt;&lt;samp&gt;This is sample output&lt;/samp&gt;&lt;/li&gt;
 	&lt;li&gt;The variable element, such as &lt;var&gt;x&lt;/var&gt; / &lt;var&gt;y&lt;/var&gt; = &lt;var&gt;z&lt;/var&gt;&lt;/li&gt;
 	&lt;li&gt;The relative time is &lt;time datetime=&quot;2014-02-14T08:00&quot;&gt;2 weeks&lt;/time&gt;&lt;/li&gt;
-&lt;/ul&gt;</code></pre>
-		
-	</div>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Unordered List</h3>
-		
-		<p class="guide-pattern__heading">Use lists to represent groups of related data</p>
-		
-		<div class="guide-pattern__output "><ul>
-    <li>Lorem ipsum dolor
-        <ul>
-            <li>Lorem ipsum dolor
-                <ul>
-                    <li>Lorem ipsum dolor</li>
-                    <li>Lorem ipsum dolor</li>
-                </ul>
-            </li>
-            <li>Lorem ipsum dolor
-                <ol>
-                    <li>Lorem ipsum dolor</li>
-                    <li>Lorem ipsum dolor</li>
-                </ol>
-            </li>
-        </ul>
-    </li>
-    <li>Lorem ipsum dolor</li>
-    <li>Lorem ipsum dolor</li>
-</ul>
-</div>
-		
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="html">&lt;ul&gt;
+&lt;/ul&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Unordered List</h3><p class="guide-pattern__heading">Use lists to represent groups of related data</p><div class="guide-pattern__output"><ul><li>Lorem ipsum dolor<ul><li>Lorem ipsum dolor<ul><li>Lorem ipsum dolor</li><li>Lorem ipsum dolor</li></ul></li><li>Lorem ipsum dolor<ol><li>Lorem ipsum dolor</li><li>Lorem ipsum dolor</li></ol></li></ul></li><li>Lorem ipsum dolor</li><li>Lorem ipsum dolor</li></ul></div><div class="button guide-pattern__toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div><pre class="guide-pattern__input js-hide"><code class="html">&lt;ul&gt;
 	&lt;li&gt;Lorem ipsum dolor
 		&lt;ul&gt;
 			&lt;li&gt;Lorem ipsum dolor
@@ -223,36 +50,7 @@
 	&lt;/li&gt;
 	&lt;li&gt;Lorem ipsum dolor&lt;/li&gt;
 	&lt;li&gt;Lorem ipsum dolor&lt;/li&gt;
-&lt;/ul&gt;</code></pre>
-		
-	</div>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Ordered List</h3>
-		
-		<div class="guide-pattern__output "><ol>
-    <li>Lorem ipsum dolor
-        <ol>
-            <li>Lorem ipsum dolor
-                <ul>
-                    <li>Lorem ipsum dolor</li>
-                </ul>
-            </li>
-            <li>Lorem ipsum dolor
-                <ol>
-                    <li>Lorem ipsum dolor</li>
-                    <li>Lorem ipsum dolor</li>
-                </ol>
-            </li>
-        </ol>
-    </li>
-    <li>Lorem ipsum dolor</li>
-    <li>Lorem ipsum dolor</li>
-</ol>
-</div>
-		
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="html">&lt;ol&gt;
+&lt;/ul&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Ordered List</h3><div class="guide-pattern__output"><ol><li>Lorem ipsum dolor<ol><li>Lorem ipsum dolor<ul><li>Lorem ipsum dolor</li></ul></li><li>Lorem ipsum dolor<ol><li>Lorem ipsum dolor</li><li>Lorem ipsum dolor</li></ol></li></ol></li><li>Lorem ipsum dolor</li><li>Lorem ipsum dolor</li></ol></div><div class="button guide-pattern__toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div><pre class="guide-pattern__input js-hide"><code class="html">&lt;ol&gt;
 	&lt;li&gt;Lorem ipsum dolor
 		&lt;ol&gt;
 			&lt;li&gt;Lorem ipsum dolor
@@ -270,69 +68,16 @@
 	&lt;/li&gt;
 	&lt;li&gt;Lorem ipsum dolor&lt;/li&gt;
 	&lt;li&gt;Lorem ipsum dolor&lt;/li&gt;
-&lt;/ol&gt;</code></pre>
-		
-	</div>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Description List</h3>
-		
-		<div class="guide-pattern__output "><dl>
-    <dt>Lorem ipsum dolor</dt>
-    <dd>Lorem ipsum dolor</dd>
-    <dt>Lorem ipsum dolor</dt>
-    <dd>Lorem ipsum dolor</dd>
-</dl>
-</div>
-		
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="html">&lt;dl&gt;
+&lt;/ol&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Description List</h3><div class="guide-pattern__output"><dl><dt>Lorem ipsum dolor</dt><dd>Lorem ipsum dolor</dd><dt>Lorem ipsum dolor</dt><dd>Lorem ipsum dolor</dd></dl></div><div class="button guide-pattern__toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div><pre class="guide-pattern__input js-hide"><code class="html">&lt;dl&gt;
 	&lt;dt&gt;Lorem ipsum dolor&lt;/dt&gt;
 	&lt;dd&gt;Lorem ipsum dolor&lt;/dd&gt;
 	&lt;dt&gt;Lorem ipsum dolor&lt;/dt&gt;
 	&lt;dd&gt;Lorem ipsum dolor&lt;/dd&gt;
-&lt;/dl&gt;</code></pre>
-		
-	</div>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Blockquote</h3>
-		
-		<div class="guide-pattern__output "><blockquote>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    <cite><a href="#">John Doe</a></cite>
-</blockquote>
-</div>
-		
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="html">&lt;blockquote&gt;
+&lt;/dl&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Blockquote</h3><div class="guide-pattern__output"><blockquote><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><cite><a href="#">John Doe</a></cite></blockquote></div><div class="button guide-pattern__toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div><pre class="guide-pattern__input js-hide"><code class="html">&lt;blockquote&gt;
 	&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&lt;/p&gt;
 	&lt;cite&gt;&lt;a href=&quot;#&quot;&gt;John Doe&lt;/a&gt;&lt;/cite&gt;
-&lt;/blockquote&gt;</code></pre>
-		
-	</div>
-	
-	<div class="guide-pattern">
-		<h3 class="guide-pattern__title"></a>Address</h3>
-		
-		<div class="guide-pattern__output "><address>
-    <strong>Company Name</strong><br>
-    123 Main Street<br>
-    Nashville, <abbr title="Tennessee">TN</abbr> 12345
-</address>
-</div>
-		
-		<div class="button guide-pattern__toggle js-toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div>
-		<pre class="guide-pattern__input js-hide"><code class="html">&lt;address&gt;
+&lt;/blockquote&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Address</h3><div class="guide-pattern__output"><p><address><strong>Company Name</strong><br>123 Main Street<br>Nashville, <abbr title="Tennessee">TN</abbr> 12345</address></p></div><div class="button guide-pattern__toggle" data-ref="toggle" data-lang="html">&lt;html/&gt;</div><pre class="guide-pattern__input js-hide"><code class="html">&lt;address&gt;
 	&lt;strong&gt;Company Name&lt;/strong&gt;&lt;br&gt;
 	123 Main Street&lt;br&gt;
 	Nashville, &lt;abbr title=&quot;Tennessee&quot;&gt;TN&lt;/abbr&gt; 12345
-&lt;/address&gt;</code></pre>
-		
-	</div>
-	
-</main>
-<script src="/assets/js/script.min.js"></script>
-<script src="/assets/js/guide.min.js"></script>
-</body>
-</html>
+&lt;/address&gt;</code></pre></div></main><script src="/assets/js/script.min.js"></script><script src="/assets/js/guide.min.js"></script></body></html>

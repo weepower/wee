@@ -2,7 +2,8 @@
 name: Selection Fields
 ---
 
-```html
+---html|push|render---
+
 <select name="selection">
 	<option value="1">Lorem</option>
 	<option value="2">Ipsum</option>
@@ -36,4 +37,3 @@ name: Selection Fields
 	<input type="radio" name="radio" id="radio2">
 	<label for="radio2">Lorem ipsum dolor sit amet</label>
 </div>
-```
