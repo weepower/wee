@@ -380,6 +380,8 @@
 
 @buttonStyled: true;
 
+@buttonClass: ~'button';
+
 @buttonColor: @white;
 @buttonFont: @baseFont;
 @buttonFontSize: @baseFontSize;
@@ -406,6 +408,8 @@
 
 // Colored Buttons
 
+@coloredButtonClass: ~'@{buttonClass}-colored';
+
 @coloredButtonColor: @white; // font color
 
 @coloredButtonBackground: @linkColor;
@@ -415,6 +419,8 @@
 @coloredButtonBorderColor: darken(@coloredButtonBackground, 5%);
 
 // Disabled Buttons
+
+@disabledButtonClass: ~'@{buttonClass}-disabled';
 
 @disabledButtonColor: @darkGray;
 
@@ -432,6 +438,10 @@
 @tableStyled: true;   // apply base styling by default
 @tableBordered: true; // apply outer border by default
 @tableStriped: true;  // apply striping by default
+
+@tableClass: ~'table';
+@tableBorderedClass: ~'@{tableClass}-bordered';
+@tableStripedClass: ~'@{tableClass}-striped';
 
 // Table Cells
 

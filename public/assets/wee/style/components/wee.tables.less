@@ -37,23 +37,23 @@
 	}
 	.check () when (@tableStyled = true) {
 		table,
-		.table {
+		.@{tableClass} {
 			.rules();
 		}
 	}
 	.check () when not (@tableStyled = true) {
-		.table {
+		.@{tableClass} {
 			.rules();
 		}
 	}
 	.table-bordered () when not (@tableBordered = true) {
-		.table-bordered {
+		.@{tableBorderedClass} {
 			.wee-table-bordered(true);
 		}
 	}
 	.table-striped () when not (@tableStriped = true)
 			and not (@tableStripedBackground = false) {
-		.table-striped {
+		.@{tableStripedClass} {
 			.wee-table-striped(true);
 		}
 	}

@@ -66,26 +66,26 @@
 		input[type='button'],
 		input[type='reset'],
 		input[type='submit'],
-		.button {
+		.@{buttonClass} {
 			.rules();
-			&.button-colored {
+			&.@{coloredButtonClass} {
 				.colored-rules();
 			}
 			&[disabled],
-			&.button-disabled {
+			&.@{disabledButtonClass} {
 				.disabled-rules();
 			}
 		}
 	}
 	.check () when not (@buttonStyled = true) {
-		.button {
+		.@{buttonClass} {
 			.rules();
 		}
-		.button-colored {
+		.@{buttonColoredClass} {
 			.colored-rules();
 		}
-		.button[disabled],
-		.button-disabled {
+		.@{buttonClass}[disabled],
+		.@{buttonDisabledClass} {
 			.disabled-rules();
 		}
 	}
