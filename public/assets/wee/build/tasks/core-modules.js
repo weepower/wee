@@ -10,18 +10,18 @@ module.exports = function(grunt) {
 
 		for (var directory in children) {
 			var name = children[directory],
-				path = modules.rootPath + '/' + children[directory];
+				modulePath = modules.rootPath + '/' + children[directory];
 
 			// Ensure the child is a directory
-			if (fs.statSync(path).isDirectory()) {
-				var configFile = path + '/module.json';
+			if (fs.statSync(modulePath).isDirectory()) {
+				var configFile = modulePath + '/module.json';
 
 				// Ensure the module.json file exists
 				if (grunt.file.exists(configFile)) {
 					// Get module config
 					var module = grunt.file.readJSON(configFile),
 						moduleScript = [
-							path + '/module/script/*.js'
+							modulePath + '/module/script/*.js'
 						],
 						vars = JSON.parse(JSON.stringify(style.vars)),
 						less = grunt.file.read(config.assetPath + '/wee/style/wee.module.less');
@@ -36,21 +36,21 @@ module.exports = function(grunt) {
 
 					// Build additional style
 					if (module.style && module.style.build) {
-						module.style.build.forEach(function(path) {
-							inject += '@import "../../modules/' + name + '/' + path + '";\n';
+						module.style.build.forEach(function(filepath) {
+							inject += '@import "../../modules/' + name + '/' + filepath + '";\n';
 						});
 					}
 
 					// Build additional script
 					if (module.script && module.script.build) {
-						module.script.build.forEach(function(scriptPath) {
-							moduleScript.push(path.join(path, scriptPath));
+						module.script.build.forEach(function(filepath) {
+							moduleScript.push(path.join(modulePath, filepath));
 						});
 					}
 
 					// Determine if module is responsive
 					if (project.style.core.responsive.enable) {
-						if (fs.existsSync(path + '/module/style/breakpoints')) {
+						if (fs.existsSync(modulePath + '/module/style/breakpoints')) {
 							vars.responsive = true;
 
 							responsive += ' \
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
 							';
 						}
 
-						if (fs.existsSync(path + '/css/breakpoints')) {
+						if (fs.existsSync(modulePath + '/css/breakpoints')) {
 							vars.responsive = true;
 
 							responsive += ' \
@@ -107,7 +107,7 @@ module.exports = function(grunt) {
 					// Create module style compile task
 					var dest = (module.autoload === true) ?
 							config.assetPath + '/wee/temp/' + name + '.css' :
-							path + '/screen.min.css',
+							modulePath + '/screen.min.css',
 						obj = {};
 
 					obj[name] = {
@@ -129,7 +129,7 @@ module.exports = function(grunt) {
 
 					// Configure style watch task
 					grunt.config.set('watch.' + name + '-style', {
-						files: path + '/**/*.less',
+						files: modulePath + '/**/*.less',
 						tasks: [
 							'less:' + name,
 							'concat:style'
@@ -146,7 +146,7 @@ module.exports = function(grunt) {
 						// Create module style compile task
 						obj[name] = {
 							files: [{
-								dest: path + '/script.min.js',
+								dest: modulePath + '/script.min.js',
 								src: moduleScript
 							}]
 						};
