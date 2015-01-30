@@ -809,7 +809,7 @@
 	}
 	.check();
 }
-.border (top; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
+.border (top; @color: @baseColor; @value: 1px; @style: solid) {
 	.check () when (@color = 0), (iskeyword(@color)) {
 		border-top: 0;
 	}
@@ -861,7 +861,7 @@
 	}
 	.check();
 }
-.border (right; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
+.border (right; @color: @baseColor; @value: 1px; @style: solid) {
 	.check () when (@color = 0), (iskeyword(@color)) {
 		border-right: 0;
 	}
@@ -913,7 +913,7 @@
 	}
 	.check();
 }
-.border (bottom; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)) {
+.border (bottom; @color: @baseColor; @value: 1px; @style: solid) {
 	.check () when (@color = 0), (iskeyword(@color)) {
 		border-bottom: 0;
 	}
@@ -965,7 +965,7 @@
 	}
 	.check();
 }
-.border (left; @color: @baseColor; @value: 1px; @style: solid) when (iscolor(@color)){
+.border (left; @color: @baseColor; @value: 1px; @style: solid) {
 	.check () when (@color = 0), (iskeyword(@color)) {
 		border-left: 0;
 	}
@@ -1397,7 +1397,7 @@
 \*------------------------------------*/
 
 .background (@value) when (@value = 0) {
-	background: none;
+	background: transparent;
 }
 .background (@value) when (isstring(@value)), (iskeyword(@value))
  		and not (@value = dark)
@@ -2056,27 +2056,20 @@
 .opacity (@value) {
 	.check () when (@value > 1)
 			and not (ispercentage(@value)) {
-		filter: ~'alpha(opacity=@{value})';
 		opacity: (@value / 100);
 	}
 	.check () when (@value < 1) {
-		@ieValue: (@value * 100);
-		filter: ~'alpha(opacity=@{ieValue})';
 		opacity: @value;
 	}
 	.check () when (ispercentage(@value)) {
-		@ieValue: unit(@value);
-		filter: ~'alpha(opacity=@{ieValue})';
 		opacity: unit((@value / 100));
 	}
 	.check();
 }
 .transparent () {
-	filter: alpha(opacity=0);
 	opacity: 0;
 }
 .opaque () {
-	filter: alpha(opacity=100);
 	opacity: 1;
 }
 
