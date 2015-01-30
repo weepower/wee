@@ -559,37 +559,37 @@
 		$is: function(sel, filter, opt) {
 			var el = W.$first(sel);
 
-			if (filter.indexOf('ref:') === 0) {
-				filter = $(filter);
+			if (typeof filter == 'string' && filter.indexOf('ref:') === 0) {
+				filter = W.$get(filter);
+				return filter ? filter.indexOf(el) !== -1 : false;
+			}
+
+			if (W.$isObject(filter)) {
+				for (var key in filter) {
+					if (filter[key] === el) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			if (Array.isArray(filter)) {
+				return filter.indexOf(el) !== -1;
 			}
 
 			if (W._canExec(filter)) {
 				return W.$exec(filter, W.$extend({
 					scope: el
 				}, opt));
-			} else if (W.$isObject(filter)) {
-				return el === (filter._$ ? filter[0] : filter);
-			} else if (Array.isArray(filter)) {
-				return el === filter[0];
-			} else {
-				var matches = el.matches || el.matchesSelector || el.msMatchesSelector ||
-						el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector;
-
-				if (matches) {
-					return matches.call(el, filter);
-				} else {
-					var elem = el.parentNode.querySelectorAll(filter),
-						i = 0;
-
-					for (; i < elem.length; i++) {
-						if (elem[i] === el) {
-							return true;
-						}
-					}
-				}
 			}
 
-			return false;
+			var matches = el.matches || el.matchesSelector || el.msMatchesSelector ||
+					el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector;
+
+			return matches ?
+				matches.call(el, filter) :
+				W._slice.call(el.parentNode.querySelectorAll(filter)).indexOf(el) !== -1;
 		},
 		// Get the sibling index of a specified element
 		// Returns int
