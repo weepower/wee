@@ -112,13 +112,13 @@
 			// Match against patterns
 			for (; x < keys.length; x++) {
 				var key = keys[x],
+					child = route[key],
 					opts = key.split('||'),
 					match = false,
 					k = 0;
 
 				for (; k < opts.length; k++) {
-					var opt = opts[k],
-						child = route[key];
+					var opt = opts[k];
 
 					if (opt == seg) {
 						match = true;
@@ -157,16 +157,16 @@
 							}
 						}
 					}
+				}
 
-					// If matched process recursively or execute if complete
-					if (match) {
-						if (W.$isObject(child)) {
-							this.process(child, i, total);
-						} else if (i === total) {
-							W.$exec(child, {
-								args: seg
-							});
-						}
+				// If matched process recursively or execute if complete
+				if (match) {
+					if (W.$isObject(child)) {
+						this.process(child, i, total);
+					} else if (i === total) {
+						W.$exec(child, {
+							args: seg
+						});
 					}
 				}
 			}
