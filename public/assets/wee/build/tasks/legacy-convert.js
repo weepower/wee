@@ -1,9 +1,12 @@
-/* global legacy */
+/* global legacy, legacyConvert */
 
 module.exports = function(grunt) {
-	grunt.registerTask('convertRem', function() {
-		var css = grunt.file.read(legacy.dest),
-			rootSize = legacy.rootSize,
+	grunt.registerTask('convertLegacy', function(task) {
+		var dest = legacyConvert[task],
+			css = grunt.file.read(dest);
+
+		// Convert rem units to px
+		var rootSize = legacy.rootSize,
 			rootValue = 10;
 
 		// Determine root value for unit conversion
@@ -21,6 +24,11 @@ module.exports = function(grunt) {
 			return (match * rootValue) + 'px';
 		});
 
-		grunt.file.write(legacy.dest, output);
+		// Convert opacity to filter
+		output = output.replace(/(-?[.\d]+)rem/gi, function(str, match) {
+			return 'filter:alpha(opacity=' + Math.round((match * 100) * 100 / 100) + ');';
+		});
+
+		grunt.file.write(dest, output);
 	});
 };

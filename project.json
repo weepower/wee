@@ -39,7 +39,10 @@
 			"dest": "ie8.min.css",
 			"build": [
 				"custom/ie8.less"
-			]
+			],
+			"compile": {
+				"guide.legacy.min.css": "guide.min.css"
+			}
 		}
 	},
 	"script": {
@@ -61,10 +64,7 @@
 		],
 		"compile": {
 			"ie8.min.js": [
-				"polyfill/es5-shim.js",
-				"polyfill/html5shiv.js",
-				"polyfill/sizzle.js",
-				"polyfill/wee.svg.js",
+				"polyfill/*.js",
 				"custom/ie8.js"
 			],
 			"ie9.min.js": [

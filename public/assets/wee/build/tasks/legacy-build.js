@@ -1,4 +1,4 @@
-/* global config, legacy, legacyBuild, path, project, style */
+/* global config, legacy, legacyBuild, legacyConvert, path, project, style */
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildLegacy', function() {
@@ -54,6 +54,9 @@ module.exports = function(grunt) {
 				}
 			});
 
+			// Push to conversion array
+			legacyConvert.core = legacy.dest;
+
 			// Exclude legacy files from primary watch task
 			grunt.config.merge({
 				watch: {
@@ -74,7 +77,7 @@ module.exports = function(grunt) {
 						styleCore: {
 							tasks: watchedTasks.concat([
 								'less:legacy',
-								'convertRem',
+								'convertLegacy:core',
 								'notify:legacy'
 							])
 						}
@@ -90,7 +93,7 @@ module.exports = function(grunt) {
 							],
 							tasks: [
 								'less:legacy',
-								'convertRem',
+								'convertLegacy:core',
 								'notify:legacy'
 							]
 						}
@@ -98,8 +101,55 @@ module.exports = function(grunt) {
 				});
 			}
 
+			// Compile custom
+			if (legacy.compile) {
+				for (var target in legacy.compile) {
+					var taskName = target.replace(/\./g, '-') + '-legacy-style',
+						dest = Wee.buildPath(style.rootPath, target),
+						sources = Wee.$toArray(legacy.compile[target]),
+						files = [];
+
+					for (var legacyPath in sources) {
+						files.push(Wee.buildPath(style.rootPath, sources[legacyPath]));
+					}
+
+					// Create Less task
+					grunt.config.set('less.' + taskName, {
+						files: [{
+							dest: dest,
+							src: files
+						}],
+						options: {
+							globalVars: {
+								weePath: '"' + config.tempPath + '/wee.less"'
+							}
+						}
+					});
+
+					if (legacy.watch === true) {
+						// Merge watch config
+						grunt.config.set('watch.' + taskName, {
+							files: files,
+							tasks: [
+								'less:' + taskName,
+								'convertLegacy:' + taskName
+							]
+						});
+
+						// Push style task
+						style.tasks.push('less:' + taskName);
+					}
+
+					// Push to conversion array
+					legacyConvert[taskName] = dest;
+
+					grunt.task.run('less:' + taskName);
+					grunt.task.run('convertLegacy:' + taskName);
+				}
+			}
+
 			grunt.task.run('less:legacy');
-			grunt.task.run('convertRem');
+			grunt.task.run('convertLegacy:core');
 			grunt.task.run('notify:legacy');
 		}
 	});
