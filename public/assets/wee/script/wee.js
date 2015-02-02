@@ -145,7 +145,9 @@
 
 						if (root.hasOwnProperty(key)) {
 							return root[key];
-						} else if (def !== U) {
+						}
+
+						if (def !== U) {
 							def = W._canExec(def) ?
 								W.$exec(def, opt) || opt :
 								def;
@@ -350,16 +352,29 @@
 					if (typeof sel != 'string') {
 						el = sel;
 					} else {
+						context = context !== U ? W.$first(context) : D;
+
 						// Check for pre-cached element
 						if (sel.indexOf('ref:') === 0) {
-							return W.$get(sel);
+							sel = W.$get(sel);
+
+							// Apply context filter if not document
+							return context === D || ! sel ?
+								sel :
+								sel.filter(function(el) {
+									return context.contains(el);
+								});
 						}
 
 						if (sel == 'window') {
 							return [N];
-						} else if (sel == 'document') {
+						}
+
+						if (sel == 'document') {
 							return [D];
-						} else if (N.WeeSelector !== U) { // Use third-party selector engine if defined
+						}
+
+						if (N.WeeSelector !== U) { // Use third-party selector engine if defined
 							el = N.WeeSelector(sel, context);
 						} else {
 							context = context !== U ? W.$first(context) : D;
@@ -385,7 +400,9 @@
 
 					if (el === null) {
 						return el;
-					} else if (el.nodeType !== U || el === N) {
+					}
+
+					if (el.nodeType !== U || el === N) {
 						return [el];
 					}
 
@@ -504,10 +521,10 @@
 				// Returns undefined
 				$setRef: function() {
 					W.$each('[data-ref], [data-bind]', function(el) {
-						var ref = W.$data(el, 'ref');
+						var ref = el.getAttribute('data-ref');
 
 						if (ref == null) {
-							ref = W.$data(el, 'bind');
+							ref = el.getAttribute('data-bind');
 						}
 
 						ref.split(/\s+/).forEach(function(val) {
