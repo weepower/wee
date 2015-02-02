@@ -1,7 +1,6 @@
 # [Wee](https://www.weepower.com)
 
-Wee is a front-end framework for methodically building complex, responsive web projects.  
-To read more, visit [weepower.com](https://www.weepower.com).
+Wee is a lightweight front-end framework for logically building complex, responsive web projects.
 
 ### Features
 

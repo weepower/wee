@@ -32,9 +32,7 @@ module.exports = function(grunt) {
 				});
 			}
 
-			less = Wee.view.render(less, {
-				imports: inject
-			});
+			less = less.replace('{{imports}}', inject);
 
 			// Write temporary file
 			grunt.file.write(legacyTemp, less);

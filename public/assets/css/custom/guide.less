@@ -7,7 +7,7 @@
 	# Global
 \*------------------------------------*/
 
-.page-guide {
+body {
 	.background();
 }
 
@@ -19,15 +19,10 @@
 	# Header
 \*------------------------------------*/
 
-.layout {
-	&-top {
-		.background-gradient(@colorBlue; @colorBlue; @colorTeal; 135);
-		.min-height(0);
-		.padding(vertical; 4%);
-		.spaced(5);
-		&:after {
-			.hide();
-		}
+.header {
+	.border(bottom; none);
+	&--guide {
+		.background-gradient(@colorBlue; @colorBlue; @colorTeal; 150);
 	}
 }
 
@@ -39,9 +34,6 @@
 	# Guide
 \*------------------------------------*/
 
-.heading {
-	.spaced(0);
-}
 .jump {
 	.font(@headingFont; 1.3);
 	.spaced(4);
@@ -72,7 +64,6 @@
 		.spaced(2);
 	}
 	&__input {
-		.background(none);
 		.padding(0);
 		.spaced(1);
 	}
@@ -161,8 +152,8 @@ code.hljs {
 	.spaced(2);
 	&:before {
 		.black();
-		.block(11; 4);
-		.line-height(4);
+		.block(9.2; 4);
+		.line-height(40px);
 		.rounded();
 	}
 	&--white {

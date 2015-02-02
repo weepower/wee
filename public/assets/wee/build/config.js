@@ -8,13 +8,10 @@ var LessCssClean = require('less-plugin-clean-css');
 
 global.fs = require('fs');
 global.browserSync = require('browser-sync');
-global.Wee = require('../script/wee.js').Wee;
+global.Wee = require('../script/wee').Wee;
 global.path = require('path');
 global.jshint = require('jshint').JSHINT;
 global.JSCS = require('jscs');
-
-// Import view library
-require('../script/wee.view.js');
 
 Wee.fn.extend({
 	// Build root or relative path

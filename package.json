@@ -1,6 +1,6 @@
 {
 	"name": "wee",
-	"version": "2.1.0-rc.2.1",
+	"version": "2.1.0-rc.2.2",
 	"description": "Blueprint for modern web development",
 	"homepage": "https://www.weepower.com",
 	"keywords": [
@@ -32,13 +32,13 @@
 		"grunt-contrib-uglify": "~0.7.0",
 		"grunt-contrib-watch": "~0.6.1",
 		"grunt-newer": "~1.1.0",
-		"browser-sync": "~1.9.1",
+		"browser-sync": "~2.0.0-rc4",
 		"html-minifier": "~0.6.9",
 		"js-yaml": "~3.2.5",
 		"jscs": "~1.10.0",
 		"jshint": "~2.6.0",
-		"less-plugin-clean-css": "~1.4.0",
-		"node-notifier": "~4.0.3",
+		"less-plugin-clean-css": "~1.5.0",
+		"node-notifier": "~4.1.0",
 		"remarkable": "~1.6.0"
 	}
 }

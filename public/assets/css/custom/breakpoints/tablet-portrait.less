@@ -1,19 +1,16 @@
 // Sample rules below can be removed
 
 /*------------------------------------*\
-	# Global
+	# Header
 \*------------------------------------*/
 
-.layout {
-	&-top {
-		.spaced(-9.5);
-		&:after {
-			.height(9.5);
-		}
-	}
-	&-bottom {
-		.height(9.5);
-	}
+.header {
+	.border(bottom; light; 25%; 1px; dotted);
+	.padding(bottom; 3);
+	.spaced(6);
+}
+.heading {
+	.font-size(2.8);
 }
 
 
@@ -25,6 +22,7 @@
 \*------------------------------------*/
 
 .footer {
+	.padding(top; 16);
 	&__license {
 		.left();
 	}
@@ -41,10 +39,6 @@
 	# Index
 \*------------------------------------*/
 
-.heading {
-	.font-size(2.8);
-	.spaced(7);
-}
 .nav {
 	.row(2%);
 	&__button {

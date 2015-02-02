@@ -5,8 +5,10 @@
 
 Wee.fn.make('guide', {
 	_construct: function() {
-		// Setup syntax highlighting
-		this.$private('highlightCode');
+		// Setup syntax highlighting in modern browsers
+		if (! Wee._legacy) {
+			this.$private('highlightCode');
+		}
 
 		// Bind code toggle and selection
 		Wee.events.on({

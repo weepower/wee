@@ -52,11 +52,9 @@ module.exports = function(grunt) {
 			}
 		});
 
-		less = Wee.view.render(less, {
-			imports: inject,
-			print: style.print,
-			responsive: style.responsive
-		});
+		less = less.replace('{{imports}}', inject)
+			.replace('{{print}}', style.print)
+			.replace('{{responsive}}', style.responsive);
 
 		// Write temporary file
 		grunt.file.write(config.tempPath + '/wee.less', less);

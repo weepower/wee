@@ -434,7 +434,5 @@ QUnit.test('set', 1, function(assert) {
 
 	Wee.$setRef();
 
-	var el = Wee.$('ref:testElement');
-
-	assert.strictEqual(Wee.$text(el), '1', 'Reference element was successfully selected.');
+	assert.strictEqual(Wee.$text('ref:testElement'), '1', 'Reference element was successfully selected.');
 });
