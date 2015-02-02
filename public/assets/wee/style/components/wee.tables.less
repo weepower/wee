@@ -7,6 +7,8 @@
 		table-layout: fixed;
 		word-wrap: break-word;
 		.spaced();
+		.wee-table-striped();
+		.wee-table-bordered();
 		td,
 		th {
 			text-align: left;
@@ -16,14 +18,11 @@
 		}
 		thead,
 		tfoot {
-			.bold();
+			font-weight: @boldFontWeight;
 			th {
+				color: @darkestGray;
 				vertical-align: bottom;
-				.darkestGray();
 			}
-		}
-		tbody {
-			.wee-table-striped(@tableStriped);
 		}
 		caption {
 			.background(@tableCaptionBackground);
@@ -33,35 +32,32 @@
 		img {
 			vertical-align: top;
 		}
-		.wee-table-bordered(@tableBordered);
 	}
 	.check () when (@tableStyled = true) {
 		table,
-		.@{tableClass} {
+		.table {
 			.rules();
 		}
 	}
 	.check () when not (@tableStyled = true) {
-		.@{tableClass} {
+		.table {
 			.rules();
 		}
 	}
-	.table-bordered () when not (@tableBordered = true) {
-		.@{tableBorderedClass} {
-			.wee-table-bordered(true);
+	.check () when not (@tableBordered = true) {
+		.table@{tableBorderedClassModifier} {
+			.wee-table-bordered();
 		}
 	}
-	.table-striped () when not (@tableStriped = true)
+	.check () when not (@tableStriped = true)
 			and not (@tableStripedBackground = false) {
-		.@{tableStripedClass} {
-			.wee-table-striped(true);
+		.table@{tableStripedClassModifier} {
+			.wee-table-striped();
 		}
 	}
-	.table-bordered();
-	.table-striped();
 	.check();
 }
-.wee-table-bordered (@output) when (@output = true) {
+.wee-table-bordered () when (@tableBordered = true) {
 	.border(bottom; @tableCellBorderColor);
 	caption {
 		.border(@tableCellBorderColor);
@@ -76,24 +72,9 @@
 		}
 	}
 }
-.wee-table-striped (@output) when (@output = true)
-		and (@tableStripedPosition = even) {
-	tr {
-		&:nth-child(even) {
-			td {
-				.background(@tableStripedBackground);
-			}
-		}
-	}
-}
-.wee-table-striped (@output) when (@output = true)
-		and not (@tableStripedPosition = even) {
-	tr {
-		&:nth-child(odd) {
-			td {
-				.background(@tableStripedBackground);
-			}
-		}
+.wee-table-striped () when (@tableStriped = true) {
+	tbody tr:nth-child(@{tableStripedPosition}) td {
+		.background(@tableStripedBackground);
 	}
 }
 .wee-table();

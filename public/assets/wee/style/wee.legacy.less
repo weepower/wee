@@ -4,6 +4,20 @@
 	# Normalization
 \*------------------------------------*/
 
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+	display: block;
+}
 table {
 	white-space: normal;
 }
@@ -20,6 +34,9 @@ textarea {
 .clear () {
 	*zoom: 1;
 }
+img {
+	-ms-interpolation-mode: bicubic;
+}
 
 
 
@@ -34,45 +51,36 @@ html {
 }
 
 .responsive () when (@responsiveEnabled = true) {
-	.check (@ieBreakpoint) when (@ieBreakpoint > 1) {
-		body {
-			min-width: @mobileLandscapeWidth;
-		}
+	.check () when (@ieBreakpoint > 1) {
+		@temp: @mobileLandscapeWidth;
 		.mobile-landscape();
 	}
-	.check (@ieBreakpoint) when (@ieBreakpoint > 2) {
-		body {
-			min-width: @tabletPortraitWidth;
-		}
+	.check () when (@ieBreakpoint > 2) {
+		@temp: @tabletPortraitWidth;
 		.tablet-portrait();
 	}
-	.check (@ieBreakpoint) when (@ieBreakpoint > 3) {
-		body {
-			min-width: @desktopSmallWidth;
-		}
+	.check () when (@ieBreakpoint > 3) {
+		@temp: @desktopSmallWidth;
 		.desktop-small();
 	}
-	.check (@ieBreakpoint) when (@ieBreakpoint > 4) {
-		body {
-			min-width: @desktopMediumWidth;
-		}
+	.check () when (@ieBreakpoint > 4) {
+		@temp: @desktopMediumWidth;
 		.desktop-medium();
 	}
-	.check (@ieBreakpoint) when (@ieBreakpoint > 5) {
-		body {
-			min-width: @desktopLargeWidth;
-		}
+	.check () when (@ieBreakpoint > 5) {
+		@temp: @desktopLargeWidth;
 		.desktop-large();
 	}
-	.check(@ieBreakpoint);
+	.check();
+	body {
+		min-width: @temp;
+	}
 }
 
 .responsive();
 
 // Framework
-
 @legacyMode: true;
 
 // Inject imports
-
-{{imports|raw}}
+{{imports}}

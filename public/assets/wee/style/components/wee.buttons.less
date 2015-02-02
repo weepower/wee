@@ -8,9 +8,11 @@
 		text-align: center;
 		text-shadow: none;
 		.background(@buttonBackground);
+		.border(@buttonBorderColor);
 		.font(@buttonFont; @buttonFontSize; @buttonFontWeight);
-		.spaced(@buttonMarginBottom);
 		.padding(@buttonPaddingVertical; @buttonPaddingHorizontal);
+		.spaced(@buttonMarginBottom);
+		.rounded(@buttonRounded);
 		&:hover {
 			color: @buttonColor;
 			.background-color(@buttonBackgroundHover);
@@ -19,12 +21,6 @@
 			color: @buttonColor;
 			.background-color(@buttonBackgroundActive);
 		}
-	}
-	.rules () when not (@buttonRounded = false) {
-		.rounded(@buttonRounded);
-	}
-	.rules () when not (@buttonBorderColor = false) {
-		.border(@buttonBorderColor);
 	}
 	.rules () when (@buttonBorderColor = false) {
 		.border(0);
@@ -58,7 +54,7 @@
 			.background(@disabledButtonBackground);
 		}
 	}
-	.disabled-rules () when not (@buttonBorderColor = false) {
+	.disabled-rules () when not (@disabledButtonBorderColor = false) {
 		.border(@disabledButtonBorderColor);
 	}
 	.check () when (@buttonStyled = true) {
@@ -66,26 +62,26 @@
 		input[type='button'],
 		input[type='reset'],
 		input[type='submit'],
-		.@{buttonClass} {
+		.button {
 			.rules();
-			&.@{coloredButtonClass} {
+			&.button@{coloredButtonClassModifier} {
 				.colored-rules();
 			}
 			&[disabled],
-			&.@{disabledButtonClass} {
+			&.button@{disabledButtonClassModifier} {
 				.disabled-rules();
 			}
 		}
 	}
 	.check () when not (@buttonStyled = true) {
-		.@{buttonClass} {
+		.button {
 			.rules();
 		}
-		.@{buttonColoredClass} {
+		.button@{buttonColoredClassModifier} {
 			.colored-rules();
 		}
-		.@{buttonClass}[disabled],
-		.@{buttonDisabledClass} {
+		.button[disabled],
+		.button@{buttonDisabledClassModifier} {
 			.disabled-rules();
 		}
 	}

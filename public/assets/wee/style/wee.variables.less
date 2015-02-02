@@ -2,8 +2,8 @@
 	# Layout
 \*------------------------------------*/
 
-@minWidth: 260px;  // min container width, false to disable
-@maxWidth: 1280px; // max container width, false to disable
+@minWidth: false; // min container width, false to disable
+@maxWidth: 128;   // max container width, false to disable
 
 @bumperPadding: 6%;  // bumper padding on containers, false to disable
 @padContainer: true; // enable bumperPadding on containers
@@ -123,6 +123,11 @@
 @figCaptionColor: @darkGray;
 @figCaptionFontStyle: italic;
 @figCaptionLineHeight: 1.3em;
+
+// Alignment
+
+@imageLeftClass: img-left;
+@imageRightClass: img-right;
 
 
 /*------------------------------------*\
@@ -298,7 +303,7 @@
 @inputBorderWidth: 1px; // false to disable
 @inputRounded: 3px; // false to disable
 
-@inputMinWidth: 200px; // false to disable
+@inputMinWidth: 20; // false to disable
 @inputMinHeight: 3; // false to disable
 
 @inputPaddingHorizontal: .8;
@@ -380,8 +385,6 @@
 
 @buttonStyled: true;
 
-@buttonClass: ~'button';
-
 @buttonColor: @white;
 @buttonFont: @baseFont;
 @buttonFontSize: @baseFontSize;
@@ -408,7 +411,7 @@
 
 // Colored Buttons
 
-@coloredButtonClass: ~'@{buttonClass}-colored';
+@coloredButtonClassModifier: -colored;
 
 @coloredButtonColor: @white; // font color
 
@@ -420,7 +423,7 @@
 
 // Disabled Buttons
 
-@disabledButtonClass: ~'@{buttonClass}-disabled';
+@disabledButtonClassModifier: -disabled;
 
 @disabledButtonColor: @darkGray;
 
@@ -439,9 +442,8 @@
 @tableBordered: true; // apply outer border by default
 @tableStriped: true;  // apply striping by default
 
-@tableClass: ~'table';
-@tableBorderedClass: ~'@{tableClass}-bordered';
-@tableStripedClass: ~'@{tableClass}-striped';
+@tableBorderedClassModifier: -bordered;
+@tableStripedClassModifier: -striped;
 
 // Table Cells
 

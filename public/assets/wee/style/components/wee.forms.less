@@ -28,7 +28,7 @@
 	}
 	label {
 		font-weight: @labelFontWeight;
-		line-height: @labelLineHeight;
+		.line-height(@labelLineHeight);
 		.spaced-block(@labelMarginBottom);
 	}
 	input[type='checkbox'],
@@ -37,10 +37,10 @@
 		.margin(right; @checkboxMarginRight);
 	}
 	.input () {
+		background-clip: border-box;
 		color: @inputColor;
 		width: 100%;
 		.background(@inputBackground);
-		.background-clip();
 		.padding(@inputPaddingVertical; @inputPaddingHorizontal);
 		.spaced(@inputMarginBottom);
 		&:focus {
@@ -55,7 +55,7 @@
 		&:invalid {
 			color: @inputColorInvalid;
 			.background(@inputBackgroundInvalid);
-			.border () when not (@inputBorderWidthInvalid = 0)
+			.check () when not (@inputBorderWidthInvalid = 0)
 					and not (@inputBorderWidthInvalid = false) {
 				.border(@inputBorderColorInvalid; @inputBorderWidthInvalid);
 				&:hover {
@@ -65,16 +65,16 @@
 					.border(@inputBorderColorInvalidFocus);
 				}
 			}
-			.border () when (@inputBorderWidthInvalid = 0), (@inputBorderWidthInvalid = false) {
+			.check () when (@inputBorderWidthInvalid = 0), (@inputBorderWidthInvalid = false) {
 				border-width: 0;
 			}
-			.border();
+			.check();
 		}
 		&:required {
 			color: @inputColorRequired;
 			.background(@inputBackgroundRequired);
 			.border(@inputBorderColorRequired);
-			.border () when not (@inputBorderWidthRequired = 0)
+			.check () when not (@inputBorderWidthRequired = 0)
 					and not (@inputBorderWidthRequired = false) {
 				.border(@inputBorderColorRequired; @inputBorderWidthRequired);
 				&:hover {
@@ -84,10 +84,10 @@
 					.border(@inputBorderColorRequiredFocus);
 				}
 			}
-			.border () when (@inputBorderWidthRequired = 0), (@inputBorderWidthRequired = false) {
+			.check () when (@inputBorderWidthRequired = 0), (@inputBorderWidthRequired = false) {
 				border-width: 0;
 			}
-			.border();
+			.check();
 		}
 	}
 	.input () when not (@inputBorderWidth = 0)
@@ -127,11 +127,11 @@
 	input[type='search'],
 	input[type='tel'],
 	input[type='text'],
-	textarea,
-	select {
+	select,
+	textarea {
 		.input();
 	}
-	input[type="search"] {
+	input[type='search'] {
 		-moz-box-sizing: content-box;
 		-webkit-appearance: textfield;
 		-webkit-box-sizing: content-box;
@@ -151,7 +151,6 @@
 	}
 	select {
 		cursor: pointer;
-		outline: 0;
 		.padding(right; @inputPaddingVertical);
 		&[multiple] {
 			vertical-align: top;
@@ -173,7 +172,6 @@
 		cursor: @inputCursorDisabled;
 		.background-color(@inputBackgroundDisabled);
 	}
-	// DEPRECATED
 	.inline-field {
 		button,
 		input,

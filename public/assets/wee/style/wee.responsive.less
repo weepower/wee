@@ -1,108 +1,67 @@
 .mobile-landscape () when not (@mobileLandscapeWidth = false) {
-	@import '../../css/@{responsivePath}/mobile-landscape.less';
+	@import (optional) '../../css/@{responsivePath}/mobile-landscape.less';
 }
 .tablet-portrait () when not (@tabletPortraitWidth = false) {
-	@import '../../css/@{responsivePath}/tablet-portrait.less';
+	@import (optional) '../../css/@{responsivePath}/tablet-portrait.less';
 }
 .desktop-small () when not (@desktopSmallWidth = false) {
-	@import '../../css/@{responsivePath}/desktop-small.less';
+	@import (optional) '../../css/@{responsivePath}/desktop-small.less';
 }
 .desktop-medium () when not (@desktopMediumWidth = false) {
-	@import '../../css/@{responsivePath}/desktop-medium.less';
+	@import (optional) '../../css/@{responsivePath}/desktop-medium.less';
 }
 .desktop-large () when not (@desktopLargeWidth = false) {
-	@import '../../css/@{responsivePath}/desktop-large.less';
+	@import (optional) '../../css/@{responsivePath}/desktop-large.less';
 }
 
-// Components
-
 .responsive () when (@responsiveEnabled = true) and not (@legacyMode = true) {
-
-	// IE Metro Compatability
-
+	// IE Metro Compatibility
 	@-ms-viewport {
 		width: device-width;
 	}
 
-	// Mobile Landscape
-
-	.mobile-landscape-query () when not (@mobileLandscapeWidth = false) {
-		@breakpoint: (@mobileLandscapeWidth - @responsiveOffset);
-		@value: 2;
-
-		@media (min-width: @breakpoint) {
+	// Breakpoints
+	.check () when not (@mobileLandscapeWidth = false) {
+		@media (min-width: (@mobileLandscapeWidth - @responsiveOffset)) {
 			html {
-				font-family: '"@{value}"';
+				font-family: '"2"';
 			}
 			.mobile-landscape();
 		}
 	}
-
-	.mobile-landscape-query();
-
-	// Tablet Portrait
-
-	.tablet-portrait-query () when not (@tabletPortraitWidth = false) {
-		@breakpoint: (@tabletPortraitWidth - @responsiveOffset);
-		@value: 3;
-
-		@media (min-width: @breakpoint) {
+	.check () when not (@tabletPortraitWidth = false) {
+		@media (min-width: (@tabletPortraitWidth - @responsiveOffset)) {
 			html {
-				font-family: '"@{value}"';
+				font-family: '"3"';
 			}
 			.tablet-portrait();
 		}
 	}
-
-	.tablet-portrait-query();
-
-	// Small Desktop
-
-	.desktop-small-query () when not (@desktopSmallWidth = false) {
-		@breakpoint: (@desktopSmallWidth - @responsiveOffset);
-		@value: 4;
-
-		@media (min-width: @breakpoint) {
+	.check () when not (@desktopSmallWidth = false) {
+		@media (min-width: (@desktopSmallWidth - @responsiveOffset)) {
 			html {
-				font-family: '"@{value}"';
+				font-family: '"4"';
 			}
 			.desktop-small();
 		}
 	}
-
-	.desktop-small-query();
-
-	// Medium Desktop
-
-	.desktop-medium-query () when not (@desktopMediumWidth = false) {
-		@breakpoint: (@desktopMediumWidth - @responsiveOffset);
-		@value: 5;
-
-		@media (min-width: @breakpoint) {
+	.check () when not (@desktopMediumWidth = false) {
+		@media (min-width: (@desktopMediumWidth - @responsiveOffset)) {
 			html {
-				font-family: '"@{value}"';
+				font-family: '"5"';
 			}
 			.desktop-medium();
 		}
 	}
-
-	.desktop-medium-query();
-
-	// Large Desktop
-
-	.desktop-large-query () when not (@desktopLargeWidth = false) {
-		@breakpoint: (@desktopLargeWidth - @responsiveOffset);
-		@value: 6;
-
-		@media (min-width: @breakpoint) {
+	.check () when not (@desktopLargeWidth = false) {
+		@media (min-width: (@desktopLargeWidth - @responsiveOffset)) {
 			html {
-				font-family: '"@{value}"';
+				font-family: '"6"';
 			}
 			.desktop-large();
 		}
 	}
-
-	.desktop-large-query();
+	.check();
 }
 
 .responsive();

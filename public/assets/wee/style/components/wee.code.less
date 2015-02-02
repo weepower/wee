@@ -1,28 +1,22 @@
 .wee-code () when (@codeEnabled = true) {
-	.rules () {
-		color: @codeColor;
-		.background(@codeBackground);
-		.font(@codeFont; @codeFontSize);
-		.line-height(@codeLineHeight);
-		.padding(@codePaddingVertical; @codePaddingHorizontal);
-	}
-	.rules () when not (@codeRounded = 0)
-			and not (@codeRounded = false) {
-		.rounded(@codeRounded);
-	}
-	.rules () when not (@codeBorderColor = false) {
-		.border(@codeBorderColor);
-	}
 	code,
 	kbd,
 	samp {
-		.rules();
+		color: @codeColor;
+		.background(@codeBackground);
+		.border(@codeBorderColor);
+		.font(@codeFont; @codeFontSize);
+		.line-height(@codeLineHeight);
+		.padding(@codePaddingVertical; @codePaddingHorizontal);
+		.rounded(@codeRounded);
 	}
 }
 .wee-code();
 .wee-code-block () when (@codeEnabled = true) {
-	.rules () {
+	pre {
 		.background(@codeBlockBackground);
+		.border(@codeBlockBorderColor);
+		.rounded(@codeBlockRounded);
 		.spaced();
 		.tab-size();
 		code {
@@ -45,16 +39,6 @@
 			.padding(@codeBlockPaddingVertical; @codeBlockPaddingHorizontal);
 			.sub-rules();
 		}
-	}
-	.rules () when not (@codeBlockRounded = 0)
-			and not (@codeBlockRounded = false) {
-		.rounded(@codeBlockRounded);
-	}
-	.rules () when not (@codeBlockBorderColor = false) {
-		.border(@codeBlockBorderColor);
-	}
-	pre {
-		.rules();
 	}
 }
 .wee-code-block();

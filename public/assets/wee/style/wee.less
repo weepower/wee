@@ -4,27 +4,22 @@
 
 @import (reference) '../style/wee.variables.less';     // Core configuration
 @import (reference) '../../css/custom/variables.less'; // Custom configuration
-@import '../style/wee.mixins.less';                    // Mixins
 @import '../style/wee.reset.less';                     // Reset
+@import '../style/wee.mixins.less';                    // Mixins
 @import (reference) '../../css/custom/mixins.less';    // Custom mixins
 
 // Inject imports
-
-{{imports|raw}}
+{{imports}}
 
 // Core
-
 @import '../../css/custom/screen.less'; // Customizations
 
 // Responsive
-
-{{responsive|raw}}
+{{responsive}}
 
 // Print
-
-{{print|raw}}
+{{print}}
 
 // Framework
-
 @responsivePath: 'custom/breakpoints';
 @legacyMode: false;

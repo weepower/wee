@@ -2,9 +2,8 @@
 *:before,
 *:after {
 	margin: 0;
-	outline: 0;
 	padding: 0;
-	.border-box();
+	.box-sizing(border-box);
 }
 .wee-container-min-width () when not (@minWidth = 0)
 		and not (@minWidth = false) {
@@ -15,6 +14,7 @@
 }
 .wee-container-min-width();
 html {
+	-moz-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
 	font-family: '"1"';
@@ -23,26 +23,9 @@ html {
 body {
 	color: @baseColor;
 	position: relative;
+	.background(@bodyBackground);
 	.font(@baseFont; @baseFontSize; @baseFontWeight);
 	.line-height(@baseLineHeight);
-	.check () when not (@bodyBackground = false) {
-		.background();
-	}
-	.check();
-}
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section,
-summary {
-	display: block;
 }
 embed,
 img,
@@ -65,6 +48,7 @@ abbr[title] {
 	}
 	.check();
 }
+// DEPRECATE BOLD CLASS
 b,
 strong,
 .bold {
@@ -81,31 +65,22 @@ iframe {
 	.spaced()
 }
 figure {
-	.check () {
-		position: relative;
-		text-align: center;
-		.padding(@figurePadding);
+	position: relative;
+	text-align: center;
+	.border(@figureBorderColor);
+	.padding(@figurePadding);
+	.rounded(@figureRounded);
+	.spaced();
+	img {
 		.spaced();
-		img {
-			.spaced();
-		}
-		figcaption {
-			color: @figCaptionColor;
-			font-style: @figCaptionFontStyle;
-			.line-height(@figCaptionLineHeight);
-		}
 	}
-	.check () when not (@figureRounded = 0)
-			and not (@figureRounded = false) {
-		.rounded(@figureRounded);
+	figcaption {
+		color: @figCaptionColor;
+		font-style: @figCaptionFontStyle;
+		.line-height(@figCaptionLineHeight);
 	}
-	.check () when not (@figureBorderColor = false) {
-		.border(@figureBorderColor);
-	}
-	.check();
 }
 img {
-	-ms-interpolation-mode: bicubic;
 	display: inline-block;
 }
 sub,
@@ -191,6 +166,7 @@ p {
 small {
 	.font-size(@smallFontSize);
 }
+// DEPRECATE ITALIC CLASS
 dfn,
 em,
 i,
@@ -236,7 +212,6 @@ strike {
 }
 a {
 	color: @linkColor;
-	outline: 0;
 	text-decoration: @linkDecoration;
 	&:focus {
 		outline: thin dotted;
@@ -293,11 +268,7 @@ ul {
 }
 ol,
 ul {
-	.check () when not (@listMarginLeft = 0)
-			and not (@listMarginLeft = false) {
-		.margin(left; @listMarginLeft);
-	}
-	.check();
+	.margin(left; @listMarginLeft);
 	ol,
 	ul {
 		margin-bottom: 0;
