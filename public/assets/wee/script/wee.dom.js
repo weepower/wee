@@ -502,7 +502,7 @@
 				arr = arr.concat(W.$(filter, el));
 			});
 
-			return arr;
+			return W.$unique(arr);
 		},
 		// Get the next sibling of a specified element
 		// Returns element
