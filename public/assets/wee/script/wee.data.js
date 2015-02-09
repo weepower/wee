@@ -6,7 +6,8 @@
 		request: function(opt) {
 			var conf = W.$extend({
 					args: [],
-					data: {}
+					data: {},
+					headers: {}
 				}, opt);
 
 			if (conf.cache === false) {
@@ -116,14 +117,21 @@
 					x.open('GET', conf.url, true);
 				}
 
-				// Set request headers
-				if (conf.headers) {
-					var keys = Object.keys(conf.headers),
-						i = 0;
+				// Add X-Requested-With header for same domain requests
+				var a = W._doc.createElement('a'),
+					xrw = 'X-Requested-With';
+				a.href = conf.url;
 
-					for (; i < keys.length; i++) {
-						var key = keys[i];
-						x.setRequestHeader(key, conf.headers[key]);
+				if (a.hostname == Wee._win.location.hostname && ! conf.headers[xrw]) {
+					conf.headers[xrw] = 'XMLHttpRequest';
+				}
+
+				// Set request headers
+				for (var key in conf.headers) {
+					var val = conf.headers[key];
+
+					if (val !== false) {
+						x.setRequestHeader(key, val);
 					}
 				}
 
