@@ -8,7 +8,7 @@
 	var web = typeof window !== 'undefined',
 		W = (function() {
 			var _store = {},
-				D = web === true ? document : {};
+				D = web ? document : {};
 
 			return {
 				_body: D.body,
@@ -19,7 +19,6 @@
 				_win: N,
 
 				// Create namespaced controller with specified name, public object, and optional private object
-				// Returns undefined
 				fn: {
 					make: function(name, pub, priv) {
 						W[name] = (function() {
@@ -88,7 +87,6 @@
 						})();
 					},
 					// Extend existing controller with additional methods and properties
-					// Returns undefined
 					extend: function(a, b, c) {
 						if (W.$isObject(a)) {
 							// Merge into the global object
@@ -116,7 +114,7 @@
 
 								if (el == host || (W._canExec(el) && W.$exec(el, {
 										args: [host]
-									}) === true)) {
+									}))) {
 									return key;
 								}
 							});
@@ -127,7 +125,7 @@
 
 					return W.$get('_env', 'local');
 				},
-				// Determine if the current environment is secured over https
+				// Determine if the environment is secured over https
 				// Optional url can be passed for evaluation
 				// Returns boolean
 				$envSecure: function(url) {
@@ -296,7 +294,9 @@
 				// Returns string
 				$serialize: function(obj) {
 					return Object.keys(obj).map(function(key) {
-						return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]);
+						if (typeof obj[key] == 'string') {
+							return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]);
+						}
 					}).join('&');
 				},
 				// Extend specified object with specified source object
@@ -334,7 +334,7 @@
 				// Returns array
 				$merge: function(arr, arr2, dup) {
 					arr = arr.concat(arr2);
-					return dup === true ? W.$unique(arr) : arr;
+					return dup ? W.$unique(arr) : arr;
 				},
 				// Create new array with only unique values from specified array
 				// Returns array
@@ -421,7 +421,6 @@
 				},
 				// Execute specified function for specified elements|selector
 				// Options include arguments, context, and scope
-				// Returns undefined
 				$each: function(sel, fn, opt) {
 					if (sel) {
 						var conf = W.$extend({
@@ -506,7 +505,6 @@
 					return W.$attr(sel, a, b);
 				},
 				// Add metadata variables to datastore
-				// Returns undefined
 				$setVars: function() {
 					W.$each('[data-set]', function(el) {
 						var key = W.$data(el, 'set'),
@@ -518,7 +516,6 @@
 					});
 				},
 				// Add bind elements to datastore
-				// Returns undefined
 				$setRef: function() {
 					W.$each('[data-ref], [data-bind]', function(el) {
 						var ref = el.getAttribute('data-ref');
@@ -562,17 +559,18 @@
 					return el ? W.$toArray(el) : [];
 				},
 				// Execute specified function when document is ready
-				// Returns undefined
 				ready: function(fn) {
-					W._legacy ?
-						D.attachEvent('onreadystatechange', function() {
-							if (D.readyState == 'complete') {
+					document.readyState === 'complete' ?
+						W.$exec(fn) :
+						W._legacy ?
+							D.attachEvent('onreadystatechange', function() {
+								if (D.readyState == 'complete') {
+									W.$exec(fn);
+								}
+							}) :
+							D.addEventListener('DOMContentLoaded', function() {
 								W.$exec(fn);
-							}
-						}) :
-						D.addEventListener('DOMContentLoaded', function() {
-							W.$exec(fn);
-						});
+							});
 				}
 			};
 		})();
@@ -580,7 +578,7 @@
 	N.Wee = W;
 
 	// Set data variables and bind elements
-	if (web === true) {
+	if (web) {
 		W.$setVars();
 		W.$setRef();
 	}
