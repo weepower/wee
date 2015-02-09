@@ -38,6 +38,7 @@ module.exports = function(grunt) {
 		server.logPrefix = 'Wee';
 		server.open = 'external';
 		server.notify = false;
+		server.ui.port = serverConfig.port + 1;
 
 		browserSync(server);
 	});
