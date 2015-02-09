@@ -4,7 +4,7 @@
 	W.fn.make('assets', {
 		// Cache pre-existing CSS and JavaScript asset references
 		_construct: function() {
-			this.loaded = [];
+			this.loaded = {};
 
 			W.$each('link[rel="stylesheet"], script[src]', function(el) {
 				this.loaded[el.href || el.src] = el;
@@ -49,16 +49,21 @@
 			}
 		},
 		// Remove one or more files from the DOM
-		remove: function(files) {
+		remove: function(files, root) {
 			files = W.$toArray(files);
+			root = root || '';
 
 			var keys = Object.keys(files),
+				a = W._doc.createElement('a'),
 				i = 0;
 
 			for (; i < keys.length; i++) {
 				var key = keys[i],
-					src = files[key],
-					el = this.loaded[src];
+					src = root + files[key];
+				a.href = src;
+				src = a.href;
+
+				var el = this.loaded[src];
 
 				if (el !== U) {
 					el.parentNode.removeChild(el);
@@ -91,6 +96,7 @@
 		// Request specific file
 		request: function(path, conf) {
 			var scope = this,
+				pub = scope.$public,
 				head = W._doc.getElementsByTagName('head')[0],
 				ext = path.split('.').pop().split(/\#|\?/)[0],
 				group = conf.group,
@@ -110,7 +116,7 @@
 						return;
 					}
 
-					scope.$public.loaded[path] = js;
+					pub.loaded[js.src] = js;
 					scope.done(group);
 				};
 
@@ -128,7 +134,7 @@
 				head.appendChild(link);
 
 				img.onerror = function() {
-					scope.$public.loaded[path] = link;
+					pub.loaded[link.href] = link;
 					scope.done(group);
 				};
 
