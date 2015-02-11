@@ -45,7 +45,7 @@ Get started using one of these methods:
 
 ## Compatibility
 
-The following indicates the earliest tested browser versions.
+Wee officially supports the following minimum browser versions:
 
 * Android 4.1
 * Chrome 30
