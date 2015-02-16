@@ -2,9 +2,9 @@
 	'use strict';
 
 	W.$chain({
-		render: function(obj, opt) {
+		render: function(data) {
 			W.$each(this, function(el) {
-				W.$html(el, V.render(W.$html(el), obj, opt));
+				W.$html(el, V.render(W.$html(el), data));
 			});
 			return this;
 		}
