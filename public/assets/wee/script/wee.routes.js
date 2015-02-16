@@ -4,20 +4,20 @@
 	W.fn.make('routes', {
 		// Get currently bound URI values or set URI with a specified string or value object
 		// Returns object
-		uri: function(val) {
-			if (val) {
-				if (W.$isObject(val)) {
-					return this.$set('uri', W.$extend(this.uri(), val));
+		uri: function(value) {
+			if (value) {
+				if (W.$isObject(value)) {
+					return this.$set('uri', W.$extend(this.uri(), value));
 				} else {
 					var a = W._doc.createElement('a'),
 						query = {},
 						i = 0;
-					a.href = val;
+					a.href = value;
 
 					var path = this.$get('path', a.pathname, true);
 
 					if (a.search !== '') {
-						var arr = a.search.replace(/^\?/, '').split('&');
+						var arr = decodeURIComponent(a.search).replace(/^\?/, '').split('&');
 
 						for (; i < arr.length; i++) {
 							var split = arr[i].split('=');
@@ -40,18 +40,18 @@
 		// Get currently bound path or set path with a specified string
 		// Optionally accepts options to pass through to get/set
 		// Returns string
-		path: function(val, opt) {
-			return val ?
+		path: function(value, options) {
+			return value ?
 				this.uri({
-					path: this.$set('path', val, opt)
+					path: this.$set('path', value, options)
 				}).path :
-				this.$get('path', this.uri().path, true, opt);
+				this.$get('path', this.uri().path, true, options);
 		},
 		// Get all segments or single segment at index integer
 		// Returns array of segment strings or string if index specified
-		segments: function(i) {
+		segments: function(index) {
 			var segs = W.$toArray(this.path().replace(/^\/|\/$/g, '').split('/'));
-			return i !== U ? (segs[i] || '') : segs;
+			return index !== U ? (segs[index] || '') : segs;
 		},
 		// Retrieve or add route endpoints to route storage
 		// Immediately evaluate the map by setting init to true
@@ -73,10 +73,10 @@
 		},
 		// Process stored route options with optional config
 		// Defaults to current path
-		run: function(opt) {
+		run: function(options) {
 			var conf = W.$extend({
 					routes: this.$get('routes')
-				}, opt);
+				}, options);
 
 			if (conf.path) {
 				this.path(conf.path);
