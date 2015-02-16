@@ -2,19 +2,19 @@
 	'use strict';
 
 	W.$chain({
-		html: function(val) {
-			var r = W.$html(this, val);
-			return val !== U ? this : r;
+		html: function(value) {
+			var r = W.$html(this, value);
+			return value !== U ? this : r;
 		},
-		hasClass: function(val) {
-			return W.$hasClass(this, val);
+		hasClass: function(value) {
+			return W.$hasClass(this, value);
 		},
-		addClass: function(val) {
-			W.$addClass(this, val);
+		addClass: function(value) {
+			W.$addClass(this, value);
 			return this;
 		},
-		removeClass: function(val) {
-			W.$removeClass(this, val);
+		removeClass: function(value) {
+			W.$removeClass(this, value);
 			return this;
 		},
 		css: function(a, b) {
@@ -28,13 +28,13 @@
 			W.$removeAttr(this, key);
 			return this;
 		},
-		prop: function(key, val) {
-			var r = W.$prop(this, key, val);
-			return val !== U ? this : r;
+		prop: function(key, value) {
+			var r = W.$prop(this, key, value);
+			return value !== U ? this : r;
 		},
-		val: function(val) {
-			var r = W.$val(this, val);
-			return val !== U ? this : r;
+		val: function(value) {
+			var r = W.$val(this, value);
+			return value !== U ? this : r;
 		},
 		show: function() {
 			W.$show(this);
@@ -60,43 +60,43 @@
 		parent: function() {
 			return $(W.$parent(this));
 		},
-		contains: function(child) {
-			return W.$contains(this, child);
+		contains: function(descendant) {
+			return W.$contains(this, descendant);
 		},
-		append: function(child) {
-			W.$append(this, child);
+		append: function(source) {
+			W.$append(this, source);
 			return this;
 		},
-		appendTo: function(parent) {
-			W.$append(parent, this);
+		appendTo: function(target) {
+			W.$append(target, this);
 			return this;
 		},
-		prepend: function(child) {
-			W.$prepend(this, child);
+		prepend: function(source) {
+			W.$prepend(this, source);
 			return this;
 		},
-		prependTo: function(parent) {
-			W.$prepend(parent, this.reverse());
+		prependTo: function(target) {
+			W.$prepend(target, this.reverse());
 			return this;
 		},
-		before: function(pos) {
-			W.$before(this, pos);
+		before: function(source, remove) {
+			W.$before(this, source, remove);
 			return this;
 		},
-		insertBefore: function(sel) {
-			W.$insertBefore(this, sel);
+		insertBefore: function(source) {
+			W.$insertBefore(this, source);
 			return this;
 		},
-		after: function(pos) {
-			W.$after(this, pos);
+		after: function(source, remove) {
+			W.$after(this, source, remove);
 			return this;
 		},
-		insertAfter: function(sel) {
-			W.$insertAfter(this, sel);
+		insertAfter: function(source) {
+			W.$insertAfter(this, source);
 			return this;
 		},
-		replaceWith: function(sel) {
-			return W.$replaceWith(this, sel);
+		replaceWith: function(source) {
+			return W.$replaceWith(this, source);
 		},
 		remove: function() {
 			W.$remove(this);
@@ -114,9 +114,9 @@
 			W.$wrapInner(this, html);
 			return this;
 		},
-		text: function(val) {
-			var r = W.$text(this, val);
-			return val !== U ? this : r;
+		text: function(value) {
+			var r = W.$text(this, value);
+			return value !== U ? this : r;
 		},
 		last: function() {
 			return $(W.$last(this));
@@ -164,17 +164,21 @@
 		offset: function() {
 			return W.$offset(this);
 		},
-		width: function(val) {
-			var r = W.$width(this, val);
-			return val === U || val === true ? r : this;
+		width: function(value) {
+			var r = W.$width(this, value);
+			return value === U || value === true ? r : this;
 		},
-		height: function(val) {
-			var r = W.$height(this, val);
-			return val === U || val === true ? r : this;
+		height: function(value) {
+			var r = W.$height(this, value);
+			return value === U || value === true ? r : this;
 		},
-		scrollTop: function(val) {
-			var r = W.$scrollTop(this, val);
-			return val === U || val === true ? r : this;
+		scrollLeft: function(value) {
+			var r = W.$scrollLeft(this, value);
+			return value === U || value === true ? r : this;
+		},
+		scrollTop: function(value) {
+			var r = W.$scrollTop(this, value);
+			return value === U || value === true ? r : this;
 		}
 	});
 })(Wee, undefined);
