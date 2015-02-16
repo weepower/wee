@@ -45,16 +45,16 @@
 		},
 		// Bind specified function to specified element and event
 		// Options include arguments, context, one, scope, and delegate
-		on: function(sel, a, b, c) {
+		on: function(target, a, b, c) {
 			var evts = [];
 
-			if (W.$isObject(sel) && ! sel._$) {
-				var keys = Object.keys(sel),
+			if (W.$isObject(target) && ! target._$) {
+				var keys = Object.keys(target),
 					i = 0;
 
 				for (; i < keys.length; i++) {
 					var key = keys[i];
-					evts = sel[key];
+					evts = target[key];
 
 					this.$private('bind', key, evts, a);
 				}
@@ -66,13 +66,7 @@
 					c = b;
 				}
 
-				// Reset variables when watching target
-				if (c && c.delegate) {
-					c.targ = sel;
-					sel = c.delegate;
-				}
-
-				this.$private('bind', sel, evts, c);
+				this.$private('bind', target, evts, c);
 			}
 		},
 		// Bind specified function to specified element and event for single execution
@@ -91,7 +85,7 @@
 			}, c));
 		},
 		// Remove specified function to specified element and optional event|function
-		off: function(sel, a, b) {
+		off: function(target, a, b) {
 			var obj = a;
 
 			if (a) {
@@ -108,26 +102,26 @@
 						var evt = evts[i],
 						fn = obj[evt];
 
-						this.$private('off', sel, evt, fn);
+						this.$private('off', target, evt, fn);
 					}
 				}
 			} else {
-				this.$private('off', sel);
+				this.$private('off', target);
 			}
 		},
 		// Get currently bound events to optional specified element and event|function
 		// Returns array of objects
-		bound: function(sel, evt, fn) {
+		bound: function(target, event, fn) {
 			var bound = this.$get('evts'),
 				matches = [];
 
 			if (bound) {
-				if (sel) {
-					W.$each(sel, function(el) {
+				if (target) {
+					W.$each(target, function(el) {
 						for (var e in bound) {
 							var ev = bound[e];
 
-							if (el !== ev.el || (evt && (evt !== ev.ev || (fn && String(fn) !== String(ev.fn))))) {
+							if (el !== ev.el || (event && (event !== ev.ev || (fn && String(fn) !== String(ev.fn))))) {
 								continue;
 							}
 
@@ -141,22 +135,28 @@
 
 			return matches;
 		},
-		// Execute specific element|slector event by name and optional trigger
-		trigger: function(sel, evt) {
-			W.$each(sel, function(el) {
+		// Execute event for each matching selection
+		trigger: function(target, event) {
+			W.$each(target, function(el) {
 				if (W._win.createEvent) {
 					var ev = W._win.createEvent('HTMLEvents');
 
-					ev.initEvent(evt, true, false);
+					ev.initEvent(event, true, false);
 					el.dispatchEvent(ev);
 				} else {
-					el.fireEvent('on' + evt);
+					el.fireEvent('on' + event);
 				}
 			});
 		}
 	}, {
 		bind: function(els, obj, c) {
 			var scope = this;
+
+			// Redefine variables when delegating
+			if (c && c.delegate) {
+				c.targ = els;
+				els = c.delegate;
+			}
 
 			// For each element attach events
 			W.$each(els, function(el) {
