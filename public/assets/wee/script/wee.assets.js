@@ -14,37 +14,37 @@
 		},
 		// Get currently bound resource root or set root with specified value
 		// Returns string
-		root: function(val) {
-			return val ? this.$set('.', val) : this.$get('.', '');
+		root: function(value) {
+			return value ? this.$set('.', value) : this.$get('.', '');
 		},
 		// Load specified assets with specified set of options
-		load: function(conf) {
-			var files = W.$toArray(conf.files),
-				root = conf.root !== U ? conf.root : this.root(),
+		load: function(options) {
+			var files = W.$toArray(options.files),
+				root = options.root !== U ? options.root : this.root(),
 				now = new Date().getTime(),
 				len = files.length,
 				i = 0;
 
 			// Create group name if not specified
-			if (! conf.group) {
-				conf.group = 'load-' + now;
+			if (! options.group) {
+				options.group = 'load-' + now;
 			}
 
 			// Set file array length to check against
-			this.$set(conf.group, len);
-			this.$set(conf.group + 'fail', 0);
-			this.$set(conf.group + 'conf', conf);
+			this.$set(options.group, len);
+			this.$set(options.group + 'fail', 0);
+			this.$set(options.group + 'conf', options);
 
 			// Request each specified file
 			for (; i < len; i++) {
 				var file = root + files[i];
 
 				if (! this.loaded[file]) {
-					if (conf.cache === false) {
+					if (options.cache === false) {
 						file += (file.indexOf('?') == -1 ? '?' : '&') + now;
 					}
 
-					this.$private('request', file, conf);
+					this.$private('request', file, options);
 				}
 			}
 		},
@@ -73,18 +73,18 @@
 			}
 		},
 		// When specified references are ready execute callback
-		ready: function(group, opt, poll) {
+		ready: function(group, options, poll) {
 			if (this.$get(group) === 0) {
-				var conf = W.$extend(this.$get(group + 'conf'), opt);
-				opt = {
+				var conf = W.$extend(this.$get(group + 'conf'), options);
+				options = {
 					args: conf.args,
 					scope: conf.scope
 				};
 
 				if (conf.failure && this.$get(group + 'fail') > 0) {
-					W.$exec(conf.failure, opt);
+					W.$exec(conf.failure, options);
 				} else if (conf.success) {
-					W.$exec(conf.success, opt);
+					W.$exec(conf.success, options);
 				}
 			} else if (poll) {
 				setTimeout(function() {
