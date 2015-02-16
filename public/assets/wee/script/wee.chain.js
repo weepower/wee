@@ -34,44 +34,41 @@
 		};
 
 		W._win[WeeAlias] = function(sel, context) {
-			var o = new Get(sel, context);
-			o.sel = sel;
-
-			return o;
+			return new Get(sel, context);
 		};
 
 		W._win[WeeAlias].prototype = Get.prototype = {
 			_$: true,
 			length: 0,
-			each: function(fn, opt) {
-				W.$each(this, fn, opt);
+			each: function(fn, options) {
+				W.$each(this, fn, options);
 			},
 			map: function(fn) {
 				return W.$map(this, fn);
 			},
-			attr: function(key, val) {
-				var r = W.$attr(this, key, val);
-				return val !== U ? this : r;
+			attr: function(key, value) {
+				var resp = W.$attr(this, key, value);
+				return value !== U ? this : resp;
 			},
-			eq: function(i) {
-				return $(W.$eq(this, i));
+			eq: function(index) {
+				return $(W.$eq(this, index));
 			},
 			first: function() {
 				return this.eq(0);
 			},
-			data: function(key, val) {
-				var r = W.$data(this, key, val);
-				return val !== U ? this : r;
+			data: function(key, value) {
+				var resp = W.$data(this, key, value);
+				return value !== U ? this : resp;
 			},
 			reverse: function() {
-				var cp = W.$extend({}, this),
-					len = this.length,
-					x = len,
+				var copy = W.$extend({}, this),
+					length = this.length,
+					x = length,
 					i = 0;
 
-				for (; i < len; i++) {
+				for (; i < length; i++) {
 					x--;
-					this[i] = cp[x];
+					this[i] = copy[x];
 				}
 
 				return this;
