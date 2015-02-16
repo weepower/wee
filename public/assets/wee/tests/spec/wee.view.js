@@ -89,15 +89,11 @@ QUnit.test('render filter', 1, function(assert) {
 // Method: view.addHelper(a, b)
 
 QUnit.test('render helper', 1, function(assert) {
-	Wee.view.addHelper('tag', function() {
-		var helpers = '|' + this.helpers.filter(function(el) {
-				return el !== 'tag';
-			}).join('|').replace(/\|+$/, '');
-
-		return '{{' + this.tag + helpers + '}}';
+	Wee.view.addHelper('upper', function() {
+		return this.val.toUpperCase();
 	});
 
-	assert.strictEqual(Wee.view.render('{{name|upper|tag}}', {}), '{{name|upper}}', 'Template parsed successfully.');
+	assert.strictEqual(Wee.view.render('{{name|upper}}', {name: 'Chris'}), 'CHRIS', 'Template parsed successfully.');
 });
 
 // Method: view.addPartial(a, b)

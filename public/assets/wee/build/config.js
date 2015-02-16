@@ -130,7 +130,9 @@ module.exports = function(grunt) {
 	global.config = {};
 	global.style = {};
 	global.script = {};
-	global.server = {};
+	global.server = {
+		ui: {}
+	};
 	global.modules = {};
 	global.legacy = {};
 	global.reloadPaths = [];

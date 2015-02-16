@@ -16,7 +16,7 @@
 			var sets = W.$toArray(val),
 				scope = this,
 				cb = function() {
-					scope.$private('check');
+					scope.$private('check', false);
 				},
 				i = 0;
 
@@ -54,7 +54,6 @@
 		check: function(init, conf) {
 			var size = this.$public.size(),
 				prev = this.$get('size');
-			init = init || false;
 
 			// If breakpoint has been hit or resize logic initialized
 			if (size && (size !== prev || init)) {
