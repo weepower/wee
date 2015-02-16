@@ -2,11 +2,11 @@
  * Sizzle CSS Selector Engine v2.2.0-pre
  * http://sizzlejs.com/
  *
- * Copyright 2008, 2014 jQuery Foundation, Inc. and other contributors
+ * Copyright jQuery Foundation and other contributors
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2014-12-30
+ * Date: 2015-02-13
  */
 (function( window ) {
 
@@ -251,7 +251,7 @@ function Sizzle( selector, context, results, seed ) {
 		}
 
 		// QSA path
-		if ( support.qsa && (!rbuggyQSA || !rbuggyQSA.test( selector )) ) {
+		if ( support.qsa && !compilerCache[ selector + " " ] && (!rbuggyQSA || !rbuggyQSA.test( selector )) ) {
 			nid = old = expando;
 			newContext = context;
 			newSelector = nodeType !== 1 && selector;
@@ -284,7 +284,7 @@ function Sizzle( selector, context, results, seed ) {
 						newContext.querySelectorAll( newSelector )
 					);
 					return results;
-				} catch(qsaError) {
+				} catch ( qsaError ) {
 				} finally {
 					if ( !old ) {
 						context.removeAttribute("id");
@@ -446,6 +446,9 @@ function testContext( context ) {
 
 // Expose support vars for convenience
 support = Sizzle.support = {};
+
+// Expose expando so it can be removed if needed (#310)
+Sizzle.expando = expando;
 
 /**
  * Detects XML nodes
@@ -849,6 +852,7 @@ Sizzle.matchesSelector = function( elem, expr ) {
 	expr = expr.replace( rattributeQuotes, "='$1']" );
 
 	if ( support.matchesSelector && documentIsHTML &&
+		!compilerCache[ expr + " " ] &&
 		( !rbuggyMatches || !rbuggyMatches.test( expr ) ) &&
 		( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
 
