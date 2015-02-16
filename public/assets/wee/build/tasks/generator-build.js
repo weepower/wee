@@ -180,6 +180,9 @@ module.exports = function(grunt) {
 						data.section = block;
 
 						var obj = {
+							sourcePath: name,
+							sourceFile: name.replace(/^.*[\\\/]/, ''),
+							sourceName: fileSegments.join('.'),
 							name: fileSegments.join('.'),
 							original: template,
 							input: '',
