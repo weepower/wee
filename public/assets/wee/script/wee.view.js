@@ -194,7 +194,7 @@
 					helpers = segs.length > 1 ? segs.slice(1) : segs;
 
 				if (val === U || typeof val == 'object') {
-					return '';
+					val = '';
 				}
 
 				// Process helpers
@@ -222,7 +222,7 @@
 
 				// Encode output by default
 				if (typeof val == 'string') {
-					if (helpers.indexOf('raw') == -1) {
+					if (helpers.indexOf('raw') < 0) {
 						val = val.replace(/&amp;/g, '&')
 							.replace(/&/g, '&amp;')
 							.replace(/</g, '&lt;')
@@ -230,7 +230,7 @@
 							.replace(/"/g, '&quot;');
 					}
 
-					if (val.indexOf('{{') !== -1) {
+					if (val.indexOf('{{') > 0) {
 						val = scope.parse(val, data, prev, init, index);
 					}
 				}
