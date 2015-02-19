@@ -63,7 +63,7 @@
 									var args = W._slice.call(arguments);
 
 									// Bind all additional arguments to private method call
-									args.length > 1 ?
+									args.length ?
 										args.shift() :
 										args = [];
 
@@ -105,27 +105,12 @@
 				// Accepts optional context
 				// Returns array
 				$: function(selector, context) {
-					var el = null;
+					var el = null,
+						ref = [];
 
-					if (typeof selector != 'string') {
+					if (typeof selector !== 'string') {
 						el = selector;
 					} else {
-						context = context !== U ? W.$first(context) : D;
-
-						// Check for pre-cached element
-						if (selector.slice(0, 4) == 'ref:') {
-							selector = W.$get(selector);
-
-							// Apply context filter if not document
-							return selector ?
-								context === D ?
-									selector :
-									selector.filter(function(el) {
-										return context.contains(el);
-									}) :
-								[];
-						}
-
 						if (selector == 'window') {
 							return [N];
 						}
@@ -134,37 +119,81 @@
 							return [D];
 						}
 
+						// Lookup the context and return nothing if it doesn't exist
+						context = context !== U ? W.$first(context) : D;
+
+						if (! context) {
+							return [];
+						}
+
+						// Check for pre-cached elements
+						if (selector.indexOf('ref:') > -1) {
+							var split = selector.split(',').filter(function(sel) {
+								sel = sel.trim();
+
+								if (sel.slice(0, 4) == 'ref:') {
+									sel = W.$get(sel);
+
+									// Apply context filter if not document
+									if (sel) {
+										ref = ref.concat(
+											context === D ?
+												sel :
+												sel.filter(function(el) {
+													return context.contains(el);
+												})
+										);
+									}
+
+									return false;
+								}
+
+								return true;
+							});
+
+							if (split.length) {
+								selector = split.join(',');
+							} else {
+								return ref;
+							}
+						}
+
 						if (N.WeeSelector !== U) { // Use third-party selector engine if defined
 							el = N.WeeSelector(selector, context);
+						} else if (
+							selector.indexOf(' ') > 0 ||
+							selector.indexOf(',') > 0 ||
+							selector.indexOf(':') > -1 ||
+							selector.indexOf('[') > -1 ||
+							selector.indexOf('#') > -1 ||
+							selector.lastIndexOf('.') > 0
+						) {
+							el = context.querySelectorAll(selector);
 						} else {
-							// Check for advanced query triggers
-							if (selector.indexOf(' ') > 0 || selector.indexOf(':') > -1 || selector.indexOf('[') > -1 || selector.indexOf('#') > -1 || selector.lastIndexOf('.') > 0) {
-								el = context.querySelectorAll(selector);
-							} else {
-								var c = selector.charAt(0);
+							var pre = selector.charAt(0);
 
-								if (c == '#') {
-									el = context.getElementById(selector.substr(1));
-								} else if (c == '.') {
-									el = W._legacy ?
-										context.querySelectorAll(selector) :
-										context.getElementsByClassName(selector.substr(1));
-								} else {
-									el = context.getElementsByTagName(selector);
-								}
+							if (pre == '#') {
+								el = context.getElementById(selector.substr(1));
+							} else if (pre == '.') {
+								el = W._legacy ?
+									context.querySelectorAll(selector) :
+									context.getElementsByClassName(selector.substr(1));
+							} else {
+								el = context.getElementsByTagName(selector);
 							}
 						}
 					}
 
-					if (el === null) {
-						return el;
+					if (! el) {
+						el = ref;
+					} else if (el.nodeType !== U || el === N) {
+						el = [el];
+					} else {
+						el = W._slice.call(el, 0);
 					}
 
-					if (el.nodeType !== U || el === N) {
-						return [el];
-					}
-
-					return W._slice.call(el, 0);
+					// Join refs if available
+					return ref.length ? el.concat(ref) : el;
 				},
 				// Set global variable
 				// Options can be passed if value is a callback
@@ -493,13 +522,9 @@
 					// Clear existing refs if reset
 					if (sets) {
 						Object.keys(sets).forEach(function(key) {
-							var set = sets[key];
-
-							set.forEach(function(el, i) {
-								if (context.contains(el) && context !== el) {
-									set.splice(i, i + 1);
-								}
-							});
+							W.$set('ref:' + key, sets[key].filter(function(el) {
+								return ! (! D.contains(el) || (context.contains(el) && context !== el));
+							}));
 						});
 					}
 
@@ -518,11 +543,20 @@
 				$setVars: function() {
 					W.$each('[data-set]', function(el) {
 						var key = W.$data(el, 'set'),
-							val = W.$data(el, 'value');
+							val = W.$data(el, 'value'),
+							end = key.slice(-2);
 
-						key.slice(-2) == '[]' ?
-							W.$push(key.slice(0, -2), val) :
+						if (end == '[]' || end == '{}') {
+							var obj = key.slice(0, -2),
+								split = val.split(':');
+							key = split[0];
+
+							end == '[]' ?
+								W.$push(obj, key) :
+								W.$push(obj, key, split[1]);
+						} else {
 							W.$set(key, val);
+						}
 					});
 				},
 				// Cast object to array if it isn't one
@@ -534,7 +568,7 @@
 				// Returns array
 				$unique: function(array) {
 					return array.reverse().filter(function(e, i, array) {
-						return array.indexOf(e, i + 1) === -1;
+						return array.indexOf(e, i + 1) < 0;
 					}).reverse();
 				},
 				// Fallback for non-existent chaining
@@ -542,7 +576,7 @@
 				// Determine if value can be executed
 				// Returns boolean
 				_canExec: function(value) {
-					if (W.$isString(value) && value.indexOf(':') !== -1) {
+					if (W.$isString(value) && value.indexOf(':') > -1) {
 						var split = value.split(':'),
 							fn = split[0],
 							method = split[1];
@@ -569,7 +603,7 @@
 				// Determine data storage root and key
 				// Returns array
 				_storeData: function(key) {
-					if (key.indexOf(':') == -1) {
+					if (key.indexOf(':') < 0) {
 						return [_store, key];
 					}
 
