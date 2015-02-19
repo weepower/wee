@@ -204,6 +204,12 @@
 								if (conf.targ) {
 									var t = conf.targ,
 										sel = t._$ ? t.sel : t;
+
+									// Update refs when targeting ref
+									if (sel.indexOf('ref:') > -1) {
+										W.$setRef(el);
+									}
+
 									t = W.$toArray(W.$(sel));
 
 									if (! t.some(function(par) {
