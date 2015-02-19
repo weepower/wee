@@ -19,32 +19,66 @@
 		},
 		// Load specified assets with specified set of options
 		load: function(options) {
-			var files = W.$toArray(options.files),
-				root = options.root !== U ? options.root : this.root(),
+			var conf = W.$extend({
+					files: [],
+					js: [],
+					css: [],
+					img: []
+				}, options),
+				files = W.$toArray(conf.files),
+				js = W.$toArray(conf.js),
+				css = W.$toArray(conf.css),
+				img = W.$toArray(conf.img),
+				root = conf.root !== U ? conf.root : this.root(),
 				now = new Date().getTime(),
-				len = files.length,
 				i = 0;
 
 			// Create group name if not specified
-			if (! options.group) {
-				options.group = 'load-' + now;
+			if (! conf.group) {
+				conf.group = 'load-' + now;
+			}
+
+			// Determine file type
+			var assets = [];
+
+			for (; i < files.length; i++) {
+				var ext = files[i].split('.').pop().split(/\#|\?/)[0],
+					type = (ext == 'js' || ext == 'css') ?
+						ext : (/(gif|jpe?g|png|svg)$/i).test(ext) ?
+							'img' : '';
+
+				if (type) {
+					assets[files[i]] = type;
+				}
+			}
+
+			for (i = 0; i < js.length; i++) {
+				assets[js[i]] = 'js';
+			}
+
+			for (i = 0; i < css.length; i++) {
+				assets[css[i]] = 'css';
+			}
+
+			for (i = 0; i < img.length; i++) {
+				assets[img[i]] = 'img';
 			}
 
 			// Set file array length to check against
-			this.$set(options.group, len);
-			this.$set(options.group + 'fail', 0);
-			this.$set(options.group + 'conf', options);
+			this.$set(conf.group, Object.keys(assets).length);
+			this.$set(conf.group + 'fail', 0);
+			this.$set(conf.group + 'conf', conf);
 
 			// Request each specified file
-			for (; i < len; i++) {
-				var file = root + files[i];
+			for (var file in assets) {
+				file = root + file;
 
 				if (! this.loaded[file]) {
-					if (options.cache === false) {
-						file += (file.indexOf('?') == -1 ? '?' : '&') + now;
+					if (conf.cache === false) {
+						file += (file.indexOf('?') < 0 ? '?' : '&') + now;
 					}
 
-					this.$private('request', file, options);
+					this.$private('load', file, assets[file], conf);
 				}
 			}
 		},
@@ -94,16 +128,15 @@
 		}
 	}, {
 		// Request specific file
-		request: function(path, conf) {
+		load: function(path, type, conf) {
 			var scope = this,
 				pub = scope.$public,
 				head = W._doc.getElementsByTagName('head')[0],
-				ext = path.split('.').pop().split(/\#|\?/)[0],
 				group = conf.group,
 				img = new Image();
 
 			// Load file based on extension
-			if (ext == 'js') {
+			if (type == 'js') {
 				var js = W._doc.createElement('script');
 
 				js.src = path;
@@ -125,7 +158,7 @@
 				};
 
 				head.appendChild(js);
-			} else if (ext == 'css') {
+			} else if (type == 'css') {
 				var link = W._doc.createElement('link');
 
 				link.rel = 'stylesheet';
@@ -139,7 +172,7 @@
 				};
 
 				img.src = path;
-			} else if ((/(gif|jpe?g|png|svg)$/i).test(ext)) {
+			} else if (type == 'img') {
 				img.onload = function() {
 					scope.done(group);
 				};
