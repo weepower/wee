@@ -38,6 +38,12 @@ module.exports = function(grunt) {
 		server.logPrefix = 'Wee';
 		server.open = 'external';
 		server.notify = false;
+		server.ui = {
+			port: serverConfig.port + 1,
+			weinre: {
+				port: serverConfig.port + 2
+			}
+		};
 		server.ui.port = serverConfig.port + 1;
 
 		browserSync(server);
