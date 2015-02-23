@@ -1,12 +1,9 @@
-// Wee Slice 1.0.1 (weepower.com)
+// Wee Slice 1.0.2 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY
 
-(function(d, s) {
-	'use strict';
-
+(function(D, S) {
 	try {
-		s.call(d.documentElement);
+		S.call(D.documentElement);
 	} catch (e) {
 		Array.prototype.slice = function(start, end) {
 			var arr = [],
@@ -23,7 +20,7 @@
 				}
 			}
 
-			return s.call(arr, start, end || arr.length);
+			return S.call(arr, start, end || arr.length);
 		};
 	}
 })(document, [].slice);

@@ -1,40 +1,28 @@
-// Wee SVG 1.0.1 (weepower.com)
+// Wee SVG 1.0.2 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY
 
-(function(w, d) {
-	'use strict';
-
-	w.attachEvent('onload', function() {
-		var imgs = d.getElementsByTagName('img'),
-			svgs = d.getElementsByTagName('svg'),
-			fb,
+(function(W, D) {
+	W.attachEvent('onload', function() {
+		var imgs = D.getElementsByTagName('img'),
+			svgs = D.getElementsByTagName('svg'),
 			img,
 			i = 0;
 
 		for (; i < imgs.length; i++) {
 			img = imgs[i];
 
-			if (img.hasAttribute('src')) {
-				var ext = img.getAttribute('src').split('.').pop();
-
-				if (ext == 'svg') {
-					fb = img.getAttribute('data-fallback');
-
-					img.src = fb !== null ?
-						fb :
-						img.src.slice(0, -3) + 'png';
-				}
+			if (img.src.split('.').pop() == 'svg') {
+				img.src = img.getAttribute('data-fallback') || img.src.slice(0, -3) + 'png';
 			}
 		}
 
 		for (i = 0; i < svgs.length; i++) {
-			var svg = svgs[i];
-			fb = svg.getAttribute('data-fallback');
+			var svg = svgs[i],
+				fallback = svg.getAttribute('data-fallback');
 
-			if (fb !== null) {
-				img = d.createElement('img');
-				img.src = fb;
+			if (fallback) {
+				img = D.createElement('img');
+				img.src = fallback;
 
 				var attrs = svg.attributes,
 					x = 0;

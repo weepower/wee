@@ -1,14 +1,11 @@
-// Wee Placeholder 1.0.1 (weepower.com)
+// Wee Placeholder 1.0.2 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY
 
-(function(w, d) {
-	'use strict';
-
-	w.attachEvent('onload', function() {
-		var sel = 'input[placeholder], textarea[placeholder]',
-			forms = d.querySelectorAll('form'),
-			inputs = d.querySelectorAll(sel),
+(function(W, D) {
+	W.attachEvent('onload', function() {
+		var selector = 'input[placeholder], textarea[placeholder]',
+			forms = D.getElementsByTagName('form'),
+			inputs = D.querySelectorAll(selector),
 			i = 0;
 
 		// Reset value to placeholder value on blur
@@ -41,7 +38,7 @@
 				var form = forms[i];
 
 				form.onsubmit = function() {
-					var inputs = form.querySelectorAll(sel),
+					var inputs = form.querySelectorAll(selector),
 						x = 0;
 
 					for (; x < inputs.length; x++) {
