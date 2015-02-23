@@ -1023,11 +1023,19 @@
 		font-family: ~'@{name}';
 		src: url('@{fontPath}@{file}.eot');
 		src: url('@{fontPath}@{file}.eot?#iefix') format('embedded-opentype'),
-		url('@{fontPath}@{file}.woff') format('woff'),
-		url('@{fontPath}@{file}.ttf') format('truetype'),
-		url('@{fontPath}@{file}.svg#@{name}') format('svg');
+			 url('@{fontPath}@{file}.woff') format('woff'),
+			 url('@{fontPath}@{file}.ttf') format('truetype'),
+			 url('@{fontPath}@{file}.svg#@{name}') format('svg');
 		font-style: @style;
 		font-weight: @weight;
+	}
+
+	// Window Chrome fix
+	@media screen and (-webkit-min-device-pixel-ratio: 0) {
+		@font-face {
+			font-family: ~'@{name}';
+			src: url('@{fontPath}@{file}.svg#@{name}') format('svg');
+		}
 	}
 }
 
@@ -1567,6 +1575,20 @@
 }
 .z-index (@index: 1) {
 	z-index: @index;
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Responsive
+\*------------------------------------*/
+
+.media-query (@minWidth; @rules) {
+	@media (min-width: @minWidth) {
+		@rules();
+	}
 }
 
 
