@@ -108,7 +108,7 @@
 					var el = null,
 						ref = [];
 
-					if (typeof selector !== 'string') {
+					if (typeof selector != 'string') {
 						el = selector;
 					} else {
 						if (selector == 'window') {
@@ -282,7 +282,7 @@
 					return W.$attr(target, a, b);
 				},
 				// Execute function for each matching selection
-				// Options include arguments, context, and scope
+				// Options include arguments, reverse, context, and scope
 				$each: function(target, fn, options) {
 					if (target) {
 						var conf = W.$extend({
@@ -358,7 +358,7 @@
 					for (; i < len; i++) {
 						fn = fns[i];
 
-						if (W.$isString(fn)) {
+						if (typeof fn == 'string') {
 							var segs = fn.split(':');
 							fn = W[segs[0]][segs.length > 1 ? segs[1] : 'init'];
 
@@ -383,23 +383,13 @@
 					target = target || {};
 
 					if (source) {
-						var keys = Object.keys(source),
-							i = 0;
+						for (var key in source) {
+							var src = source[key];
 
-						for (; i < keys.length; i++) {
-							var key = keys[i];
-
-							// Attempt to deep nest else set property of object
-							if (deep) {
-								try {
-									target[key] = (W.$isObject(target[key])) ?
-										W.$extend(target[key], source[key]) :
-										source[key];
-								} catch (e) {
-									target[key] = source[key];
-								}
-							} else {
-								target[key] = source[key];
+							if (deep && (W.$isObject(src) || W.$isArray(src))) {
+								target[key] = W.$extend(target[key], src, deep);
+							} else if (src !== U) {
+								target[key] = src;
 							}
 						}
 					}
@@ -419,6 +409,7 @@
 				},
 				// Determine if value belongs to array
 				// Returns int|false
+				// DEPRECATED
 				$inArray: function(array, value) {
 					var i = array.indexOf(value);
 					return i < 0 ? false : i;
@@ -544,16 +535,41 @@
 					W.$each('[data-set]', function(el) {
 						var key = W.$data(el, 'set'),
 							val = W.$data(el, 'value'),
-							end = key.slice(-2);
+							ind = key.search(/\[.*]/g);
 
-						if (end == '[]' || end == '{}') {
-							var obj = key.slice(0, -2),
-								split = val.split(':');
-							key = split[0];
+						if (ind > 0) {
+							var arr = key.slice(ind).slice(1, -1),
+								obj = key.slice(0, ind);
 
-							end == '[]' ?
-								W.$push(obj, key) :
-								W.$push(obj, key, split[1]);
+							if (arr === '') {
+								W.$push(obj, val);
+							} else {
+								var segs = arr.split(']['),
+									len = segs.length - 1;
+								key = segs[0];
+
+								if (len) {
+									var set = {},
+										ref,
+										i = 1;
+
+									ref = set[key] = {};
+
+									for (i; i <= len; i++) {
+										var last = i === len;
+
+										ref[segs[i]] = last ? val : {};
+
+										if (! last) {
+											ref = ref[segs[i]];
+										}
+									}
+
+									W.$set(obj, W.$extend(Wee.$get(obj, {}), set, true));
+								} else {
+									W.$push(obj, key, val);
+								}
+							}
 						} else {
 							W.$set(key, val);
 						}
@@ -576,7 +592,7 @@
 				// Determine if value can be executed
 				// Returns boolean
 				_canExec: function(value) {
-					if (W.$isString(value) && value.indexOf(':') > -1) {
+					if (typeof value == 'string' && value.indexOf(':') > -1) {
 						var split = value.split(':'),
 							fn = split[0],
 							method = split[1];
@@ -596,7 +612,7 @@
 					}
 
 					options = options || {};
-					var el = W.$isString(selector) ? W.$(selector, options.context) : selector;
+					var el = typeof selector == 'string' ? W.$(selector, options.context) : selector;
 
 					return el ? W.$toArray(el) : [];
 				},
