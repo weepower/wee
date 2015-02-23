@@ -59,7 +59,7 @@
 					this.$private('bind', key, evts, a);
 				}
 			} else {
-				if (W.$isString(a)) {
+				if (typeof a == 'string') {
 					evts[a] = b;
 				} else {
 					evts = a;
@@ -72,7 +72,7 @@
 		// Bind specified function to specified element and event for single execution
 		// DEPRECATED
 		one: function(sel, a, b, c) {
-			if (W.$isString(a)) {
+			if (typeof a == 'string') {
 				var obj = [];
 				obj[a] = b;
 				a = obj;
@@ -89,7 +89,7 @@
 			var obj = a;
 
 			if (a) {
-				if (W.$isString(a)) {
+				if (typeof a == 'string') {
 					obj = [];
 					obj[a] = b;
 				}
@@ -138,8 +138,8 @@
 		// Execute event for each matching selection
 		trigger: function(target, event) {
 			W.$each(target, function(el) {
-				if (W._win.createEvent) {
-					var ev = W._win.createEvent('HTMLEvents');
+				if (W._doc.createEvent) {
+					var ev = W._doc.createEvent('HTMLEvents');
 
 					ev.initEvent(event, true, false);
 					el.dispatchEvent(ev);
