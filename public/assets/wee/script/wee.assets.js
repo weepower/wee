@@ -31,7 +31,8 @@
 				img = W.$toArray(conf.img),
 				root = conf.root !== U ? conf.root : this.root(),
 				now = new Date().getTime(),
-				i = 0;
+				i = 0,
+				type;
 
 			// Create group name if not specified
 			if (! conf.group) {
@@ -42,10 +43,10 @@
 			var assets = [];
 
 			for (; i < files.length; i++) {
-				var ext = files[i].split('.').pop().split(/\#|\?/)[0],
-					type = (ext == 'js' || ext == 'css') ?
-						ext : (/(gif|jpe?g|png|svg)$/i).test(ext) ?
-							'img' : '';
+				var ext = files[i].split('.').pop().split(/\#|\?/)[0];
+				type = (ext == 'js' || ext == 'css') ?
+					ext : (/(gif|jpe?g|png|svg)$/i).test(ext) ?
+						'img' : '';
 
 				if (type) {
 					assets[files[i]] = type;
@@ -71,6 +72,7 @@
 
 			// Request each specified file
 			for (var file in assets) {
+				type = assets[file];
 				file = root + file;
 
 				if (! this.loaded[file]) {
@@ -78,7 +80,7 @@
 						file += (file.indexOf('?') < 0 ? '?' : '&') + now;
 					}
 
-					this.$private('load', file, assets[file], conf);
+					this.$private('load', file, type, conf);
 				}
 			}
 		},
