@@ -298,10 +298,12 @@
 						for (; i < els.length; i++) {
 							var el = els[i];
 
-							W.$exec(fn, {
-								args: [el, i].concat(conf.args),
-								scope: conf.scope || el
-							});
+							if (el) {
+								W.$exec(fn, {
+									args: [el, i].concat(conf.args),
+									scope: conf.scope || el
+								});
+							}
 						}
 					}
 				},
@@ -311,19 +313,21 @@
 				$env: function(rules, fallback) {
 					if (rules) {
 						W.$set('_env', function() {
-							var host = location.host;
+							var env = fallback,
+								host = location.host;
 
-							Object.keys(rules).forEach(function(key) {
-								var el = rules[key];
+							for (var rule in rules) {
+								var val = rules[rule];
 
-								if (el == host || (W._canExec(el) && W.$exec(el, {
+								if (val == host || (W._canExec(val) && W.$exec(val, {
 										args: [host]
-									}))) {
-									return key;
+									}) === true)) {
+									env = rule;
+									break;
 								}
-							});
+							}
 
-							return fallback || 'local';
+							return env;
 						});
 					}
 
@@ -499,7 +503,7 @@
 				// Returns string
 				$serialize: function(value) {
 					return Object.keys(value).map(function(key) {
-						if (typeof value[key] == 'string') {
+						if (typeof value[key] != 'object') {
 							return encodeURIComponent(key) + '=' + encodeURIComponent(value[key]);
 						}
 					}).join('&');
