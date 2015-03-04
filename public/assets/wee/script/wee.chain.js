@@ -1,25 +1,8 @@
 (function(W, U) {
 	'use strict';
 
-	var WeeAlias = WeeAlias || '$';
-
-	W.fn.extend({
-		$chain: function(a, b) {
-			var p = W._win[WeeAlias].prototype;
-
-			if (typeof a == 'string') {
-				p[a] = b;
-			} else {
-				var keys = Object.keys(a),
-					i = 0;
-
-				for (; i < keys.length; i++) {
-					var key = keys[i];
-					p[key] = a[key];
-				}
-			}
-		}
-	});
+	var $, $p;
+	W._win.WeeAlias = W._win.WeeAlias || '$';
 
 	(function(A) {
 		var Get = function(sel, context) {
@@ -28,16 +11,22 @@
 					i = 0;
 
 				for (; i < els.length; i++) {
-					A.call(this, els[i]);
+					var el = els[i];
+
+					if (el) {
+						A.call(this, el);
+					}
 				}
+
+				this.sel = sel;
 			}
 		};
 
-		W._win[WeeAlias] = function(sel, context) {
+		$ = W._win[WeeAlias] = function(sel, context) {
 			return new Get(sel, context);
 		};
 
-		W._win[WeeAlias].prototype = Get.prototype = {
+		$p = $.prototype = Get.prototype = {
 			_$: true,
 			length: 0,
 			each: function(fn, options) {
@@ -75,4 +64,16 @@
 			}
 		};
 	})([].push);
+
+	W.fn.extend({
+		$chain: function(a, b) {
+			if (typeof a == 'string') {
+				$p[a] = b;
+			} else {
+				for (var key in a) {
+					$p[key] = a[key];
+				}
+			}
+		}
+	});
 })(Wee, undefined);
