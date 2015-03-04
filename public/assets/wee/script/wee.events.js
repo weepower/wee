@@ -202,27 +202,31 @@
 
 								// If watch within parent make sure the target matches the selector
 								if (conf.targ) {
-									var t = conf.targ,
-										sel = t._$ ? t.sel : t;
+									var targ = conf.targ,
+										sel = targ._$ ? targ.sel : targ;
 
 									// Update refs when targeting ref
 									if (sel.indexOf('ref:') > -1) {
 										W.$setRef(el);
 									}
 
-									t = W.$toArray(W.$(sel));
+									targ = W.$toArray(W.$(sel));
 
-									if (! t.some(function(par) {
-										return par.contains(e.target);
+									if (! targ.some(function(el) {
+										return el.contains(e.target);
 									})) {
 										return false;
 									}
+
+									// Ensure element argument is the target
+									conf.args[1] = e.target;
 								}
 
 								W.$exec(fn, conf);
 
 								// If the event is to be executed once unbind it immediately
-								if (conf.one) {
+								// DEPRECATED one property
+								if (conf.one || conf.once) {
 									scope.$public.off(el, evt, f);
 								}
 							};
