@@ -1,3 +1,5 @@
+/* global project, script */
+
 module.exports = function(grunt) {
 	grunt.registerTask('configModules', function() {
 		// Set global config
@@ -34,18 +36,95 @@ module.exports = function(grunt) {
 					var inject = '@import "../../modules/' + name + '/module/style/screen.less";\n',
 						responsive = '';
 
-					// Build additional style
-					if (module.style && module.style.build) {
-						module.style.build.forEach(function(filepath) {
-							inject += '@import "../../modules/' + name + '/' + filepath + '";\n';
-						});
+					if (module.style) {
+						// Build additional style
+						if (module.style.build) {
+							module.style.build.forEach(function(filepath) {
+								inject += '@import "../../modules/' + name + '/' + filepath + '";\n';
+							});
+						}
+
+						// Compile additional style
+						if (module.style.compile) {
+							for (var target in module.style.compile) {
+								var taskName = target.replace(/\./g, '-') + '-' + name + '-style',
+									sources = Wee.$toArray(module.style.compile[target]),
+									files = [];
+
+								for (var sourcePath in sources) {
+									files.push(Wee.buildPath(modulePath, sources[sourcePath]));
+								}
+
+								// Merge watch config
+								grunt.config.set('watch.' + taskName, {
+									files: files,
+									tasks: [
+										'less:' + taskName
+									]
+								});
+
+								// Create Less task
+								grunt.config.set('less.' + taskName, {
+									files: [{
+										dest: Wee.buildPath(modulePath, target),
+										src: files
+									}],
+									options: {
+										globalVars: {
+											weePath: '"' + config.tempPath + '/wee.less"'
+										}
+									}
+								});
+
+								// Push style task
+								style.tasks.push('less:' + taskName);
+							}
+						}
 					}
 
-					// Build additional script
-					if (module.script && module.script.build) {
-						module.script.build.forEach(function(filepath) {
-							moduleScript.push(path.join(modulePath, filepath));
-						});
+					if (module.script) {
+						// Build additional script
+						if (module.script.build) {
+							module.script.build.forEach(function(filepath) {
+								moduleScript.push(path.join(modulePath, filepath));
+							});
+						}
+
+						// Compile additional script
+						if (module.script.compile) {
+							for (var target in module.script.compile) {
+								var taskName = target.replace(/\./g, '-') + '-' + name + '-script',
+									sources = module.script.compile[target],
+									src = [];
+
+								if (sources instanceof Array) {
+									for (var source in sources) {
+										src.push(Wee.buildPath(modulePath, sources[source]));
+									}
+								} else {
+									src = Wee.buildPath(modulePath, sources);
+								}
+
+								// Merge watch config
+								grunt.config.set('watch.' + taskName, {
+									files: src,
+									tasks: [
+										'uglify:' + taskName
+									]
+								});
+
+								// Create uglify task
+								grunt.config.set('uglify.' + taskName, {
+									files: [{
+										dest: Wee.buildPath(modulePath, target),
+										src: src
+									}]
+								});
+
+								// Run task
+								grunt.task.run('uglify:' + taskName);
+							}
+						}
 					}
 
 					// Determine if module is responsive
@@ -114,6 +193,9 @@ module.exports = function(grunt) {
 							src: config.tempPath + '/' + name + '.less'
 						}],
 						options: {
+							globalVars: {
+								weePath: '"' + config.tempPath + '/wee.less"'
+							},
 							modifyVars: vars
 						}
 					};
