@@ -1,3 +1,5 @@
+/* global WeeAlias */
+
 (function(W, U) {
 	'use strict';
 
@@ -35,7 +37,7 @@
 					source;
 
 				if (aft) {
-					W.$isString(aft) ?
+					typeof aft == 'string' ?
 						el.insertAdjacentHTML('afterend', aft) :
 						W.$each(aft, function(cel) {
 							if (i > 0) {
@@ -66,7 +68,7 @@
 					source;
 
 				if (app) {
-					W.$isString(app) ?
+					typeof app == 'string' ?
 						el.innerHTML = el.innerHTML + app :
 						W.$each(app, function(cel) {
 							el.appendChild(cel);
@@ -87,7 +89,7 @@
 					source;
 
 				if (bef) {
-					W.$isString(bef) ?
+					typeof bef == 'string' ?
 						el.insertAdjacentHTML('beforebegin', bef) :
 						W.$each(bef, function(cel) {
 							if (i > 0) {
@@ -257,26 +259,23 @@
 			if (value === U || value === true || func) {
 				var el = W.$first(target);
 
-				switch (el) {
-					case W._win:
-						height = el.innerHeight;
-						break;
-					case W._doc:
-						height = Math.max(
-							W._body.offsetHeight,
-							W._body.scrollHeight,
-							W._html.clientHeight,
-							W._html.offsetHeight,
-							W._html.scrollHeight
-						);
-						break;
-					default:
-						height = el.offsetHeight;
+				if (el === W._win) {
+					height = el.innerHeight;
+				} else if (el === W._doc) {
+					height = Math.max(
+						W._body.offsetHeight,
+						W._body.scrollHeight,
+						W._html.clientHeight,
+						W._html.offsetHeight,
+						W._html.scrollHeight
+					);
+				} else {
+					height = el.offsetHeight;
 
-						if (value === true) {
-							var style = el.currentStyle || getComputedStyle(el);
-							height += parseInt(style.marginTop) + parseInt(style.marginBottom);
-						}
+					if (value === true) {
+						var style = el.currentStyle || getComputedStyle(el);
+						height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+					}
 				}
 
 				if (! func) {
@@ -365,7 +364,7 @@
 			return W.$map(target, function(el, i) {
 				if (typeof filter == 'string' && filter.slice(0, 4) == 'ref:') {
 					filter = W.$get(filter);
-					return filter ? filter.indexOf(el) !== -1 : false;
+					return filter ? filter.indexOf(el) > -1 : false;
 				}
 
 				if (W.$isObject(filter)) {
@@ -379,7 +378,7 @@
 				}
 
 				if (Array.isArray(filter)) {
-					return filter.indexOf(el) !== -1;
+					return filter.indexOf(el) > -1;
 				}
 
 				if (W._canExec(filter)) {
@@ -394,7 +393,7 @@
 
 				return matches ?
 					matches.call(el, filter) :
-					W._slice.call(el.parentNode.querySelectorAll(filter)).indexOf(el) !== -1;
+					W._slice.call(el.parentNode.querySelectorAll(filter)).indexOf(el) > -1;
 			}).length > 0;
 		},
 		// Get the last element of a matching selection
@@ -472,7 +471,7 @@
 
 			var children = W.$children(el);
 
-			return convert ? $(children) : children;
+			return convert ? W._win[WeeAlias](children) : children;
 		},
 		// Get the position of the first matching selection relative to its offset parent
 		// Returns object
@@ -497,7 +496,7 @@
 					source;
 
 				if (pre) {
-					W.$isString(pre) ?
+					typeof pre == 'string' ?
 						el.innerHTML = source + el.innerHTML :
 						W.$each(source, function(cel) {
 							el.insertBefore(cel, el.firstChild);
@@ -548,7 +547,9 @@
 		// Remove specified attribute of each matching selection
 		$removeAttr: function(target, name) {
 			W.$each(target, function(el) {
-				el.removeAttribute(name);
+				name.split(/\s+/).forEach(function(value) {
+					el.removeAttribute(value);
+				});
 			});
 		},
 		// Remove classes from each matching selection
@@ -799,28 +800,23 @@
 			if (value === U || value === true || func) {
 				var el = W.$first(target);
 
-				switch (el) {
-					case W._win:
-						width = el.innerWidth;
-						break;
-					case W._doc:
-						width = Math.max(
-							W._body.offsetWidth,
-							W._body.scrollWidth,
-							W._html.clientWidth,
-							W._html.offsetWidth,
-							W._html.scrollWidth
-						);
-						break;
-					default:
-						width = el.offsetWidth;
+				if (el === W._win) {
+					width = el.innerWidth;
+				} else if (el === W._doc) {
+					width = Math.max(
+						W._body.offsetWidth,
+						W._body.scrollWidth,
+						W._html.clientWidth,
+						W._html.offsetWidth,
+						W._html.scrollWidth
+					);
+				} else {
+					width = el.offsetWidth;
 
-						if (value === true) {
-							var style = el.currentStyle || getComputedStyle(el);
-							width += parseInt(style.marginLeft) + parseInt(style.marginRight);
-						}
-
-						break;
+					if (value === true) {
+						var style = el.currentStyle || getComputedStyle(el);
+						width += parseInt(style.marginLeft) + parseInt(style.marginRight);
+					}
 				}
 
 				if (! func) {
@@ -857,7 +853,7 @@
 				);
 
 				if (wrap) {
-					W.$each(wrap, function (cel) {
+					W.$each(wrap, function(cel) {
 						cel.appendChild(el.cloneNode(true));
 						el.parentNode.replaceChild(cel, el);
 					});
