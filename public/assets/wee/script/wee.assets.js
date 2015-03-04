@@ -4,12 +4,11 @@
 	W.fn.make('assets', {
 		// Cache pre-existing CSS and JavaScript asset references
 		_construct: function() {
+			var scope = this;
 			this.loaded = {};
 
 			W.$each('link[rel="stylesheet"], script[src]', function(el) {
-				this.loaded[el.href || el.src] = el;
-			}, {
-				scope: this
+				scope.loaded[el.href || el.src] = el;
 			});
 		},
 		// Get currently bound resource root or set root with specified value
@@ -32,6 +31,7 @@
 				root = conf.root !== U ? conf.root : this.root(),
 				now = new Date().getTime(),
 				i = 0,
+				assets = [],
 				type;
 
 			// Create group name if not specified
@@ -40,8 +40,6 @@
 			}
 
 			// Determine file type
-			var assets = [];
-
 			for (; i < files.length; i++) {
 				var ext = files[i].split('.').pop().split(/\#|\?/)[0];
 				type = (ext == 'js' || ext == 'css') ?
@@ -134,47 +132,85 @@
 			var scope = this,
 				pub = scope.$public,
 				head = W._doc.getElementsByTagName('head')[0],
-				group = conf.group,
-				img = new Image();
+				group = conf.group;
 
 			// Load file based on extension
 			if (type == 'js') {
 				var js = W._doc.createElement('script');
 
-				js.src = path;
-				js.async = conf.async === true;
-
-				js.onload = js.onreadystatechange = function() {
-					var rs = js.readyState;
-
-					if (rs && rs != 'complete' && rs != 'loaded') {
-						return;
-					}
-
-					pub.loaded[js.src] = js;
-					scope.done(group);
-				};
-
-				js.onerror = function() {
-					scope.fail(group);
-				};
-
 				head.appendChild(js);
+
+				if (Wee._legacy) {
+					js.onreadystatechange = function() {
+						var rs = js.readyState;
+
+						if (rs != 'complete' && rs != 'loaded') {
+							return;
+						}
+
+						pub.loaded[js.src] = js;
+						scope.done(group);
+					};
+				} else {
+					js.async = conf.async === true;
+
+					js.onload = function() {
+						pub.loaded[js.src] = js;
+						scope.done(group);
+					};
+
+					js.onerror = function() {
+						scope.fail(group);
+					};
+				}
+
+				js.src = path;
 			} else if (type == 'css') {
 				var link = W._doc.createElement('link');
 
 				link.rel = 'stylesheet';
 				link.href = path;
 
+				if (Wee._legacy) {
+					this.ind = this.ind ? this.ind + 1 : 1;
+					var id = 'load-' + this.ind;
+					link.id = id;
+
+					link.attachEvent('onload', function() {
+						var sheets = Wee._doc.styleSheets,
+							i = sheets.length,
+							text;
+
+						try {
+							while (i--) {
+								var sheet = sheets[i];
+
+								if (sheet.id == id) {
+									text = sheet.cssText;
+									scope.done(group);
+									return;
+								}
+							}
+						} catch (e) {}
+
+						if (! text) {
+							scope.fail(group);
+						}
+					});
+				} else {
+					link.addEventListener('load', function() {
+						scope.done(group);
+					}, false);
+
+					link.addEventListener('error', function() {
+						scope.fail(group);
+					}, false);
+				}
+
 				head.appendChild(link);
-
-				img.onerror = function() {
-					pub.loaded[link.href] = link;
-					scope.done(group);
-				};
-
-				img.src = path;
 			} else if (type == 'img') {
+				var img = new Image();
+
 				img.onload = function() {
 					scope.done(group);
 				};
