@@ -3,7 +3,7 @@ name: Unordered List
 heading: Use lists to represent groups of related data
 ---
 
----html|push|render---
+---html|render---
 
 <ul>
 	<li>Lorem ipsum dolor

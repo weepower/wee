@@ -10,14 +10,14 @@
 					return this.$set('uri', W.$extend(this.uri(), value));
 				} else {
 					var a = W._doc.createElement('a'),
-						query = {},
-						i = 0;
+						query = {};
 					a.href = value;
 
 					var path = this.$get('path', a.pathname, true);
 
 					if (a.search !== '') {
-						var arr = decodeURIComponent(a.search).replace(/^\?/, '').split('&');
+						var arr = decodeURIComponent(a.search).replace(/^\?/, '').split('&'),
+							i = 0;
 
 						for (; i < arr.length; i++) {
 							var split = arr[i].split('=');
@@ -83,16 +83,13 @@
 			}
 
 			if (conf.routes) {
-				var segs = this.segments();
-
-				this.$private('process', conf.routes, 0, this.$set('segs', segs).length);
+				this.$private('process', conf.routes, 0, this.$set('segs', this.segments()).length);
 
 				// Execute queued init functions on last iteration
-				var any = this.$get('any'),
-					i = 0;
+				var any = this.$get('any');
 
 				if (any) {
-					for (; i < any.length; i++) {
+					for (var i = 0; i < any.length; i++) {
 						W.$exec(any[i]);
 					}
 

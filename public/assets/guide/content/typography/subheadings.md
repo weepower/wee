@@ -2,7 +2,7 @@
 name: Subheadings
 ---
 
----html|push|render---
+---html|render---
 
 <h1 class="subheading">Subheading One</h1>
 <h2 class="subheading">Subheading Two</h2>

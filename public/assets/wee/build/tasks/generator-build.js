@@ -189,7 +189,7 @@ module.exports = function(grunt) {
 							blocks: []
 						};
 
-						// Check for js-yaml
+						// Check for front matter
 						if (template.substring(0, 3) == '---') {
 							var results = /^(---(?:\n|\r)([\w\W]+?)---)?([\w\W]*)*/.exec(template);
 
@@ -200,19 +200,19 @@ module.exports = function(grunt) {
 
 									// Check for global data
 									if (front.global) {
-										Wee.$extend(data, front.global);
+										data = Wee.$extend(front.global, data);
 										delete front.global;
 									}
 
 									// Check for site data
 									if (front.site) {
-										Wee.$extend(data.site, front.site);
+										data.site = Wee.$extend(front.site. data.site);
 										delete front.site;
 									}
 
 									// Check for section data
 									if (front.section) {
-										Wee.$extend(data.section, front.section);
+										data.section = Wee.$extend(front.section, data.section);
 										delete front.section;
 									}
 

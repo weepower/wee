@@ -3,7 +3,7 @@ name: Figure
 heading: Semantic grouping of image and associated caption
 ---
 
----html|push|render---
+---html|render---
 
 <figure>
 	<img src="//placehold.it/800x400" alt="Figure Image">

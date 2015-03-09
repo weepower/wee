@@ -1,9 +1,9 @@
 ---
 name: Table
-heading: Tables should only with tabular data
+heading: Tables should only be used with tabular data
 ---
 
----html|push|render---
+---html|render---
 
 <table itemscope itemtype="http://schema.org/Table">
 	<caption itemprop="about">Caption ipsum dolor sit amet</caption>

@@ -13,8 +13,8 @@
 		},
 		// Bind single or set of screen events with specified options
 		map: function(val) {
-			var sets = W.$toArray(val),
-				scope = this,
+			var scope = this,
+				sets = W.$toArray(val),
 				cb = function() {
 					scope.$private('check', false);
 				},
@@ -82,7 +82,7 @@
 						});
 
 						// Disable future execution if set for once
-						if (evt.once === true) {
+						if (evt.once) {
 							this.$set('evts', this.$get('evts').filter(function(el) {
 								return el !== evt;
 							}));

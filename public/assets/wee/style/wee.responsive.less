@@ -1,16 +1,16 @@
-.mobile-landscape () when not (@mobileLandscapeWidth = false) {
+.wee-mobile-landscape () when not (@mobileLandscapeWidth = false) {
 	@import (optional) '../../css/@{responsivePath}/mobile-landscape.less';
 }
-.tablet-portrait () when not (@tabletPortraitWidth = false) {
+.wee-tablet-portrait () when not (@tabletPortraitWidth = false) {
 	@import (optional) '../../css/@{responsivePath}/tablet-portrait.less';
 }
-.desktop-small () when not (@desktopSmallWidth = false) {
+.wee-desktop-small () when not (@desktopSmallWidth = false) {
 	@import (optional) '../../css/@{responsivePath}/desktop-small.less';
 }
-.desktop-medium () when not (@desktopMediumWidth = false) {
+.wee-desktop-medium () when not (@desktopMediumWidth = false) {
 	@import (optional) '../../css/@{responsivePath}/desktop-medium.less';
 }
-.desktop-large () when not (@desktopLargeWidth = false) {
+.wee-desktop-large () when not (@desktopLargeWidth = false) {
 	@import (optional) '../../css/@{responsivePath}/desktop-large.less';
 }
 
@@ -26,7 +26,7 @@
 			html {
 				font-family: '"2"';
 			}
-			.mobile-landscape();
+			.wee-mobile-landscape();
 		}
 	}
 	.check () when not (@tabletPortraitWidth = false) {
@@ -34,7 +34,7 @@
 			html {
 				font-family: '"3"';
 			}
-			.tablet-portrait();
+			.wee-tablet-portrait();
 		}
 	}
 	.check () when not (@desktopSmallWidth = false) {
@@ -42,7 +42,7 @@
 			html {
 				font-family: '"4"';
 			}
-			.desktop-small();
+			.wee-desktop-small();
 		}
 	}
 	.check () when not (@desktopMediumWidth = false) {
@@ -50,7 +50,7 @@
 			html {
 				font-family: '"5"';
 			}
-			.desktop-medium();
+			.wee-desktop-medium();
 		}
 	}
 	.check () when not (@desktopLargeWidth = false) {
@@ -58,7 +58,7 @@
 			html {
 				font-family: '"6"';
 			}
-			.desktop-large();
+			.wee-desktop-large();
 		}
 	}
 	.check();

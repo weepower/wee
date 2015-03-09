@@ -1,6 +1,8 @@
 (function(W, U) {
 	'use strict';
 
+	var $ = W._win[WeeAlias];
+
 	W.$chain({
 		addClass: function(value) {
 			W.$addClass(this, value);

@@ -49,10 +49,6 @@ QUnit.test('settings', 1, function(assert) {
 
 QUnit.module('$envSecure');
 
-QUnit.test('current', 1, function(assert) {
-	assert.strictEqual(Wee.$envSecure(), false, 'The environment is correctly identified as insecure.');
-});
-
 QUnit.test('override', 1, function(assert) {
 	assert.ok(Wee.$envSecure('https://www.weepower.com'), 'The environment is correctly identified as secure.');
 });

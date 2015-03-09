@@ -5,10 +5,8 @@
 
 Wee.fn.make('guide', {
 	_construct: function() {
-		// Setup syntax highlighting in modern browsers
-		if (! Wee._legacy) {
-			this.$private('highlightCode');
-		}
+		// Setup syntax highlighting
+		this.$private('highlightCode');
 
 		// Bind code toggle and selection
 		Wee.events.on({
@@ -28,16 +26,19 @@ Wee.fn.make('guide', {
 	}
 }, {
 	highlightCode: function() {
-		Wee.assets.load({
-			root: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/',
-			files: [
-				'highlight.min.js',
-				'styles/monokai_sublime.min.css'
-			],
-			success: function() {
-				hljs.initHighlightingOnLoad();
-			}
-		});
+		// Don't load in IE8-
+		if (! Wee._legacy) {
+			Wee.assets.load({
+				root: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/',
+				files: [
+					'highlight.min.js',
+					'styles/monokai_sublime.min.css'
+				],
+				success: function() {
+					hljs.initHighlightingOnLoad();
+				}
+			});
+		}
 	},
 	selectCode: function(el) {
 		var range = Wee._doc.createRange(),

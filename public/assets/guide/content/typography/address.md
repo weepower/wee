@@ -2,7 +2,7 @@
 name: Address
 ---
 
----html|push|render---
+---html|render---
 
 <address>
 	<strong>Company Name</strong><br>

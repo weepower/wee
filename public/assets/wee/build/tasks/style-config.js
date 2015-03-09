@@ -87,8 +87,8 @@ module.exports = function(grunt) {
 				sources = Wee.$toArray(project.style.compile[target]),
 				files = [];
 
-			for (var path in sources) {
-				files.push(Wee.buildPath(style.rootPath, sources[path]));
+			for (var sourcePath in sources) {
+				files.push(Wee.buildPath(style.rootPath, sources[sourcePath]));
 			}
 
 			// Merge watch config

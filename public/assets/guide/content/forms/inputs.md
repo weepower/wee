@@ -2,7 +2,7 @@
 name: Input Fields
 ---
 
----html|push|render---
+---html|render---
 
 <input type="email" name="name" placeholder="Email Address" required>
 <div class="inline-field">

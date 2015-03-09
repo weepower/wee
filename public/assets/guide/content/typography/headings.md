@@ -1,10 +1,10 @@
 ---
 name: Headings
-heading: Heading tags are important for establishing importance heirarchy
+heading: Heading tags are important for establishing importance hierarchy
 class: headings
 ---
 
----html|push|render---
+---html|render---
 
 <h1>Heading <small>.h1</small></h1>
 <h2>Heading <small>.h2</small></h2>
