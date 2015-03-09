@@ -114,9 +114,11 @@ module.exports = function(grunt) {
 		if (project.script.sourceMaps === true) {
 			grunt.config.set('uglify.options.sourceMap', true);
 			grunt.config.set('uglify.options.sourceMapName', function(dest) {
-				var root = path.normalize(script.rootPath)
+				var scriptRoot = path.normalize(script.rootPath),
+					moduleRoot = path.normalize(config.assetPath + '/modules');
 				dest = path.normalize(dest)
-					.replace(root, '')
+					.replace(scriptRoot, '')
+					.replace(moduleRoot, '')
 					.replace(/^\\|\//, '')
 					.replace(/\\|\//g, '-')
 					.replace('.min.js', '');
