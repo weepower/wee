@@ -107,11 +107,11 @@
 		},
 		"tasks": {
 			"local": {
-				"https": true,
-				"proxy": "https://wee.dev"
+				"https": false,
+				"proxy": "http://wee.dev"
 			},
 			"static": {
-				"https": true
+				"https": false
 			}
 		}
 	}
