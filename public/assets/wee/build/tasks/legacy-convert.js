@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 		});
 
 		// Convert opacity to filter
-		output = output.replace(/(-?[.\d]+)rem/gi, function(str, match) {
+		output = output.replace(/opacity:([.\d]+)/gi, function(str, match) {
 			return 'filter:alpha(opacity=' + Math.round((match * 100) * 100 / 100) + ');';
 		});
 
