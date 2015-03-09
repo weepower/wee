@@ -2,22 +2,22 @@
 	'use strict';
 
 	W.fn.make('view', {
-		// Render specified data into specified template string
+		// Parse data into template string
 		// Return string
 		render: function(template, data) {
-			return this.$private('render', template, W.$extend({}, data, true));
+			return this.$private('render', template, W.$extend({}, data));
 		},
-		// Add template conditional filters
-		addFilter: function(a, b) {
-			this.$private('extend', 'filters', a, b);
+		// Add conditional template handler or data modifier
+		addFilter: function(name, fn) {
+			this.$private('extend', 'filters', name, fn);
 		},
-		// Add template helper functions
-		addHelper: function(a, b) {
-			this.$private('extend', 'helpers', a, b);
+		// Add helper to run additional processing on tag data
+		addHelper: function(name, fn) {
+			this.$private('extend', 'helpers', name, fn);
 		},
-		// Add global template partials
-		addPartial: function(a, b) {
-			this.$private('extend', 'partials', a, b);
+		// Make partial available for injection into other templates
+		addPartial: function(name, value) {
+			this.$private('extend', 'partials', name, value);
 		}
 	}, {
 		_construct: function() {
@@ -51,7 +51,7 @@
 		extend: function(type, a, b) {
 			var obj = a;
 
-			if (W.$isString(a)) {
+			if (typeof a == 'string') {
 				obj = [];
 				obj[a] = b;
 			}
@@ -64,11 +64,15 @@
 			this.esc = false;
 
 			// Make partial replacements
+			while (temp.indexOf('{{> ') > -1) {
+				temp = temp.replace(this.partial, function(match, tag) {
+					var partial = scope.partials[tag];
+					return partial ? (W.$isFunction(partial) ? partial() : partial) : '';
+				});
+			}
+
 			// Preprocess tags to allow for reliable tag matching
-			temp = temp.replace(this.partial, function(match, tag) {
-				var partial = scope.partials[tag];
-				return partial ? (W.$isFunction(partial) ? partial() : partial) : '';
-			}).replace(this.tags, function(m, pre, tag, filter) {
+			temp = temp.replace(this.tags, function(m, pre, tag, filter) {
 				var resp = '{{' + pre;
 
 				if (pre == '#') {
@@ -213,7 +217,6 @@
 								root: init,
 								tag: tag,
 								index: index,
-								helpers: helpers,
 								fallback: fb
 							}, args);
 						}
@@ -268,9 +271,11 @@
 							data = data(orig, init, x);
 						}
 
-						if (data !== U) {
+						if (data) {
 							return data;
 						}
+
+						break;
 					}
 				} else {
 					break;
