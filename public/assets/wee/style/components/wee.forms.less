@@ -49,7 +49,7 @@
 				&:invalid {
 					color: @inputColorInvalid;
 					.background(@inputBackgroundInvalid);
-					.border(@inputBorderColorInvalid);
+					.border-color(@inputBorderColorInvalid);
 				}
 			}
 		}
@@ -60,10 +60,10 @@
 					and not (@inputBorderWidthInvalid = false) {
 				.border(@inputBorderColorInvalid; @inputBorderWidthInvalid);
 				&:hover {
-					.border(@inputBorderColorInvalidHover);
+					.border-color(@inputBorderColorInvalidHover);
 				}
 				&:focus {
-					.border(@inputBorderColorInvalidFocus);
+					.border-color(@inputBorderColorInvalidFocus);
 				}
 			}
 			.check () when (@inputBorderWidthInvalid = 0), (@inputBorderWidthInvalid = false) {
@@ -74,15 +74,15 @@
 		&:required {
 			color: @inputColorRequired;
 			.background(@inputBackgroundRequired);
-			.border(@inputBorderColorRequired);
+			.border-color(@inputBorderColorRequired);
 			.check () when not (@inputBorderWidthRequired = 0)
 					and not (@inputBorderWidthRequired = false) {
 				.border(@inputBorderColorRequired; @inputBorderWidthRequired);
 				&:hover {
-					.border(@inputBorderColorRequiredHover);
+					.border-color(@inputBorderColorRequiredHover);
 				}
 				&:focus {
-					.border(@inputBorderColorRequiredFocus);
+					.border-color(@inputBorderColorRequiredFocus);
 				}
 			}
 			.check () when (@inputBorderWidthRequired = 0), (@inputBorderWidthRequired = false) {
@@ -95,10 +95,10 @@
 			and not (@inputBorderWidth = false) {
 		.border(@inputBorderColor; @inputBorderWidth);
 		&:hover {
-			.border(@inputBorderColorHover);
+			.border-color(@inputBorderColorHover);
 		}
 		&:focus {
-			.border(@inputBorderColorFocus);
+			.border-color(@inputBorderColorFocus);
 		}
 	}
 	.input () when (@inputBorderWidth = 0), (@inputBorderWidth = false) {
