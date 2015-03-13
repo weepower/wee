@@ -20,6 +20,10 @@
 			W.$append(target, this);
 			return this;
 		},
+		attr: function(key, value) {
+			var resp = W.$attr(this, key, value);
+			return value !== U ? this : resp;
+		},
 		before: function(source, remove) {
 			W.$before(this, source, remove);
 			return this;
@@ -43,15 +47,25 @@
 			var r = W.$css(this, a, b);
 			return b || W.$isObject(a) ? this : r;
 		},
+		data: function(key, value) {
+			var resp = W.$data(this, key, value);
+			return value !== U ? this : resp;
+		},
 		empty: function() {
 			W.$empty(this);
 			return this;
+		},
+		eq: function(index) {
+			return $(W.$eq(this, index));
 		},
 		filter: function(filter) {
 			return $(W.$filter(this, filter));
 		},
 		find: function(filter) {
 			return $(W.$find(this, filter));
+		},
+		first: function() {
+			return this.eq(0);
 		},
 		hasClass: function(value) {
 			return W.$hasClass(this, value);

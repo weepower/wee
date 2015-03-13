@@ -120,7 +120,7 @@
 						}
 
 						// Lookup the context and return nothing if it doesn't exist
-						context = context !== U ? W.$first(context) : D;
+						context = context !== U ? W.$(context)[0] : D;
 
 						if (! context) {
 							return [];
@@ -239,48 +239,6 @@
 
 					return _store;
 				},
-				// Get attribute of first matching selection or set attribute of each matching selection
-				// Returns string|undefined
-				$attr: function(target, a, b) {
-					var obj = W.$isObject(a);
-
-					if (b !== U || obj) {
-						var func = ! obj && W._canExec(b);
-
-						W.$each(target, function(el, i) {
-							obj ?
-								Object.keys(a).forEach(function(key) {
-									el.setAttribute(key, a[key]);
-								}) :
-								el.setAttribute(a, func ?
-										W.$exec(b, {
-											args: [i, el[a]],
-											scope: el
-										}) :
-										b
-								);
-						});
-					} else {
-						return W.$first(target).getAttribute(a);
-					}
-				},
-				// Get data of first matching selection or set data of each matching selection
-				// Returns string|undefined
-				$data: function(target, a, b) {
-					if (W.$isObject(a)) {
-						var obj = {};
-
-						Object.keys(a).forEach(function(key) {
-							obj['data-' + key] = a[key];
-						});
-
-						a = obj;
-					} else {
-						a = 'data-' + a;
-					}
-
-					return W.$attr(target, a, b);
-				},
 				// Execute function for each matching selection
 				// Options include arguments, reverse, context, and scope
 				$each: function(target, fn, options) {
@@ -339,12 +297,6 @@
 				$envSecure: function(url) {
 					return (url || N.location.href).slice(0, 5) == 'https';
 				},
-				// Get indexed node of matching selection
-				// Returns element
-				$eq: function(target, index, context) {
-					var el = W.$(target, context);
-					return el[index < 0 ? el.length + index : index];
-				},
 				// Execute specified function or controller method
 				// Arguments and scope can be set in the optional options object
 				// Arguments defaults to an empty array and the scope defaults to null
@@ -399,11 +351,6 @@
 					}
 
 					return target;
-				},
-				// Get the first element of a matching selection
-				// Returns element
-				$first: function(target, context) {
-					return W.$eq(target, 0, context);
 				},
 				// Get keys from an object
 				// Returns array
@@ -512,7 +459,7 @@
 				// data-bind is DEPRECATED
 				$setRef: function(context) {
 					var sets = W.$get('ref');
-					context = context ? W.$first(context) : D;
+					context = context ? W.$(context)[0] : D;
 
 					// Clear existing refs if reset
 					if (sets) {
@@ -537,8 +484,8 @@
 				// Add metadata variables to datastore
 				$setVars: function() {
 					W.$each('[data-set]', function(el) {
-						var key = W.$data(el, 'set'),
-							val = W.$data(el, 'value'),
+						var key = el.getAttribute('data-set'),
+							val = el.getAttribute('data-value'),
 							ind = key.search(/\[.*]/g);
 
 						if (ind > 0) {

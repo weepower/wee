@@ -76,6 +76,31 @@
 				}
 			});
 		},
+		// Get attribute of first matching selection or set attribute of each matching selection
+		// Returns string|undefined
+		$attr: function(target, a, b) {
+			var obj = W.$isObject(a);
+
+			if (b !== U || obj) {
+				var func = ! obj && W._canExec(b);
+
+				W.$each(target, function(el, i) {
+					obj ?
+						Object.keys(a).forEach(function(key) {
+							el.setAttribute(key, a[key]);
+						}) :
+						el.setAttribute(a, func ?
+								W.$exec(b, {
+									args: [i, el[a]],
+									scope: el
+								}) :
+								b
+						);
+				});
+			} else {
+				return W.$first(target).getAttribute(a);
+			}
+		},
 		// Insert selection or markup before each matching selection
 		$before: function(target, source, remove) {
 			var func = W._canExec(source);
@@ -208,6 +233,23 @@
 					getComputedStyle(el, null)[a];
 			}
 		},
+		// Get data of first matching selection or set data of each matching selection
+		// Returns string|undefined
+		$data: function(target, a, b) {
+			if (W.$isObject(a)) {
+				var obj = {};
+
+				Object.keys(a).forEach(function(key) {
+					obj['data-' + key] = a[key];
+				});
+
+				a = obj;
+			} else {
+				a = 'data-' + a;
+			}
+
+			return W.$attr(target, a, b);
+		},
 		// Remove child nodes from each matching selection
 		$empty: function(target) {
 			W.$each(target, function(el) {
@@ -215,6 +257,12 @@
 					el.removeChild(el.firstChild);
 				}
 			});
+		},
+		// Get indexed node of matching selection
+		// Returns element
+		$eq: function(target, index, context) {
+			var el = W.$(target, context);
+			return el[index < 0 ? el.length + index : index];
 		},
 		// Return a filtered subset of elements from a matching selection
 		// Returns element array
@@ -242,6 +290,11 @@
 			});
 
 			return W.$unique(arr);
+		},
+		// Get the first element of a matching selection
+		// Returns element
+		$first: function(target, context) {
+			return W.$eq(target, 0, context);
 		},
 		// Determine if the matching selection has a class
 		// Returns boolean

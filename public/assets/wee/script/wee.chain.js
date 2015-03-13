@@ -35,20 +35,6 @@
 			map: function(fn) {
 				return W.$map(this, fn);
 			},
-			attr: function(key, value) {
-				var resp = W.$attr(this, key, value);
-				return value !== U ? this : resp;
-			},
-			eq: function(index) {
-				return $(W.$eq(this, index));
-			},
-			first: function() {
-				return this.eq(0);
-			},
-			data: function(key, value) {
-				var resp = W.$data(this, key, value);
-				return value !== U ? this : resp;
-			},
 			reverse: function() {
 				var copy = W.$extend({}, this),
 					length = this.length,
