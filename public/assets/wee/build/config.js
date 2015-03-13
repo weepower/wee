@@ -136,7 +136,7 @@ module.exports = function(grunt) {
 	global.reloadPaths = [];
 	global.legacyBuild = [];
 	global.legacyConvert = [];
-	global.version = '2.1.0';
+	global.version = '2.1.1';
 
 	grunt.initConfig({
 		less: {
