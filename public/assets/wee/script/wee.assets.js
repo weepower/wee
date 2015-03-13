@@ -30,6 +30,7 @@
 				img = W.$toArray(conf.img),
 				root = conf.root !== U ? conf.root : this.root(),
 				now = new Date().getTime(),
+				absolute = /^(https?:)?\/\//i,
 				i = 0,
 				assets = [],
 				type;
@@ -70,6 +71,11 @@
 
 			// Request each specified file
 			for (var file in assets) {
+				// Reset root if the URL is absolute
+				if (root && absolute.test(file)) {
+					root = '';
+				}
+
 				type = assets[file];
 				file = root + file;
 
