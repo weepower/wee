@@ -376,6 +376,7 @@ module.exports = function(grunt) {
 		'default',
 		'proxy',
 		'sync',
+		'checkUpdates:delay',
 		'watch'
 	]);
 
@@ -384,6 +385,7 @@ module.exports = function(grunt) {
 		'default',
 		'server',
 		'sync',
+		'checkUpdates:delay',
 		'watch'
 	]);
 
