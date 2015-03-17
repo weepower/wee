@@ -477,14 +477,38 @@
 		},
 		// Get the offset position of a matching selection relative to the document
 		// Returns object
-		$offset: function(target) {
-			var rect = W.$first(target).getBoundingClientRect(),
-				el = W._legacy ? W._html : W._win;
+		$offset: function(target, value) {
+			var top = W._legacy ? W._html : W._win,
+				rect = W.$first(target).getBoundingClientRect(),
+				offset = {
+					top: rect.top + (W._legacy ? top.scrollTop : top.pageYOffset),
+					left: rect.left + (W._legacy ? top.scrollLeft : top.pageXOffset)
+				};
 
-			return {
-				top: rect.top + (W._legacy ? el.scrollTop : el.pageYOffset),
-				left: rect.left + (W._legacy ? el.scrollLeft : el.pageXOffset)
-			};
+			if (value) {
+				var func = W._canExec(value);
+
+				W.$each(target, function(el, i) {
+					var set = func ?
+						W.$exec(value, {
+							args: [i, offset],
+							scope: el
+						}) :
+						value;
+
+					if (typeof set.top == 'number') {
+						set.top = set.top + 'px';
+					}
+
+					if (typeof set.left == 'number') {
+						set.left = set.left + 'px';
+					}
+
+					W.$css(el, set);
+				});
+			} else {
+				return offset;
+			}
 		},
 		// Get unique parent from each matching selection
 		// Returns element array

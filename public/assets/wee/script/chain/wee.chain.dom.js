@@ -105,8 +105,8 @@
 		not: function(filter) {
 			return $(W.$not(this, filter));
 		},
-		offset: function() {
-			return W.$offset(this);
+		offset: function(value) {
+			return W.$offset(this, value);
 		},
 		parent: function() {
 			return $(W.$parent(this));
