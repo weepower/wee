@@ -1,9 +1,21 @@
+/* global WeeAlias */
+
 (function(W, U) {
 	'use strict';
 
 	var $ = W._win[WeeAlias];
 
 	W.$chain({
+		add: function(source) {
+			var orig = [],
+				i = 0;
+
+			for (; i < this.length; i++) {
+				orig.push(this[i]);
+			}
+
+			return $(W.$merge(orig, W.$(source), true));
+		},
 		addClass: function(value) {
 			W.$addClass(this, value);
 			return this;
