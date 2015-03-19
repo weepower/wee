@@ -28,8 +28,8 @@
 
 		],
 		"compile": {
-			"ie9.min.css": "custom/ie9.less",
-			"guide.min.css": "custom/guide.less"
+			"guide.min.css": "custom/guide.less",
+			"ie9.min.css": "custom/ie9.less"
 		},
 		"legacy": {
 			"enable": true,
@@ -38,7 +38,8 @@
 			"rootSize": "62.5%",
 			"dest": "ie8.min.css",
 			"build": [
-				"custom/ie8.less"
+				"custom/ie8.less",
+				"ie9.min.css"
 			],
 			"compile": {
 				"guide.ie8.min.css": "guide.min.css"
