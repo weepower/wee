@@ -375,8 +375,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('local', [
 		'default',
 		'proxy',
+		'checkUpdates',
 		'sync',
-		'checkUpdates:delay',
 		'watch'
 	]);
 
@@ -384,8 +384,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('static', [
 		'default',
 		'server',
+		'checkUpdates',
 		'sync',
-		'checkUpdates:delay',
 		'watch'
 	]);
 
