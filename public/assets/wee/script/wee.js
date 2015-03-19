@@ -140,7 +140,7 @@
 											context === D ?
 												sel :
 												sel.filter(function(el) {
-													return context.contains(el);
+													return W._contains(context, el);
 												})
 										);
 									}
@@ -465,7 +465,7 @@
 					if (sets) {
 						Object.keys(sets).forEach(function(key) {
 							W.$set('ref:' + key, sets[key].filter(function(el) {
-								return ! (! D.contains(el) || (context.contains(el) && context !== el));
+								return ! (! W._contains(D, el) || (W._contains(context, el) && context !== el));
 							}));
 						});
 					}
@@ -582,6 +582,9 @@
 					}
 
 					return [_store[key], segs[1]];
+				},
+				_contains: function(source, target) {
+					return (Wee._legacy && source === D ? W._html : source).contains(target);
 				},
 				// Execute specified function when document is ready
 				ready: function(fn) {
