@@ -1,4 +1,4 @@
-/* global config, legacy, legacyBuild, legacyConvert, path, project, style */
+/* global config, legacy, legacyBuild, legacyConvert, moduleResponsive, path, project, style */
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildLegacy', function() {
@@ -32,7 +32,8 @@ module.exports = function(grunt) {
 				});
 			}
 
-			less = less.replace('{{imports}}', inject);
+			less = less.replace('{{imports}}', inject)
+				.replace('{{moduleResponsive}}', moduleResponsive);
 
 			// Write temporary file
 			grunt.file.write(legacyTemp, less);

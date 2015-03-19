@@ -1,12 +1,10 @@
-/* global legacy, legacyConvert */
+/* global legacyConvert, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('convertLegacy', function(task) {
 		var dest = legacyConvert[task],
-			css = grunt.file.read(dest);
-
-		// Convert rem units to px
-		var rootSize = legacy.rootSize,
+			css = grunt.file.read(dest),
+			rootSize = project.style.legacy.rootSize,
 			rootValue = 10;
 
 		// Determine root value for unit conversion

@@ -132,11 +132,12 @@ module.exports = function(grunt) {
 	global.script = {};
 	global.server = {};
 	global.modules = {};
+	global.moduleResponsive = [];
 	global.legacy = {};
 	global.reloadPaths = [];
 	global.legacyBuild = [];
 	global.legacyConvert = [];
-	global.version = '2.1.1';
+	global.version = '2.2.0';
 
 	grunt.initConfig({
 		less: {
@@ -361,10 +362,10 @@ module.exports = function(grunt) {
 		'cleanup',
 		'configStyle',
 		'configScript',
-		'configModules',
 		'configGenerator',
 		'bindConfig',
 		'buildStyle',
+		'configModules',
 		'buildLegacy',
 		'uglify:core',
 		'uglify:lib',

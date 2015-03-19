@@ -14,27 +14,27 @@
 .wee-responsive () when (@responsive = true) and (@responsiveEnabled = true) and not (@legacyMode = true) {
 	.check () when not (@mobileLandscapeWidth = false) {
 		@media (min-width: (@mobileLandscapeWidth - @responsiveOffset)) {
-			.mobile-landscape();
+			.wee-mobile-landscape();
 		}
 	}
 	.check () when not (@tabletPortraitWidth = false) {
 		@media (min-width: (@tabletPortraitWidth - @responsiveOffset)) {
-			.tablet-portrait();
+			.wee-tablet-portrait();
 		}
 	}
 	.check () when not (@desktopSmallWidth = false) {
 		@media (min-width: (@desktopSmallWidth - @responsiveOffset)) {
-			.desktop-small();
+			.wee-desktop-small();
 		}
 	}
 	.check () when not (@desktopMediumWidth = false) {
 		@media (min-width: (@desktopMediumWidth - @responsiveOffset)) {
-			.desktop-medium();
+			.wee-desktop-medium();
 		}
 	}
 	.check () when not (@desktopLargeWidth = false) {
 		@media (min-width: (@desktopLargeWidth - @responsiveOffset)) {
-			.desktop-large();
+			.wee-desktop-large();
 		}
 	}
 	.check();
