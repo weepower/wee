@@ -189,12 +189,18 @@
 
 						(function(el, evt, fn, f, conf) {
 							var cb = function(e) {
+								var cont = true;
+
 								if (W._legacy) {
 									e = W._win.event;
 									e.target = e.srcElement;
 
 									e.preventDefault = function() {
 										e.returnValue = false;
+									};
+
+									e.stopPropagation = function() {
+										e.cancelBubble = true;
 									};
 								}
 
@@ -215,19 +221,21 @@
 									if (! targ.some(function(el) {
 										return el.contains(e.target);
 									})) {
-										return false;
+										cont = false;
 									}
 
 									// Ensure element argument is the target
 									conf.args[1] = e.target;
 								}
 
-								W.$exec(fn, conf);
+								if (cont) {
+									W.$exec(fn, conf);
 
-								// If the event is to be executed once unbind it immediately
-								// DEPRECATED one property
-								if (conf.one || conf.once) {
-									scope.$public.off(el, evt, f);
+									// If the event is to be executed once unbind it immediately
+									// DEPRECATED one property
+									if (conf.one || conf.once) {
+										scope.$public.off(el, evt, f);
+									}
 								}
 							};
 
