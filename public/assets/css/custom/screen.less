@@ -94,21 +94,11 @@ body {
 	# Index
 \*------------------------------------*/
 
-.header {
-	&.\--index {
-		.heading {
-			.animation(fade-in .6s .2s ease-out forwards);
-			.transparent();
-		}
-	}
-}
 .welcome {
-	.animation(fade-in .6s .4s ease-out forwards);
 	.color(@colorMediumBlue);
 	.font(@headingFont; 1.7);
 	.font-weight(300);
 	.spaced(3);
-	.transparent();
 }
 .nav {
 	&__button {
@@ -116,8 +106,6 @@ body {
 		.fill();
 		.font(@headingFont; 1.2);
 		.spaced(1);
-		.translate(0; -1);
-		.transparent();
 		.uppercase();
 		& {
 			.background(transparent);
@@ -131,27 +119,8 @@ body {
 			.background(light; 10%; @colorTeal);
 			.outline(none);
 		}
-		&:first-child {
-			.animation(fade-in .4s .4s ease-out forwards, slide-in .5s .3s ease-out forwards;);
-		}
-		&:nth-child(2) {
-			.animation(fade-in .4s .6s ease-out forwards, slide-in .5s .5s ease-out forwards;);
-		}
-		&:last-child {
-			.animation(fade-in .4s .8s ease-out forwards, slide-in .5s .7s ease-out forwards;);
-		}
 	}
 }
-.keyframes(fade-in, {
-	.transparent();
-}, {
-	.opaque();
-});
-.keyframes(slide-in, {
-	.translate(0; -1);
-}, {
-	.translate();
-});
 
 
 
