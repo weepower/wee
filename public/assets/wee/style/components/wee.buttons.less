@@ -64,11 +64,11 @@
 		input[type='submit'],
 		.button {
 			.rules();
-			&.button@{coloredButtonClassModifier} {
+			&.@{coloredButtonClassModifier} {
 				.colored-rules();
 			}
 			&[disabled],
-			&.button@{disabledButtonClassModifier} {
+			&.@{disabledButtonClassModifier} {
 				.disabled-rules();
 			}
 		}
@@ -77,11 +77,11 @@
 		.button {
 			.rules();
 		}
-		.button@{buttonColoredClassModifier} {
+		.@{buttonColoredClassModifier} {
 			.colored-rules();
 		}
 		.button[disabled],
-		.button@{buttonDisabledClassModifier} {
+		.@{buttonDisabledClassModifier} {
 			.disabled-rules();
 		}
 	}

@@ -412,7 +412,7 @@
 
 // Colored Buttons
 
-@coloredButtonClassModifier: -colored;
+@coloredButtonClassModifier: button-colored;
 
 @coloredButtonColor: @white; // font color
 
@@ -420,17 +420,17 @@
 @coloredButtonBackgroundHover: darken(@coloredButtonBackground, 5%);
 @coloredButtonBackgroundActive: darken(@coloredButtonBackground, 10%);
 
-@coloredButtonBorderColor: darken(@coloredButtonBackground, 5%);
+@coloredButtonBorderColor: false;
 
 // Disabled Buttons
 
-@disabledButtonClassModifier: -disabled;
+@disabledButtonClassModifier: button-disabled;
 
 @disabledButtonColor: @darkGray;
 
 @disabledButtonBackground: @lightGray;
 
-@disabledButtonBorderColor: darken(@disabledButtonBackground, 5%);
+@disabledButtonBorderColor: false;
 
 @disabledButtonCursor: not-allowed;
 
@@ -443,8 +443,10 @@
 @tableBordered: true; // apply outer border by default
 @tableStriped: true;  // apply striping by default
 
-@tableBorderedClassModifier: -bordered;
-@tableStripedClassModifier: -striped;
+@tableFontSize: @baseFontSize;
+
+@tableBorderedClassModifier: table-bordered;
+@tableStripedClassModifier: table-striped;
 
 // Table Cells
 

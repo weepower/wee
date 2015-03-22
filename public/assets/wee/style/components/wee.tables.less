@@ -6,6 +6,7 @@
 		min-width: 100%;
 		table-layout: fixed;
 		word-wrap: break-word;
+		.font-size(@tableFontSize);
 		.spaced();
 		.wee-table-striped();
 		.wee-table-bordered();
@@ -45,13 +46,13 @@
 		}
 	}
 	.check () when not (@tableBordered = true) {
-		.table@{tableBorderedClassModifier} {
+		.@{tableBorderedClassModifier} {
 			.wee-table-bordered();
 		}
 	}
 	.check () when not (@tableStriped = true)
 			and not (@tableStripedBackground = false) {
-		.table@{tableStripedClassModifier} {
+		.@{tableStripedClassModifier} {
 			.wee-table-striped();
 		}
 	}
