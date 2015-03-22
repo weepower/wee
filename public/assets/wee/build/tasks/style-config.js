@@ -18,16 +18,12 @@ module.exports = function(grunt) {
 
 		// Core style features
 		style.vars = {
-			buttonEnabled: (styleFeatures.buttons === true) ? true : false,
-			codeEnabled: (styleFeatures.code === true) ? true : false,
-			formEnabled: (styleFeatures.forms === true) ? true : false,
-			tableEnabled: (styleFeatures.tables === true) ? true : false,
-			printEnabled: (styleFeatures.print === true) ? true : false
+			buttonEnabled: styleFeatures.buttons === true,
+			codeEnabled: styleFeatures.code === true,
+			formEnabled: styleFeatures.forms === true,
+			tableEnabled: styleFeatures.tables === true,
+			printEnabled: styleFeatures.print === true
 		};
-
-		if (style.vars.buttonEnabled) {
-			style.imports.push('../style/components/wee.buttons.less');
-		}
 
 		if (style.vars.codeEnabled) {
 			style.imports.push('../style/components/wee.code.less');
@@ -35,6 +31,10 @@ module.exports = function(grunt) {
 
 		if (style.vars.formEnabled) {
 			style.imports.push('../style/components/wee.forms.less');
+		}
+
+		if (style.vars.buttonEnabled) {
+			style.imports.push('../style/components/wee.buttons.less');
 		}
 
 		if (style.vars.tableEnabled) {
