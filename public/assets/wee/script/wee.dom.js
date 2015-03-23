@@ -236,6 +236,19 @@
 		// Get data of first matching selection or set data of each matching selection
 		// Returns string|undefined
 		$data: function(target, a, b) {
+			if (a === U) {
+				var el = W.$first(target),
+					arr = {};
+
+				W._slice.call(el.attributes).forEach(function(attr) {
+					if (attr.name.substr(0, 5) == 'data-') {
+						arr[attr.name.substring(5)] = attr.value;
+					}
+				});
+
+				return arr;
+			}
+
 			if (W.$isObject(a)) {
 				var obj = {};
 
