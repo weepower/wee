@@ -240,7 +240,21 @@
 	background-attachment: @arguments;
 }
 .background-position (@x: 0; @y: 0) {
-	background-position: @x @y;
+	.checkX () when (isunit(@x, '')) {
+		@tempX: unit(@x, @defaultUnit);
+	}
+	.checkX () when (default()) {
+		@tempX: @x;
+	}
+	.checkY () when (isunit(@y, '')) {
+		@tempY: unit(@y, @defaultUnit);
+	}
+	.checkY () when (default()) {
+		@tempY: @y;
+	}
+	.checkX();
+	.checkY();
+	background-position: @tempX @tempY;
 }
 .background-repeat (...) {
 	background-repeat: @arguments;
@@ -249,7 +263,21 @@
 	background-size: @size;
 }
 .background-size (@width; @height) {
-	background-size: @width @height;
+	.checkWidth () when (isunit(@width, '')) {
+		@tempWidth: unit(@width, @defaultUnit);
+	}
+	.checkWidth () when (default()) {
+		@tempWidth: @width;
+	}
+	.checkHeight () when (isunit(@height, '')) {
+		@tempHeight: unit(@height, @defaultUnit);
+	}
+	.checkHeight () when (default()) {
+		@tempHeight: @height;
+	}
+	.checkWidth();
+	.checkHeight();
+	background-size: @tempWidth @tempHeight;
 }
 .background-clip (@value: border-box) {
 	background-clip: ~'@{value}';
@@ -1024,8 +1052,7 @@
 		src: url('@{fontPath}@{file}.eot');
 		src: url('@{fontPath}@{file}.eot?#iefix') format('embedded-opentype'),
 			 url('@{fontPath}@{file}.woff') format('woff'),
-			 url('@{fontPath}@{file}.ttf') format('truetype'),
-			 url('@{fontPath}@{file}.svg#@{name}') format('svg');
+			 url('@{fontPath}@{file}.ttf') format('truetype');
 		font-style: @style;
 		font-weight: @weight;
 	}
@@ -2388,20 +2415,23 @@
 	# Helper Classes
 \*------------------------------------*/
 
-.container {
-	.wee-container();
+.wee-helpers () {
+	.container {
+		.wee-container();
+	}
+	.@{imageLeftClass} {
+		float: left;
+		.margin(.32em; @imageMarginSide; @imageMarginBottom; false);
+	}
+	.@{imageRightClass} {
+		float: right;
+		.margin(.32em; false; @imageMarginBottom; @imageMarginSide);
+	}
+	.js-hide {
+		display: none !important;
+	}
 }
-.@{imageLeftClass} {
-	float: left;
-	.margin(.32em; @imageMarginSide; @imageMarginBottom; false);
-}
-.@{imageRightClass} {
-	float: right;
-	.margin(.32em; false; @imageMarginBottom; @imageMarginSide);
-}
-.js-hide {
-	display: none !important;
-}
+.wee-helpers();
 
 
 
