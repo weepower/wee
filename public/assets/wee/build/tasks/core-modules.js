@@ -78,6 +78,9 @@ module.exports = function(grunt) {
 
 								// Push style task
 								style.tasks.push('less:' + taskName);
+
+								// Run task
+								grunt.task.run('less:' + taskName);
 							}
 						}
 					}
@@ -216,6 +219,8 @@ module.exports = function(grunt) {
 						]
 					});
 
+					grunt.task.run('less:' + name);
+
 					if (module.autoload === true) {
 						// Push temporary style to concat list
 						style.concat.push(dest);
@@ -253,22 +258,21 @@ module.exports = function(grunt) {
 
 						// Legacy processing
 						if (project.style.legacy.enable) {
-							var taskName = name + '-legacy',
-								less = grunt.file.read(config.assetPath + '/wee/style/wee.module-legacy.less'),
-								legacySource = config.tempPath + '/' + name + '-legacy.less';
+							var taskName = name + '-legacy';
 
-							// Process media query injection
-							less = less.replace('{{mediaQueries}}', responsive);
-
-							// Write temporary file
-							grunt.file.write(legacySource, less);
 
 							// Create legacy task
 							grunt.config.set('less.' + taskName, {
 								files: [{
 									dest: Wee.buildPath(modulePath, 'legacy.min.css'),
-									src: legacySource
-								}]
+									src: config.tempPath + '/' + name + '-legacy.less'
+								}],
+								options: {
+									modifyVars: vars,
+									globalVars: {
+										weePath: '"' + config.tempPath + '/wee.less"'
+									}
+								}
 							});
 
 							if (project.style.legacy.watch === true) {
