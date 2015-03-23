@@ -1049,12 +1049,21 @@
 .load-font (@name; @file: @name; @weight: normal; @style: normal) {
 	@font-face {
 		font-family: ~'@{name}';
-		src: url('@{fontPath}@{file}.eot');
-		src: url('@{fontPath}@{file}.eot?#iefix') format('embedded-opentype'),
-			 url('@{fontPath}@{file}.woff') format('woff'),
-			 url('@{fontPath}@{file}.ttf') format('truetype');
 		font-style: @style;
-		font-weight: @weight;
+		font-weight: @weight
+		src: url('@{fontPath}@{file}.eot');
+		.check () when (@woff2Enabled = true) {
+			src: url('@{fontPath}@{file}.eot?#iefix') format('embedded-opentype'),
+				 url('@{fontPath}@{file}.woff2') format('woff2'),
+				 url('@{fontPath}@{file}.woff') format('woff'),
+				 url('@{fontPath}@{file}.ttf') format('truetype');
+		}
+		.check () when (default()) {
+			src: url('@{fontPath}@{file}.eot?#iefix') format('embedded-opentype'),
+				 url('@{fontPath}@{file}.woff') format('woff'),
+				 url('@{fontPath}@{file}.ttf') format('truetype');
+		}
+		.check();
 	}
 
 	// Window Chrome fix
