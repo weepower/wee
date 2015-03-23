@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 			}
 
 			less = less.replace('{{imports}}', inject)
-				.replace('{{moduleResponsive}}', moduleResponsive);
+				.replace('{{moduleResponsive}}', moduleResponsive.join('\n'));
 
 			// Write temporary file
 			grunt.file.write(legacyTemp, less);
