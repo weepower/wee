@@ -1,4 +1,4 @@
-/* global project */
+/* global module, project, require */
 
 module.exports = function(grunt) {
 	grunt.registerTask('configGenerator', function() {
@@ -8,11 +8,10 @@ module.exports = function(grunt) {
 
 			// Loop through static site config files
 			grunt.file.expand(project.generator.build).forEach(function(src, i) {
-				var json = grunt.file.readJSON(src),
-					config = json.config;
+				var json = grunt.file.readJSON(src);
 
 				// Watch for config updates
-				if (config.watch === true) {
+				if (json.config.watch === true) {
 					grunt.config.set('watch.initGenerator-' + i, {
 						files: src,
 						tasks: 'initGenerator:' + i

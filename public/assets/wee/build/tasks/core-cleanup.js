@@ -1,18 +1,18 @@
-/* global config, fs, project */
+/* global config, fs, module, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('cleanup', function() {
 		// Remove temp files
-		fs.readdirSync(config.tempPath).forEach(function(file) {
+		fs.readdirSync(config.paths.temp).forEach(function(file) {
 			if (file.charAt(0) !== '.') {
-				fs.unlinkSync(config.tempPath + '/' + file);
+				fs.unlinkSync(config.paths.temp + file);
 			}
 		});
 
 		// Remove JavaScript source maps
 		if (project.script.sourceMaps === true) {
-			fs.readdirSync(config.paths.sourceMaps).forEach(function(file) {
-				fs.unlinkSync(config.paths.sourceMaps + file);
+			fs.readdirSync(config.paths.maps).forEach(function(file) {
+				fs.unlinkSync(config.paths.maps + file);
 			});
 		}
 	});

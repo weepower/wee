@@ -1,13 +1,12 @@
-/* global path, project */
+/* global module, path, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('cachePartials', function(task) {
 		var build = Wee.$toArray(project.generator.build),
 			configPath = build[task],
 			json = grunt.file.readJSON(configPath),
-			config = json.config,
 			staticRoot = path.dirname(configPath),
-			partialRoot = path.join(staticRoot, config.paths.partials),
+			partialRoot = path.join(staticRoot, json.config.paths.partials),
 			partials = grunt.file.expand({
 				cwd: partialRoot
 			}, '**/*.html');

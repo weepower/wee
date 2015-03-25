@@ -1,3 +1,5 @@
+/* global module */
+
 module.exports = function(grunt) {
 	grunt.registerTask('notify', function(task) {
 		var obj = {};

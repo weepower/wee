@@ -1,21 +1,20 @@
-/* global project, server */
+/* global module, project, server */
 
 module.exports = function(grunt) {
 	grunt.registerTask('server', function() {
-		var serverConfig = project.server,
-			staticConfig = serverConfig.tasks.static;
+		var staticConfig = project.server.tasks.static;
 
 		// Server root
 		server.server = project.paths.root;
 
-		// HTTPS mode
+		// Secure mode
 		if (staticConfig.https === true) {
 			server.https = true;
 		}
 
 		// Override auto-detected IP address
-		if (serverConfig.host !== 'auto') {
-			server.host = serverConfig.host;
+		if (project.server.host !== 'auto') {
+			server.host = project.server.host;
 		}
 	});
 };

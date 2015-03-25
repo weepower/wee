@@ -1,4 +1,4 @@
-/* global browserSync, config, project, reloadPaths, server */
+/* global browserSync, config, module, project, reloadPaths, server */
 
 module.exports = function(grunt) {
 	grunt.registerTask('sync', function() {
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 			}
 
 			// Bind BrowserSync watchlist
-			reloadPaths.unshift(config.assetPath + '/**/*.{min.css,min.js,gif,jpg,png,svg}');
+			reloadPaths.unshift(config.paths.assets + '/**/*.{min.css,min.js,gif,jpg,png,svg}');
 
 			server.files = reloadPaths;
 		}

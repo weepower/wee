@@ -1,20 +1,19 @@
-/* global config, path, project, style */
+/* global config, module, path, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildStyle', function() {
-		var weeStyleRoot = config.assetPath + '/wee/style',
-			less = grunt.file.read(weeStyleRoot + '/wee.less'),
+		var less = grunt.file.read(config.paths.wee + 'style/wee.less'),
 			imports = [],
 			inject = '',
 			buildFiles = grunt.file.expand({
-				cwd: style.rootPath + '/build'
+				cwd: config.paths.css + '/build'
 			}, [
 				'**/*.css',
 				'**/*.less'
 			]);
 
 		buildFiles.forEach(function(name) {
-			name = '../../css/build/' + name.replace(path.normalize(config.assetPath), '');
+			name = '../../css/build/' + name.replace(path.normalize(config.paths.assets), '');
 
 			if (name.indexOf('/vendor/') !== -1) {
 				imports.unshift(name);
@@ -25,15 +24,15 @@ module.exports = function(grunt) {
 
 		// Build configured
 		var buildArray = [
-			'<%= config.style.rootPath %>/build/**/*.{css,less}'
+			'<%= config.paths.css %>/build/**/*.{css,less}'
 		];
 
 		project.style.build.forEach(function(name) {
-			name = Wee.buildPath(style.rootPath, name);
+			name = Wee.buildPath(config.paths.css, name);
 
 			buildArray.push(name);
 
-			name = '../../' + name.replace(path.normalize(config.assetPath), '');
+			name = '../../' + name.replace(path.normalize(config.paths.assets), '');
 
 			imports.push(name);
 		});
@@ -41,10 +40,10 @@ module.exports = function(grunt) {
 		grunt.config.set('watch.styleBuildUpdate.files', buildArray);
 
 		// Merge imports into global imports
-		style.imports = style.imports.concat(imports);
+		config.style.imports = config.style.imports.concat(imports);
 
 		// Process template
-		style.imports.forEach(function(val) {
+		config.style.imports.forEach(function(val) {
 			if (path.extname(val) == '.css') {
 				inject += '@import (inline) "' + val + '";\n';
 			} else {
@@ -53,14 +52,14 @@ module.exports = function(grunt) {
 		});
 
 		less = less.replace('{{imports}}', inject)
-			.replace('{{print}}', style.print)
-			.replace('{{responsive}}', style.responsive);
+			.replace('{{print}}', config.style.print)
+			.replace('{{responsive}}', config.style.responsive);
 
 		// Write temporary file
-		grunt.file.write(config.tempPath + '/wee.less', less);
+		grunt.file.write(config.paths.weeTemp, less);
 
 		// Add to concat array
-		style.concat.push(config.tempPath + '/wee.css');
+		config.style.concat.push(config.paths.temp + 'wee.css');
 
 		// Run Grunt tasks
 		var tasks = [
@@ -68,8 +67,7 @@ module.exports = function(grunt) {
 			'less:core'
 		];
 
-		tasks = tasks.concat(style.tasks);
-
+		tasks = tasks.concat(config.style.tasks);
 		tasks.push('concat:style');
 
 		grunt.task.run(tasks);

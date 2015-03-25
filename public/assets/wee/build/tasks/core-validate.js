@@ -1,8 +1,8 @@
-/* global config */
+/* global config, module */
 
 module.exports = function(grunt) {
 	grunt.registerTask('runValidation', function() {
-		var rootPath = config.assetPath + '/js',
+		var rootPath = config.paths.assets + '/js',
 			scripts = grunt.file.expand({
 				cwd: rootPath,
 				filter: function(src) {

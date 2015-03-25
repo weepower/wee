@@ -1,13 +1,12 @@
-/* global __dirname, path, project */
+/* global __dirname, module, path, project, require */
 
 module.exports = function(grunt) {
 	grunt.registerTask('loadExtensions', function(task) {
 		var build = Wee.$toArray(project.generator.build),
 			configPath = build[task],
 			json = grunt.file.readJSON(configPath),
-			config = json.config,
 			staticRoot = path.dirname(configPath),
-			extensionRoot = path.join(staticRoot, config.paths.extensions),
+			extensionRoot = path.join(staticRoot, json.config.paths.extensions),
 			extensions = grunt.file.expand({
 				cwd: extensionRoot
 			}, '**/*.js');

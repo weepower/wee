@@ -1,84 +1,70 @@
-/* global config, project, style */
+/* global config, module, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('configStyle', function() {
-		// Set global config
-		style = {
-			rootPath: config.assetPath + '/css',
-			files: [],
-			project: {},
-			imports: [],
-			tasks: [],
-			concat: [],
-			print: '',
-			responsive: ''
-		};
-
-		var styleFeatures = project.style.core;
+		var features = project.style.core;
 
 		// Core style features
-		style.vars = {
-			buttonEnabled: styleFeatures.buttons === true,
-			codeEnabled: styleFeatures.code === true,
-			formEnabled: styleFeatures.forms === true,
-			tableEnabled: styleFeatures.tables === true,
-			printEnabled: styleFeatures.print === true
+		config.style.vars = {
+			buttonEnabled: features.buttons === true,
+			codeEnabled: features.code === true,
+			formEnabled: features.forms === true,
+			tableEnabled: features.tables === true,
+			printEnabled: features.print === true
 		};
 
-		if (style.vars.codeEnabled) {
-			style.imports.push('../style/components/wee.code.less');
+		if (config.style.vars.codeEnabled) {
+			config.style.imports.push('../style/components/wee.code.less');
 		}
 
-		if (style.vars.formEnabled) {
-			style.imports.push('../style/components/wee.forms.less');
+		if (config.style.vars.formEnabled) {
+			config.style.imports.push('../style/components/wee.forms.less');
 		}
 
-		if (style.vars.buttonEnabled) {
-			style.imports.push('../style/components/wee.buttons.less');
+		if (config.style.vars.buttonEnabled) {
+			config.style.imports.push('../style/components/wee.buttons.less');
 		}
 
-		if (style.vars.tableEnabled) {
-			style.imports.push('../style/components/wee.tables.less');
+		if (config.style.vars.tableEnabled) {
+			config.style.imports.push('../style/components/wee.tables.less');
 		}
 
-		if (style.vars.printEnabled) {
-			style.print = '@media print {\n';
-			style.print += '@import (inline) "../style/wee.print.less";\n';
-			style.print += '@import "../../css/custom/print.less"; // Customizations\n';
-			style.print += '}';
+		if (config.style.vars.printEnabled) {
+			config.style.print = '@media print {\n';
+			config.style.print += '@import (inline) "../style/wee.print.less";\n';
+			config.style.print += '@import (optional) "../../css/custom/print.less";\n';
+			config.style.print += '}';
 		}
 
 		// Responsive
-		if (styleFeatures.responsive) {
-			if (styleFeatures.responsive.enable) {
-				style.vars.responsiveEnabled = true;
-				style.vars.responsiveOffset = styleFeatures.responsive.offset + 'px';
-				style.vars.ieBreakpoint = project.style.legacy.breakpoint;
+		if (features.responsive && features.responsive.enable === true) {
+			config.style.vars.responsiveEnabled = true;
+			config.style.vars.responsiveOffset = (features.responsive.offset || 0) + 'px';
+			config.style.vars.ieBreakpoint = project.style.legacy.breakpoint || 4;
 
-				// Breakpoints
-				var breakpoints = styleFeatures.responsive.breakpoints;
+			// Breakpoints
+			var breakpoints = features.responsive.breakpoints;
 
-				style.vars.mobileLandscapeWidth = (breakpoints.mobileLandscape !== false) ?
-					breakpoints.mobileLandscape + 'px' :
-					false;
-				style.vars.tabletPortraitWidth = (breakpoints.tabletPortrait !== false) ?
-					breakpoints.tabletPortrait + 'px' :
-					false;
-				style.vars.desktopSmallWidth = (breakpoints.desktopSmall !== false) ?
-					breakpoints.desktopSmall + 'px' :
-					false;
-				style.vars.desktopMediumWidth = (breakpoints.desktopMedium !== false) ?
-					breakpoints.desktopMedium + 'px' :
-					false;
-				style.vars.desktopLargeWidth = (breakpoints.desktopLarge !== false) ?
-					breakpoints.desktopLarge + 'px' :
-					false;
+			config.style.vars.mobileLandscapeWidth = breakpoints.mobileLandscape !== false ?
+				breakpoints.mobileLandscape + 'px' :
+				false;
+			config.style.vars.tabletPortraitWidth = breakpoints.tabletPortrait !== false ?
+				breakpoints.tabletPortrait + 'px' :
+				false;
+			config.style.vars.desktopSmallWidth = breakpoints.desktopSmall !== false ?
+				breakpoints.desktopSmall + 'px' :
+				false;
+			config.style.vars.desktopMediumWidth = breakpoints.desktopMedium !== false ?
+				breakpoints.desktopMedium + 'px' :
+				false;
+			config.style.vars.desktopLargeWidth = breakpoints.desktopLarge !== false ?
+				breakpoints.desktopLarge + 'px' :
+				false;
 
-				style.responsive = '@import "../style/wee.responsive.less";';
-			} else {
-				style.vars.responsiveEnabled = false;
-				style.vars.ieBreakpoint = 1;
-			}
+			config.style.responsive = '@import "../style/wee.responsive.less";';
+		} else {
+			config.style.vars.responsiveEnabled = false;
+			config.style.vars.ieBreakpoint = 1;
 		}
 
 		// Compile custom
@@ -88,10 +74,10 @@ module.exports = function(grunt) {
 				files = [];
 
 			for (var sourcePath in sources) {
-				files.push(Wee.buildPath(style.rootPath, sources[sourcePath]));
+				files.push(Wee.buildPath(config.paths.css, sources[sourcePath]));
 			}
 
-			// Merge watch config
+			// Set watch config
 			grunt.config.set('watch.' + taskName, {
 				files: files,
 				tasks: [
@@ -102,18 +88,18 @@ module.exports = function(grunt) {
 			// Create Less task
 			grunt.config.set('less.' + taskName, {
 				files: [{
-					dest: Wee.buildPath(style.rootPath, target),
+					dest: Wee.buildPath(config.paths.css, target),
 					src: files
 				}],
 				options: {
 					globalVars: {
-						weePath: '"' + config.tempPath + '/wee.less"'
+						weePath: '"' + config.paths.weeTemp + '"'
 					}
 				}
 			});
 
 			// Push style task
-			style.tasks.push('less:' + taskName);
+			config.style.tasks.push('less:' + taskName);
 		}
 	});
 };

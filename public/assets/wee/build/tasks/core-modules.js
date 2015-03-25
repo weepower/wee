@@ -1,18 +1,13 @@
-/* global legacyConvert, moduleResponsive, project, script */
+/* global legacyConvert, module, moduleResponsive, project, script */
 
 module.exports = function(grunt) {
 	grunt.registerTask('configModules', function() {
-		// Set global config
-		modules = {
-			rootPath: config.assetPath + '/modules'
-		};
-
 		// Loop through module directories
-		var children = fs.readdirSync(modules.rootPath);
+		var children = fs.readdirSync(config.paths.modules);
 
 		for (var directory in children) {
 			var name = children[directory],
-				modulePath = modules.rootPath + '/' + children[directory];
+				modulePath = config.paths.modules + '/' + children[directory];
 
 			// Ensure the child is a directory
 			if (fs.statSync(modulePath).isDirectory()) {
@@ -25,8 +20,8 @@ module.exports = function(grunt) {
 						moduleScript = [
 							modulePath + '/module/script/*.js'
 						],
-						vars = JSON.parse(JSON.stringify(style.vars)),
-						less = grunt.file.read(config.assetPath + '/wee/style/wee.module.less');
+						vars = JSON.parse(JSON.stringify(config.style.vars)),
+						less = grunt.file.read(config.paths.assets + '/wee/style/wee.module.less');
 
 					// Set module variables
 					vars.moduleName = name;
@@ -71,13 +66,13 @@ module.exports = function(grunt) {
 									}],
 									options: {
 										globalVars: {
-											weePath: '"' + config.tempPath + '/wee.less"'
+											weePath: '"' + config.paths.weeTemp + '"'
 										}
 									}
 								});
 
 								// Push style task
-								style.tasks.push('less:' + taskName);
+								config.style.tasks.push('less:' + taskName);
 
 								// Run task
 								grunt.task.run('less:' + taskName);
@@ -136,21 +131,21 @@ module.exports = function(grunt) {
 							vars.responsive = true;
 
 							responsive += ' \
-								.wee-mobile-landscape () when not (@mobileLandscapeWidth = false) { \
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/mobile-landscape.less"; \
-								} \
-								.wee-tablet-portrait () when not (@tabletPortraitWidth = false) { \
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/tablet-portrait.less"; \
-								} \
-								.wee-desktop-small () when not (@desktopSmallWidth = false) { \
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-small.less"; \
-								} \
-								.wee-desktop-medium () when not (@desktopMediumWidth = false) { \
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-medium.less"; \
-								} \
-								.wee-desktop-large () when not (@desktopLargeWidth = false) { \
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-large.less"; \
-								} \
+								.wee-mobile-landscape () when not (@mobileLandscapeWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/module/style/breakpoints/mobile-landscape.less";\n\
+								}\n\
+								.wee-tablet-portrait () when not (@tabletPortraitWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/module/style/breakpoints/tablet-portrait.less";\n\
+								}\n\
+								.wee-desktop-small () when not (@desktopSmallWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-small.less";\n\
+								}\n\
+								.wee-desktop-medium () when not (@desktopMediumWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-medium.less";\n\
+								}\n\
+								.wee-desktop-large () when not (@desktopLargeWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-large.less";\n\
+								}\n\
 							';
 						}
 
@@ -158,23 +153,34 @@ module.exports = function(grunt) {
 							vars.responsive = true;
 
 							responsive += ' \
-								.wee-mobile-landscape () when not (@mobileLandscapeWidth = false) { \
-									@import (optional) "../../modules/' + name + '/css/breakpoints/mobile-landscape.less"; \
-								} \
-								.wee-tablet-portrait () when not (@tabletPortraitWidth = false) { \
-									@import (optional) "../../modules/' + name + '/css/breakpoints/tablet-portrait.less"; \
-								} \
-								.wee-desktop-small () when not (@desktopSmallWidth = false) { \
-									@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-small.less"; \
-								} \
-								.wee-desktop-medium () when not (@desktopMediumWidth = false) { \
-									@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-medium.less"; \
-								} \
-								.wee-desktop-large () when not (@desktopLargeWidth = false) { \
-									@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-large.less"; \
-								} \
+								.wee-mobile-landscape () when not (@mobileLandscapeWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/css/breakpoints/mobile-landscape.less";\n\
+								}\n\
+								.wee-tablet-portrait () when not (@tabletPortraitWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/css/breakpoints/tablet-portrait.less";\n\
+								}\n\
+								.wee-desktop-small () when not (@desktopSmallWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-small.less";\n\
+								}\n\
+								.wee-desktop-medium () when not (@desktopMediumWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-medium.less";\n\
+								}\n\
+								.wee-desktop-large () when not (@desktopLargeWidth = false) {\n\
+									@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-large.less";\n\
+								}\n\
 							';
 						}
+					}
+
+					// Inject empty mixins if no breakpoints exist
+					if (! vars.responsive) {
+						responsive += ' \
+							.wee-mobile-landscape () {}\n\
+							.wee-tablet-portrait () {}\n\
+							.wee-desktop-small () {}\n\
+							.wee-desktop-medium () {}\n\
+							.wee-desktop-large () {}\n\
+						';
 					}
 
 					// Process import injection
@@ -182,22 +188,22 @@ module.exports = function(grunt) {
 						.replace('{{responsive}}', responsive);
 
 					// Write temporary file
-					grunt.file.write(config.tempPath + '/' + name + '.less', less);
+					grunt.file.write(config.paths.temp + name + '.less', less);
 
 					// Create module style compile task
 					var dest = (module.autoload === true) ?
-							config.assetPath + '/wee/temp/' + name + '.css' :
+							config.paths.assets + '/wee/temp/' + name + '.css' :
 							modulePath + '/screen.min.css',
 						obj = {};
 
 					obj[name] = {
 						files: [{
 							dest: dest,
-							src: config.tempPath + '/' + name + '.less'
+							src: config.paths.temp + name + '.less'
 						}],
 						options: {
 							globalVars: {
-								weePath: '"' + config.tempPath + '/wee.less"'
+								weePath: '"' + config.paths.weeTemp + '"'
 							},
 							modifyVars: vars
 						}
@@ -208,7 +214,7 @@ module.exports = function(grunt) {
 					});
 
 					// Push style task
-					style.tasks.push('less:' + name);
+					config.style.tasks.push('less:' + name);
 
 					// Configure style watch task
 					grunt.config.set('watch.' + name + '-style', {
@@ -219,18 +225,33 @@ module.exports = function(grunt) {
 						]
 					});
 
+					// Run initial tasks
 					grunt.task.run('less:' + name);
+					grunt.task.run('concat:style');
 
 					if (module.autoload === true) {
 						// Push temporary style to concat list
-						style.concat.push(dest);
+						config.style.concat.push(dest);
 
 						// Add script paths to uglify
-						script.files = script.files.concat(moduleScript);
+						config.script.files = config.script.files.concat(moduleScript);
 
 						// Legacy processing
 						if (project.style.legacy.enable) {
+							moduleResponsive.push('@import (inline) "../temp/' + name + '.css";');
 							moduleResponsive.push(responsive);
+						}
+
+						if (project.style.legacy.watch === true) {
+							// Configure legacy watch task
+							grunt.config.set('watch.' + name + '-legacy', {
+								files: modulePath + '/**/*.less',
+								tasks: [
+									'less:legacy',
+									'convertLegacy:core',
+									'notify:legacy'
+								]
+							});
 						}
 					} else {
 						// Create module style compile task
@@ -259,18 +280,18 @@ module.exports = function(grunt) {
 						// Legacy processing
 						if (project.style.legacy.enable) {
 							var taskName = name + '-legacy';
-
+							dest = Wee.buildPath(modulePath, 'legacy.min.css');
 
 							// Create legacy task
 							grunt.config.set('less.' + taskName, {
 								files: [{
-									dest: Wee.buildPath(modulePath, 'legacy.min.css'),
-									src: config.tempPath + '/' + name + '-legacy.less'
+									dest: dest,
+									src: config.paths.wee + 'style/wee.module-legacy.less'
 								}],
 								options: {
 									modifyVars: vars,
 									globalVars: {
-										weePath: '"' + config.tempPath + '/wee.less"'
+										weePath: '"' + config.paths.weeTemp + '"'
 									}
 								}
 							});
@@ -284,9 +305,6 @@ module.exports = function(grunt) {
 										'convertLegacy:' + taskName
 									]
 								});
-
-								// Push style task
-								style.tasks.push('less:' + taskName);
 							}
 
 							// Push to conversion array

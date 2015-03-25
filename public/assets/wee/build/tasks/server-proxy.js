@@ -1,21 +1,18 @@
-/* global project, server */
+/* global module, project, server */
 
 module.exports = function(grunt) {
 	grunt.registerTask('proxy', function() {
-		var serverConfig = project.server,
-			localConfig = serverConfig.tasks.local;
-
-		if (serverConfig.tasks.local.proxy !== false) {
-			server.proxy = serverConfig.tasks.local.proxy;
+		if (project.server.tasks.local.proxy !== false) {
+			server.proxy = project.server.tasks.local.proxy;
 
 			// Override auto-detected IP address
-			if (serverConfig.host !== 'auto') {
-				server.host = serverConfig.host;
+			if (project.server.host !== 'auto') {
+				server.host = project.server.host;
 			}
 		}
 
-		// HTTPS mode
-		if (localConfig.https === true) {
+		// Secure mode
+		if (project.server.tasks.local.https === true) {
 			server.https = true;
 		}
 	});

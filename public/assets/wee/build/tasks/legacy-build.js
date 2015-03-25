@@ -1,4 +1,4 @@
-/* global config, legacy, legacyBuild, legacyConvert, moduleResponsive, path, project, style */
+/* global config, legacy, legacyConvert, module, moduleResponsive, path, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildLegacy', function() {
@@ -6,110 +6,65 @@ module.exports = function(grunt) {
 
 		// Ensure legacy support is enabled
 		if (legacy.enable === true) {
-			var styleRoot = config.assetPath + '/css',
-				weeStyleRoot = config.assetPath + '/wee/style',
-				legacyTemp = config.tempPath + '/wee.legacy.less',
-				less = grunt.file.read(weeStyleRoot + '/wee.legacy.less'),
-				legacyImports = [],
-				inject = '',
-				i = 0;
-
-			legacy.dest = Wee.buildPath(styleRoot, legacy.dest);
+			var styleRoot = config.paths.assets + '/css',
+				legacyTemp = config.paths.temp + 'wee.legacy.less',
+				less = grunt.file.read(config.paths.assets + '/wee/style/wee.legacy.less'),
+				dest = dest = Wee.buildPath(styleRoot, legacy.dest),
+				imports = [];
 
 			// Build configured
 			legacy.build.forEach(function(name) {
-				legacyImports.push('../../' + Wee.buildPath(styleRoot, name).replace(config.assetPath, ''));
+				var filePath = '../..' + Wee.buildPath(styleRoot, name)
+					.replace(config.paths.assets, '');
+
+				if (path.extname(filePath) == '.css') {
+					imports.push('@import (inline) "' + filePath + '";');
+				} else {
+					imports.push('@import "' + filePath + '";');
+				}
 			});
 
-			if (legacyImports.length > 0) {
-				// Process template
-				legacyImports.forEach(function(val) {
-					if (path.extname(val) == '.css') {
-						inject += '@import (inline) "' + val + '";\n';
-					} else {
-						inject += '@import "' + val + '";\n';
-					}
-				});
-			}
-
-			less = less.replace('{{imports}}', inject)
+			less = less.replace('{{imports}}', imports.join('\n'))
 				.replace('{{moduleResponsive}}', moduleResponsive.join('\n'));
 
 			// Write temporary file
 			grunt.file.write(legacyTemp, less);
 
 			// Less config update
-			grunt.config.merge({
-				less: {
-					legacy: {
-						files: [{
-							dest: legacy.dest,
-							src: legacyTemp
-						}],
-						options: {
-							modifyVars: style.vars
-						}
-					}
+			grunt.config.set('less.legacy', {
+				files: [{
+					dest: dest,
+					src: legacyTemp
+				}],
+				options: {
+					modifyVars: config.style.vars
 				}
 			});
 
 			// Push to conversion array
-			legacyConvert.core = legacy.dest;
-
-			// Exclude legacy files from primary watch task
-			grunt.config.merge({
-				watch: {
-					styleCore: {
-						files: [
-							'!' + legacyTemp
-						]
-					}
-				}
-			});
+			legacyConvert.core = dest;
 
 			if (legacy.watch === true) {
 				var watchedTasks = grunt.config.get('watch.styleCore.tasks');
 
 				// Recompile legacy on update of core file
-				grunt.config.merge({
-					watch: {
-						styleCore: {
-							tasks: watchedTasks.concat([
-								'less:legacy',
-								'convertLegacy:core',
-								'notify:legacy'
-							])
-						}
-					}
-				});
-
-				// Watch for legacy updates
-				grunt.config.merge({
-					watch: {
-						legacy: {
-							files: [
-								legacyBuild
-							],
-							tasks: [
-								'less:legacy',
-								'convertLegacy:core',
-								'notify:legacy'
-							]
-						}
-					}
-				});
+				grunt.config.set('watch.styleCore.tasks', watchedTasks.concat([
+					'less:legacy',
+					'convertLegacy:core',
+					'notify:legacy'
+				]));
 			}
 
 			// Compile custom
 			if (legacy.compile) {
 				for (var target in legacy.compile) {
 					var taskName = target.replace(/\./g, '-') + '-legacy-style',
-						dest = Wee.buildPath(style.rootPath, target),
 						sources = Wee.$toArray(legacy.compile[target]),
 						files = [];
+					dest = Wee.buildPath(config.paths.css, target);
 
 					for (var legacyPath in sources) {
-						files.push(Wee.buildPath(style.rootPath, sources[legacyPath]));
+						files.push(Wee.buildPath(config.paths.css, sources[legacyPath]));
 					}
 
 					// Create Less task
@@ -120,7 +75,7 @@ module.exports = function(grunt) {
 						}],
 						options: {
 							globalVars: {
-								weePath: '"' + config.tempPath + '/wee.less"'
+								weePath: '"' + config.paths.weeTemp + '"'
 							}
 						}
 					});
@@ -136,7 +91,7 @@ module.exports = function(grunt) {
 						});
 
 						// Push style task
-						style.tasks.push('less:' + taskName);
+						config.style.tasks.push('less:' + taskName);
 					}
 
 					// Push to conversion array
