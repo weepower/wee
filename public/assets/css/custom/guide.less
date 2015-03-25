@@ -23,6 +23,7 @@ body {
 	.border(bottom; none);
 	&.\--guide {
 		.background-gradient(@colorBlue; @colorBlue; @colorTeal; 150);
+		.spaced(2);
 	}
 }
 
@@ -147,12 +148,13 @@ code.hljs {
 .color {
 	.align(center);
 	.font-size(1.2);
-	.inline-block();
-	.margin(right; .8);
+	.inline-block(13);
+	.margin(right; 1);
 	.spaced(2);
 	&:before {
 		.black();
-		.block(9.2; 4);
+		.block();
+		.height(4);
 		.line-height(40px);
 		.rounded();
 	}

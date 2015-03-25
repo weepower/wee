@@ -36,9 +36,7 @@
 			"template": "default",
 			"target": "elements.html",
 			"content": [
-				"content/elements/table.md",
-				"content/elements/figure.md",
-				"content/elements/code.md"
+				"content/elements/*.md"
 			]
 		},
 		"forms": {
@@ -46,26 +44,25 @@
 			"template": "default",
 			"target": "forms.html",
 			"content": [
-				"content/forms/inputs.md",
-				"content/forms/selects.md",
-				"content/forms/buttons.md"
+				"content/forms/*.md"
 			]
 		},
 		"typography": {
 			"name": "Typography",
 			"template": "default",
 			"target": "typography.html",
+			"contentRoot": "content/typography/",
 			"content": [
-				"content/typography/fonts.md",
-				"content/typography/paragraph.md",
-				"content/typography/headings.md",
-				"content/typography/subheadings.md",
-				"content/typography/inline.md",
-				"content/typography/unordered.md",
-				"content/typography/ordered.md",
-				"content/typography/description.md",
-				"content/typography/blockquote.md",
-				"content/typography/address.md"
+				"fonts.md",
+				"paragraph.md",
+				"headings.md",
+				"subheadings.md",
+				"inline.md",
+				"unordered.md",
+				"ordered.md",
+				"description.md",
+				"blockquote.md",
+				"address.md"
 			]
 		}
 	}
