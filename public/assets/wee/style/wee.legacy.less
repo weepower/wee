@@ -50,6 +50,9 @@ html {
 	font-family: "'@{ieBreakpoint}'";
 }
 
+// Module responsive
+{{moduleResponsive}}
+
 .responsive () when (@responsiveEnabled = true) {
 	.check () when (@ieBreakpoint > 1) {
 		@temp: @mobileLandscapeWidth;
@@ -79,11 +82,8 @@ html {
 
 .responsive();
 
-// Framework
-@legacyMode: true;
-
 // Inject imports
 {{imports}}
 
-// Module responsive
-{{moduleResponsive}}
+// Framework
+@legacyMode: true;

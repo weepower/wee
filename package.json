@@ -1,6 +1,6 @@
 {
 	"name": "wee",
-	"version": "2.1.1",
+	"version": "2.2.0-rc.1",
 	"description": "Blueprint for modern web development",
 	"homepage": "https://www.weepower.com",
 	"keywords": [
@@ -27,12 +27,12 @@
 	"devDependencies": {
 		"grunt": "~0.4.5",
 		"grunt-contrib-concat": "~0.5.1",
-		"grunt-contrib-imagemin": "~0.9.3",
+		"grunt-contrib-imagemin": "~0.9.4",
 		"grunt-contrib-less": "~1.0.0",
 		"grunt-contrib-uglify": "~0.8.0",
 		"grunt-contrib-watch": "~0.6.1",
 		"grunt-newer": "~1.1.0",
-		"browser-sync": "~2.2.4",
+		"browser-sync": "~2.4.0",
 		"html-minifier": "~0.7.0",
 		"js-yaml": "~3.2.7",
 		"jscs": "~1.11.3",
