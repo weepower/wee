@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 			return (match * rootValue) + 'px';
 		}).replace(/opacity:([.\d]+)/gi, function(str, match) {
 			return 'filter:alpha(opacity=' + Math.round((match * 100) * 100 / 100) + ');';
-		});
+		}).replace(/::/g, ':');
 
 		grunt.file.write(dest, content);
 	});
