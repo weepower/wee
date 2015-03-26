@@ -57,7 +57,7 @@ module.exports = function(grunt) {
 					target = path.join(staticRoot, target);
 
 					// Target writing function
-					var writeTarget = function() {
+					var writeTarget = function(target, data) {
 						// Add parent reference
 						if (parent) {
 							data.parent = parent;
@@ -353,13 +353,16 @@ module.exports = function(grunt) {
 						data.url = path.join(site.domain || '', uri);
 
 						if (single === true) {
-							target = Wee.view.render(target, obj);
-							writeTarget();
+							var dest = Wee.view.render(target, obj);
+
+							writeTarget(dest, Wee.$extend(data, {
+								content: [obj]
+							}));
 						}
 					});
 
 					if (single === false) {
-						writeTarget();
+						writeTarget(target, data);
 					}
 				});
 			});
