@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 			response.on('end', function() {
 				var data = JSON.parse(json);
 
-				if (version < data.version) {
+				if (version.replace(/[^\d\.]/g, '') < data.version) {
 					var current = version.split('.'),
 						update = data.version.split('.'),
 						type = 'patch';
