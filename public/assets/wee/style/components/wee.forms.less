@@ -133,15 +133,12 @@
 		.input();
 	}
 	input[type='search'] {
-		-moz-box-sizing: content-box;
 		-webkit-appearance: textfield;
-		-webkit-box-sizing: content-box;
-		box-sizing: content-box;
-	}
-	input[type='search']::-webkit-search-decoration,
-	input[type='search']::-webkit-search-cancel-button {
-		-webkit-appearance: none;
-		display: none;
+		&::-webkit-search-decoration,
+		&::-webkit-search-cancel-button {
+			-webkit-appearance: none;
+			display: none;
+		}
 	}
 	button,
 	html input[type='button'],
