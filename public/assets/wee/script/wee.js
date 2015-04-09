@@ -257,10 +257,14 @@
 							var el = els[i];
 
 							if (el) {
-								W.$exec(fn, {
+								var val = W.$exec(fn, {
 									args: [el, i].concat(conf.args),
 									scope: conf.scope || el
 								});
+
+								if (val === false) {
+									return;
+								}
 							}
 						}
 					}
