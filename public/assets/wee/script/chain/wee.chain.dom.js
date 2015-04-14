@@ -57,7 +57,7 @@
 		},
 		css: function(a, b) {
 			var r = W.$css(this, a, b);
-			return b || W.$isObject(a) ? this : r;
+			return b !== U || W.$isObject(a) ? this : r;
 		},
 		data: function(key, value) {
 			var resp = W.$data(this, key, value);
