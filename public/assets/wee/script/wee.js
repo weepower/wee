@@ -271,7 +271,7 @@
 				$env: function(rules, fallback) {
 					if (rules) {
 						W.$set('_env', function() {
-							var env = fallback,
+							var env = fallback || 'local',
 								host = location.host;
 
 							for (var rule in rules) {
