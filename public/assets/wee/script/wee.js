@@ -588,7 +588,7 @@
 					return [_store[key], segs[1]];
 				},
 				_contains: function(source, target) {
-					return (Wee._legacy && source === D ? W._html : source).contains(target);
+					return (source === D ? W._html : source).contains(target);
 				},
 				// Execute specified function when document is ready
 				ready: function(fn) {
