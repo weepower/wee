@@ -136,7 +136,7 @@ module.exports = function(grunt) {
 	global.reloadPaths = [];
 	global.legacyBuild = [];
 	global.legacyConvert = [];
-	global.version = '2.2.2';
+	global.version = '2.3.0';
 
 	grunt.initConfig({
 		less: {
@@ -203,17 +203,12 @@ module.exports = function(grunt) {
 		},
 		imagemin: {
 			options: {
-				plugins: [
+				svgoPlugins: [
 					{
 						removeViewBox: false
 					},
 					{
 						convertPathData: false
-					}
-				],
-				svgoPlugins: [
-					{
-						removeViewBox: false
 					}
 				]
 			},
