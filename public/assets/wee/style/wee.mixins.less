@@ -939,6 +939,59 @@
 
 
 /*------------------------------------*\
+	# CSS Columns
+\*------------------------------------*/
+
+.columns (@count: 2; ...) {
+	.columns-count(@count);
+}
+.columns (@count; @gap; ...) {
+	.columns-gap(@gap);
+}
+.columns (@count; @gap; @style; @width: 1px) {
+	.columns-style(@style);
+	.columns-width(@width);
+}
+.columns-count (@value) {
+	-moz-column-count: @value;
+	-webkit-column-count: @value;
+	column-count: @value;
+}
+.columns-gap (@value) when not (@value = false) {
+	.check () when (isunit(@value, '')) {
+		@temp: unit(@value, @defaultUnit);
+	}
+	.check () when (default()) {
+		@temp: @value;
+	}
+	.check();
+	-moz-column-gap: @temp;
+	-webkit-column-gap: @temp;
+	column-gap: @temp;
+}
+.columns-style (@value) when not (@value = false) {
+	-moz-column-rule-style: @value;
+	-webkit-column-rule-style: @value;
+	column-rule-style: @value;
+}
+.columns-width (@value) when not (@value = false) {
+	.check () when (isunit(@value, '')) {
+		@temp: unit(@value, @defaultUnit);
+	}
+	.check () when (default()) {
+		@temp: @value;
+	}
+	.check();
+	-moz-column-rule-width: @temp;
+	-webkit-column-rule-width: @temp;
+	column-rule-width: @temp;
+}
+
+
+
+
+
+/*------------------------------------*\
 	# Display
 \*------------------------------------*/
 
@@ -2305,7 +2358,7 @@
 	-webkit-transition: ~'@{value}';
 	transition: ~'@{value}';
 }
-.transition (@property: all; @duration: @defaultDuration; @ease: ease-in-out; @delay: 0s)
+.transition (@property: all; @duration: @defaultDuration; @ease: @defaultTiming; @delay: 0s)
 		when (default()) {
 	.transition('@{arguments}');
 }
@@ -2321,7 +2374,7 @@
 	-webkit-transition-property: @duration;
 	transition-property: @duration;
 }
-.transition-timing-function (@function: ease) {
+.transition-timing-function (@function: @defaultTiming) {
 	-webkit-transition-timing-function: @duration;
 	transition-timing-function: @duration;
 }
