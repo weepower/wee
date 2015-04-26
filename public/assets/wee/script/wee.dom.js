@@ -28,6 +28,10 @@
 		$after: function(target, source, remove) {
 			var func = W._canExec(source);
 
+			if (typeof source == 'string') {
+				source = W.$parseHTML(source);
+			}
+
 			W.$each(target, function(el, i) {
 				var aft = func ?
 					W.$exec(source, {
@@ -37,17 +41,15 @@
 					source;
 
 				if (aft) {
-					typeof aft == 'string' ?
-						el.insertAdjacentHTML('afterend', aft) :
-						W.$each(aft, function(cel) {
-							if (i > 0) {
-								cel = W.$clone(cel)[0];
-							}
+					W.$each(aft, function(cel) {
+						if (i > 0) {
+							cel = W.$clone(cel)[0];
+						}
 
-							el.parentNode.insertBefore(cel, el.nextSibling);
-						}, {
-							reverse: true
-						});
+						el.parentNode.insertBefore(cel, el.nextSibling);
+					}, {
+						reverse: true
+					});
 				}
 
 				if (remove) {
@@ -59,6 +61,10 @@
 		$append: function(target, source) {
 			var func = W._canExec(source);
 
+			if (typeof source == 'string') {
+				source = W.$parseHTML(source);
+			}
+
 			W.$each(target, function(el, i) {
 				var app = func ?
 					W.$exec(source, {
@@ -68,11 +74,9 @@
 					source;
 
 				if (app) {
-					typeof app == 'string' ?
-						el.innerHTML = el.innerHTML + app :
-						W.$each(app, function(cel) {
-							el.appendChild(cel);
-						});
+					W.$each(app, function(cel) {
+						el.appendChild(cel);
+					});
 				}
 			});
 		},
@@ -105,6 +109,10 @@
 		$before: function(target, source, remove) {
 			var func = W._canExec(source);
 
+			if (typeof source == 'string') {
+				source = W.$parseHTML(source);
+			}
+
 			W.$each(target, function(el, i) {
 				var bef = func ?
 					W.$exec(source, {
@@ -114,17 +122,15 @@
 					source;
 
 				if (bef) {
-					typeof bef == 'string' ?
-						el.insertAdjacentHTML('beforebegin', bef) :
-						W.$each(bef, function(cel) {
-							if (i > 0) {
-								cel = W.$clone(cel)[0];
-							}
+					W.$each(bef, function(cel) {
+						if (i > 0) {
+							cel = W.$clone(cel)[0];
+						}
 
-							el.parentNode.insertBefore(cel, el);
-						}, {
-							reverse: true
-						});
+						el.parentNode.insertBefore(cel, el);
+					}, {
+						reverse: true
+					});
 				}
 
 				if (remove) {
@@ -559,7 +565,7 @@
 
 			el.innerHTML = html;
 
-			var children = W.$children(el);
+			var children = W._slice.call(el.children.length ? el.children : el.childNodes);
 
 			return convert ? W._win[WeeAlias](children) : children;
 		},
@@ -577,6 +583,10 @@
 		$prepend: function(target, source) {
 			var func = W._canExec(source);
 
+			if (typeof source == 'string') {
+				source = W.$parseHTML(source);
+			}
+
 			W.$each(target, function(el, i) {
 				var pre = func ?
 					W.$exec(source, {
@@ -586,11 +596,9 @@
 					source;
 
 				if (pre) {
-					typeof pre == 'string' ?
-						el.innerHTML = source + el.innerHTML :
-						W.$each(source, function(cel) {
-							el.insertBefore(cel, el.firstChild);
-						});
+					W.$each(source, function(cel) {
+						el.insertBefore(cel, el.firstChild);
+					});
 				}
 			});
 		},
