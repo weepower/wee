@@ -17,6 +17,7 @@
 	"disallowMixedSpacesAndTabs": "smart",
 	"disallowMultipleLineBreaks": true,
 	"disallowMultipleLineStrings": true,
+	"disallowMultipleSpaces": true,
 	"disallowPaddingNewlinesInBlocks": true,
 	"disallowSpaceAfterPrefixUnaryOperators": [
 		"++",
@@ -52,6 +53,14 @@
 	"disallowYodaConditions": true,
 	"requireBlocksOnNewline": true,
 	"requireCamelCaseOrUpperCaseIdentifiers": true,
+	"requireCapitalizedComments": {
+		"allExcept": [
+			"exported",
+			"falls",
+			"global",
+			"jshint"
+		]
+	},
 	"requireCapitalizedConstructors": true,
 	"requireCommaBeforeLineBreak": true,
 	"requireCurlyBraces": [
@@ -63,6 +72,7 @@
 		"try",
 		"catch"
 	],
+	"requireDollarBeforejQueryAssignment": true,
 	"requireDotNotation": true,
 	"requireLineBreakAfterVariableAssignment": true,
 	"requireMultipleVarDecl": true,
@@ -75,8 +85,12 @@
 		"try",
 		"while"
 	],
+	"requirePaddingNewLinesBeforeLineComments": {
+		"allExcept": "firstAfterCurly"
+	},
 	"requirePaddingNewLinesInObjects": true,
 	"requireParenthesesAroundIIFE": true,
+	"requireSemicolons": true,
 	"requireSpaceAfterBinaryOperators": true,
 	"requireSpaceAfterKeywords": [
 		"do",
