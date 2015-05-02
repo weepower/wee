@@ -7,8 +7,29 @@
 
 	var web = typeof window != 'undefined',
 		W = (function() {
-			var _store = {},
-				D = web ? document : {};
+			// Determine if value can be executed
+			// Returns boolean
+			var store = {},
+				D = web ? document : {},
+				// Determine data storage root and key
+				// Returns array
+				storeData = function(key) {
+					if (key.indexOf(':') < 0) {
+						return [store, key];
+					}
+
+					var segs = key.split(':');
+					key = segs[0];
+
+					if (! store.hasOwnProperty(key)) {
+						store[key] = [];
+					}
+
+					return [store[key], segs[1]];
+				},
+				contains = function(source, target) {
+					return (source === D ? W._html : source).contains(target);
+				};
 
 			return {
 				_body: D.body,
@@ -73,7 +94,7 @@
 
 							Private.$public = Public;
 
-							_store[name] = {};
+							store[name] = {};
 
 							if (Public._construct !== U) {
 								Public._construct();
@@ -140,7 +161,7 @@
 											context === D ?
 												sel :
 												sel.filter(function(el) {
-													return W._contains(context, el);
+													return contains(context, el);
 												})
 										);
 									}
@@ -199,7 +220,7 @@
 				// Options can be passed if value is a callback
 				// Returns mixed
 				$set: function(key, value, options) {
-					var split = W._storeData(key),
+					var split = storeData(key),
 						set = W._canExec(value) || options ?
 							W.$exec(value, options) :
 							value;
@@ -214,7 +235,7 @@
 				// Returns mixed
 				$get: function(key, fallback, set, options) {
 					if (key) {
-						var split = W._storeData(key),
+						var split = storeData(key),
 							root = split[0];
 						key = split[1];
 
@@ -237,7 +258,7 @@
 						return null;
 					}
 
-					return _store;
+					return store;
 				},
 				// Execute function for each matching selection
 				// Options include arguments, reverse, context, and scope
@@ -426,7 +447,7 @@
 				// Push value into global array
 				// Returns array
 				$push: function(key, a, b) {
-					var split = W._storeData(key),
+					var split = storeData(key),
 						root = split[0];
 					key = split[1];
 
@@ -469,7 +490,7 @@
 					if (sets) {
 						Object.keys(sets).forEach(function(key) {
 							W.$set('ref:' + key, sets[key].filter(function(el) {
-								return ! (! W._contains(D, el) || (W._contains(context, el) && context !== el));
+								return ! (! W._contains(D, el) || (W.contains(context, el) && context !== el));
 							}));
 						});
 					}
@@ -544,8 +565,7 @@
 				},
 				// Fallback for non-existent chaining
 				$chain: function() {},
-				// Determine if value can be executed
-				// Returns boolean
+				// Determine if value can be executed as a function
 				_canExec: function(value) {
 					if (typeof value == 'string' && value.indexOf(':') > -1) {
 						var split = value.split(':'),
@@ -570,25 +590,6 @@
 					var el = typeof selector == 'string' ? W.$(selector, options.context) : selector;
 
 					return el ? W.$toArray(el) : [];
-				},
-				// Determine data storage root and key
-				// Returns array
-				_storeData: function(key) {
-					if (key.indexOf(':') < 0) {
-						return [_store, key];
-					}
-
-					var segs = key.split(':');
-					key = segs[0];
-
-					if (! _store.hasOwnProperty(key)) {
-						_store[key] = [];
-					}
-
-					return [_store[key], segs[1]];
-				},
-				_contains: function(source, target) {
-					return (source === D ? W._html : source).contains(target);
 				},
 				// Execute specified function when document is ready
 				ready: function(fn) {
