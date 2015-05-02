@@ -85,9 +85,7 @@
 		"try",
 		"while"
 	],
-	"requirePaddingNewLinesBeforeLineComments": {
-		"allExcept": "firstAfterCurly"
-	},
+	"requirePaddingNewLinesAfterUseStrict": true,
 	"requirePaddingNewLinesInObjects": true,
 	"requireParenthesesAroundIIFE": true,
 	"requireSemicolons": true,
@@ -133,6 +131,10 @@
 	},
 	"requireSpacesInNamedFunctionExpression": {
 		"beforeOpeningCurlyBrace": true
+	},
+	"validateAlignedFunctionParameters": {
+		"lineBreakAfterOpeningBraces": true,
+		"lineBreakBeforeClosingBraces": true
 	},
 	"validateIndentation": "\t",
 	"validateLineBreaks": "LF",
