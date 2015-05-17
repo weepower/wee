@@ -5,7 +5,13 @@
 		"root": "public",
 		"assets": "assets"
 	},
+	"data": {
+
+	},
 	"style": {
+		"data": {
+
+		},
 		"core": {
 			"buttons": true,
 			"code": true,
@@ -46,6 +52,9 @@
 		}
 	},
 	"script": {
+		"data": {
+
+		},
 		"core": {
 			"enable": true,
 			"features": {
@@ -93,6 +102,9 @@
 		"ghostMode": true,
 		"host": "auto",
 		"port": 9000,
+		"inject": [
+
+		],
 		"reload": {
 			"enable": true,
 			"watch": {
