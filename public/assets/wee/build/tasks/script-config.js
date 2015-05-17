@@ -9,6 +9,20 @@ module.exports = function(grunt) {
 
 			config.script.files.push(weeScriptRoot + 'wee.js');
 
+			// Set global data variables
+			if (
+				(project.data && Object.keys(project.data).length) ||
+				(project.script.data && Object.keys(project.script.data).length)
+			) {
+				var weeScriptGlobal = config.paths.temp + '/data.js',
+					configVars = Wee.$extend(project.data, project.script.data || {}),
+					script = 'Wee.$set("global", ' + JSON.stringify(configVars) + ');';
+
+				grunt.file.write(weeScriptGlobal, script);
+
+				config.script.files.push(weeScriptGlobal);
+			}
+
 			if (features.chain === true) {
 				config.script.files.push(weeScriptRoot + 'wee.chain.js');
 			}
