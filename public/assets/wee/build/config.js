@@ -15,10 +15,10 @@ global.JSCS = require('jscs');
 
 Wee.fn.extend({
 	// Build root or relative path
-	buildPath: function(path, file) {
+	buildPath: function(loc, file) {
 		return file.substring(0, 2) == './' ?
 			file :
-			global.path.join(path, file);
+			path.join(loc, file);
 	},
 	// Append minified extension
 	getMinifiedExtension: function(dest, src, ext) {
@@ -174,6 +174,11 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify: {
+			options: {
+				compress: {
+					drop_debugger: false
+				}
+			},
 			core: {
 				files: [{
 					dest: '<%= config.paths.js %>/script.min.js',
