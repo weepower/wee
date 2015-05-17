@@ -101,5 +101,21 @@ module.exports = function(grunt) {
 			// Push style task
 			config.style.tasks.push('less:' + taskName);
 		}
+
+		// Set global data variables
+		if (
+			(project.data && Object.keys(project.data).length) ||
+			(project.style.data && Object.keys(project.style.data).length)
+		) {
+			var configVars = Wee.$extend(project.data, project.style.data || {});
+
+			for (var key in configVars) {
+				var value = configVars[key];
+
+				if (typeof value == 'string') {
+					config.style.vars[key] = value;
+				}
+			}
+		}
 	});
 };
