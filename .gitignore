@@ -11,7 +11,7 @@
 
 node_modules
 bower_components
-**/wee/temp
+**/wee/temp/*
 
 
 #------------------------------------
@@ -48,6 +48,7 @@ Thumbs.db
 *.lock
 *.vi
 *.pid
+error_log
 
 
 #------------------------------------
