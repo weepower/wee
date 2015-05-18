@@ -81,6 +81,20 @@ module.exports = function(grunt) {
 					}
 
 					if (module.script) {
+						// Set global data variables
+						if (
+							(module.data && Object.keys(module.data).length) ||
+							(module.script.data && Object.keys(module.script.data).length)
+						) {
+							var weeScriptGlobal = config.paths.temp + '/' + name + '.data.js',
+								configVars = Wee.$extend(module.data, module.script.data || {}),
+								script = 'Wee.$set("' + name + ':global", ' + JSON.stringify(configVars) + ');';
+
+							grunt.file.write(weeScriptGlobal, script);
+
+							moduleScript.unshift(weeScriptGlobal);
+						}
+
 						// Build additional script
 						if (module.script.build) {
 							module.script.build.forEach(function(filepath) {
@@ -189,6 +203,22 @@ module.exports = function(grunt) {
 
 					// Write temporary file
 					grunt.file.write(config.paths.temp + name + '.less', less);
+
+					// Set global data variables
+					if (
+						(module.data && Object.keys(module.data).length) ||
+						(module.style.data && Object.keys(module.style.data).length)
+					) {
+						var configVars = Wee.$extend(module.data, module.style.data || {});
+
+						for (var key in configVars) {
+							var value = configVars[key];
+
+							if (typeof value == 'string') {
+								vars[key] = value;
+							}
+						}
+					}
 
 					// Create module style compile task
 					var dest = (module.autoload === true) ?
