@@ -380,29 +380,31 @@ module.exports = function(grunt) {
 			keys.forEach(function(key) {
 				var block = context[key];
 
-				Wee.$toArray(block.content).forEach(function(value, i) {
-					if (value.substring(0, 4) == 'http') {
-						var filename = '/remote-' + remoteIndex + '.html',
-							absolutePath = tempPath + filename,
-							relativePath = './' + path.relative(
-								configPath,
-								tempPath
-							) + filename;
+				if (block.content) {
+					Wee.$toArray(block.content).forEach(function(value, i) {
+						if (value.substring(0, 4) == 'http') {
+							var filename = '/remote-' + remoteIndex + '.html',
+								absolutePath = tempPath + filename,
+								relativePath = './' + path.relative(
+									configPath,
+									tempPath
+								) + filename;
 
-						remoteUrls.push([
-							value,
-							absolutePath
-						]);
-						remoteIndex++;
+							remoteUrls.push([
+								value,
+								absolutePath
+							]);
+							remoteIndex++;
 
-						// Inject temp path into content value
-						if (typeof block.content == 'string') {
-							block.content = relativePath;
-						} else {
-							block.content[i] = path.resolve(configPath, relativePath);
+							// Inject temp path into content value
+							if (typeof block.content == 'string') {
+								block.content = relativePath;
+							} else {
+								block.content[i] = path.resolve(configPath, relativePath);
+							}
 						}
-					}
-				});
+					});
+				}
 
 				if (block.sections) {
 					getRemotePaths(block.sections);
