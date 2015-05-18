@@ -1,6 +1,6 @@
 {
 	"name": "Project Name",
-	"description": "Project description.",
+	"description": "Project description",
 	"paths": {
 		"root": "public",
 		"assets": "assets"

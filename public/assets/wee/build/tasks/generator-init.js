@@ -1,4 +1,4 @@
-/* global path, project, reloadPaths */
+/* global module, path, project, reloadPaths */
 
 module.exports = function(grunt) {
 	grunt.registerTask('initGenerator', function(task) {

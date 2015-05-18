@@ -1,6 +1,6 @@
 {
 	"name": "Project Style Guide",
-	"description": "Project style guide description.",
+	"description": "Project style guide description",
 	"config": {
 		"watch": true,
 		"minify": true,
@@ -35,17 +35,13 @@
 			"name": "Elements",
 			"template": "default",
 			"target": "elements.html",
-			"content": [
-				"content/elements/*.md"
-			]
+			"content": "content/elements/*.md"
 		},
 		"forms": {
 			"name": "Forms",
 			"template": "default",
 			"target": "forms.html",
-			"content": [
-				"content/forms/*.md"
-			]
+			"content": "content/forms/*.md"
 		},
 		"typography": {
 			"name": "Typography",
@@ -62,7 +58,8 @@
 				"ordered.md",
 				"description.md",
 				"blockquote.md",
-				"address.md"
+				"address.md",
+				"*.md"
 			]
 		}
 	}

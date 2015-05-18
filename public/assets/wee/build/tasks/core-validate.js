@@ -1,4 +1,4 @@
-/* global config, module */
+/* global config, module, path */
 
 module.exports = function(grunt) {
 	grunt.registerTask('runValidation', function() {

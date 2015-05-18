@@ -1,15 +1,16 @@
-/* global config, legacy, legacyConvert, module, moduleResponsive, path, project */
+/* global config, global, legacyConvert, module, moduleResponsive, path, project */
 
 module.exports = function(grunt) {
 	grunt.registerTask('buildLegacy', function() {
-		legacy = project.style.legacy;
+		var legacy = project.style.legacy;
+		global.legacy = legacy;
 
 		// Ensure legacy support is enabled
 		if (legacy.enable === true) {
 			var styleRoot = config.paths.assets + '/css',
 				legacyTemp = config.paths.temp + 'wee.legacy.less',
 				less = grunt.file.read(config.paths.assets + '/wee/style/wee.legacy.less'),
-				dest = dest = Wee.buildPath(styleRoot, legacy.dest),
+				dest = Wee.buildPath(styleRoot, legacy.dest),
 				imports = [];
 
 			// Build configured

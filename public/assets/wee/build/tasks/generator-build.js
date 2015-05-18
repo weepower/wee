@@ -1,4 +1,4 @@
-/* global browserSync, module, path, project */
+/* global browserSync, config, module, path, project */
 
 module.exports = function(grunt) {
 	var fs = require('fs'),
@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 			build = Wee.$toArray(project.generator.build),
 			configPath = build[task],
 			json = grunt.file.readJSON(configPath),
-			config = json.config,
+			siteConfig = json.config,
 			staticRoot = path.dirname(configPath),
 			site = Wee.$extend(json.data, {
 				config: config,
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 		// Setup CommonMark parser
 		var md = new Remarkable({
 			html: true,
-			typographer: config.enhanceTypography || false
+			typographer: siteConfig.enhanceTypography || false
 		});
 
 		// Merge in environment data
@@ -40,10 +40,10 @@ module.exports = function(grunt) {
 			var keys = Object.keys(context);
 
 			// Loop though sections in current context
-			keys.forEach(function(key) {
+			keys.forEach(function(key, keyIndex) {
 				var block = context[key],
 					root = block.contentRoot || '',
-					template = grunt.file.read(Wee.buildPath(staticRoot, config.paths.templates + '/' + block.template + '.html')),
+					template = grunt.file.read(Wee.buildPath(staticRoot, siteConfig.paths.templates + '/' + block.template + '.html')),
 					content = block.content ? grunt.file.expand({
 						cwd: path.join(staticRoot, root)
 					}, block.content) : [],
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
 						var output = Wee.view.render(template, data);
 
 						// Minify rendered output
-						if (config.minify === true) {
+						if (siteConfig.minify === true) {
 							try {
 								var minify = require('html-minifier').minify;
 
@@ -146,33 +146,11 @@ module.exports = function(grunt) {
 					data.content = [];
 
 					content.forEach(function(name, i) {
-						var template = '';
-
-						if (name.substring(0, 4) == 'http') {
-							var request = name.substring(4, 5) == 's' ?
-									require('https') :
-									require('http'),
-								done = scope.async();
-
-							request.get(name, function(response) {
-								var body = '';
-
-								response.on('data', function(d) {
-									body += d;
-								});
-
-								response.on('end', function() {
-									template = body;
-									done();
-								});
-							});
-						} else {
-							var src = Wee.buildPath(staticRoot, root + '/' + name);
-
-							template = grunt.file.read(src);
-						}
-
-						var fileSegments = name.replace(/^.*[\\\/]/, '').split('.');
+						var src = path.isAbsolute(name) ?
+								name :
+								Wee.buildPath(staticRoot, root + '/' + name),
+							template = grunt.file.read(src),
+							fileSegments = name.replace(/^.*[\\\/]/, '').split('.');
 
 						fileSegments.splice(-1, 1);
 
@@ -184,6 +162,8 @@ module.exports = function(grunt) {
 							sourceFile: name.replace(/^.*[\\\/]/, ''),
 							sourceName: fileSegments.join('.'),
 							name: fileSegments.join('.'),
+							created: fs.statSync(src).ctime.getTime(),
+							modified: fs.statSync(src).mtime.getTime(),
 							original: template,
 							input: '',
 							blocks: []
@@ -340,17 +320,36 @@ module.exports = function(grunt) {
 						// Set current target, path, and URL
 						var uri = target.replace(project.paths.root, '');
 
-						if (config.removeIndex) {
+						if (siteConfig.removeIndex) {
 							uri = uri.replace('index.html', '');
 						}
 
-						if (config.removeTrailingSlashes === true) {
+						if (siteConfig.removeTrailingSlashes === true) {
 							uri = uri.replace(/\/$/, '');
 						}
 
 						data.target = block.target;
 						data.path = uri;
 						data.url = path.join(site.domain || '', uri);
+
+						// Handle block ordering and sorting
+						if (block.order) {
+							data.content.sort(function(a, b) {
+								if (a[block.order] < b[block.order]) {
+									return -1;
+								}
+
+								if (a[block.order] > b[block.order]) {
+									return 1;
+								}
+
+								return 0;
+							});
+						}
+
+						if (block.sort == 'desc') {
+							data.content.reverse();
+						}
 
 						if (single === true) {
 							var dest = Wee.view.render(target, obj);
@@ -368,7 +367,96 @@ module.exports = function(grunt) {
 			});
 		};
 
-		processSection(json.sections);
+		var tempPath = config.paths.temp,
+			remoteUrls = [],
+			remotesDownloaded = 0,
+			remoteIndex = 1,
+			done;
+
+		// Extract remote URLs
+		var getRemotePaths = function(context) {
+			var keys = Object.keys(context);
+
+			keys.forEach(function(key) {
+				var block = context[key];
+
+				Wee.$toArray(block.content).forEach(function(value, i) {
+					if (value.substring(0, 4) == 'http') {
+						var filename = '/remote-' + remoteIndex + '.html',
+							absolutePath = tempPath + filename,
+							relativePath = './' + path.relative(
+								configPath,
+								tempPath
+							) + filename;
+
+						remoteUrls.push([
+							value,
+							absolutePath
+						]);
+						remoteIndex++;
+
+						// Inject temp path into content value
+						if (typeof block.content == 'string') {
+							block.content = relativePath;
+						} else {
+							block.content[i] = path.resolve(configPath, relativePath);
+						}
+					}
+				});
+
+				if (block.sections) {
+					getRemotePaths(block.sections);
+				}
+			});
+		};
+
+		getRemotePaths(json.sections);
+
+		// Download all available remote content
+		if (remoteUrls.length) {
+			done = this.async();
+
+			// Create remote cache directory
+			grunt.file.mkdir(path.normalize(tempPath));
+
+			var cacheRemote = function(i) {
+				var arr = remoteUrls[i],
+					url = arr[0],
+					http = url.substring(4, 5) == 's' ?
+						require('https') :
+						require('http'),
+					tempFile = fs.createWriteStream(arr[1]);
+
+				http.get(url, function(res) {
+					res.on('data', function(chunk) {
+						tempFile.write(chunk);
+					}).on('end', function() {
+						tempFile.end();
+
+						remotesDownloaded++;
+
+						// Continue processing if all remotes have been downloaded
+						if (remotesDownloaded === remoteUrls.length) {
+							processSection(json.sections);
+							done();
+						} else {
+							cacheRemote(i + 1);
+						}
+					});
+				}).on('error', function() {
+					Wee.notify({
+						title: 'Generation Error',
+						message: 'There was a problem downloading ' + url
+					}, 'error');
+
+					fs.unlink(dest);
+				});
+			};
+
+			cacheRemote(0);
+		} else {
+			processSection(json.sections);
+		}
 
 		// Reload browsers
 		browserSync.reload();

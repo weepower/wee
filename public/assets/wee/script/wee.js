@@ -94,7 +94,7 @@
 
 							Private.$public = Public;
 
-							store[name] = {};
+							store[name] = store[name] || {};
 
 							if (Public._construct !== U) {
 								Public._construct();

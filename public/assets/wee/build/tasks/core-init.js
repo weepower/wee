@@ -1,11 +1,10 @@
-/* global config, configPath, module, path, project */
+/* global config, configPath, global, module, path */
 
 module.exports = function(grunt) {
 	grunt.registerTask('init', function() {
-		project = grunt.file.readJSON(configPath);
-
 		// Reset config object and set core paths
-		var rootPath = project.paths.root,
+		var project = grunt.file.readJSON(configPath),
+			rootPath = project.paths.root,
 			assetPath = path.normalize(
 				rootPath !== '' ?
 					rootPath + '/' + project.paths.assets :
@@ -14,11 +13,13 @@ module.exports = function(grunt) {
 			weePath = assetPath + '/wee/',
 			tempPath = weePath + 'temp/';
 
-		config = {
+		global.project = project;
+
+		global.config = {
 			path: configPath,
 			paths: {
 				assets: assetPath,
-				css: assetPath +  '/css',
+				css: assetPath + '/css',
 				js: assetPath + '/js',
 				modules: assetPath + '/modules',
 				root: './' + rootPath,
