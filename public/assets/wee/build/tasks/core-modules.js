@@ -1,4 +1,4 @@
-/* global legacyConvert, module, moduleResponsive, project, script */
+/* global legacyConvert, module, moduleLegacy, project, script */
 
 module.exports = function(grunt) {
 	grunt.registerTask('configModules', function() {
@@ -144,57 +144,54 @@ module.exports = function(grunt) {
 						if (fs.existsSync(modulePath + '/module/style/breakpoints')) {
 							vars.responsive = true;
 
-							responsive += ' \
-								.wee-mobile-landscape () when not (@mobileLandscapeWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/mobile-landscape.less";\n\
-								}\n\
-								.wee-tablet-portrait () when not (@tabletPortraitWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/tablet-portrait.less";\n\
-								}\n\
-								.wee-desktop-small () when not (@desktopSmallWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-small.less";\n\
-								}\n\
-								.wee-desktop-medium () when not (@desktopMediumWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-medium.less";\n\
-								}\n\
-								.wee-desktop-large () when not (@desktopLargeWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-large.less";\n\
-								}\n\
-							';
+							responsive +=
+								'.wee-mobile-landscape () when not (@mobileLandscapeWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/module/style/breakpoints/mobile-landscape.less";\n' +
+								'}\n' +
+								'.wee-tablet-portrait () when not (@tabletPortraitWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/module/style/breakpoints/tablet-portrait.less";\n' +
+								'}\n' +
+								'.wee-desktop-small () when not (@desktopSmallWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-small.less";\n' +
+								'}\n' +
+								'.wee-desktop-medium () when not (@desktopMediumWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-medium.less";\n' +
+								'}\n' +
+								'.wee-desktop-large () when not (@desktopLargeWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/module/style/breakpoints/desktop-large.less";\n' +
+								'}\n';
 						}
 
 						if (fs.existsSync(modulePath + '/css/breakpoints')) {
 							vars.responsive = true;
 
-							responsive += ' \
-								.wee-mobile-landscape () when not (@mobileLandscapeWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/css/breakpoints/mobile-landscape.less";\n\
-								}\n\
-								.wee-tablet-portrait () when not (@tabletPortraitWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/css/breakpoints/tablet-portrait.less";\n\
-								}\n\
-								.wee-desktop-small () when not (@desktopSmallWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-small.less";\n\
-								}\n\
-								.wee-desktop-medium () when not (@desktopMediumWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-medium.less";\n\
-								}\n\
-								.wee-desktop-large () when not (@desktopLargeWidth = false) {\n\
-									@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-large.less";\n\
-								}\n\
-							';
+							responsive +=
+								'.wee-mobile-landscape () when not (@mobileLandscapeWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/css/breakpoints/mobile-landscape.less";\n' +
+								'}\n' +
+								'.wee-tablet-portrait () when not (@tabletPortraitWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/css/breakpoints/tablet-portrait.less";\n' +
+								'}\n' +
+								'.wee-desktop-small () when not (@desktopSmallWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-small.less";\n' +
+								'}\n' +
+								'.wee-desktop-medium () when not (@desktopMediumWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-medium.less";\n' +
+								'}\n' +
+								'.wee-desktop-large () when not (@desktopLargeWidth = false) {\n' +
+								'	@import (optional) "../../modules/' + name + '/css/breakpoints/desktop-large.less";\n' +
+								'}\n';
 						}
 					}
 
 					// Inject empty mixins if no breakpoints exist
 					if (! vars.responsive) {
-						responsive += ' \
-							.wee-mobile-landscape () {}\n\
-							.wee-tablet-portrait () {}\n\
-							.wee-desktop-small () {}\n\
-							.wee-desktop-medium () {}\n\
-							.wee-desktop-large () {}\n\
-						';
+						responsive +=
+							'.wee-mobile-landscape () {}\n' +
+							'.wee-tablet-portrait () {}\n' +
+							'.wee-desktop-small () {}\n' +
+							'.wee-desktop-medium () {}\n' +
+							'.wee-desktop-large () {}\n';
 					}
 
 					// Process import injection
@@ -266,16 +263,15 @@ module.exports = function(grunt) {
 						// Add script paths to uglify
 						config.script.files = config.script.files.concat(moduleScript);
 
-						// Legacy processing
+						// Append legacy style
 						if (project.style.legacy.enable) {
-							moduleResponsive.push('@import (inline) "../temp/' + name + '.css";');
-							moduleResponsive.push(responsive);
+							moduleLegacy.push('@import (inline) "../temp/' + name + '-legacy.css";');
 						}
 
 						if (project.style.legacy.watch === true) {
 							// Configure legacy watch task
 							grunt.config.set('watch.' + name + '-legacy', {
-								files: modulePath + '/**/*.less',
+								files: config.paths.temp + '/' + taskName + '.css',
 								tasks: [
 									'less:legacy',
 									'convertLegacy:core',
@@ -306,43 +302,45 @@ module.exports = function(grunt) {
 
 						// Execute script task
 						grunt.task.run('uglify:' + name);
+					}
 
-						// Legacy processing
-						if (project.style.legacy.enable) {
-							var taskName = name + '-legacy';
-							dest = Wee.buildPath(modulePath, 'legacy.min.css');
+					// Legacy processing
+					if (project.style.legacy.enable) {
+						var taskName = name + '-legacy';
+						dest = module.autoload ?
+							config.paths.temp + '/' + taskName + '.css' :
+							Wee.buildPath(modulePath, 'legacy.min.css');
 
-							// Create legacy task
-							grunt.config.set('less.' + taskName, {
-								files: [{
-									dest: dest,
-									src: config.paths.wee + 'style/wee.module-legacy.less'
-								}],
-								options: {
-									modifyVars: vars,
-									globalVars: {
-										weePath: '"' + config.paths.weeTemp + '"'
-									}
+						// Create legacy task
+						grunt.config.set('less.' + taskName, {
+							files: [{
+								dest: dest,
+								src: config.paths.wee + 'style/wee.module-legacy.less'
+							}],
+							options: {
+								modifyVars: vars,
+								globalVars: {
+									weePath: '"' + config.paths.weeTemp + '"'
 								}
-							});
-
-							if (project.style.legacy.watch === true) {
-								// Configure legacy watch task
-								grunt.config.set('watch.' + taskName, {
-									files: modulePath + '/**/*.less',
-									tasks: [
-										'less:' + taskName,
-										'convertLegacy:' + taskName
-									]
-								});
 							}
+						});
 
-							// Push to conversion array
-							legacyConvert[taskName] = dest;
-
-							grunt.task.run('less:' + taskName);
-							grunt.task.run('convertLegacy:' + taskName);
+						if (project.style.legacy.watch === true) {
+							// Configure legacy watch task
+							grunt.config.set('watch.' + taskName, {
+								files: modulePath + '/**/*.less',
+								tasks: [
+									'less:' + taskName,
+									'convertLegacy:' + taskName
+								]
+							});
 						}
+
+						// Push to conversion array
+						legacyConvert[taskName] = dest;
+
+						grunt.task.run('less:' + taskName);
+						grunt.task.run('convertLegacy:' + taskName);
 					}
 				} else {
 					Wee.notify({

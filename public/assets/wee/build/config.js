@@ -136,12 +136,12 @@ Wee.fn.extend({
 module.exports = function(grunt) {
 	global.config = {};
 	global.server = {};
-	global.moduleResponsive = [];
+	global.moduleLegacy = [];
 	global.legacy = {};
 	global.reloadPaths = [];
 	global.legacyBuild = [];
 	global.legacyConvert = [];
-	global.version = '2.3.0';
+	global.version = '2.3.1';
 
 	grunt.initConfig({
 		less: {
