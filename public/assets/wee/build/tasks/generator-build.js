@@ -16,6 +16,7 @@ module.exports = function(grunt) {
 				config: config,
 				name: json.name,
 				description: json.description,
+				env: 'default',
 				time: new Date(),
 				sections: json.sections
 			}),
@@ -27,10 +28,14 @@ module.exports = function(grunt) {
 			typographer: siteConfig.enhanceTypography || false
 		});
 
-		// Merge in environment data
-		var env = grunt.option('env') || 'default';
+		// Merge default environment data
+		if (json.env.default) {
+			site = Wee.$extend(site, json.env.default);
+		}
 
-		if (json.env[env]) {
+		if (grunt.option('env')) {
+			var env = grunt.option('env');
+
 			site = Wee.$extend(site, json.env[env]);
 			site.env = env;
 		}
@@ -40,7 +45,7 @@ module.exports = function(grunt) {
 			var keys = Object.keys(context);
 
 			// Loop though sections in current context
-			keys.forEach(function(key, keyIndex) {
+			keys.forEach(function(key) {
 				var block = context[key],
 					root = block.contentRoot || '',
 					template = grunt.file.read(Wee.buildPath(staticRoot, siteConfig.paths.templates + '/' + block.template + '.html')),
@@ -143,6 +148,9 @@ module.exports = function(grunt) {
 					block.isActive = true;
 					block.isCurrent = true;
 
+					// Inject current context
+					data.section = block;
+					data.sections = block.sections;
 					data.content = [];
 
 					content.forEach(function(name, i) {
@@ -153,9 +161,6 @@ module.exports = function(grunt) {
 							fileSegments = name.replace(/^.*[\\\/]/, '').split('.');
 
 						fileSegments.splice(-1, 1);
-
-						// Inject current context
-						data.section = block;
 
 						var obj = {
 							sourcePath: name,

@@ -14,10 +14,10 @@
 		}
 	},
 	"env": {
-		"prod": {
+		"default": {
 
 		},
-		"default": {
+		"prod": {
 
 		}
 	},
