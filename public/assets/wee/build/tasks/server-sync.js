@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 			}
 
 			// Bind BrowserSync watchlist
-			reloadPaths.unshift(config.paths.assets + '/**/*.{min.css,min.js,gif,jpg,png,svg}');
+			reloadPaths.unshift(config.paths.assets + '/**/*.{min.css,min.js,gif,jpg,png,svg,webp,woff}');
 
 			server.files = reloadPaths;
 		}
