@@ -1,4 +1,4 @@
-# [Wee](https://www.weepower.com)
+[![Wee](https://www.weepower.com/share.png?v1)](https://www.weepower.com)
 
 Wee is a lightweight front-end framework for logically building complex, responsive web projects.
 
@@ -78,7 +78,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
