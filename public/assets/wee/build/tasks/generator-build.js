@@ -162,17 +162,28 @@ module.exports = function(grunt) {
 
 						fileSegments.splice(-1, 1);
 
-						var obj = {
-							sourcePath: name,
-							sourceFile: name.replace(/^.*[\\\/]/, ''),
-							sourceName: fileSegments.join('.'),
-							name: fileSegments.join('.'),
-							created: fs.statSync(src).ctime.getTime(),
-							modified: fs.statSync(src).mtime.getTime(),
-							original: template,
-							input: '',
-							blocks: []
-						};
+						// Reset single data
+						if (single === true) {
+							data = {
+								content: [],
+								site: site,
+								section: block,
+								sections: block.sections
+							};
+						}
+
+						var fileStats = fs.statSync(src),
+							obj = {
+								sourcePath: name,
+								sourceFile: name.replace(/^.*[\\\/]/, ''),
+								sourceName: fileSegments.join('.'),
+								name: fileSegments.join('.'),
+								created: fileStats.birthtime.getTime(),
+								modified: fileStats.mtime.getTime(),
+								original: template,
+								input: '',
+								blocks: []
+							};
 
 						// Check for front matter
 						if (template.substring(0, 3) == '---') {
