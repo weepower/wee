@@ -2,7 +2,9 @@
 
 Wee is a lightweight front-end framework for logically building complex, responsive web projects.
 
-### Features
+[![Code Climate](https://codeclimate.com/github/weepower/wee/badges/gpa.svg)](https://codeclimate.com/github/weepower/wee)
+
+## Features
 
 Mobile-first CSS framework with reset, base, and Less mixin library < *4KB gzipped*
 
@@ -36,6 +38,190 @@ JSON-configured Grunt process to compile, optimize, and minify your project
 
 Structured foundation of markup, icons, and supporting files
 
+## Examples
+
+Here are a few basic examples. There's much more so check out the [documentation](https://www.weepower.com/start).
+
+##### Mixins [→](https://www.weepower.com/style/mixins)
+
+Improved organization and readability using [Less](http://lesscss.org) along with the powerful mixin library. 
+
+```less
+.nav {
+	&__button {
+		.border(@brandColor);
+		.fill();
+		.font(@headingFont; 1.2);
+		.spaced(1);
+		.uppercase();
+		&:hover {
+			.background(light; 5%; @brandColor);
+		}
+	}
+}
+```
+
+##### DOM [→](https://www.weepower.com/style/chain)
+
+Familiar chainable API and pre-cached [references](https://www.weepower.com/script/#selection) make DOM interaction easy.
+
+```html
+<button data-ref="element">Button</button>
+```
+
+```javascript
+$('ref:element').addClass('--is-active').attr('aria-selected', 'true');
+```
+
+##### Controllers [→](https://www.weepower.com/style/core)
+
+Controllers along with the automated build process create well-organized projects.
+
+```javascript
+Wee.fn.make('controllerName', {
+	_construct: function() {
+		this.publicVariable = 'Public Variable';
+		this.init();
+	},
+	init: function() {
+		this.$private('privateMethod', 'varName');
+	}
+}, {
+	privateMethod: function(key) {
+		return key;
+	}
+});
+```
+
+##### Routing [→](https://www.weepower.com/script/routes)
+
+Create independence between markup and script using the powerful routing options. 
+
+```javascript
+Wee.routes.map({
+	'$any': 'common',
+	'$root': 'home',
+	'category': {
+		'$root': 'categories:publicMethod',
+		'$slug': {
+			'$root': function() {
+				console.log('Category index');
+			},
+			'$num': function(id) {
+				console.log('Product ID is ' + id);
+			}
+		}
+	}
+});
+```
+
+##### Templating [→](https://www.weepower.com/script/view)
+
+The template parser supports fallbacks, loops, functions, filters, helpers, partials, and more. It also powers the [static site generator](https://www.weepower.com/generator).
+
+```javascript
+var template = 'My name is {{firstName}}{{#lastName|notEmpty}} {{lastName}}{{/lastName}}',
+	data = {
+		firstName: 'John',
+		lastName: 'Smith'
+	};
+
+Wee.view.render(template, data);
+```
+
+Becomes...
+
+```javascript
+"My name is John Smith"
+```
+
+##### Breakpoints [→](https://www.weepower.com/script/screen)
+
+Seamlessly combine and trigger breakpoint logic based on configured project media queries.
+
+```javascript
+Wee.screen.map([
+	{
+		size: 1,
+		callback: [
+			'common:mobile',
+			'common:smallScreen'
+		]
+	},
+	{
+		min: 3,
+		max: 4,
+		watch: false,
+		callback: 'common:mediumScreen'
+	},
+	{
+		min: 5,
+		args: [
+			'varName'
+		],
+		callback: function(obj, val) {
+			console.log(val); // varName
+			console.log(obj);
+		}
+	}
+]);
+```
+
+##### Events [→](https://www.weepower.com/script/events)
+
+Create organized interaction on your page with the simple event API.
+
+```javascript
+Wee.events.on('ref:element', 'mouseenter', function(e, el) {
+	// Click logic
+	e.preventDefault();
+}, {
+	once: true
+});
+```
+
+##### Requests [→](https://www.weepower.com/script/data)
+
+You can submit any type of request with a number of callback options. 
+
+```javascript
+Wee.data.request({
+	url: '/login',
+	method: 'post',
+	data: {
+		username: 'user@weepower.com',
+		password: 'pass123'
+	},
+	success: function(data) {
+		// Success logic
+	},
+	failure: function(data) {
+	   // Failure logic
+	}
+});
+```
+
+##### Asset Loading [→](https://www.weepower.com/style/assets)
+
+Load what you need on demand to optimize page speed and preserve bandwidth.
+
+```javascript
+Wee.assets.load({
+	root: 'https://cdn.weepower.com/assets/alert/',
+	files: [
+		'script.js',
+		'style.css',
+		'close.png'
+	],
+	success: function() {
+		// Success logic
+	},
+	failure: function() {
+		// Failure logic
+	}
+});
+```
+
 ## Installation
 
 Get started using one of these methods:
@@ -43,16 +229,15 @@ Get started using one of these methods:
 * [Download the latest release](https://github.com/weepower/wee/archive/master.zip) or
 * Clone the repository from `git clone git://github.com/weepower/wee.git`
 
+*Node.js 0.11.14+ and the Grunt CLI are required for the [build process](https://www.weepower.com/build/#setup).*
+
 ## Compatibility
 
 Wee officially supports the following minimum browser versions:
 
-* Android 4.1
-* Chrome 30
-* Internet Explorer 8
-* iOS Safari 5.1
-* Mozilla Firefox 24
-* Safari 6.1
+Internet Explorer  | Chrome | Firefox | Safari | iOS Safari | Android
+------------------ | ------ | ------- | ------ | ---------- | -------
+8                  | 30     | 24      | 6.1    | 5.1        | 4.1
 
 ## Bugs
 

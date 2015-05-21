@@ -1,6 +1,6 @@
 {
 	"name": "wee",
-	"version": "2.3.1",
+	"version": "2.3.2",
 	"description": "Blueprint for modern web development",
 	"homepage": "https://www.weepower.com",
 	"keywords": [
@@ -32,7 +32,7 @@
 		"grunt-contrib-uglify": "~0.9.1",
 		"grunt-contrib-watch": "~0.6.1",
 		"grunt-newer": "~1.1.0",
-		"browser-sync": "~2.7.1",
+		"browser-sync": "~2.7.2",
 		"html-minifier": "~0.7.2",
 		"js-yaml": "~3.3.1",
 		"jscs": "~1.13.1",
