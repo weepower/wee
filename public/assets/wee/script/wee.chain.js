@@ -1,4 +1,6 @@
-(function(W, U) {
+/* global WeeAlias */
+
+(function(W) {
 	'use strict';
 
 	var $, $p;
@@ -62,4 +64,4 @@
 			}
 		}
 	});
-})(Wee, undefined);
+})(Wee);

@@ -2,7 +2,7 @@
 
 module.exports = function(grunt) {
 	grunt.registerTask('server', function() {
-		var staticConfig = project.server.tasks.static;
+		var staticConfig = project.server.tasks['static'];
 
 		// Server root
 		server.server = project.paths.root;

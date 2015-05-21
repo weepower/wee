@@ -29,8 +29,8 @@ module.exports = function(grunt) {
 		});
 
 		// Merge default environment data
-		if (json.env.default) {
-			site = Wee.$extend(site, json.env.default);
+		if (json.env['default']) {
+			site = Wee.$extend(site, json.env['default']);
 		}
 
 		if (grunt.option('env')) {
@@ -467,7 +467,7 @@ module.exports = function(grunt) {
 						message: 'There was a problem downloading ' + url
 					}, 'error');
 
-					fs.unlink(dest);
+					fs.unlink(tempFile);
 				});
 			};
 
