@@ -136,11 +136,11 @@ QUnit.test('module callback', 1, function(assert) {
 QUnit.module('$isArray');
 
 QUnit.test('check different types against array', 4, function(assert) {
-	assert.strictEqual(Wee.$isArray('string'), false, 'Variable "string" is not an array.');
-	assert.strictEqual(Wee.$isArray(function test() {}), false, 'Function "test()" is not an array.');
-	assert.strictEqual(Wee.$isArray({
+	assert.notOk(Wee.$isArray('string'), 'Variable "string" is not an array.');
+	assert.notOk(Wee.$isArray(function test() {}), 'Function "test()" is not an array.');
+	assert.notOk(Wee.$isArray({
 		string: 'string'
-	}), false, 'Object "string" is not an array.');
+	}), 'Object "string" is not an array.');
 	assert.ok(Wee.$isArray(['string']), 'Array "[\'string\']" is an array.');
 });
 
@@ -168,11 +168,11 @@ QUnit.test('convert array to array', 1, function(assert) {
 QUnit.module('$isString');
 
 QUnit.test('check different types against string', 4, function(assert) {
-	assert.strictEqual(Wee.$isString(function test() {}), false, 'Function "test()" is not a string.');
-	assert.strictEqual(Wee.$isString({
+	assert.notOk(Wee.$isString(function test() {}), 'Function "test()" is not a string.');
+	assert.notOk(Wee.$isString({
 		string: 'string'
-	}), false, 'Object "string" is not a string.');
-	assert.strictEqual(Wee.$isString(['string']), false, 'Array "[\'string\']" is not a string.');
+	}), 'Object "string" is not a string.');
+	assert.notOk(Wee.$isString(['string']), 'Array "[\'string\']" is not a string.');
 	assert.ok(Wee.$isString('string'), 'Variable "string" is a string.');
 });
 
@@ -181,11 +181,11 @@ QUnit.test('check different types against string', 4, function(assert) {
 QUnit.module('$isFunction');
 
 QUnit.test('check different types against function', 4, function(assert) {
-	assert.strictEqual(Wee.$isFunction('string'), false, 'Variable "string" is not a function.');
-	assert.strictEqual(Wee.$isFunction({
+	assert.notOk(Wee.$isFunction('string'), 'Variable "string" is not a function.');
+	assert.notOk(Wee.$isFunction({
 		string: 'string'
-	}), false, 'Object "string" is not a function.');
-	assert.strictEqual(Wee.$isFunction(['string']), false, 'Array "[\'string\']" is not a function.');
+	}), 'Object "string" is not a function.');
+	assert.notOk(Wee.$isFunction(['string']), 'Array "[\'string\']" is not a function.');
 	assert.ok(Wee.$isFunction(function test() {}), 'Function "test()" is a function.');
 });
 
@@ -194,9 +194,9 @@ QUnit.test('check different types against function', 4, function(assert) {
 QUnit.module('$isObject');
 
 QUnit.test('check different types against object', 4, function(assert) {
-	assert.strictEqual(Wee.$isObject('string'), false, 'Variable "string" is not an object.');
-	assert.strictEqual(Wee.$isObject(function test() {}), false, 'Function "test()" is not an object.');
-	assert.strictEqual(Wee.$isObject(['string']), false, 'Array "[\'string\']" is not an object.');
+	assert.notOk(Wee.$isObject('string'), 'Variable "string" is not an object.');
+	assert.notOk(Wee.$isObject(function test() {}), 'Function "test()" is not an object.');
+	assert.notOk(Wee.$isObject(['string']), 'Array "[\'string\']" is not an object.');
 	assert.ok(Wee.$isObject({
 		string: 'string'
 	}), 'Object "string" is an object.');

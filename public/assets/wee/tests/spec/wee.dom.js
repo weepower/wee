@@ -11,7 +11,7 @@ QUnit.module('$addClass, $removeClass, $hasClass', {
 QUnit.test('add', 3, function(assert) {
 	assert.ok(Wee.$hasClass('#wee', 'test-class'), 'Test class was added successfully.');
 	assert.ok(Wee.$hasClass('#wee', 'test-class-2'), 'Test class 2 was added successfully.');
-	assert.strictEqual(Wee.$hasClass('#wee', 'another-class'), false, 'Another class was not available.');
+	assert.notOk(Wee.$hasClass('#wee', 'another-class'), 'Another class was not available.');
 });
 
 // Method: $removeClass(sel, val)
@@ -19,7 +19,7 @@ QUnit.test('add', 3, function(assert) {
 QUnit.test('remove', 2, function(assert) {
 	Wee.$removeClass('#wee', 'test-class');
 
-	assert.strictEqual(Wee.$hasClass('#wee', 'test-class'), false, 'Test class was removed successfully.');
+	assert.notOk(Wee.$hasClass('#wee', 'test-class'), 'Test class was removed successfully.');
 	assert.ok(Wee.$hasClass('#wee', 'test-class-2'), 'Test class 2 is still available.');
 });
 
@@ -28,8 +28,8 @@ QUnit.test('remove', 2, function(assert) {
 QUnit.test('has', 2, function(assert) {
 	Wee.$removeClass('#wee', 'test-class test-class-2');
 
-	assert.strictEqual(Wee.$hasClass('#wee', 'test-class'), false, 'Test class was removed successfully.');
-	assert.strictEqual(Wee.$hasClass('#wee', 'test-class-2'), false, 'Test class 2 was removed successfully.');
+	assert.notOk(Wee.$hasClass('#wee', 'test-class'), 'Test class was removed successfully.');
+	assert.notOk(Wee.$hasClass('#wee', 'test-class-2'), 'Test class 2 was removed successfully.');
 });
 
 // Method: $css(sel, a, b)
@@ -103,7 +103,7 @@ QUnit.test('show', 1, function(assert) {
 	Wee.$hide('#wee');
 	Wee.$show('#wee');
 
-	assert.strictEqual(Wee.$hasClass('#wee', 'js-hide'), false, 'Element was shown successfully.');
+	assert.notOk(Wee.$hasClass('#wee', 'js-hide'), 'Element was shown successfully.');
 });
 
 // Method: $toggle(sel)
@@ -117,7 +117,7 @@ QUnit.test('toggle', 2, function(assert) {
 
 	Wee.$toggle('#wee');
 
-	assert.strictEqual(Wee.$hasClass('#wee', 'js-hide'), false, 'Element was shown successfully.');
+	assert.notOk(Wee.$hasClass('#wee', 'js-hide'), 'Element was shown successfully.');
 });
 
 // Method: $children(sel, filter)
@@ -190,7 +190,7 @@ QUnit.test('query', 2, function(assert) {
 	Wee.$html('#wee', '<span class="testing"></span>');
 
 	assert.ok(Wee.$contains('#wee', '.testing'), 'Testing element selected successfully.');
-	assert.strictEqual(Wee.$contains('#wee', '.another'), false, 'Another element not available.');
+	assert.notOk(Wee.$contains('#wee', '.another'), 'Another element not available.');
 });
 
 // Method: $append(sel, child)
@@ -481,7 +481,7 @@ QUnit.test('query', 2, function(assert) {
 
 	Wee.$toggleClass('#wee', 'test');
 
-	assert.strictEqual(Wee.$hasClass('#wee', 'test'), false, 'Class removed successfully.');
+	assert.notOk(Wee.$hasClass('#wee', 'test'), 'Class removed successfully.');
 });
 
 // Method: $parseHTML(html, obj)
