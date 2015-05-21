@@ -19,7 +19,7 @@ JavaScript toolset to build scalable, organized client-side codebase < *10KB gzi
 * **Foundation** of utilities, helpers, and module structure
 * **Chainable DOM** traversal and manipulation with familiar API
 * **Routing library** to flexibly associate endpoints to actions
-* **Event handing** to bind actions to elements
+* **Event handling** to bind actions to elements
 * **Data loading** for Ajax and JSON interaction
 * **Template rendering** to parse complex data structures
 * **Resource loading** for JavaScript, CSS, and images
@@ -44,12 +44,19 @@ Here are a few basic examples. There's much more so check out the [documentation
 
 ##### Mixins [→](https://www.weepower.com/style/mixins)
 
-Improved organization and readability using [Less](http://lesscss.org) along with the powerful mixin library. 
+Improved organization and readability using [Less](http://lesscss.org) along with Wee's powerful mixin library. 
+
+```html
+<nav class="nav">
+	<button class="nav__button --bordered">Button</button>
+</nav>
+```
 
 ```less
+@brandColor: #167da3;
+
 .nav {
 	&__button {
-		.border(@brandColor);
 		.fill();
 		.font(@headingFont; 1.2);
 		.spaced(1);
@@ -57,7 +64,29 @@ Improved organization and readability using [Less](http://lesscss.org) along wit
 		&:hover {
 			.background(light; 5%; @brandColor);
 		}
+		&./--bordered {
+			.border(@brandColor);
+		}
 	}
+}
+```
+
+Becomes...
+
+```css
+.nav__button {
+	width: 100%;
+	font-family: Lato, sans-serif;
+	font-size: 1.2rem;
+	margin-bottom: 1rem;
+	text-transform: uppercase;
+}
+.nav__button:hover {
+	background-color: #167da3;
+	background-color: rgba(255, 255, 255, .05);
+}
+.nav__button./--bordered {
+	border: 1px solid #167da3;
 }
 ```
 
@@ -99,10 +128,10 @@ Create independence between markup and script using the powerful routing options
 
 ```javascript
 Wee.routes.map({
-	'$any': 'common',
+	'$any': 'common', // Call the init method of the common controller
 	'$root': 'home',
 	'category': {
-		'$root': 'categories:publicMethod',
+		'$root': 'controllerName:publicMethod',
 		'$slug': {
 			'$root': function() {
 				console.log('Category index');
@@ -144,7 +173,7 @@ Wee.screen.map([
 	{
 		size: 1,
 		callback: [
-			'common:mobile',
+			'common:mobile', // Call the mobile method of the common controller
 			'common:smallScreen'
 		]
 	},
