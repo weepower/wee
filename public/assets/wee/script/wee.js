@@ -490,7 +490,7 @@
 					if (sets) {
 						Object.keys(sets).forEach(function(key) {
 							W.$set('ref:' + key, sets[key].filter(function(el) {
-								return ! (! W._contains(D, el) || (W.contains(context, el) && context !== el));
+								return ! (! contains(D, el) || (contains(context, el) && context !== el));
 							}));
 						});
 					}
