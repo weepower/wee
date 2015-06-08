@@ -2254,21 +2254,6 @@
 	-webkit-transform: @arguments;
 	transform: @arguments;
 }
-.rotate (@angle: 45) {
-	.transform(rotate(unit(@angle, deg)));
-}
-.scale (@deg: 1) {
-	.transform(scale(@deg));
-}
-.skew (x; @x: 45) {
-	.transform(skewX(unit(@x, deg)));
-}
-.skew (y; @y: 45) {
-	.transform(skewY(unit(@y, deg)));
-}
-.skew (@x: 45; @y: 0) when (default()) {
-	.transform(skew(unit(@x, deg), unit(@y, deg)));
-}
 .transform-origin (@x; @y: 0) {
 	.check () when (isunit(@x, '')) {
 		@tempX: unit(@x, rem);
@@ -2283,7 +2268,24 @@
 		@tempY: @y;
 	}
 	.check();
-	.transform(transform-origin(@tempX, @tempY));
+	-ms-transform-origin: @tempX @tempY;
+	-webkit-transform-origin: @tempX @tempY;
+	transform-origin: @tempX @tempY;
+}
+.rotate (@angle: 45) {
+	.transform(rotate(unit(@angle, deg)));
+}
+.scale (@deg: 1) {
+	.transform(scale(@deg));
+}
+.skew (x; @x: 45) {
+	.transform(skewX(unit(@x, deg)));
+}
+.skew (y; @y: 45) {
+	.transform(skewY(unit(@y, deg)));
+}
+.skew (@x: 45; @y: 0) when (default()) {
+	.transform(skew(unit(@x, deg), unit(@y, deg)));
 }
 .translate (x; @value) {
 	.check () when (isunit(@value, '')) {
