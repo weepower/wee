@@ -1,5 +1,5 @@
 {
-	"name": "Project Style Guide",
+	"name": "Style Guide",
 	"description": "Project style guide description",
 	"config": {
 		"watch": true,
@@ -22,7 +22,7 @@
 		}
 	},
 	"data": {
-		"heading": "Project design elements"
+		"heading": "Style Guide"
 	},
 	"sections": {
 		"general": {

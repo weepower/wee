@@ -1,6 +1,6 @@
 ---
 name: Headings
-heading: Heading tags are important for establishing importance hierarchy
+heading: Headings establish the hierarchy of importance on a page
 class: headings
 ---
 

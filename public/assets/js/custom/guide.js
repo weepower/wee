@@ -4,35 +4,45 @@
 /* global hljs */
 
 Wee.fn.make('guide', {
+	/**
+	 * Highlight code and bind code click events
+	 *
+	 * @constructor
+	 */
 	_construct: function() {
+		var scope = this;
+
 		// Setup syntax highlighting
-		this.$private('highlightCode');
+		scope.$private.highlightCode();
 
 		// Bind code toggle and selection
 		Wee.events.on({
 			'ref:code': {
-				dblclick: function(e, el) {
-					this.$private('selectCode', el);
+				dblclick: function() {
+					scope.$private.selectCode(this);
 				}
 			},
 			'ref:toggle': {
-				click: function(e, el) {
-					this.$private('toggleCode', el);
+				click: function() {
+					scope.$private.toggleCode(this);
 				}
 			}
-		}, {
-			scope: this
 		});
 	}
 }, {
+	/**
+	 * Load highlight.js assets and highlight all code
+	 *
+	 * @private
+	 */
 	highlightCode: function() {
 		// Don't load in IE8-
 		if (! Wee._legacy) {
 			Wee.assets.load({
-				root: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/',
+				root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/',
 				files: [
 					'highlight.min.js',
-					'styles/monokai_sublime.min.css'
+					'styles/vs.min.css'
 				],
 				success: function() {
 					hljs.initHighlightingOnLoad();
@@ -40,6 +50,13 @@ Wee.fn.make('guide', {
 			});
 		}
 	},
+
+	/**
+	 * Select all markup in a code block
+	 *
+	 * @private
+	 * @param {node} el - target code
+	 */
 	selectCode: function(el) {
 		var range = Wee._doc.createRange(),
 			sel = Wee._win.getSelection();
@@ -49,13 +66,30 @@ Wee.fn.make('guide', {
 		sel.removeAllRanges();
 		sel.addRange(range);
 	},
+
+	/**
+	 * Toggle the visibility of a code block
+	 *
+	 * @private
+	 * @param {(string|node)} el - source button
+	 */
 	toggleCode: function(el) {
 		var $el = $(el);
 
-		if ($el.text() == 'x') {
-			$el.html('&lt;' + $el.data('lang') + '/&gt;').next().hide();
+		if ($el.attr('aria-expanded') != 'false') {
+			$el.removeClass('--is-active')
+				.text('<' + $el.data('lang') + '/>')
+				.attr('aria-expanded', 'false')
+				.next()
+				.attr('aria-hidden', 'true')
+				.hide();
 		} else {
-			$el.text('x').next().show();
+			$el.addClass('--is-active')
+				.text('x')
+				.attr('aria-expanded', 'true')
+				.next()
+				.attr('aria-hidden', 'false')
+				.show();
 		}
 	}
 });

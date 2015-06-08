@@ -1,6 +1,5 @@
 ---
 name: Table
-heading: Tables should only be used with tabular data
 ---
 
 ---html|render---

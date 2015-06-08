@@ -8,8 +8,8 @@
 	<div class="guide-pattern__output {{class}}">{{output|raw}}</div>
 	{{#blocks}}
 		{{#name|not(content)}}
-		<div class="button guide-pattern__toggle" data-ref="toggle" data-lang="{{lang||html}}">&lt;{{lang||html}}/&gt;</div>
-		<pre class="guide-pattern__input js-hide" data-ref="code"><code class="{{lang||html}}">{{input}}</code></pre>
+		<div class="button guide-pattern__toggle" aria-controls="{{../sourceName}}-code" aria-expanded="false" data-ref="toggle" data-lang="{{lang||html}}">&lt;{{lang||html}}/&gt;</div>
+		<pre class="guide-pattern__input js-hide" id="{{../sourceName}}-code" aria-hidden="true" data-ref="code"><code class="{{lang||html}}">{{input}}</code></pre>
 		{{/name}}
 	{{/blocks}}
 </div>

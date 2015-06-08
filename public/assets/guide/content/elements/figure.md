@@ -1,6 +1,6 @@
 ---
 name: Figure
-heading: Semantic grouping of image and associated caption
+heading: Semantic grouping of an image and associated caption
 ---
 
 ---html|render---
