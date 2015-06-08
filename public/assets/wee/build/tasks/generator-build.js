@@ -308,10 +308,6 @@ module.exports = function(grunt) {
 							}
 						});
 
-						// Inject current index
-						obj['#'] = i;
-						obj['##'] = i + 1;
-
 						// Handle basic content
 						if (values.length === 0) {
 							var rendered = md.render(obj.original);
