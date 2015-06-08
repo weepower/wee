@@ -2,8 +2,11 @@
 	'use strict';
 
 	W.fn.make('screen', {
-		// Get current screen value
-		// Returns number
+		/**
+		 * Get current breakpoint value
+		 *
+		 * @returns {int} breakpoint value
+		 */
 		size: function() {
 			var size = W._legacy ?
 					(W._html.currentStyle ? W._html.currentStyle.fontFamily : null) :
@@ -11,53 +14,71 @@
 
 			return parseFloat(size.replace(/[^0-9\.]+/g, ''), 10);
 		},
-		// Bind single or set of screen events with specified options
-		map: function(val) {
+
+		/**
+		 * Map conditional events to breakpoint values
+		 *
+		 * @param {(Array|object)} rules - breakpoint rules
+		 * @param {int} [rules.size] - specific breakpoint value
+		 * @param {int} [rules.min] - minimum breakpoint value
+		 * @param {int} [rules.max] - maximum breakpoint value
+		 * @param {boolean} [rules.watch=true] - check event on screen resize
+		 * @param {boolean} [rules.init=true] - check event on load
+		 * @param {object} [rules.scope] - callback scope
+		 * @param {Array} [rules.args] - callback arguments
+		 * @param {function} [rules.callback]
+		 */
+		map: function(rules) {
 			var scope = this,
-				sets = W.$toArray(val),
-				cb = function() {
-					scope.$private('check', false);
-				},
+				sets = W.$toArray(rules),
+				cb = scope.$private.check,
 				i = 0;
 
-			// Delay check 1ms to avoid incorrect size in IE
+			// Delay check 1ms to prevent incorrect breakpoint value in IE
 			setTimeout(function() {
 				for (; i < sets.length; i++) {
 					var conf = sets[i];
 
 					if (conf.callback) {
-						// Only bind resize event if not disabled
+						// Only setup watching when enabled
 						if (conf.watch !== false) {
 							scope.$push('evts', conf);
 
-							// Only create event if not already running
+							// Only attach event once
 							if (! scope.$get('on')) {
 								scope.$set('on', 1);
 								scope.$set('evts', [conf]);
 
-								// Watch widow resize event for breakpoint changes
+								// Attach resize event
 								W._legacy ?
 									W._win.attachEvent('onresize', cb) :
 									W._win.addEventListener('resize', cb);
 							}
 						}
 
-						// Evaluate current screen if not disabled
+						// Check current screen if not disabled
 						if (conf.init !== false) {
-							scope.$private('check', true, [conf]);
+							scope.$private.check(true, [conf]);
 						}
 					}
 				}
 			}, 1);
 		}
 	}, {
-		check: function(init, conf) {
+		/**
+		 * Check mapped events for matching conditions
+		 *
+		 * @private
+		 * @param {bool} [init=false] - initial page load
+		 * @param {Array} [rules] - breakpoint rules
+		 */
+		check: function(init, rules) {
 			var size = this.$public.size(),
 				prev = this.$get('size');
 
 			// If breakpoint has been hit or resize logic initialized
 			if (size && (size !== prev || init)) {
-				var evts = conf || this.$get('evts'),
+				var evts = rules || this.$get('evts'),
 					i = 0;
 
 				for (; i < evts.length; i++) {
@@ -66,7 +87,7 @@
 						mn = evt.min,
 						mx = evt.max;
 
-					// Check match against settings
+					// Check match against rules
 					if ((! sz && ! mn && ! mx) ||
 						(sz && sz === size) ||
 						(mn && size >= mn && (init || prev < mn) && (! mx || size <= mx)) ||
@@ -90,7 +111,7 @@
 					}
 				}
 
-				// Set current screen value
+				// Update current breakpoint value
 				this.$set('size', size);
 			}
 		}

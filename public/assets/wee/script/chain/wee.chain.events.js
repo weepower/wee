@@ -2,21 +2,67 @@
 	'use strict';
 
 	W.$chain({
+		/**
+		 * Bind event(s) to selection
+		 *
+		 * @param {(object|string)} a - event name or object of events
+		 * @param {(function|object)} [b] - event callback or options object
+		 * @param {(object|string)} [c] - event options
+		 * @param {Array} [c.args] - callback arguments
+		 * @param {(node|string)} [c.context=document]
+		 * @param {(node|string)} [c.delegate]
+		 * @param {boolean} [c.once=false] - remove event after first execution
+		 * @param {object} [c.scope]
+		 * @returns {$} selection
+		 */
 		on: function(a, b, c) {
 			E.on(this, a, b, c);
+
 			return this;
 		},
-		off: function(events, options) {
-			E.off(this, events, options);
+
+		/**
+		 * Remove event(s) from selection
+		 *
+		 * @param {(object|string)} a - event name or object of events
+		 * @param {function} [b] - specific function to remove
+		 * @returns {$} selection
+		 */
+		off: function(a, b) {
+			E.off(this, a, b);
+
 			return this;
 		},
-		// DEPRECATED
+
+		/**
+		 * Bind event(s) to selection for single execution
+		 *
+		 * @deprecated
+		 * @param {(object|string)} a - event name or object of events
+		 * @param {(function|object)} [b] - event callback or options object
+		 * @param {(object|string)} [c] - event options
+		 * @param {Array} [c.args] - callback arguments
+		 * @param {(node|string)} [c.context=document]
+		 * @param {(node|string)} [c.delegate]
+		 * @param {boolean} [c.once=true] - remove event after first execution
+		 * @param {object} [c.scope]
+		 * @returns {$} selection
+		 */
 		one: function(a, b, c) {
 			E.one(this, a, b, c);
+
 			return this;
 		},
+
+		/**
+		 * Execute event on selection
+		 *
+		 * @param {string} event name
+		 * @returns {$} selection
+		 */
 		trigger: function(event) {
 			E.trigger(this, event);
+
 			return this;
 		}
 	});

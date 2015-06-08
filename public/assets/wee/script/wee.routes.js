@@ -2,8 +2,15 @@
 	'use strict';
 
 	W.fn.make('routes', {
-		// Get currently bound URI values or set URI with a specified string or value object
-		// Returns object
+		/**
+		 * Get currently bound URI values or set with string or value object
+		 *
+		 * @param {(object|string)} [value]
+		 * @param {string} [value.hash]
+		 * @param {string} [value.path] - relative path
+		 * @param {object} [value.query]
+		 * @returns {object} data
+		 */
 		uri: function(value) {
 			if (value) {
 				if (W.$isObject(value)) {
@@ -16,7 +23,9 @@
 					var path = this.$get('path', a.pathname, true);
 
 					if (a.search !== '') {
-						var arr = decodeURIComponent(a.search).replace(/^\?/, '').split('&'),
+						var arr = decodeURIComponent(a.search)
+								.replace(/^\?/, '')
+								.split('&'),
 							i = 0;
 
 						for (; i < arr.length; i++) {
@@ -37,9 +46,16 @@
 				}, true);
 			}
 		},
-		// Get currently bound path or set path with a specified string
-		// Optionally accepts options to pass through to get/set
-		// Returns string
+
+		/**
+		 * Get currently bound path or set path with a specified string
+		 *
+		 * @param {string} [value]
+		 * @param {object} [options]
+		 * @param {Array} [options.args]
+		 * @param {object} [options.scope]
+		 * @returns {string} path
+		 */
 		path: function(value, options) {
 			return value ?
 				this.uri({
@@ -47,15 +63,30 @@
 				}).path :
 				this.$get('path', this.uri().path, true, options);
 		},
-		// Get all segments or single segment at index integer
-		// Returns array of segment strings or string if index specified
+
+		/**
+		 * Get all segments or single segment at index integer
+		 *
+		 * @param {int} [index]
+		 * @returns {(Array|string)} segments
+		 */
 		segments: function(index) {
-			var segs = W.$toArray(this.path().replace(/^\/|\/$/g, '').split('/'));
+			var segs = W.$toArray(
+				this.path()
+					.replace(/^\/|\/$/g, '')
+					.split('/')
+			);
+
 			return index !== U ? (segs[index] || '') : segs;
 		},
-		// Retrieve or add route endpoints to route storage
-		// Immediately evaluate the map by setting init to true
-		// Returns object
+
+		/**
+		 * Retrieve or add route endpoints to route storage
+		 *
+		 * @param {object} routes
+		 * @param {bool} [init=false] - evaluate the map immediately
+		 * @returns {object} routes
+		 */
 		map: function(routes, init) {
 			var curr = this.$get('routes', {});
 
@@ -71,19 +102,23 @@
 
 			return curr;
 		},
-		// Process stored route options with optional config
-		// Defaults to current path
-		run: function(options) {
-			var conf = W.$extend({
-					routes: this.$get('routes')
-				}, options);
+
+		/**
+		 * Process stored routes
+		 *
+		 * @param {object} [conf]
+		 */
+		run: function(conf) {
+			conf = W.$extend({
+				routes: this.$get('routes')
+			}, conf);
 
 			if (conf.path) {
 				this.path(conf.path);
 			}
 
 			if (conf.routes) {
-				this.$private('process', conf.routes, 0, this.$set('segs', this.segments()).length);
+				this.$private.process(conf.routes, 0, this.$set('segs', this.segments()).length);
 
 				// Execute queued init functions on last iteration
 				var any = this.$get('any');
@@ -99,7 +134,14 @@
 			}
 		}
 	}, {
-		// Recursive method to process routes
+		/**
+		 * Recursively process routes
+		 *
+		 * @private
+		 * @param {string} route - route to evaluate
+		 * @param {int} i - current index in iteration
+		 * @param {int} total - total number of routes
+		 */
 		process: function(route, i, total) {
 			var seg = this.$get('segs')[i],
 				keys = Object.keys(route),

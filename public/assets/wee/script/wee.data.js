@@ -2,7 +2,23 @@
 	'use strict';
 
 	W.fn.make('data', {
-		// Make Ajax request based on specified options
+		/**
+		 * Make Ajax request based on specified options
+		 *
+		 * @param {object} options
+		 * @param {string} options.url - endpoint to request
+		 * @param {(Array|function|string)} [options.success] - callback if request succeeds
+		 * @param {(Array|function|string)} [options.failure] - callback if request fails
+		 * @param {Array} [options.args] - callback arguments appended after default values
+		 * @param {object} [options.data] - object to serialize and pass along with request
+		 * @param {object} [options.headers] - request headers
+		 * @param {boolean} [options.json=false] - evaluate the response as JSON and return object
+		 * @param {(boolean|string)} [options.jsonp=false] - boolean or override name for callback query string parameter
+		 * @param {string} [options.jsonpCallback] - override the name of the JSONP callback function
+		 * @param {string} [options.method=get] - request verb
+		 * @param {object} [options.scope] - callback scope
+		 * @param {string} [options.template] - template string to parse response JSON
+		 */
 		request: function(options) {
 			var conf = W.$extend({
 					args: [],
@@ -111,8 +127,13 @@
 				// Post or get endpoint based on specification
 				if (conf.method == 'post') {
 					x.open('POST', conf.url, true);
-					x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-					send = W.$isObject(conf.data) ? W.$serialize(conf.data) : conf.data;
+					x.setRequestHeader(
+						'Content-Type',
+						'application/x-www-form-urlencoded; charset=UTF-8'
+					);
+					send = W.$isObject(conf.data) ?
+						W.$serialize(conf.data) :
+						conf.data;
 				} else {
 					if (Object.keys(conf.data).length > 0) {
 						conf.url += '?' + W.$serialize(conf.data);
@@ -146,9 +167,15 @@
 				x.send(send);
 			}
 		},
-		// Render specified data into specified template string
-		// Return string
-		// DEPRECATED
+
+		/**
+		 * Render data into template string
+		 *
+		 * @deprecated since 2.1.0
+		 * @param {string} temp
+		 * @param {object} data
+		 * @returns {string} value
+		 */
 		parse: function(temp, data) {
 			return W.view.render(temp, data);
 		}
