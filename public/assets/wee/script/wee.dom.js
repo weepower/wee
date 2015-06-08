@@ -1,11 +1,12 @@
-/* global WeeAlias */
-
 (function(W, U) {
 	'use strict';
 
 	W.fn.extend({
-		// Add classes to each matching selection
-		// Accepts either string or callback
+		/**
+		 * Add classes to each matching selection
+		 *
+		 * @param {(function|string)} target
+		 */
 		$addClass: function(target, value) {
 			var func = W._canExec(value);
 
@@ -24,21 +25,28 @@
 				}
 			});
 		},
-		// Insert selection or markup after each matching selection
+
+		/**
+		 * Insert selection or markup after each matching selection
+		 *
+		 * @param target
+		 * @param source
+		 * @param remove
+		 */
 		$after: function(target, source, remove) {
 			var func = W._canExec(source);
 
-			if (typeof source == 'string') {
-				source = W.$parseHTML(source);
-			}
-
 			W.$each(target, function(el, i) {
 				var aft = func ?
-					W.$exec(source, {
-						args: [i, el.innerHTML],
-						scope: el
-					}) :
-					source;
+						W.$exec(source, {
+							args: [i, el.innerHTML],
+							scope: el
+						}) :
+						source;
+
+				if (typeof aft == 'string') {
+					aft = W.$parseHTML(aft);
+				}
 
 				if (aft) {
 					W.$each(aft, function(cel) {
@@ -57,21 +65,27 @@
 				}
 			});
 		},
-		// Append selection or markup after each matching selection
+
+		/**
+		 * Append selection or markup after each matching selection
+		 *
+		 * @param target
+		 * @param source
+		 */
 		$append: function(target, source) {
 			var func = W._canExec(source);
 
-			if (typeof source == 'string') {
-				source = W.$parseHTML(source);
-			}
-
 			W.$each(target, function(el, i) {
 				var app = func ?
-					W.$exec(source, {
-						args: [i, el.innerHTML],
-						scope: el
-					}) :
-					source;
+						W.$exec(source, {
+							args: [i, el.innerHTML],
+							scope: el
+						}) :
+						source;
+
+				if (typeof app == 'string') {
+					app = W.$parseHTML(app);
+				}
 
 				if (app) {
 					W.$each(app, function(cel) {
@@ -80,8 +94,15 @@
 				}
 			});
 		},
-		// Get attribute of first matching selection or set attribute of each matching selection
-		// Returns string|undefined
+
+		/**
+		 * Get attribute of first matching selection or set attribute of each matching selection
+		 *
+		 * @param target
+		 * @param a
+		 * @param b
+		 * @returns {(string|undefined)}
+		 */
 		$attr: function(target, a, b) {
 			var obj = W.$isObject(a);
 
@@ -94,32 +115,39 @@
 							el.setAttribute(key, a[key]);
 						}) :
 						el.setAttribute(a, func ?
-								W.$exec(b, {
-									args: [i, el[a]],
-									scope: el
-								}) :
-								b
+							W.$exec(b, {
+								args: [i, el[a]],
+								scope: el
+							}) :
+							b
 						);
 				});
 			} else {
 				return W.$first(target).getAttribute(a);
 			}
 		},
-		// Insert selection or markup before each matching selection
+
+		/**
+		 * Insert selection or markup before each matching selection
+		 *
+		 * @param target
+		 * @param source
+		 * @param remove
+		 */
 		$before: function(target, source, remove) {
 			var func = W._canExec(source);
 
-			if (typeof source == 'string') {
-				source = W.$parseHTML(source);
-			}
-
 			W.$each(target, function(el, i) {
 				var bef = func ?
-					W.$exec(source, {
-						args: [i, el.innerHTML],
-						scope: el
-					}) :
-					source;
+						W.$exec(source, {
+							args: [i, el.innerHTML],
+							scope: el
+						}) :
+						source;
+
+				if (typeof bef == 'string') {
+					bef = W.$parseHTML(bef);
+				}
 
 				if (bef) {
 					W.$each(bef, function(cel) {
@@ -138,8 +166,14 @@
 				}
 			});
 		},
-		// Get unique direct children of each matching selection
-		// Returns element array
+
+		/**
+		 * Get unique direct children of each matching selection
+		 *
+		 * @param parent
+		 * @param filter
+		 * @returns {array}
+		 */
 		$children: function(parent, filter) {
 			var arr = [];
 
@@ -155,15 +189,27 @@
 
 			return W.$unique(arr);
 		},
-		// Clone each matching selection
-		// Returns element array
+
+		/**
+		 * Clone each matching selection
+		 *
+		 * @param target
+		 * @returns {array}
+		 */
 		$clone: function(target) {
 			return W.$map(target, function(el) {
 				return el.cloneNode(true);
 			});
 		},
-		// Get unique closest ancestors of each matching selection
-		// Returns element
+
+		/**
+		 * Get unique closest ancestors of each matching selection
+		 *
+		 * @param target
+		 * @param filter
+		 * @param context
+		 * @returns {node}
+		 */
 		$closest: function(target, filter, context) {
 			return W.$unique(W.$map(target, function(el) {
 				if (W.$is(el, filter)) {
@@ -185,8 +231,14 @@
 				context: context
 			}));
 		},
-		// Determine if any matching parent selection contains descendant selection
-		// Returns boolean
+
+		/**
+		 * Determine if any matching parent selection contains descendant selection
+		 *
+		 * @param parent
+		 * @param descendant
+		 * @returns {boolean}
+		 */
 		$contains: function(parent, descendant) {
 			var b = false;
 
@@ -199,8 +251,13 @@
 
 			return b;
 		},
-		// Get unique content of each matching selection
-		// Returns element array
+
+		/**
+		 * Get unique content of each matching selection
+		 *
+		 * @param parent
+		 * @returns {array}
+		 */
 		$contents: function(parent) {
 			var arr = [];
 
@@ -210,9 +267,15 @@
 
 			return W.$unique(arr);
 		},
-		// Get CSS value of first matching selection or set value of each matching selection
-		// Accepts either rule object or rule, value
-		// Returns string|undefined
+
+		/**
+		 * Get CSS value of first matching selection or set value of each matching selection
+		 *
+		 * @param target
+		 * @param {(object|string)} a
+		 * @param {string} [b]
+		 * @returns {(string|undefined)}
+		 */
 		$css: function(target, a, b) {
 			var obj = W.$isObject(a);
 
@@ -239,8 +302,15 @@
 					getComputedStyle(el, null)[a];
 			}
 		},
-		// Get data of first matching selection or set data of each matching selection
-		// Returns string|undefined
+
+		/**
+		 * Get data of first matching selection or set data of each matching selection
+		 *
+		 * @param target
+		 * @param a
+		 * @param b
+		 * @returns {(string|undefined)}
+		 */
 		$data: function(target, a, b) {
 			if (a === U) {
 				var el = W.$first(target),
@@ -269,7 +339,12 @@
 
 			return W.$attr(target, a, b);
 		},
-		// Remove child nodes from each matching selection
+
+		/**
+		 * Remove child nodes from each matching selection
+		 *
+		 * @param target
+		 */
 		$empty: function(target) {
 			W.$each(target, function(el) {
 				while (el.firstChild) {
@@ -277,30 +352,50 @@
 				}
 			});
 		},
-		// Get indexed node of matching selection
-		// Returns element
+
+		/**
+		 * Get indexed node of matching selection
+		 *
+		 * @param target
+		 * @param index
+		 * @param context
+		 * @returns {node}
+		 */
 		$eq: function(target, index, context) {
 			var el = W.$(target, context);
 			return el[index < 0 ? el.length + index : index];
 		},
-		// Return a filtered subset of elements from a matching selection
-		// Returns element array
+
+		/**
+		 * Return a filtered subset of elements from a matching selection
+		 *
+		 * @param target
+		 * @param filter
+		 * @param options
+		 * @returns {Array} elements
+		 */
 		$filter: function(target, filter, options) {
 			var func = W._canExec(filter);
 
 			return W.$map(target, function(el, i) {
 				var match = func ?
-					W.$exec(filter, {
-						args: [i, el],
-						scope: el
-					}) :
-					W.$is(el, filter, options);
+						W.$exec(filter, {
+							args: [i, el],
+							scope: el
+						}) :
+						W.$is(el, filter, options);
 
 				return match ? el : false;
 			});
 		},
-		// Get unique filtered descendants from each matching selection
-		// Returns element array
+
+		/**
+		 * Get unique filtered descendants from each matching selection
+		 *
+		 * @param parent
+		 * @param filter
+		 * @returns {Array} elements
+		 */
 		$find: function(parent, filter) {
 			var arr = [];
 
@@ -310,20 +405,38 @@
 
 			return W.$unique(arr);
 		},
-		// Get the first element of a matching selection
-		// Returns element
+
+		/**
+		 * Get the first element of a matching selection
+		 *
+		 * @param target
+		 * @param context
+		 * @returns {node}
+		 */
 		$first: function(target, context) {
 			return W.$eq(target, 0, context);
 		},
-		// Determine if the matching selection has a class
-		// Returns boolean
+
+		/**
+		 * Determine if the matching selection has a class
+		 *
+		 * @param target
+		 * @param className
+		 * @returns {boolean}
+		 */
 		$hasClass: function(target, className) {
 			return W.$(target).some(function(el) {
 				return new RegExp('(^| )' + className + '($| )', 'gim').test(el.className);
 			});
 		},
-		// Get or set the height of each matching selection
-		// Returns int
+
+		/**
+		 * Get or set the height of each matching selection
+		 *
+		 * @param target
+		 * @param value
+		 * @returns {int}
+		 */
 		$height: function(target, value) {
 			var func = value && W._canExec(value),
 				height;
@@ -361,20 +474,31 @@
 
 			W.$each(target, function(el, i) {
 				W.$css(el, 'height', func ?
-						W.$exec(value, {
-							args: [i, height],
-							scope: el
-						}) :
-						value
+					W.$exec(value, {
+						args: [i, height],
+						scope: el
+					}) :
+					value
 				);
 			});
 		},
-		// Hide each matching selection
+
+		/**
+		 * Hide each matching selection
+		 *
+		 * @param target
+		 */
 		$hide: function(target) {
 			W.$addClass(target, 'js-hide');
 		},
-		// Get inner HTML of first selection or set each matching selection's HTML
-		// Returns string|undefined
+
+		/**
+		 * Get inner HTML of first selection or set each matching selection's HTML
+		 *
+		 * @param target
+		 * @param value
+		 * @returns {(string|undefined)}
+		 */
 		$html: function(target, value) {
 			if (value === U) {
 				return W.$first(target).innerHTML;
@@ -384,19 +508,24 @@
 
 			W.$each(target, function(el, i) {
 				var html = func ?
-					W.$exec(value, {
-						args: [i, el.innerHTML],
-						scope: el
-					}) :
-					value;
+						W.$exec(value, {
+							args: [i, el.innerHTML],
+							scope: el
+						}) :
+						value;
 
 				if (html !== false && html !== U) {
 					el.innerHTML = html;
 				}
 			});
 		},
-		// Get the zero-based index of a matching selection relative to it's siblings
-		// Returns int
+
+		/**
+		 * Get the zero-based index of a matching selection relative to it's siblings
+		 *
+		 * @param target
+		 * @returns {int}
+		 */
 		$index: function(target) {
 			var el = W.$first(target),
 				children = W.$children(W.$parent(el)),
@@ -410,7 +539,14 @@
 
 			return -1;
 		},
-		// Insert each matching source selection element after each matching target selection
+
+		/**
+		 * Insert each matching source selection element after
+		 * each matching target selection
+		 *
+		 * @param target
+		 * @param source
+		 */
 		$insertAfter: function(target, source) {
 			W.$each(source, function(el, i) {
 				W.$each(target, function(cel) {
@@ -422,7 +558,14 @@
 				});
 			});
 		},
-		// Insert each matching source selection element before each matching target selection
+
+		/**
+		 * Insert each matching source selection element before
+		 * each matching target selection
+		 *
+		 * @param target
+		 * @param source
+		 */
 		$insertBefore: function(target, source) {
 			W.$each(source, function(el) {
 				W.$each(target, function(cel) {
@@ -430,8 +573,15 @@
 				});
 			});
 		},
-		// Determine if at least one matching selection matches a specified criteria
-		// Returns boolean
+
+		/**
+		 * Determine if at least one matching selection matches a specified criteria
+		 *
+		 * @param target
+		 * @param filter
+		 * @param options
+		 * @returns {boolean}
+		 */
 		$is: function(target, filter, options) {
 			return W.$map(target, function(el, i) {
 				if (typeof filter == 'string' && filter.slice(0, 4) == 'ref:') {
@@ -468,20 +618,40 @@
 					W._slice.call(el.parentNode.querySelectorAll(filter)).indexOf(el) > -1;
 			}).length > 0;
 		},
-		// Get the last element of a matching selection
-		// Returns element
+
+		/**
+		 * Get the last element of a matching selection
+		 *
+		 * @param target
+		 * @param context
+		 * @returns {node}
+		 */
 		$last: function(target, context) {
 			return W.$eq(target, -1, context);
 		},
-		// Get the unique next sibling of each matching selection
-		// Returns element array
+
+		/**
+		 * Get the unique next sibling of each matching selection
+		 *
+		 * @param target
+		 * @param filter
+		 * @param options
+		 * @returns {Array} elements
+		 */
 		$next: function(target, filter, options) {
 			return W.$unique(W.$map(target, function(el) {
 				return W._sibling(el, 1, filter, options);
 			}));
 		},
-		// Returns elements not matching the filtered selection
-		// Returns element array
+
+		/**
+		 * Returns elements not matching the filtered selection
+		 *
+		 * @param target
+		 * @param filter
+		 * @param options
+		 * @returns {Array} elements
+		 */
 		$not: function(target, filter, options) {
 			var func = W._canExec(filter);
 
@@ -494,8 +664,14 @@
 					W.$is(el, filter, options)) ? false : el;
 			});
 		},
-		// Get the offset position of a matching selection relative to the document
-		// Returns object
+
+		/**
+		 * Get the offset position of a matching selection relative to the document
+		 *
+		 * @param target
+		 * @param value
+		 * @returns {{top: number, left: number}}
+		 */
 		$offset: function(target, value) {
 			var top = W._legacy ? W._html : W._win,
 				rect = W.$first(target).getBoundingClientRect(),
@@ -529,16 +705,28 @@
 				return offset;
 			}
 		},
-		// Get unique parent from each matching selection
-		// Returns element array
+
+		/**
+		 * Get unique parent from each matching selection
+		 *
+		 * @param child
+		 * @param filter
+		 * @returns {Array} elements
+		 */
 		$parent: function(child, filter) {
 			return W.$unique(W.$map(child, function(el) {
 				var parent = el.parentNode;
 				return ! filter || W.$is(parent, filter) ? parent : false;
 			}));
 		},
-		// Get unique ancestors of each matching selection
-		// Returns element array
+
+		/**
+		 * Get unique ancestors of each matching selection
+		 *
+		 * @param child
+		 * @param filter
+		 * @returns {Array} elements
+		 */
 		$parents: function(child, filter) {
 			var arr = [];
 
@@ -558,19 +746,14 @@
 
 			return W.$unique(arr);
 		},
-		// Create a DOM object from an HTML string
-		// Returns element
-		$parseHTML: function(html, convert) {
-			var el = W._doc.createElement('div');
 
-			el.innerHTML = html;
-
-			var children = W._slice.call(el.children.length ? el.children : el.childNodes);
-
-			return convert ? W._win[WeeAlias](children) : children;
-		},
-		// Get the position of the first matching selection relative to its offset parent
-		// Returns object
+		/**
+		 * Get the position of the first matching selection relative
+		 * to its offset parent
+		 *
+		 * @param target
+		 * @returns {{top: number, left: number}}
+		 */
 		$position: function(target) {
 			var el = W.$first(target);
 
@@ -579,37 +762,59 @@
 				left: el.offsetLeft
 			};
 		},
-		// Prepend selection or markup before each matching selection
+
+		/**
+		 * Prepend selection or markup before each matching selection
+		 *
+		 * @param target
+		 * @param source
+		 */
 		$prepend: function(target, source) {
 			var func = W._canExec(source);
 
-			if (typeof source == 'string') {
-				source = W.$parseHTML(source);
-			}
-
 			W.$each(target, function(el, i) {
 				var pre = func ?
-					W.$exec(source, {
-						args: [i, el.innerHTML],
-						scope: el
-					}) :
-					source;
+						W.$exec(source, {
+							args: [i, el.innerHTML],
+							scope: el
+						}) :
+						source;
+
+				if (typeof pre == 'string') {
+					pre = W.$parseHTML(pre);
+				}
 
 				if (pre) {
-					W.$each(source, function(cel) {
+					W.$each(pre, function(cel) {
 						el.insertBefore(cel, el.firstChild);
 					});
 				}
 			});
 		},
-		// Get the unique previous sibling of each matching selection
-		// Returns element array
+
+		/**
+		 * Get the unique previous sibling of each matching selection
+		 *
+		 * @param target
+		 * @param filter
+		 * @param options
+		 * @returns {Array} elements
+		 */
 		$prev: function(target, filter, options) {
 			return W.$unique(W.$map(target, function(el) {
 				return W._sibling(el, -1, filter, options);
 			}));
 		},
-		// Get property of first matching selection or set property of each matching selection
+
+		/**
+		 * Get property of first matching selection or set property of
+		 * each matching selection
+		 *
+		 * @param target
+		 * @param a
+		 * @param b
+		 * @returns {*}
+		 */
 		$prop: function(target, a, b) {
 			var obj = W.$isObject(a);
 
@@ -634,7 +839,13 @@
 				return el[a];
 			}
 		},
-		// Remove each matching selection from the document
+
+		/**
+		 * Remove each matching selection from the document
+		 *
+		 * @param target
+		 * @param context
+		 */
 		$remove: function(target, context) {
 			W.$each(target, function(el) {
 				el.parentNode.removeChild(el);
@@ -642,7 +853,13 @@
 				context: context
 			});
 		},
-		// Remove specified attribute of each matching selection
+
+		/**
+		 * Remove specified attribute of each matching selection
+		 *
+		 * @param target
+		 * @param name
+		 */
 		$removeAttr: function(target, name) {
 			W.$each(target, function(el) {
 				name.split(/\s+/).forEach(function(value) {
@@ -650,8 +867,13 @@
 				});
 			});
 		},
-		// Remove classes from each matching selection
-		// Accepts either string or function value
+
+		/**
+		 * Remove classes from each matching selection
+		 *
+		 * @param target
+		 * @param {(function|string)} value
+		 */
 		$removeClass: function(target, value) {
 			var func = W._canExec(value);
 
@@ -670,12 +892,24 @@
 				}
 			});
 		},
-		// Replace each matching selection with selection or markup
+
+		/**
+		 * Replace each matching selection with selection or markup
+		 *
+		 * @param target
+		 * @param source
+		 */
 		$replaceWith: function(target, source) {
 			W.$after(target, source, true);
 		},
-		// Get or set the X scroll position of each matching selection
-		// Returns int
+
+		/**
+		 * Get or set the X scroll position of each matching selection
+		 *
+		 * @param target
+		 * @param value
+		 * @returns {int}
+		 */
 		$scrollLeft: function(target, value) {
 			if (value === U) {
 				var el = target ? W.$first(target) : W._win;
@@ -695,8 +929,14 @@
 				el.scrollLeft = value;
 			});
 		},
-		// Get or set the Y scroll position of each matching selection
-		// Returns int
+
+		/**
+		 * Get or set the Y scroll position of each matching selection
+		 *
+		 * @param target
+		 * @param value
+		 * @returns {int}
+		 */
 		$scrollTop: function(target, value) {
 			if (value === U) {
 				var el = target ? W.$first(target) : W._win;
@@ -716,8 +956,13 @@
 				el.scrollTop = value;
 			});
 		},
-		// Serialize input values from first matching form selection
-		// Returns string
+
+		/**
+		 * Serialize input values from first matching form selection
+		 *
+		 * @param target
+		 * @returns {string}
+		 */
 		$serializeForm: function(target) {
 			var el = W.$first(target);
 
@@ -753,12 +998,23 @@
 
 			return '';
 		},
-		// Show each matching selection
+
+		/**
+		 * Show each matching selection
+		 *
+		 * @param target
+		 */
 		$show: function(target) {
 			W.$removeClass(target, 'js-hide');
 		},
-		// Get unique siblings of each matching selection
-		// Returns element array
+
+		/**
+		 * Get unique siblings of each matching selection
+		 *
+		 * @param target
+		 * @param filter
+		 * @returns {Array} elements
+		 */
 		$siblings: function(target, filter) {
 			var arr = [];
 
@@ -782,8 +1038,15 @@
 
 			return W.$unique(arr);
 		},
-		// Get subset of selection matches from specified range
-		// Returns element array
+
+		/**
+		 * Get subset of selection matches from specified range
+		 *
+		 * @param target
+		 * @param start
+		 * @param end
+		 * @returns {Array} elements
+		 */
 		$slice: function(target, start, end) {
 			if (! target._$) {
 				target = W._selArray(target);
@@ -791,8 +1054,14 @@
 
 			return W._slice.call(target, start, end);
 		},
-		// Get inner text of first selection or set each matching selection's text
-		// Returns string
+
+		/**
+		 * Get inner text of first selection or set each matching selection's text
+		 *
+		 * @param target
+		 * @param value
+		 * @returns {string}
+		 */
 		$text: function(target, value) {
 			if (value === U) {
 				return W.$map(target, function(el) {
@@ -804,18 +1073,23 @@
 
 			W.$each(target, function(el, i) {
 				var text = func ?
-					W.$exec(value, {
-						args: [i, (el.textContent || el.innerText).trim()],
-						scope: el
-					}) :
-					value;
+						W.$exec(value, {
+							args: [i, (el.textContent || el.innerText).trim()],
+							scope: el
+						}) :
+						value;
 
 				el.textContent === U ?
 					el.innerText = text :
 					el.textContent = text;
 			});
 		},
-		// Toggle the display of each matching selection
+
+		/**
+		 * Toggle the display of each matching selection
+		 *
+		 * @param target
+		 */
 		$toggle: function(target) {
 			W.$each(target, function(el) {
 				! W.$hasClass(el, 'js-hide') ?
@@ -823,7 +1097,14 @@
 					W.$show(el);
 			});
 		},
-		// Toggle adding and removing class(es) from the specified element
+
+		/**
+		 * Toggle adding and removing class(es) from the specified element
+		 *
+		 * @param target
+		 * @param className
+		 * @param state
+		 */
 		$toggleClass: function(target, className, state) {
 			var func = W._canExec(className);
 
@@ -844,8 +1125,15 @@
 				}
 			});
 		},
-		// Get value of first matching selection or set values of each matching selection
-		// Returns string
+
+		/**
+		 * Get value of first matching selection or set values of
+		 * each matching selection
+		 *
+		 * @param target
+		 * @param value
+		 * @returns {string}
+		 */
 		$val: function(target, value) {
 			if (value === U) {
 				var el = W.$first(target);
@@ -889,8 +1177,14 @@
 				}
 			});
 		},
-		// Get or set the width of each matching selection
-		// Returns int
+
+		/**
+		 * Get or set the width of each matching selection
+		 *
+		 * @param target
+		 * @param value
+		 * @returns {int}
+		 */
 		$width: function(target, value) {
 			var func = value && W._canExec(value),
 				width;
@@ -928,15 +1222,21 @@
 
 			W.$each(target, function(el, i) {
 				W.$css(el, 'width', func ?
-						W.$exec(value, {
-							args: [i, width],
-							scope: el
-						}) :
-						value
+					W.$exec(value, {
+						args: [i, width],
+						scope: el
+					}) :
+					value
 				);
 			});
 		},
-		// Wrap markup around each matching selection
+
+		/**
+		 * Wrap markup around each matching selection
+		 *
+		 * @param target
+		 * @param html
+		 */
 		$wrap: function(target, html) {
 			var func = W._canExec(html);
 
@@ -958,7 +1258,13 @@
 				}
 			});
 		},
-		// Wrap markup around the content of each matching selection
+
+		/**
+		 * Wrap markup around the content of each matching selection
+		 *
+		 * @param target
+		 * @param html
+		 */
 		$wrapInner: function(target, html) {
 			var func = W._canExec(html);
 
@@ -990,8 +1296,17 @@
 				}
 			});
 		},
-		// Return either direct previous or next sibling
-		// Returns element
+
+		/**
+		 * Return either direct previous or next sibling
+		 *
+		 * @private
+		 * @param target
+		 * @param dir
+		 * @param filter
+		 * @param options
+		 * @returns {*}
+		 */
 		_sibling: function(target, dir, filter, options) {
 			var match;
 
