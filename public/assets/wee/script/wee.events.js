@@ -2,20 +2,32 @@
 	'use strict';
 
 	W.fn.make('events', {
-		// Add bindings to bound object with optional exec object and/or init boolean
-		// DEPRECATED
-		map: function(evts, a, b) {
-			this.$set('mapped', W.$extend(this.$get('mapped', {}), evts));
+		/**
+		 * Add bindings to bound object with optional exec object and init flag
+		 *
+		 * @deprecated since 2.1.0
+		 * @param {object} events
+		 * @param {(bool|object)} [a]
+		 * @param {bool} [b]
+		 */
+		map: function(events, a, b) {
+			this.$set('mapped', W.$extend(this.$get('mapped', {}), events));
 
 			if (a === true || b === true) {
-				this.bind(evts, a === true ? {} : a);
+				this.bind(events, a === true ? {} : a);
 			}
 		},
-		// Bind against elements stored in the DOM reference
-		// DEPRECATED
-		bind: function(evts, opt) {
-			var mapped = evts || this.$get('mapped');
-			evts = [];
+
+		/**
+		 * Bind against elements stored in the DOM reference
+		 *
+		 * @deprecated since 2.1.0
+		 * @param {object} events
+		 * @param {object} [opt]
+		 */
+		bind: function(events, opt) {
+			var mapped = events || this.$get('mapped');
+			events = [];
 
 			if (mapped) {
 				var keys = Object.keys(mapped),
@@ -23,28 +35,52 @@
 
 				for (; i < keys.length; i++) {
 					var key = keys[i];
-					evts['ref:' + key] = mapped[key];
+					events['ref:' + key] = mapped[key];
 				}
 
-				this.on(W.$extend({}, evts), opt);
+				this.on(W.$extend({}, events), opt);
 			}
 		},
-		// Remove bindings to bound object
-		// DEPRECATED
-		unbind: function(id, evt) {
-			this.off('ref:' + id, evt);
+
+		/**
+		 * Remove bindings to bound object
+		 *
+		 * @deprecated since 2.1.0
+		 * @param {string} id
+		 * @param {string} [event]
+		 */
+		unbind: function(id, event) {
+			this.off('ref:' + id, event);
 		},
-		// Execute specific function by name and event
-		// DEPRECATED
-		fire: function(name, evt) {
+
+		/**
+		 * Execute specific function by name and event
+		 *
+		 * @deprecated since 2.1.0
+		 * @param {string} name
+		 * @param {string} [event]
+		 */
+		fire: function(name, event) {
 			var bound = this.$get('mapped');
 
-			if (bound.hasOwnProperty(name) && bound[name].hasOwnProperty(evt)) {
-				W.$exec(bound[name][evt]);
+			if (bound.hasOwnProperty(name) && bound[name].hasOwnProperty(event)) {
+				W.$exec(bound[name][event]);
 			}
 		},
-		// Bind specified function to specified element and event
-		// Options include arguments, context, one, scope, and delegate
+
+		/**
+		 * Bind specified function to specified element and event
+		 *
+		 * @param {(node|string)} target
+		 * @param {(object|string)} a - event name or object of events
+		 * @param {(function|object)} [b] - event callback or options object
+		 * @param {(object|string)} [c] - event options
+		 * @param {Array} [c.args] - callback arguments
+		 * @param {(node|string)} [c.context=document]
+		 * @param {(node|string)} [c.delegate]
+		 * @param {boolean} [c.once=false] - remove event after first execution
+		 * @param {object} [c.scope]
+		 */
 		on: function(target, a, b, c) {
 			var evts = [];
 
@@ -56,7 +92,7 @@
 					var key = keys[i];
 					evts = target[key];
 
-					this.$private('bind', key, evts, a);
+					this.$private.bind(key, evts, a);
 				}
 			} else {
 				if (typeof a == 'string') {
@@ -66,12 +102,25 @@
 					c = b;
 				}
 
-				this.$private('bind', target, evts, c);
+				this.$private.bind(target, evts, c);
 			}
 		},
-		// Bind specified function to specified element and event for single execution
-		// DEPRECATED
-		one: function(sel, a, b, c) {
+
+		/**
+		 * Bind specified function to specified element and event for single execution
+		 *
+		 * @deprecated since 2.1.0
+		 * @param {(node|string)} target
+		 * @param {(object|string)} a - event name or object of events
+		 * @param {(function|object)} [b] - event callback or options object
+		 * @param {(object|string)} [c] - event options
+		 * @param {Array} [c.args] - callback arguments
+		 * @param {(node|string)} [c.context=document]
+		 * @param {(node|string)} [c.delegate]
+		 * @param {boolean} [c.once=true] - remove event after first execution
+		 * @param {object} [c.scope]
+		 */
+		one: function(target, a, b, c) {
 			if (typeof a == 'string') {
 				var obj = [];
 				obj[a] = b;
@@ -80,11 +129,18 @@
 				c = b;
 			}
 
-			this.on(sel, a, W.$extend({
+			this.on(target, a, W.$extend({
 				one: true
 			}, c));
 		},
-		// Remove specified function to specified element and optional event|function
+
+		/**
+		 * Remove specified event from specified element
+		 *
+		 * @param {(node|string)} [target]
+		 * @param {(object|string)} a - event name or object of events
+		 * @param {function} [b] - specific function to remove
+		 */
 		off: function(target, a, b) {
 			var obj = a;
 
@@ -102,40 +158,62 @@
 						var evt = evts[i],
 						fn = obj[evt];
 
-						this.$private('off', target, evt, fn);
+						this.$private.off(target, evt, fn);
 					}
 				}
 			} else {
-				this.$private('off', target);
+				this.$private.off(target);
 			}
 		},
-		// Get currently bound events to optional specified element and event|function
-		// Returns array of objects
+
+		/**
+		 * Get currently bound events to optional specified element and event|function
+		 *
+		 * @param {(node|string)} [target]
+		 * @param {string} [event] - event name to match
+		 * @param {function} [fn] - specific function to match
+		 * @returns {Array} matches
+		 */
 		bound: function(target, event, fn) {
-			var bound = this.$get('evts'),
+			var bound = this.$get('evts', []),
 				matches = [];
+			target = target || [0];
 
-			if (bound) {
-				if (target) {
-					W.$each(target, function(el) {
-						for (var e in bound) {
-							var ev = bound[e];
+			W.$each(target, function(el) {
+				for (var e in bound) {
+					var binding = bound[e];
 
-							if (el !== ev.el || (event && (event !== ev.ev || (fn && String(fn) !== String(ev.fn))))) {
-								continue;
-							}
+					if (
+						(
+							el &&
+							el !== binding.el
+						) ||
+						(
+							event &&
+							! new RegExp('^' + event).test(binding.ev) &&
+							! new RegExp(event + '$').test(binding.ev)
+						) ||
+						(
+							fn &&
+							String(fn) !== String(binding.fn)
+						)
+					) {
+						continue;
+					}
 
-							matches.push(ev);
-						}
-					});
-				} else {
-					return bound;
+					matches.push(binding);
 				}
-			}
+			});
 
 			return matches;
 		},
-		// Execute event for each matching selection
+
+		/**
+		 * Execute event for each matching selection
+		 *
+		 * @param {(node|string)} target
+		 * @param {string} event
+		 */
 		trigger: function(target, event) {
 			W.$each(target, function(el) {
 				if (W._doc.createEvent) {
@@ -149,6 +227,13 @@
 			});
 		}
 	}, {
+		/**
+		 * Attach specific event logic to element
+		 *
+		 * @param {Array} els
+		 * @param {object} obj
+		 * @param {object} c
+		 */
 		bind: function(els, obj, c) {
 			var scope = this;
 
@@ -175,6 +260,7 @@
 							evt = evts[i],
 							ev = evt,
 							f = fn;
+						evt = evt.split('.')[0];
 
 						if (evt == 'mouseenter' || evt == 'mouseleave') {
 							conf.args.unshift(fn);
@@ -262,7 +348,14 @@
 				}
 			});
 		},
-		// Ensure mouse has actually entered or left root element before firing event
+
+		/**
+		 * Ensure mouse has actually entered or left root element before firing event
+		 *
+		 * @param {event} e
+		 * @param {node} parent
+		 * @param {function} fn
+		 */
 		mouseEvent: function(e, parent, fn) {
 			var child = e.relatedTarget,
 				checkParent = function(parent, child) {
@@ -289,6 +382,14 @@
 				scope: this
 			});
 		},
+
+		/**
+		 * Detach event(s) from element
+		 *
+		 * @param {(node|string)} [sel]
+		 * @param {string} [evt]
+		 * @param {function} [fn]
+		 */
 		off: function(sel, evt, fn) {
 			W.$each(this.$public.bound(sel, evt, fn), function(e) {
 				W._legacy ?
