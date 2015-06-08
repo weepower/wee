@@ -1,8 +1,16 @@
 {
 	"name": "wee",
-	"version": "2.3.2",
+	"version": "2.4.0",
 	"description": "Blueprint for modern web development",
 	"homepage": "https://www.weepower.com",
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/weepower/wee.git"
+	},
+	"bugs": {
+		"url": "https://github.com/weepower/wee/issues"
+	},
 	"keywords": [
 		"bootstrap",
 		"css",
@@ -11,20 +19,8 @@
 		"less",
 		"responsive"
 	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/weepower/wee.git"
-	},
-	"bugs": {
-		"url": "https://github.com/weepower/wee/issues"
-	},
-	"licenses": [
-		{
-			"type": "Apache-2.0",
-			"url": "http://www.apache.org/licenses/LICENSE-2.0"
-		}
-	],
 	"devDependencies": {
+		"browser-sync": "~2.7.6",
 		"grunt": "~0.4.5",
 		"grunt-contrib-concat": "~0.5.1",
 		"grunt-contrib-imagemin": "~0.9.4",
@@ -32,11 +28,10 @@
 		"grunt-contrib-uglify": "~0.9.1",
 		"grunt-contrib-watch": "~0.6.1",
 		"grunt-newer": "~1.1.0",
-		"browser-sync": "~2.7.2",
 		"html-minifier": "~0.7.2",
 		"js-yaml": "~3.3.1",
 		"jscs": "~1.13.1",
-		"jshint": "~2.7.0",
+		"jshint": "~2.8.0",
 		"less-plugin-clean-css": "~1.5.0",
 		"node-notifier": "~4.2.1",
 		"remarkable": "~1.6.0"
