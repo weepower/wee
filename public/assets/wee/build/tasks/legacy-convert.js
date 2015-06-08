@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 		content = content.replace(/(-?[.\d]+)rem/gi, function(str, match) {
 			return (match * rootValue) + 'px';
 		}).replace(/opacity:([.\d]+)/gi, function(str, match) {
-			return 'filter:alpha(opacity=' + Math.round((match * 100) * 100 / 100) + ');';
+			return 'filter:alpha(opacity=' + Math.round((match * 100) * 100 / 100) + ')';
 		}).replace(/::/g, ':');
 
 		grunt.file.write(dest, content);
