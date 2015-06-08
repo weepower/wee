@@ -2,20 +2,26 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY
 
+/* global define */
+
 (function(N, U) {
 	'use strict';
 
 	var web = typeof window != 'undefined',
 		W = (function() {
-			// Determine if value can be executed
-			// Returns boolean
 			var store = {},
 				D = web ? document : {},
-				// Determine data storage root and key
-				// Returns array
-				storeData = function(key) {
+
+				/**
+				 * Determine data storage root and key
+				 *
+				 * @param {string} key
+				 * @param {object} [scope]
+				 * @returns {Array} value
+				 */
+				storeData = function(key, scope) {
 					if (key.indexOf(':') < 0) {
-						return [store, key];
+						return [scope !== W ? scope : store, key];
 					}
 
 					var segs = key.split(':');
@@ -27,6 +33,14 @@
 
 					return [store[key], segs[1]];
 				},
+
+				/**
+				 * Check if a node contains another node
+				 *
+				 * @param {node} source
+				 * @param {node} target
+				 * @returns {boolean} value
+				 */
 				contains = function(source, target) {
 					return (source === D ? W._html : source).contains(target);
 				};
@@ -38,76 +52,120 @@
 				_legacy: D.getElementsByClassName ? false : true,
 				_slice: [].slice,
 				_win: N,
-
-				// Create namespaced controller
+				_$: N.WeeAlias || '$',
 				fn: {
+					/**
+					 * Create a namespaced controller
+					 *
+					 * @param {string} name
+					 * @param {object} pub - public methods and properties
+					 * @param {object} [priv] - private methods and properties
+					 */
 					make: function(name, pub, priv) {
-						W[name] = (function() {
+						W.fn[name] = function() {
 							var Public = pub,
 								Private = priv || {};
 
 							// Ensure the current controller is not being extended
 							if (name != '_tmp') {
 								var data = {
-									// Private getter and setter methods for controllers
-									$get: function(key, def, set, opt) {
-										return W.$get(name + (key ? ':' + key : ''), def, set, opt);
-									},
-									$set: function(key, val, opt) {
-										return W.$set(name + ':' + key, val, opt);
-									},
-									$push: function(key, a, b) {
-										return W.$push(name + ':' + key, a, b);
-									},
-									// Destroy current controller
-									$destroy: function() {
-										if (Public._destruct) {
-											Public._destruct();
-										}
+									store: {},
 
+									/**
+									 * Get value from controller storage
+									 *
+									 * @returns {*}
+									 */
+									$get: function() {
+										return W.$get.apply(this.store, arguments);
+									},
+
+									/**
+									 * Set value in controller storage
+									 *
+									 * @returns {*}
+									 */
+									$set: function() {
+										return W.$set.apply(this.store, arguments);
+									},
+
+									/**
+									 * Push value into controller storage
+									 *
+									 * @returns {Array}
+									 */
+									$push: function() {
+										return W.$push.apply(this.store, arguments);
+									},
+
+									/**
+									 * Destroy current controller
+									 */
+									$destroy: function() {
 										if (Private._destruct) {
 											Private._destruct();
+										}
+
+										if (Public._destruct) {
+											Public._destruct();
 										}
 
 										delete W[name];
 									}
 								};
 
-								// Extend defined public and private objects with data functions
-								Public = W.$extend(pub, data);
-								Private = W.$extend(priv, data);
+								// Extend public and private objects with data
+								Public = W.$extend(Public, data);
+								Private = W.$extend(Private, data);
 							}
 
-							// If private object exists expose $call function for executing private methods
+							// If private object exists expose $private methods
 							if (priv) {
+								/**
+								 * Execute private method from public interface
+								 *
+								 * @deprecated
+								 * @param {string} fn - method name
+								 */
 								Public.$private = function(fn) {
-									var args = W._slice.call(arguments);
+									Private.$public = this;
 
-									// Bind all additional arguments to private method call
-									args.length ?
-										args.shift() :
-										args = [];
-
-									return Private[fn].apply(Private, args);
+									return Private[fn].apply(
+										Private,
+										W._slice.call(arguments).slice(1)
+									);
 								};
+
+								Private.$public = Public;
+
+								// Execute private constructor
+								if (Private._construct !== U) {
+									Private._construct();
+								}
+
+								for (var fn in Private) {
+									Public.$private[fn] = Private[fn];
+								}
 							}
 
-							Private.$public = Public;
-
-							store[name] = store[name] || {};
-
+							// Execute public constructor
 							if (Public._construct !== U) {
 								Public._construct();
 							}
 
-							if (Private._construct !== U) {
-								Private._construct();
-							}
+							return W.$extend({}, Public);
+						};
 
-							return Public;
-						})();
+						W[name] = new W.fn[name]();
 					},
-					// Extend existing controller with additional methods and properties
+
+					/**
+					 * Extend controller with additional methods and properties
+					 *
+					 * @param {(object|string)} a
+					 * @param {object} [b] - public methods and properties
+					 * @param {object} [c] - private methods and properties
+					 */
 					extend: function(a, b, c) {
 						if (W.$isObject(a)) {
 							// Merge into the global object
@@ -122,9 +180,14 @@
 						}
 					}
 				},
-				// Get matches to specified selector
-				// Accepts optional context
-				// Returns array
+
+				/**
+				 * Get matches to specified selector
+				 *
+				 * @param {(node|string)} selector
+				 * @param {(node|string)} [context=document]
+				 * @returns {Array} results
+				 */
 				$: function(selector, context) {
 					var el = null,
 						ref = [];
@@ -140,7 +203,7 @@
 							return [D];
 						}
 
-						// Lookup the context and return nothing if it doesn't exist
+						// Return nothing if context doesn't exist
 						context = context !== U ? W.$(context)[0] : D;
 
 						if (! context) {
@@ -179,7 +242,8 @@
 							}
 						}
 
-						if (N.WeeSelector !== U) { // Use third-party selector engine if defined
+						// Use third-party selector engine if defined
+						if (N.WeeSelector !== U) {
 							el = N.WeeSelector(selector, context);
 						} else if (
 							selector.indexOf(' ') > 0 ||
@@ -189,7 +253,11 @@
 							selector.indexOf('#') > -1 ||
 							selector.lastIndexOf('.') > 0
 						) {
-							el = context.querySelectorAll(selector);
+							try {
+								el = context.querySelectorAll(selector);
+							} catch (e) {
+								return W.$parseHTML(selector);
+							}
 						} else {
 							var pre = selector.charAt(0);
 
@@ -213,14 +281,45 @@
 						el = W._slice.call(el, 0);
 					}
 
-					// Join refs if available
+					// Join references if available
 					return ref.length ? el.concat(ref) : el;
 				},
-				// Set global variable
-				// Options can be passed if value is a callback
-				// Returns mixed
+
+				/**
+				 * Create a DOM object from an HTML string
+				 *
+				 * @param {string} html
+				 * @param {boolean} [convert=false] - deprecated
+				 * @returns {node} element
+				 */
+				$parseHTML: function(html, convert) {
+					var el = W._doc.createElement('div');
+
+					el.innerHTML = html;
+
+					var children = W._slice.call(
+						el.children.length ?
+							el.children :
+							el.childNodes
+					);
+
+					return convert ?
+						W._win[W._$](children) :
+						children;
+				},
+
+				/**
+				 * Set global variable
+				 *
+				 * @param {string} key
+				 * @param {*} value
+				 * @param {object} [options] - available if value is a callback
+				 * @param {Array} [options.args]
+				 * @param {object} [options.scope]
+				 * @returns {*} value
+				 */
 				$set: function(key, value, options) {
-					var split = storeData(key),
+					var split = storeData(key, this),
 						set = W._canExec(value) || options ?
 							W.$exec(value, options) :
 							value;
@@ -229,13 +328,21 @@
 
 					return set;
 				},
-				// Get global variable
-				// Accepts optional boolean to set default value if variable doesn't exist
-				// Options can be passed if default value being set is a callback
-				// Returns mixed
+
+				/**
+				 * Get global variable
+				 *
+				 * @param {string} key
+				 * @param {*} [fallback]
+				 * @param {boolean} [set=false]
+				 * @param {object} [options] - available if fallback is a callback
+				 * @param {Array} [options.args]
+				 * @param {object} [options.scope]
+				 * @returns {*} value
+				 */
 				$get: function(key, fallback, set, options) {
 					if (key) {
-						var split = storeData(key),
+						var split = storeData(key, this),
 							root = split[0];
 						key = split[1];
 
@@ -258,10 +365,20 @@
 						return null;
 					}
 
-					return store;
+					return this !== W ? this : store;
 				},
-				// Execute function for each matching selection
-				// Options include arguments, reverse, context, and scope
+
+				/**
+				 * Execute function for each matching selection
+				 *
+				 * @param {(Array|string)} target
+				 * @param {function} fn
+				 * @param {object} [options]
+				 * @param {Array} [options.args]
+				 * @param {boolean} [options.reverse=false]
+				 * @param {context} [options.context=document]
+				 * @param {Array} [options.scope]
+				 */
 				$each: function(target, fn, options) {
 					if (target) {
 						var conf = W.$extend({
@@ -275,24 +392,27 @@
 						}
 
 						for (; i < els.length; i++) {
-							var el = els[i];
-
-							if (el) {
-								var val = W.$exec(fn, {
+							var el = els[i],
+								val = W.$exec(fn, {
 									args: [el, i].concat(conf.args),
 									scope: conf.scope || el
 								});
 
-								if (val === false) {
-									return;
-								}
+							if (val === false) {
+								return;
 							}
 						}
 					}
 				},
-				// Get current environment or detect current environment against specified object
-				// Defaults to local
-				// Returns string|undefined
+
+				/**
+				 * Get current environment or set current environment against
+				 * specified object
+				 *
+				 * @param {object} [rules]
+				 * @param {string} [fallback=local]
+				 * @returns {string} environment
+				 */
 				$env: function(rules, fallback) {
 					if (rules) {
 						W.$set('_env', function() {
@@ -316,16 +436,26 @@
 
 					return W.$get('_env', 'local');
 				},
-				// Determine if the environment is secured over https
-				// Optional url can be passed for evaluation
-				// Returns boolean
+
+				/**
+				 * Determine if the environment is secured over https
+				 *
+				 * @param {string} [url=current url]
+				 * @returns {boolean} secure
+				 */
 				$envSecure: function(url) {
 					return (url || N.location.href).slice(0, 5) == 'https';
 				},
-				// Execute specified function or controller method
-				// Arguments and scope can be set in the optional options object
-				// Arguments defaults to an empty array and the scope defaults to null
-				// Returns mixed
+
+				/**
+				 * Execute specified function or controller method
+				 *
+				 * @param {function} fn
+				 * @param {object} [options]
+				 * @param {Array} [options.args]
+				 * @param {object} [options.scope]
+				 * @returns {*} response
+				 */
 				$exec: function(fn, options) {
 					options = options || {};
 
@@ -349,7 +479,10 @@
 						}
 
 						if (W.$isFunction(fn)) {
-							var response = fn.apply(conf.scope, W.$toArray(conf.args));
+							var response = fn.apply(
+								conf.scope,
+								W.$toArray(conf.args)
+							);
 
 							if (len === 1) {
 								return response;
@@ -357,9 +490,15 @@
 						}
 					}
 				},
-				// Extend target object with source object
-				// Optionally nest deep with third argument set to true
-				// Returns object
+
+				/**
+				 * Extend target object with source object
+				 *
+				 * @param {object} target
+				 * @param {object} source
+				 * @param {boolean} [deep=false] - extend nested properties
+				 * @returns {object} merged
+				 */
 				$extend: function(target, source, deep) {
 					target = target || {};
 
@@ -377,41 +516,82 @@
 
 					return target;
 				},
-				// Get keys from an object
-				// Returns array
-				// DEPRECATED
+
+				/**
+				 * Extract keys from an object
+				 *
+				 * @deprecated since 2.1.0
+				 * @param {object} value
+				 * @returns {Array}
+				 */
 				$getKeys: function(value) {
 					return Object.keys(value);
 				},
-				// Determine if value belongs to array
-				// Returns int|false
-				// DEPRECATED
+
+				/**
+				 * Determine if value belongs to array
+				 *
+				 * @deprecated since 2.1.0
+				 * @param {Array} array
+				 * @param {string} value
+				 * @returns {(bool|int)} false or array index
+				 */
 				$inArray: function(array, value) {
 					var i = array.indexOf(value);
 					return i < 0 ? false : i;
 				},
-				// Determine if value is an array
-				// Returns boolean
+
+				/**
+				 * Determine if value is an array
+				 *
+				 * @param {*} value
+				 * @returns {boolean}
+				 */
 				$isArray: function(value) {
 					return Array.isArray(value);
 				},
-				// Determine if value is a function
-				// Returns boolean
+
+				/**
+				 * Determine if value is a function
+				 *
+				 * @param {*} value
+				 * @returns {boolean}
+				 */
 				$isFunction: function(value) {
-					return value && {}.toString.call(value) == '[object Function]';
+					return value &&
+						{}.toString.call(value) == '[object Function]';
 				},
-				// Determine if value is an object
-				// Returns boolean
+
+				/**
+				 * Determine if value is an object
+				 *
+				 * @param {*} value
+				 * @returns {boolean}
+				 */
 				$isObject: function(value) {
 					return value && value.constructor === Object;
 				},
-				// Determine if value is a string
-				// Returns boolean
+
+				/**
+				 * Determine if value is a string
+				 *
+				 * @param {*} value
+				 * @returns {boolean}
+				 */
 				$isString: function(value) {
 					return typeof value == 'string';
 				},
-				// Translate items in an array|selection to new array
-				// Returns array
+
+				/**
+				 * Translate items in an array|selection to new array
+				 *
+				 * @param {(Array|string)} target - array or selector
+				 * @param {function} fn
+				 * @param {object} [options]
+				 * @param {Array} [options.args]
+				 * @param {object} [options.scope]
+				 * @returns {Array}
+				 */
 				$map: function(target, fn, options) {
 					if (! Array.isArray(target)) {
 						target = W._selArray(target, options);
@@ -437,17 +617,33 @@
 
 					return res;
 				},
-				// Merge source array into target array
-				// Optionally de-duplicate the arrays by passing true
-				// Returns array
+
+				/**
+				 * Merge source array into target array
+				 *
+				 * @param {Array} target
+				 * @param {Array} source
+				 * @param {boolean} [unique=false] de-duplicate values
+				 * @returns {Array}
+				 */
 				$merge: function(target, source, unique) {
 					target = target.concat(source);
-					return unique ? W.$unique(target) : target;
+
+					return unique ?
+						W.$unique(target) :
+						target;
 				},
-				// Push value into global array
-				// Returns array
+
+				/**
+				 * Push value into global array
+				 *
+				 * @param {string} key
+				 * @param {*} a
+				 * @param {*} b
+				 * @returns {*} value
+				 */
 				$push: function(key, a, b) {
-					var split = storeData(key),
+					var split = storeData(key, this),
 						root = split[0];
 					key = split[1];
 
@@ -471,17 +667,38 @@
 
 					return root[key];
 				},
-				// Serialize object
-				// Returns string
+
+				/**
+				 * Bind specified context to method execution
+				 *
+				 * @param {function} fn
+				 * @param {object} context
+				 */
+				$proxy: function(fn, context) {
+					fn.apply(context, W._slice.call(arguments).slice(2));
+				},
+
+				/**
+				 * Serialize object
+				 *
+				 * @param {object} value
+				 * @returns {string} value
+				 */
 				$serialize: function(value) {
 					return Object.keys(value).map(function(key) {
 						if (typeof value[key] != 'object') {
-							return encodeURIComponent(key) + '=' + encodeURIComponent(value[key]);
+							return encodeURIComponent(key) + '=' +
+								encodeURIComponent(value[key]);
 						}
 					}).join('&');
 				},
-				// Add ref elements to datastore
-				// data-bind is DEPRECATED
+
+				/**
+				 * Add ref elements to datastore
+				 * data-bind is deprecated
+				 *
+				 * @param {object} [context=document]
+				 */
 				$setRef: function(context) {
 					var sets = W.$get('ref');
 					context = context ? W.$(context)[0] : D;
@@ -490,14 +707,18 @@
 					if (sets) {
 						Object.keys(sets).forEach(function(key) {
 							W.$set('ref:' + key, sets[key].filter(function(el) {
-								return ! (! contains(D, el) || (contains(context, el) && context !== el));
+								return ! (
+									! contains(D, el) ||
+									(contains(context, el) && context !== el)
+								);
 							}));
 						});
 					}
 
 					// Set refs from DOM
 					W.$each('[data-ref], [data-bind]', function(el) {
-						var ref = el.getAttribute('data-ref') || el.getAttribute('data-bind');
+						var ref = el.getAttribute('data-ref') ||
+								el.getAttribute('data-bind');
 
 						ref.split(/\s+/).forEach(function(val) {
 							W.$push('ref', val, [el]);
@@ -506,7 +727,10 @@
 						context: context
 					});
 				},
-				// Add metadata variables to datastore
+
+				/**
+				 * Add metadata variables to datastore
+				 */
 				$setVars: function() {
 					W.$each('[data-set]', function(el) {
 						var key = el.getAttribute('data-set'),
@@ -551,21 +775,41 @@
 						}
 					});
 				},
-				// Cast object to array if it isn't one
-				// Returns array
+
+				/**
+				 * Cast value to array if it isn't one
+				 *
+				 * @param {(Array|object)} value
+				 * @returns {Array} value
+				 */
 				$toArray: function(value) {
 					return Array.isArray(value) ? value : [value];
 				},
-				// Create new array with only unique values from source array
-				// Returns array
+
+				/**
+				 * Create new array with only unique values from source array
+				 *
+				 * @param {Array} array
+				 * @returns {Array} unique values
+				 */
 				$unique: function(array) {
 					return array.reverse().filter(function(e, i, array) {
 						return array.indexOf(e, i + 1) < 0;
 					}).reverse();
 				},
-				// Fallback for non-existent chaining
+
+				/**
+				 * Fallback for non-existent chaining
+				 */
 				$chain: function() {},
-				// Determine if value can be executed as a function
+
+				/**
+				 * Determine if value can be executed as a function
+				 *
+				 * @private
+				 * @param {*} value
+				 * @returns {boolean} is executable
+				 */
 				_canExec: function(value) {
 					if (typeof value == 'string' && value.indexOf(':') > -1) {
 						var split = value.split(':'),
@@ -579,19 +823,34 @@
 
 					return W.$isFunction(value);
 				},
-				// Convert selection to array
-				// Returns array
+
+				/**
+				 * Convert selection to array
+				 *
+				 * @private
+				 * @param {(object|string)} selector
+				 * @param {object} [options]
+				 * @param {object} [options.context=document]
+				 * @returns {Array} nodes
+				 */
 				_selArray: function(selector, options) {
 					if (selector._$) {
 						return selector;
 					}
 
 					options = options || {};
-					var el = typeof selector == 'string' ? W.$(selector, options.context) : selector;
+					var el = typeof selector == 'string' ?
+						W.$(selector, options.context) :
+						selector;
 
 					return el ? W.$toArray(el) : [];
 				},
-				// Execute specified function when document is ready
+
+				/**
+				 * Execute specified function when document is ready
+				 *
+				 * @param {(Array|function|string)} fn
+				 */
 				ready: function(fn) {
 					D.readyState == 'complete' ?
 						W.$exec(fn) :
