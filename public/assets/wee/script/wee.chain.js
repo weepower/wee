@@ -4,7 +4,7 @@
 	/**
 	 * Cast selection as Wee object
 	 *
-	 * @param {(Array|node|string)} sel
+	 * @param {(Array|HTMLElement|string)} sel
 	 * @param {object} [context=document]
 	 */
 	var Get = function(sel, context) {
@@ -30,7 +30,7 @@
 	/**
 	 * Create chainable Wee object from selection
 	 *
-	 * @param {(node|string)} sel
+	 * @param {(HTMLElement|string)} sel
 	 * @param {object} [context=document]
 	 */
 	$ = W._win[W._$] = function(sel, context) {
@@ -115,4 +115,7 @@
 			return this;
 		}
 	};
+
+	// Map shorthand registration method
+	$.fn.extend = W.$chain;
 })(Wee, [].push);
