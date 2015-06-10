@@ -24,23 +24,23 @@
 
 					var path = this.$get('path', a.pathname, true);
 
-					if (a.search === '') {
-						return this.$set('uri', {
-							path: (path.charAt(0) == '/' ? '' : '/') + path,
-							query: query,
-							hash: a.hash.substring(1)
-						});
+					if (a.search !== '') {
+						var arr = decodeURIComponent(a.search)
+								.replace(/^\?/, '')
+								.split('&'),
+							i = 0;
+
+						for (; i < arr.length; i++) {
+							var split = arr[i].split('=');
+							query[split[0]] = split[1] == U ? '' : split[1];
+						}
 					}
 
-					var arr = decodeURIComponent(a.search)
-							.replace(/^\?/, '')
-							.split('&'),
-						i = 0;
-
-					for (; i < arr.length; i++) {
-						var split = arr[i].split('=');
-						query[split[0]] = split[1] == U ? '' : split[1];
-					}
+					return this.$set('uri', {
+						path: (path.charAt(0) == '/' ? '' : '/') + path,
+						query: query,
+						hash: a.hash.substring(1)
+					});
 				}
 			} else {
 				return this.$get('uri', function() {

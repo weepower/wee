@@ -57,6 +57,8 @@
 		 */
 		addRule: function(conf) {
 			if (conf.callback) {
+				var cb = this.check;
+
 				// Only setup watching when enabled
 				if (conf.watch !== false) {
 					this.$push('evts', conf);
@@ -68,8 +70,8 @@
 
 						// Attach resize event
 						W._legacy ?
-							W._win.attachEvent('onresize', this.check) :
-							W._win.addEventListener('resize', this.check);
+							W._win.attachEvent('onresize', cb) :
+							W._win.addEventListener('resize', cb);
 					}
 				}
 
@@ -88,7 +90,7 @@
 		 * @param {Array} [rules] - breakpoint rules
 		 */
 		check: function(init, rules) {
-			var size = this.$public.size(),
+			var size = W.screen.size(),
 				prev = this.$get('size');
 
 			// If breakpoint has been hit or resize logic initialized
