@@ -16,7 +16,7 @@
 				 * Determine data storage root and key
 				 *
 				 * @param {string} key
-				 * @param {object} [scope]
+				 * @param {object} [scope=Wee]
 				 * @returns {Array} value
 				 */
 				storeData = function(key, scope) {
@@ -37,9 +37,9 @@
 				/**
 				 * Check if a node contains another node
 				 *
-				 * @param {node} source
-				 * @param {node} target
-				 * @returns {boolean} value
+				 * @param {HTMLElement} source
+				 * @param {HTMLElement} target
+				 * @returns {boolean} match
 				 */
 				contains = function(source, target) {
 					return (source === D ? W._html : source).contains(target);
@@ -162,7 +162,7 @@
 					/**
 					 * Extend controller with additional methods and properties
 					 *
-					 * @param {(object|string)} a
+					 * @param {(object|string)} a - method name or core methods
 					 * @param {object} [b] - public methods and properties
 					 * @param {object} [c] - private methods and properties
 					 */
@@ -184,9 +184,9 @@
 				/**
 				 * Get matches to specified selector
 				 *
-				 * @param {(node|string)} selector
-				 * @param {(node|string)} [context=document]
-				 * @returns {Array} results
+				 * @param {($|HTMLElement|string)} selector
+				 * @param {($|HTMLElement|string)} [context=document]
+				 * @returns {Array} elements
 				 */
 				$: function(selector, context) {
 					var el = null,
@@ -290,7 +290,7 @@
 				 *
 				 * @param {string} html
 				 * @param {boolean} [convert=false] - deprecated
-				 * @returns {node} element
+				 * @returns {HTMLElement} element
 				 */
 				$parseHTML: function(html, convert) {
 					var el = W._doc.createElement('div');
@@ -371,13 +371,13 @@
 				/**
 				 * Execute function for each matching selection
 				 *
-				 * @param {(Array|string)} target
+				 * @param {($|Array|HTMLElement|string)} target
 				 * @param {function} fn
 				 * @param {object} [options]
 				 * @param {Array} [options.args]
 				 * @param {boolean} [options.reverse=false]
-				 * @param {context} [options.context=document]
-				 * @param {Array} [options.scope]
+				 * @param {($|HTMLElement|string)} [options.context=document]
+				 * @param {object} [options.scope]
 				 */
 				$each: function(target, fn, options) {
 					if (target) {
@@ -454,7 +454,7 @@
 				 * @param {object} [options]
 				 * @param {Array} [options.args]
 				 * @param {object} [options.scope]
-				 * @returns {*} response
+				 * @returns {*} [response]
 				 */
 				$exec: function(fn, options) {
 					options = options || {};
@@ -544,48 +544,47 @@
 				/**
 				 * Determine if value is an array
 				 *
-				 * @param {*} value
+				 * @param {*} obj
 				 * @returns {boolean}
 				 */
-				$isArray: function(value) {
-					return Array.isArray(value);
+				$isArray: function(obj) {
+					return Array.isArray(obj);
 				},
 
 				/**
 				 * Determine if value is a function
 				 *
-				 * @param {*} value
+				 * @param {*} obj
 				 * @returns {boolean}
 				 */
-				$isFunction: function(value) {
-					return value &&
-						{}.toString.call(value) == '[object Function]';
+				$isFunction: function(obj) {
+					return W.$type(obj) == 'function';
 				},
 
 				/**
 				 * Determine if value is an object
 				 *
-				 * @param {*} value
+				 * @param {*} obj
 				 * @returns {boolean}
 				 */
-				$isObject: function(value) {
-					return value && value.constructor === Object;
+				$isObject: function(obj) {
+					return W.$type(obj) == 'object';
 				},
 
 				/**
 				 * Determine if value is a string
 				 *
-				 * @param {*} value
+				 * @param {*} obj
 				 * @returns {boolean}
 				 */
-				$isString: function(value) {
-					return typeof value == 'string';
+				$isString: function(obj) {
+					return typeof obj == 'string';
 				},
 
 				/**
 				 * Translate items in an array|selection to new array
 				 *
-				 * @param {(Array|string)} target - array or selector
+				 * @param {($|Array|HTMLElement|string)} target - array or selector
 				 * @param {function} fn
 				 * @param {object} [options]
 				 * @param {Array} [options.args]
@@ -639,8 +638,8 @@
 				 *
 				 * @param {string} key
 				 * @param {*} a
-				 * @param {*} b
-				 * @returns {*} value
+				 * @param {*} [b]
+				 * @returns {Array} value
 				 */
 				$push: function(key, a, b) {
 					var split = storeData(key, this),
@@ -669,16 +668,6 @@
 				},
 
 				/**
-				 * Bind specified context to method execution
-				 *
-				 * @param {function} fn
-				 * @param {object} context
-				 */
-				$proxy: function(fn, context) {
-					fn.apply(context, W._slice.call(arguments).slice(2));
-				},
-
-				/**
 				 * Serialize object
 				 *
 				 * @param {object} value
@@ -697,7 +686,7 @@
 				 * Add ref elements to datastore
 				 * data-bind is deprecated
 				 *
-				 * @param {object} [context=document]
+				 * @param {(HTMLElement|string)} [context=document]
 				 */
 				$setRef: function(context) {
 					var sets = W.$get('ref');
@@ -737,41 +726,43 @@
 							val = el.getAttribute('data-value'),
 							ind = key.search(/\[.*]/g);
 
-						if (ind > 0) {
-							var arr = key.slice(ind).slice(1, -1),
-								obj = key.slice(0, ind);
+						if (ind == -1) {
+							W.$set(key, val);
+							return;
+						}
 
-							if (arr === '') {
-								W.$push(obj, val);
-							} else {
-								var segs = arr.split(']['),
-									len = segs.length - 1;
-								key = segs[0];
+						var arr = key.slice(ind).slice(1, -1),
+							obj = key.slice(0, ind);
 
-								if (len) {
-									var set = {},
-										ref,
-										i = 1;
+						if (arr === '') {
+							W.$push(obj, val);
+							return;
+						}
 
-									ref = set[key] = {};
+						var segs = arr.split(']['),
+							len = segs.length - 1;
+						key = segs[0];
 
-									for (i; i <= len; i++) {
-										var last = i === len;
+						if (len) {
+							var set = {},
+								ref,
+								i = 1;
 
-										ref[segs[i]] = last ? val : {};
+							ref = set[key] = {};
 
-										if (! last) {
-											ref = ref[segs[i]];
-										}
-									}
+							for (i; i <= len; i++) {
+								var last = i === len;
 
-									W.$set(obj, W.$extend(Wee.$get(obj, {}), set, true));
-								} else {
-									W.$push(obj, key, val);
+								ref[segs[i]] = last ? val : {};
+
+								if (! last) {
+									ref = ref[segs[i]];
 								}
 							}
+
+							W.$set(obj, W.$extend(Wee.$get(obj, {}), set, true));
 						} else {
-							W.$set(key, val);
+							W.$push(obj, key, val);
 						}
 					});
 				},
@@ -779,11 +770,23 @@
 				/**
 				 * Cast value to array if it isn't one
 				 *
-				 * @param {(Array|object)} value
+				 * @param {*} value
 				 * @returns {Array} value
 				 */
 				$toArray: function(value) {
 					return Array.isArray(value) ? value : [value];
+				},
+
+				/**
+				 * Determine the JavaScript type of an object
+				 *
+				 * @param {*} obj
+				 * @returns string
+				 */
+				$type: function(obj) {
+					return Object.prototype.toString.call(obj)
+						.replace(/^\[object (.+)]$/, '$1')
+						.toLowerCase();
 				},
 
 				/**
@@ -828,10 +831,10 @@
 				 * Convert selection to array
 				 *
 				 * @private
-				 * @param {(object|string)} selector
+				 * @param {($|HTMLElement|string)} selector
 				 * @param {object} [options]
-				 * @param {object} [options.context=document]
-				 * @returns {Array} nodes
+				 * @param {(HTMLElement|string)} [options.context=document]
+				 * @returns {($|Array)} nodes
 				 */
 				_selArray: function(selector, options) {
 					if (selector._$) {
