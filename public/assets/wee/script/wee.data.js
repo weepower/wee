@@ -74,52 +74,11 @@
 
 				head.appendChild(el);
 			} else {
-				var x = new XMLHttpRequest();
+				var scope = this,
+					x = new XMLHttpRequest();
 
 				x.onreadystatechange = function() {
-					if (x.readyState === 4) {
-						if (x.status >= 200 && x.status < 400) {
-							if (conf.success) {
-								var resp = x.responseText,
-									orig = resp;
-
-								// Parse JSON response if specified
-								if (conf.json || conf.template) {
-									try {
-										resp = JSON.parse(resp);
-									} catch (e) {
-										resp = {};
-									}
-
-									if (conf.template) {
-										resp = W.view.render(conf.template, resp);
-										conf.args.unshift(orig);
-									}
-								}
-
-								conf.args.unshift(resp, x);
-
-								// Execute success callback if specified
-								W.$exec(conf.success, {
-									args: conf.args,
-									scope: conf.scope
-								});
-
-								return true;
-							}
-						} else {
-							if (conf.failure) {
-								conf.args.unshift(x);
-
-								W.$exec(conf.failure, {
-									args: conf.args,
-									scope: conf.scope
-								});
-							}
-
-							return false;
-						}
-					}
+					return scope.$private.processChange(x, conf);
 				};
 
 				var send = null;
@@ -178,6 +137,70 @@
 		 */
 		parse: function(temp, data) {
 			return W.view.render(temp, data);
+		}
+	}, {
+		/**
+		 * Process the ready state change event
+		 *
+		 * @param {XMLHttpRequest} x
+		 * @param {object} conf
+		 * @returns {*}
+		 */
+		processChange: function(x, conf) {
+			if (x.readyState === 4) {
+				if (x.status >= 200 && x.status < 400) {
+					if (conf.success) {
+						return this.processSuccess(x, conf);
+					}
+				} else {
+					if (conf.failure) {
+						conf.args.unshift(x);
+
+						W.$exec(conf.failure, {
+							args: conf.args,
+							scope: conf.scope
+						});
+					}
+
+					return false;
+				}
+			}
+		},
+
+		/**
+		 * Execute the request success callback
+		 *
+		 * @param {XMLHttpRequest} x
+		 * @param {object} conf
+		 * @returns {boolean}
+		 */
+		processSuccess: function(x, conf) {
+			var resp = x.responseText,
+				orig = resp;
+
+			// Parse JSON response if specified
+			if (conf.json || conf.template) {
+				try {
+					resp = JSON.parse(resp);
+				} catch (e) {
+					resp = {};
+				}
+
+				if (conf.template) {
+					resp = W.view.render(conf.template, resp);
+					conf.args.unshift(orig);
+				}
+			}
+
+			conf.args.unshift(resp, x);
+
+			// Execute success callback if specified
+			W.$exec(conf.success, {
+				args: conf.args,
+				scope: conf.scope
+			});
+
+			return true;
 		}
 	});
 })(Wee);

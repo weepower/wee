@@ -26,50 +26,65 @@
 		 * @param {boolean} [rules.init=true] - check event on load
 		 * @param {object} [rules.scope] - callback scope
 		 * @param {Array} [rules.args] - callback arguments
-		 * @param {function} [rules.callback]
+		 * @param {function} rules.callback
 		 */
 		map: function(rules) {
 			var scope = this,
 				sets = W.$toArray(rules),
-				cb = scope.$private.check,
 				i = 0;
 
 			// Delay check 1ms to prevent incorrect breakpoint value in IE
 			setTimeout(function() {
 				for (; i < sets.length; i++) {
-					var conf = sets[i];
-
-					if (conf.callback) {
-						// Only setup watching when enabled
-						if (conf.watch !== false) {
-							scope.$push('evts', conf);
-
-							// Only attach event once
-							if (! scope.$get('on')) {
-								scope.$set('on', 1);
-								scope.$set('evts', [conf]);
-
-								// Attach resize event
-								W._legacy ?
-									W._win.attachEvent('onresize', cb) :
-									W._win.addEventListener('resize', cb);
-							}
-						}
-
-						// Check current screen if not disabled
-						if (conf.init !== false) {
-							scope.$private.check(true, [conf]);
-						}
-					}
+					scope.$private.addRule(sets[i]);
 				}
 			}, 1);
 		}
 	}, {
 		/**
+		 * Add individual ruleset to mapped events
+		 *
+		 * @private
+		 * @param {object} conf - breakpoint rules
+		 * @param {int} [conf.size] - specific breakpoint value
+		 * @param {int} [conf.min] - minimum breakpoint value
+		 * @param {int} [conf.max] - maximum breakpoint value
+		 * @param {boolean} [conf.watch=true] - check event on screen resize
+		 * @param {boolean} [conf.init=true] - check event on load
+		 * @param {object} [conf.scope] - callback scope
+		 * @param {Array} [conf.args] - callback arguments
+		 * @param {function} conf.callback
+		 */
+		addRule: function(conf) {
+			if (conf.callback) {
+				// Only setup watching when enabled
+				if (conf.watch !== false) {
+					this.$push('evts', conf);
+
+					// Only attach event once
+					if (! this.$get('on')) {
+						this.$set('on', 1);
+						this.$set('evts', [conf]);
+
+						// Attach resize event
+						W._legacy ?
+							W._win.attachEvent('onresize', this.check) :
+							W._win.addEventListener('resize', this.check);
+					}
+				}
+
+				// Check current screen if not disabled
+				if (conf.init !== false) {
+					this.check(true, [conf]);
+				}
+			}
+		},
+
+		/**
 		 * Check mapped events for matching conditions
 		 *
 		 * @private
-		 * @param {bool} [init=false] - initial page load
+		 * @param {boolean} [init=false] - initial page load
 		 * @param {Array} [rules] - breakpoint rules
 		 */
 		check: function(init, rules) {
@@ -92,27 +107,38 @@
 						(sz && sz === size) ||
 						(mn && size >= mn && (init || prev < mn) && (! mx || size <= mx)) ||
 						(mx && size <= mx && (init || prev > mx) && (! mn || size >= mn))) {
-						W.$exec(evt.callback, {
-							args: [{
-								dir: init ? 0 : (size > prev ? 1 : -1),
-								size: size,
-								prev: prev,
-								init: init
-							}].concat(evt.args),
-							scope: evt.scope
+						this.execute(evt, {
+							dir: init ? 0 : (size > prev ? 1 : -1),
+							size: size,
+							prev: prev,
+							init: init
 						});
-
-						// Disable future execution if set for once
-						if (evt.once) {
-							this.$set('evts', this.$get('evts').filter(function(el) {
-								return el !== evt;
-							}));
-						}
 					}
 				}
 
 				// Update current breakpoint value
 				this.$set('size', size);
+			}
+		},
+
+		/**
+		 * Execute a matching breakpoint callback
+		 *
+		 * @private
+		 * @param {object} evt
+		 * @param {object} args
+		 */
+		execute: function(evt, args) {
+			W.$exec(evt.callback, {
+				args: args.concat(evt.args),
+				scope: evt.scope
+			});
+
+			// Disable future execution if set for once
+			if (evt.once) {
+				this.$set('evts', this.$get('evts').filter(function(el) {
+					return el !== evt;
+				}));
 			}
 		}
 	});

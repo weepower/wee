@@ -1,3 +1,5 @@
+/* jshint maxdepth: 4, maxparams: 6 */
+
 (function(W, U) {
 	'use strict';
 
@@ -5,8 +7,8 @@
 		/**
 		 * Parse data into template string
 		 *
-		 * @param template
-		 * @param data
+		 * @param {string} template
+		 * @param {object} data
 		 * @returns {string}
 		 */
 		render: function(template, data) {
@@ -16,8 +18,8 @@
 		/**
 		 * Add conditional template handler or data modifier
 		 *
-		 * @param name
-		 * @param fn
+		 * @param {string} name
+		 * @param {function} fn
 		 */
 		addFilter: function(name, fn) {
 			this.$private.extend('filters', name, fn);
@@ -26,8 +28,8 @@
 		/**
 		 * Add helper to run additional processing on tag data
 		 *
-		 * @param name
-		 * @param fn
+		 * @param {string} name
+		 * @param {function} fn
 		 */
 		addHelper: function(name, fn) {
 			this.$private.extend('helpers', name, fn);
@@ -36,8 +38,8 @@
 		/**
 		 * Make partial available for injection into other templates
 		 *
-		 * @param name
-		 * @param value
+		 * @param {string} name
+		 * @param {string} value
 		 */
 		addPartial: function(name, value) {
 			this.$private.extend('partials', name, value);
@@ -46,7 +48,7 @@
 		/**
 		 * Set default regex and filters
 		 *
-		 * @construct
+		 * @constructor
 		 * @private
 		 */
 		_construct: function() {
@@ -81,9 +83,9 @@
 		/**
 		 * Extend view engine
 		 *
-		 * @param type
-		 * @param a
-		 * @param b
+		 * @param {string} type
+		 * @param {(object|string)} a
+		 * @param {function} b
 		 */
 		extend: function(type, a, b) {
 			var obj = a;
@@ -99,9 +101,9 @@
 		/**
 		 * Render template string
 		 *
-		 * @param temp
-		 * @param data
-		 * @returns {*}
+		 * @param {string} temp
+		 * @param {object} data
+		 * @returns {string}
 		 */
 		render: function(temp, data) {
 			var scope = this,
@@ -151,11 +153,11 @@
 		/**
 		 * Parse template string
 		 *
-		 * @param temp
-		 * @param data
-		 * @param prev
-		 * @param init
-		 * @param index
+		 * @param {string} temp
+		 * @param {object} data
+		 * @param {object} prev
+		 * @param {object} init
+		 * @param {int} index
 		 * @returns {string}
 		 */
 		parse: function(temp, data, prev, init, index) {
@@ -301,12 +303,12 @@
 		/**
 		 * Get specific object value
 		 *
-		 * @param data
-		 * @param prev
-		 * @param key
-		 * @param fb
-		 * @param init
-		 * @param x
+		 * @param {object} data
+		 * @param {object} prev
+		 * @param {string} key
+		 * @param {string} fb
+		 * @param {object} init
+		 * @param {int} x
 		 * @returns {*}
 		 */
 		get: function(data, prev, key, fb, init, x) {

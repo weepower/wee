@@ -5,7 +5,8 @@
 		/**
 		 * Add classes to each matching selection
 		 *
-		 * @param {(function|string)} target
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|string)} value
 		 */
 		$addClass: function(target, value) {
 			var func = W._canExec(value);
@@ -19,9 +20,12 @@
 						value;
 
 				if (name) {
-					el.className = (el.className + ' ' + name.split(/\s+/).filter(function(name) {
-						return ! W.$hasClass(el, name);
-					}).join(' ')).trim();
+					el.className = (
+							el.className + ' ' +
+							name.split(/\s+/
+						).filter(function(name) {
+							return ! W.$hasClass(el, name);
+						}).join(' ')).trim();
 				}
 			});
 		},
@@ -29,9 +33,9 @@
 		/**
 		 * Insert selection or markup after each matching selection
 		 *
-		 * @param target
-		 * @param source
-		 * @param remove
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|function|HTMLElement|string)} source
+		 * @param {boolean} [remove=false]
 		 */
 		$after: function(target, source, remove) {
 			var func = W._canExec(source);
@@ -69,8 +73,8 @@
 		/**
 		 * Append selection or markup after each matching selection
 		 *
-		 * @param target
-		 * @param source
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|function|HTMLElement|string)} source
 		 */
 		$append: function(target, source) {
 			var func = W._canExec(source);
@@ -96,9 +100,10 @@
 		},
 
 		/**
-		 * Get attribute of first matching selection or set attribute of each matching selection
+		 * Get attribute of first matching selection or set attribute
+		 * of each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param a
 		 * @param b
 		 * @returns {(string|undefined)}
@@ -130,9 +135,9 @@
 		/**
 		 * Insert selection or markup before each matching selection
 		 *
-		 * @param target
-		 * @param source
-		 * @param remove
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|function|HTMLElement|string)} source
+		 * @param {boolean} [remove=false]
 		 */
 		$before: function(target, source, remove) {
 			var func = W._canExec(source);
@@ -170,9 +175,9 @@
 		/**
 		 * Get unique direct children of each matching selection
 		 *
-		 * @param parent
+		 * @param {($|HTMLElement|string)} parent
 		 * @param filter
-		 * @returns {array}
+		 * @returns {Array}
 		 */
 		$children: function(parent, filter) {
 			var arr = [];
@@ -193,8 +198,8 @@
 		/**
 		 * Clone each matching selection
 		 *
-		 * @param target
-		 * @returns {array}
+		 * @param {($|HTMLElement|string)} target
+		 * @returns {Array}
 		 */
 		$clone: function(target) {
 			return W.$map(target, function(el) {
@@ -205,10 +210,10 @@
 		/**
 		 * Get unique closest ancestors of each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param filter
 		 * @param context
-		 * @returns {node}
+		 * @returns {HTMLElement}
 		 */
 		$closest: function(target, filter, context) {
 			return W.$unique(W.$map(target, function(el) {
@@ -235,7 +240,7 @@
 		/**
 		 * Determine if any matching parent selection contains descendant selection
 		 *
-		 * @param parent
+		 * @param {($|HTMLElement|string)} parent
 		 * @param descendant
 		 * @returns {boolean}
 		 */
@@ -255,8 +260,8 @@
 		/**
 		 * Get unique content of each matching selection
 		 *
-		 * @param parent
-		 * @returns {array}
+		 * @param {($|HTMLElement|string)} parent
+		 * @returns {Array}
 		 */
 		$contents: function(parent) {
 			var arr = [];
@@ -269,11 +274,12 @@
 		},
 
 		/**
-		 * Get CSS value of first matching selection or set value of each matching selection
+		 * Get CSS value of first matching selection or set value
+		 * of each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param {(object|string)} a
-		 * @param {string} [b]
+		 * @param {(function|string)} [b]
 		 * @returns {(string|undefined)}
 		 */
 		$css: function(target, a, b) {
@@ -304,11 +310,12 @@
 		},
 
 		/**
-		 * Get data of first matching selection or set data of each matching selection
+		 * Get data of first matching selection or set data
+		 * of each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param a
-		 * @param b
+		 * @param [b]
 		 * @returns {(string|undefined)}
 		 */
 		$data: function(target, a, b) {
@@ -343,7 +350,7 @@
 		/**
 		 * Remove child nodes from each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 */
 		$empty: function(target) {
 			W.$each(target, function(el) {
@@ -356,22 +363,23 @@
 		/**
 		 * Get indexed node of matching selection
 		 *
-		 * @param target
-		 * @param index
-		 * @param context
-		 * @returns {node}
+		 * @param {($|HTMLElement|string)} target
+		 * @param {int} index
+		 * @param {($|HTMLElement|string)} [context=document]
+		 * @returns {HTMLElement}
 		 */
 		$eq: function(target, index, context) {
 			var el = W.$(target, context);
+
 			return el[index < 0 ? el.length + index : index];
 		},
 
 		/**
 		 * Return a filtered subset of elements from a matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param filter
-		 * @param options
+		 * @param [options]
 		 * @returns {Array} elements
 		 */
 		$filter: function(target, filter, options) {
@@ -392,7 +400,7 @@
 		/**
 		 * Get unique filtered descendants from each matching selection
 		 *
-		 * @param parent
+		 * @param {($|HTMLElement|string)} parent
 		 * @param filter
 		 * @returns {Array} elements
 		 */
@@ -409,9 +417,9 @@
 		/**
 		 * Get the first element of a matching selection
 		 *
-		 * @param target
-		 * @param context
-		 * @returns {node}
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|HTMLElement|string)} [context=document]
+		 * @returns {HTMLElement}
 		 */
 		$first: function(target, context) {
 			return W.$eq(target, 0, context);
@@ -420,22 +428,23 @@
 		/**
 		 * Determine if the matching selection has a class
 		 *
-		 * @param target
-		 * @param className
+		 * @param {($|HTMLElement|string)} target
+		 * @param {string} className
 		 * @returns {boolean}
 		 */
 		$hasClass: function(target, className) {
 			return W.$(target).some(function(el) {
-				return new RegExp('(^| )' + className + '($| )', 'gim').test(el.className);
+				return new RegExp('(^| )' + className + '($| )', 'gim')
+					.test(el.className);
 			});
 		},
 
 		/**
 		 * Get or set the height of each matching selection
 		 *
-		 * @param target
-		 * @param value
-		 * @returns {int}
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|number|string)} value
+		 * @returns {number}
 		 */
 		$height: function(target, value) {
 			var func = value && W._canExec(value),
@@ -486,7 +495,7 @@
 		/**
 		 * Hide each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 */
 		$hide: function(target) {
 			W.$addClass(target, 'js-hide');
@@ -495,8 +504,8 @@
 		/**
 		 * Get inner HTML of first selection or set each matching selection's HTML
 		 *
-		 * @param target
-		 * @param value
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|string)} value
 		 * @returns {(string|undefined)}
 		 */
 		$html: function(target, value) {
@@ -521,9 +530,10 @@
 		},
 
 		/**
-		 * Get the zero-based index of a matching selection relative to it's siblings
+		 * Get the zero-based index of a matching selection relative
+		 * to it's siblings
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @returns {int}
 		 */
 		$index: function(target) {
@@ -544,8 +554,8 @@
 		 * Insert each matching source selection element after
 		 * each matching target selection
 		 *
-		 * @param target
-		 * @param source
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|HTMLElement|string)} source
 		 */
 		$insertAfter: function(target, source) {
 			W.$each(source, function(el, i) {
@@ -563,8 +573,8 @@
 		 * Insert each matching source selection element before
 		 * each matching target selection
 		 *
-		 * @param target
-		 * @param source
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|HTMLElement|string)} source
 		 */
 		$insertBefore: function(target, source) {
 			W.$each(source, function(el) {
@@ -575,11 +585,12 @@
 		},
 
 		/**
-		 * Determine if at least one matching selection matches a specified criteria
+		 * Determine if at least one matching selection matches
+		 * a specified criteria
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param filter
-		 * @param options
+		 * @param [options]
 		 * @returns {boolean}
 		 */
 		$is: function(target, filter, options) {
@@ -610,8 +621,9 @@
 					}, options));
 				}
 
-				var matches = el.matches || el.matchesSelector || el.msMatchesSelector ||
-					el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector;
+				var matches = el.matches || el.matchesSelector ||
+					el.msMatchesSelector || el.mozMatchesSelector ||
+					el.webkitMatchesSelector || el.oMatchesSelector;
 
 				return matches ?
 					matches.call(el, filter) :
@@ -622,9 +634,9 @@
 		/**
 		 * Get the last element of a matching selection
 		 *
-		 * @param target
-		 * @param context
-		 * @returns {node}
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|HTMLElement|string)} [context=document]
+		 * @returns {HTMLElement}
 		 */
 		$last: function(target, context) {
 			return W.$eq(target, -1, context);
@@ -633,9 +645,9 @@
 		/**
 		 * Get the unique next sibling of each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param filter
-		 * @param options
+		 * @param {object} [options]
 		 * @returns {Array} elements
 		 */
 		$next: function(target, filter, options) {
@@ -647,9 +659,9 @@
 		/**
 		 * Returns elements not matching the filtered selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param filter
-		 * @param options
+		 * @param {object} [options]
 		 * @returns {Array} elements
 		 */
 		$not: function(target, filter, options) {
@@ -668,8 +680,8 @@
 		/**
 		 * Get the offset position of a matching selection relative to the document
 		 *
-		 * @param target
-		 * @param value
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|number)} value
 		 * @returns {{top: number, left: number}}
 		 */
 		$offset: function(target, value) {
@@ -709,7 +721,7 @@
 		/**
 		 * Get unique parent from each matching selection
 		 *
-		 * @param child
+		 * @param {($|HTMLElement|string)} child
 		 * @param filter
 		 * @returns {Array} elements
 		 */
@@ -723,7 +735,7 @@
 		/**
 		 * Get unique ancestors of each matching selection
 		 *
-		 * @param child
+		 * @param {($|HTMLElement|string)} child
 		 * @param filter
 		 * @returns {Array} elements
 		 */
@@ -751,7 +763,7 @@
 		 * Get the position of the first matching selection relative
 		 * to its offset parent
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @returns {{top: number, left: number}}
 		 */
 		$position: function(target) {
@@ -766,8 +778,8 @@
 		/**
 		 * Prepend selection or markup before each matching selection
 		 *
-		 * @param target
-		 * @param source
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|function|HTMLElement|string)} source
 		 */
 		$prepend: function(target, source) {
 			var func = W._canExec(source);
@@ -795,9 +807,9 @@
 		/**
 		 * Get the unique previous sibling of each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param filter
-		 * @param options
+		 * @param {object} [options]
 		 * @returns {Array} elements
 		 */
 		$prev: function(target, filter, options) {
@@ -810,7 +822,7 @@
 		 * Get property of first matching selection or set property of
 		 * each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param a
 		 * @param b
 		 * @returns {*}
@@ -843,8 +855,8 @@
 		/**
 		 * Remove each matching selection from the document
 		 *
-		 * @param target
-		 * @param context
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|HTMLElement|string)} [context=document]
 		 */
 		$remove: function(target, context) {
 			W.$each(target, function(el) {
@@ -857,8 +869,8 @@
 		/**
 		 * Remove specified attribute of each matching selection
 		 *
-		 * @param target
-		 * @param name
+		 * @param {($|HTMLElement|string)} target
+		 * @param {string} name
 		 */
 		$removeAttr: function(target, name) {
 			W.$each(target, function(el) {
@@ -871,7 +883,7 @@
 		/**
 		 * Remove classes from each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param {(function|string)} value
 		 */
 		$removeClass: function(target, value) {
@@ -887,7 +899,11 @@
 
 				if (name) {
 					el.className = el.className.replace(
-						new RegExp('(^| )' + name.split(/\s+/).join('|') + '($| )', 'gi'
+						new RegExp(
+							'(^| )' +
+							name.split(/\s+/).join('|') +
+							'($| )',
+							'gi'
 					), ' ').trim();
 				}
 			});
@@ -896,8 +912,8 @@
 		/**
 		 * Replace each matching selection with selection or markup
 		 *
-		 * @param target
-		 * @param source
+		 * @param {($|HTMLElement|string)} target
+		 * @param {($|HTMLElement|string)} source
 		 */
 		$replaceWith: function(target, source) {
 			W.$after(target, source, true);
@@ -906,9 +922,9 @@
 		/**
 		 * Get or set the X scroll position of each matching selection
 		 *
-		 * @param target
-		 * @param value
-		 * @returns {int}
+		 * @param {($|HTMLElement|string)} target
+		 * @param {number} value
+		 * @returns {number}
 		 */
 		$scrollLeft: function(target, value) {
 			if (value === U) {
@@ -933,9 +949,9 @@
 		/**
 		 * Get or set the Y scroll position of each matching selection
 		 *
-		 * @param target
-		 * @param value
-		 * @returns {int}
+		 * @param {($|HTMLElement|string)} target
+		 * @param {number} value
+		 * @returns {number}
 		 */
 		$scrollTop: function(target, value) {
 			if (value === U) {
@@ -960,49 +976,56 @@
 		/**
 		 * Serialize input values from first matching form selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @returns {string}
 		 */
 		$serializeForm: function(target) {
 			var el = W.$first(target);
 
-			if (el.nodeName == 'FORM') {
-				var arr = [],
-					i = 0,
-					x = 0;
-
-				for (; i < el.elements.length; i++) {
-					var child = el.elements[i],
-						name = child.name,
-						type = child.type;
-
-					if (child.name && type != 'file' && type != 'reset') {
-						if (type == 'select-multiple') {
-							var opt = child.options;
-
-							for (; x < opt.length; x++) {
-								if (opt[x].selected) {
-									arr.push(name + '=' + encodeURIComponent(opt[x].value).replace(/%20/g, '+'));
-								}
-							}
-						} else {
-							if (type != 'submit' && type != 'button' && ((type != 'checkbox' && type != 'radio') || el.checked)) {
-								arr.push(name + '=' + encodeURIComponent(child.value).replace(/%20/g, '+'));
-							}
-						}
-					}
-				}
-
-				return arr.join('&');
+			if (el.nodeName != 'FORM') {
+				return '';
 			}
 
-			return '';
+			var arr = [],
+				i = 0;
+
+			for (; i < el.elements.length; i++) {
+				var child = el.elements[i],
+					name = child.name,
+					type = child.type;
+
+				if (child.name && type != 'file' && type != 'reset') {
+					if (type == 'select-multiple') {
+						name += name.slice(-2) == '[]' ? '' : '[]';
+
+						W._getSelected(child).forEach(function(val) {
+							arr.push(
+								name +
+								'=' +
+								encodeURIComponent(val)
+									.replace(/%20/g, '+')
+							);
+						});
+					} else if (
+						type != 'submit' && type != 'button' &&
+						((type != 'checkbox' && type != 'radio') || el.checked)) {
+						arr.push(
+							name +
+							'=' +
+							encodeURIComponent(child.value)
+								.replace(/%20/g, '+')
+						);
+					}
+				}
+			}
+
+			return arr.join('&');
 		},
 
 		/**
 		 * Show each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 */
 		$show: function(target) {
 			W.$removeClass(target, 'js-hide');
@@ -1011,7 +1034,7 @@
 		/**
 		 * Get unique siblings of each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 * @param filter
 		 * @returns {Array} elements
 		 */
@@ -1042,9 +1065,9 @@
 		/**
 		 * Get subset of selection matches from specified range
 		 *
-		 * @param target
-		 * @param start
-		 * @param end
+		 * @param {($|HTMLElement|string)} target
+		 * @param {int} start
+		 * @param {int} end
 		 * @returns {Array} elements
 		 */
 		$slice: function(target, start, end) {
@@ -1058,8 +1081,8 @@
 		/**
 		 * Get inner text of first selection or set each matching selection's text
 		 *
-		 * @param target
-		 * @param value
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|string)} value
 		 * @returns {string}
 		 */
 		$text: function(target, value) {
@@ -1088,7 +1111,7 @@
 		/**
 		 * Toggle the display of each matching selection
 		 *
-		 * @param target
+		 * @param {($|HTMLElement|string)} target
 		 */
 		$toggle: function(target) {
 			W.$each(target, function(el) {
@@ -1101,9 +1124,9 @@
 		/**
 		 * Toggle adding and removing class(es) from the specified element
 		 *
-		 * @param target
-		 * @param className
-		 * @param state
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|string)} className
+		 * @param {boolean} [state]
 		 */
 		$toggleClass: function(target, className, state) {
 			var func = W._canExec(className);
@@ -1130,26 +1153,16 @@
 		 * Get value of first matching selection or set values of
 		 * each matching selection
 		 *
-		 * @param target
-		 * @param value
-		 * @returns {string}
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|string)} value
+		 * @returns {(Array|string)}
 		 */
 		$val: function(target, value) {
 			if (value === U) {
 				var el = W.$first(target);
 
 				if (el.type == 'select-multiple') {
-					var opt = el.options,
-						arr = [],
-						i = 0;
-
-					for (; i < opt.length; i++) {
-						if (opt[i].selected) {
-							arr.push(opt[i].value);
-						}
-					}
-
-					return arr;
+					return W._getSelected(el);
 				}
 
 				return el.value;
@@ -1181,9 +1194,9 @@
 		/**
 		 * Get or set the width of each matching selection
 		 *
-		 * @param target
-		 * @param value
-		 * @returns {int}
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|number|string)} value
+		 * @returns {number}
 		 */
 		$width: function(target, value) {
 			var func = value && W._canExec(value),
@@ -1207,7 +1220,8 @@
 
 					if (value === true) {
 						var style = el.currentStyle || getComputedStyle(el);
-						width += parseInt(style.marginLeft) + parseInt(style.marginRight);
+						width += parseInt(style.marginLeft) +
+							parseInt(style.marginRight);
 					}
 				}
 
@@ -1234,8 +1248,8 @@
 		/**
 		 * Wrap markup around each matching selection
 		 *
-		 * @param target
-		 * @param html
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|string)} html
 		 */
 		$wrap: function(target, html) {
 			var func = W._canExec(html);
@@ -1262,8 +1276,8 @@
 		/**
 		 * Wrap markup around the content of each matching selection
 		 *
-		 * @param target
-		 * @param html
+		 * @param {($|HTMLElement|string)} target
+		 * @param {(function|string)} html
 		 */
 		$wrapInner: function(target, html) {
 			var func = W._canExec(html);
@@ -1298,14 +1312,37 @@
 		},
 
 		/**
+		 * Get the selected options from a select
+		 *
+		 * @private
+		 * @param {HTMLElement} select
+		 * @returns {Array} selected
+		 */
+		_getSelected: function(select) {
+			var options = select.options,
+				selected = [],
+				i = 0;
+
+			for (; i < options.length; i++) {
+				var option = options[i];
+
+				if (option.selected) {
+					selected.push(option.value);
+				}
+			}
+
+			return selected;
+		},
+
+		/**
 		 * Return either direct previous or next sibling
 		 *
 		 * @private
-		 * @param target
-		 * @param dir
+		 * @param {($|HTMLElement|string)} target
+		 * @param {int} dir
 		 * @param filter
-		 * @param options
-		 * @returns {*}
+		 * @param {object} [options]
+		 * @returns {HTMLElement}
 		 */
 		_sibling: function(target, dir, filter, options) {
 			var match;

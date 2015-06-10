@@ -55,7 +55,7 @@ Wee.fn.make('guide', {
 	 * Select all markup in a code block
 	 *
 	 * @private
-	 * @param {node} el - target code
+	 * @param {HTMLElement} el - target code
 	 */
 	selectCode: function(el) {
 		var range = Wee._doc.createRange(),
@@ -71,7 +71,7 @@ Wee.fn.make('guide', {
 	 * Toggle the visibility of a code block
 	 *
 	 * @private
-	 * @param {(string|node)} el - source button
+	 * @param {($|HTMLElement|string)} el - source button
 	 */
 	toggleCode: function(el) {
 		var $el = $(el);

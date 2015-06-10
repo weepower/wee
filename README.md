@@ -14,7 +14,7 @@ Mobile-first CSS framework with reset, base, and Less mixin library < *4KB gzipp
 * **Legacy rules** for IE8 compatibility
 * **Print styling** to generate print-optimized pages
 
-JavaScript toolset to build scalable, organized client-side codebase < *10KB gzipped*
+JavaScript toolset to build scalable, organized client-side codebase < *11KB gzipped*
 
 * **Foundation** of utilities, helpers, and module structure
 * **Chainable DOM** traversal and manipulation with familiar API
@@ -113,7 +113,7 @@ Wee.fn.make('controllerName', {
 		this.init();
 	},
 	init: function() {
-		this.$private('privateMethod', 'varName');
+		this.$private.privateMethod('varName');
 	}
 }, {
 	privateMethod: function(key) {

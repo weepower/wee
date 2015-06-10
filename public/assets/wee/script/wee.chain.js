@@ -4,8 +4,8 @@
 	/**
 	 * Cast selection as Wee object
 	 *
-	 * @param {(Array|HTMLElement|string)} sel
-	 * @param {object} [context=document]
+	 * @param {($|HTMLElement|string)} sel
+	 * @param {($|HTMLElement|string)} [context=document]
 	 */
 	var Get = function(sel, context) {
 			if (sel) {

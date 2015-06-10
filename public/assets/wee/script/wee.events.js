@@ -1,3 +1,5 @@
+/* jshint maxparams: 5 */
+
 (function(W) {
 	'use strict';
 
@@ -71,13 +73,13 @@
 		/**
 		 * Bind specified function to specified element and event
 		 *
-		 * @param {(node|string)} target
+		 * @param {(HTMLElement|object|string)} target
 		 * @param {(object|string)} a - event name or object of events
 		 * @param {(function|object)} [b] - event callback or options object
 		 * @param {(object|string)} [c] - event options
 		 * @param {Array} [c.args] - callback arguments
-		 * @param {(node|string)} [c.context=document]
-		 * @param {(node|string)} [c.delegate]
+		 * @param {(HTMLElement|string)} [c.context=document]
+		 * @param {(HTMLElement|string)} [c.delegate]
 		 * @param {boolean} [c.once=false] - remove event after first execution
 		 * @param {object} [c.scope]
 		 */
@@ -110,13 +112,13 @@
 		 * Bind specified function to specified element and event for single execution
 		 *
 		 * @deprecated since 2.1.0
-		 * @param {(node|string)} target
+		 * @param {(HTMLElement|string)} target
 		 * @param {(object|string)} a - event name or object of events
 		 * @param {(function|object)} [b] - event callback or options object
 		 * @param {(object|string)} [c] - event options
 		 * @param {Array} [c.args] - callback arguments
-		 * @param {(node|string)} [c.context=document]
-		 * @param {(node|string)} [c.delegate]
+		 * @param {(HTMLElement|string)} [c.context=document]
+		 * @param {(HTMLElement|string)} [c.delegate]
 		 * @param {boolean} [c.once=true] - remove event after first execution
 		 * @param {object} [c.scope]
 		 */
@@ -137,7 +139,7 @@
 		/**
 		 * Remove specified event from specified element
 		 *
-		 * @param {(node|string)} [target]
+		 * @param {(HTMLElement|string)} [target]
 		 * @param {(object|string)} a - event name or object of events
 		 * @param {function} [b] - specific function to remove
 		 */
@@ -169,7 +171,7 @@
 		/**
 		 * Get currently bound events to optional specified element and event|function
 		 *
-		 * @param {(node|string)} [target]
+		 * @param {(HTMLElement|string)} [target]
 		 * @param {string} [event] - event name to match
 		 * @param {function} [fn] - specific function to match
 		 * @returns {Array} matches
@@ -211,7 +213,7 @@
 		/**
 		 * Execute event for each matching selection
 		 *
-		 * @param {(node|string)} target
+		 * @param {(HTMLElement|string)} target
 		 * @param {string} event
 		 */
 		trigger: function(target, event) {
@@ -353,7 +355,7 @@
 		 * Ensure mouse has actually entered or left root element before firing event
 		 *
 		 * @param {event} e
-		 * @param {node} parent
+		 * @param {HTMLElement} parent
 		 * @param {function} fn
 		 */
 		mouseEvent: function(e, parent, fn) {
@@ -386,7 +388,7 @@
 		/**
 		 * Detach event(s) from element
 		 *
-		 * @param {(node|string)} [sel]
+		 * @param {(HTMLElement|string)} [sel]
 		 * @param {string} [evt]
 		 * @param {function} [fn]
 		 */

@@ -9,8 +9,8 @@
 		 * @param {(function|object)} [b] - event callback or options object
 		 * @param {(object|string)} [c] - event options
 		 * @param {Array} [c.args] - callback arguments
-		 * @param {(node|string)} [c.context=document]
-		 * @param {(node|string)} [c.delegate]
+		 * @param {(HTMLElement|string)} [c.context=document]
+		 * @param {(HTMLElement|string)} [c.delegate]
 		 * @param {boolean} [c.once=false] - remove event after first execution
 		 * @param {object} [c.scope]
 		 * @returns {$} selection
@@ -42,8 +42,8 @@
 		 * @param {(function|object)} [b] - event callback or options object
 		 * @param {(object|string)} [c] - event options
 		 * @param {Array} [c.args] - callback arguments
-		 * @param {(node|string)} [c.context=document]
-		 * @param {(node|string)} [c.delegate]
+		 * @param {(HTMLElement|string)} [c.context=document]
+		 * @param {(HTMLElement|string)} [c.delegate]
 		 * @param {boolean} [c.once=true] - remove event after first execution
 		 * @param {object} [c.scope]
 		 * @returns {$} selection

@@ -50,10 +50,10 @@ body {
 	}
 }
 .heading {
-	.color(@colorLightBlue);
 	.font-size(2.3);
 	.font-weight(300);
 	.spaced(0);
+	.white();
 }
 
 
@@ -95,7 +95,7 @@ body {
 \*------------------------------------*/
 
 .welcome {
-	.color(@colorMediumBlue);
+	.color(@colorLightBlue);
 	.font(@headingFont; 1.7);
 	.font-weight(300);
 	.spaced(3);
@@ -103,21 +103,24 @@ body {
 .nav {
 	&__button {
 		.border(@colorMediumBlue);
+		.color(@colorLightBlue);
 		.fill();
 		.font(@headingFont; 1.2);
 		.spaced(1);
 		.uppercase();
-		& {
+		&,
+		&:hover,
+		&:focus,
+		&:active {
 			.background(transparent);
+			.outline(none);
 		}
 		&:focus,
 		&:hover {
-			.background(light; 5%; @colorTeal);
-			.outline(none);
+			.border(@colorLighterBlue);
 		}
 		&:active {
-			.background(light; 10%; @colorTeal);
-			.outline(none);
+			.translate(y; 1px);
 		}
 	}
 }

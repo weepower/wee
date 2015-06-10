@@ -20,11 +20,13 @@
 		/**
 		 * Get currently bound resource root or set root with specified value
 		 *
-		 * @param {string} value
+		 * @param {string} [value]
 		 * @returns {string} root
 		 */
 		root: function(value) {
-			return value ? this.$set('.', value) : this.$get('.', '');
+			return value ?
+				this.$set('.', value) :
+				this.$get('.', '');
 		},
 
 		/**
@@ -38,7 +40,7 @@
 		 * @param {(Array|function|string)} [options.success]
 		 * @param {(Array|function|string)} [options.failure]
 		 * @param {string} [options.group]
-		 * @param {bool} [options.cache=false]
+		 * @param {boolean} [options.cache=false]
 		 */
 		load: function(options) {
 			var conf = W.$extend({
@@ -65,7 +67,7 @@
 
 			// Determine file type
 			for (; i < files.length; i++) {
-				var ext = files[i].split('.').pop().split(/\#|\?/)[0];
+				var ext = files[i].split('.').pop().split(/#|\?/)[0];
 				type = (ext == 'js' || ext == 'css') ?
 					ext : (/(gif|jpe?g|png|svg)$/i).test(ext) ?
 						'img' : '';
@@ -151,8 +153,8 @@
 		 * @param {object} [options.scope]
 		 * @param {(Array|function|string)} [options.success]
 		 * @param {(Array|function|string)} [options.failure]
-		 * @param {bool} [poll=false]
-		 * @returns {bool} ready
+		 * @param {boolean} [poll=false]
+		 * @returns {boolean} ready
 		 */
 		ready: function(group, options, poll) {
 			var complete = this.$get(group) === 0;
@@ -188,7 +190,7 @@
 		 * @param {string} type
 		 * @param {object} [conf]
 		 * @param {string} [conf.group]
-		 * @param {bool} [conf.async=false]
+		 * @param {boolean} [conf.async=false]
 		 */
 		load: function(path, type, conf) {
 			var scope = this,
