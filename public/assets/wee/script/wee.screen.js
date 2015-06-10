@@ -128,11 +128,11 @@
 		 *
 		 * @private
 		 * @param {object} evt
-		 * @param {object} args
+		 * @param {object} data
 		 */
-		execute: function(evt, args) {
+		execute: function(evt, data) {
 			W.$exec(evt.callback, {
-				args: args.concat(evt.args),
+				args: [data].concat(evt.args),
 				scope: evt.scope
 			});
 
