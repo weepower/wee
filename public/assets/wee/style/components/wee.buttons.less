@@ -1,6 +1,5 @@
 .wee-button () when (@buttonEnabled = true) {
 	.rules () {
-		-webkit-tap-highlight-color: @buttonBackgroundHover;
 		color: @buttonColor;
 		cursor: pointer;
 		display: inline-block;
@@ -32,7 +31,6 @@
 		.transition(background-color);
 	}
 	.colored-rules () {
-		-webkit-tap-highlight-color: @coloredButtonBackgroundHover;
 		border-color: @coloredButtonBorderColor;
 		color: @coloredButtonColor;
 		.background(@coloredButtonBackground);
