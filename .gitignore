@@ -10,8 +10,9 @@
 #------------------------------------
 
 **/wee/temp/*
-bower_components
-node_modules
+bower_components/
+node_modules/
+out/
 
 
 #------------------------------------
@@ -19,8 +20,8 @@ node_modules
 #------------------------------------
 
 .bundle
-.idea
-.settings
+.idea/
+.settings/
 .tern-project
 *.sublime-*
 browserstack.json
