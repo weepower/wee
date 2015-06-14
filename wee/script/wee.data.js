@@ -125,18 +125,6 @@
 				// Send request
 				x.send(send);
 			}
-		},
-
-		/**
-		 * Render data into template string
-		 *
-		 * @deprecated since 2.1.0
-		 * @param {string} temp
-		 * @param {object} data
-		 * @returns {string} value
-		 */
-		parse: function(temp, data) {
-			return W.view.render(temp, data);
 		}
 	}, {
 		/**

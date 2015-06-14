@@ -95,7 +95,7 @@
 		"sourceMaps": true
 	},
 	"generator": {
-		"enable": true,
+		"enable": false,
 		"build": [
 			"source/guide/config.json"
 		]

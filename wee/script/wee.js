@@ -119,33 +119,16 @@
 								Private = W.$extend(Private, data);
 							}
 
-							// If private object exists expose $private methods
-							if (priv) {
-								/**
-								 * Execute private method from public interface
-								 *
-								 * @deprecated
-								 * @param {string} fn - method name
-								 */
-								Public.$private = function(fn) {
-									Private.$public = this;
+							// Interface $public and $private methods
+							Private.$public = Public;
 
-									return Private[fn].apply(
-										Private,
-										W._slice.call(arguments).slice(1)
-									);
-								};
+							for (var fn in Private) {
+								Public.$private[fn] = Private[fn];
+							}
 
-								Private.$public = Public;
-
-								// Execute private constructor
-								if (Private._construct !== U) {
-									Private._construct();
-								}
-
-								for (var fn in Private) {
-									Public.$private[fn] = Private[fn];
-								}
+							// Execute private constructor
+							if (Private._construct !== U) {
+								Private._construct();
 							}
 
 							// Execute public constructor
@@ -289,23 +272,18 @@
 				 * Create a DOM object from an HTML string
 				 *
 				 * @param {string} html
-				 * @param {boolean} [convert=false] - deprecated
 				 * @returns {HTMLElement} element
 				 */
-				$parseHTML: function(html, convert) {
+				$parseHTML: function(html) {
 					var el = W._doc.createElement('div');
 
 					el.innerHTML = html;
 
-					var children = W._slice.call(
+					return W._slice.call(
 						el.children.length ?
 							el.children :
 							el.childNodes
 					);
-
-					return convert ?
-						W._win[W._$](children) :
-						children;
 				},
 
 				/**
@@ -518,30 +496,6 @@
 				},
 
 				/**
-				 * Extract keys from an object
-				 *
-				 * @deprecated since 2.1.0
-				 * @param {object} value
-				 * @returns {Array}
-				 */
-				$getKeys: function(value) {
-					return Object.keys(value);
-				},
-
-				/**
-				 * Determine if value belongs to array
-				 *
-				 * @deprecated since 2.1.0
-				 * @param {Array} array
-				 * @param {string} value
-				 * @returns {(bool|int)} false or array index
-				 */
-				$inArray: function(array, value) {
-					var i = array.indexOf(value);
-					return i < 0 ? false : i;
-				},
-
-				/**
 				 * Determine if value is an array
 				 *
 				 * @param {*} obj
@@ -684,7 +638,6 @@
 
 				/**
 				 * Add ref elements to datastore
-				 * data-bind is deprecated
 				 *
 				 * @param {(HTMLElement|string)} [context=document]
 				 */
@@ -705,9 +658,8 @@
 					}
 
 					// Set refs from DOM
-					W.$each('[data-ref], [data-bind]', function(el) {
-						var ref = el.getAttribute('data-ref') ||
-								el.getAttribute('data-bind');
+					W.$each('[data-ref]', function(el) {
+						var ref = el.getAttribute('data-ref');
 
 						ref.split(/\s+/).forEach(function(val) {
 							W.$push('ref', val, [el]);

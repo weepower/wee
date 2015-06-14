@@ -5,72 +5,6 @@
 
 	W.fn.make('events', {
 		/**
-		 * Add bindings to bound object with optional exec object and init flag
-		 *
-		 * @deprecated since 2.1.0
-		 * @param {object} events
-		 * @param {(bool|object)} [a]
-		 * @param {bool} [b]
-		 */
-		map: function(events, a, b) {
-			this.$set('mapped', W.$extend(this.$get('mapped', {}), events));
-
-			if (a === true || b === true) {
-				this.bind(events, a === true ? {} : a);
-			}
-		},
-
-		/**
-		 * Bind against elements stored in the DOM reference
-		 *
-		 * @deprecated since 2.1.0
-		 * @param {object} events
-		 * @param {object} [opt]
-		 */
-		bind: function(events, opt) {
-			var mapped = events || this.$get('mapped');
-			events = [];
-
-			if (mapped) {
-				var keys = Object.keys(mapped),
-					i = 0;
-
-				for (; i < keys.length; i++) {
-					var key = keys[i];
-					events['ref:' + key] = mapped[key];
-				}
-
-				this.on(W.$extend({}, events), opt);
-			}
-		},
-
-		/**
-		 * Remove bindings to bound object
-		 *
-		 * @deprecated since 2.1.0
-		 * @param {string} id
-		 * @param {string} [event]
-		 */
-		unbind: function(id, event) {
-			this.off('ref:' + id, event);
-		},
-
-		/**
-		 * Execute specific function by name and event
-		 *
-		 * @deprecated since 2.1.0
-		 * @param {string} name
-		 * @param {string} [event]
-		 */
-		fire: function(name, event) {
-			var bound = this.$get('mapped');
-
-			if (bound.hasOwnProperty(name) && bound[name].hasOwnProperty(event)) {
-				W.$exec(bound[name][event]);
-			}
-		},
-
-		/**
 		 * Bind specified function to specified element and event
 		 *
 		 * @param {(HTMLElement|object|string)} target
@@ -106,34 +40,6 @@
 
 				this.$private.bind(target, evts, c);
 			}
-		},
-
-		/**
-		 * Bind specified function to specified element and event for single execution
-		 *
-		 * @deprecated since 2.1.0
-		 * @param {(HTMLElement|string)} target
-		 * @param {(object|string)} a - event name or object of events
-		 * @param {(function|object)} [b] - event callback or options object
-		 * @param {(object|string)} [c] - event options
-		 * @param {Array} [c.args] - callback arguments
-		 * @param {(HTMLElement|string)} [c.context=document]
-		 * @param {(HTMLElement|string)} [c.delegate]
-		 * @param {boolean} [c.once=true] - remove event after first execution
-		 * @param {object} [c.scope]
-		 */
-		one: function(target, a, b, c) {
-			if (typeof a == 'string') {
-				var obj = [];
-				obj[a] = b;
-				a = obj;
-			} else {
-				c = b;
-			}
-
-			this.on(target, a, W.$extend({
-				one: true
-			}, c));
 		},
 
 		/**
@@ -320,8 +226,7 @@
 									W.$exec(fn, conf);
 
 									// If the event is to be executed once unbind it immediately
-									// DEPRECATED one property
-									if (conf.one || conf.once) {
+									if (conf.once) {
 										scope.$public.off(el, evt, f);
 									}
 								}

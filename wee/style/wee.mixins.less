@@ -1001,8 +1001,10 @@
 .visible () {
 	visibility: visible;
 }
-.block (@width; ...) {
+.block () {
 	display: block;
+}
+.block (@width; ...) {
 	.width(@width);
 }
 .block (@width; @height) {
@@ -2401,10 +2403,16 @@
 	text-indent: 100%;
 	white-space: nowrap;
 }
+.hide () {
+	display: none;
+}
 .hide (text) {
 	overflow: hidden;
 	text-indent: 100%;
 	white-space: nowrap;
+}
+.show () {
+	display: inherit;
 }
 .selection (@color: @selectionColor; @background: @selectionBackground) {
 	&::-moz-selection {
@@ -2499,51 +2507,3 @@
 	}
 }
 .wee-helpers();
-
-
-
-
-
-/*------------------------------------*\
-	# DEPRECATED
-\*------------------------------------*/
-
-.list-style-position (@value: outside) {
-	list-style-position: @value;
-}
-.baseColor () {
-	color: @baseColor;
-}
-.centered (vertical) {
-	position: absolute;
-	&:before {
-		content: ' ';
-		display: inline-block;
-		height: 100%;
-		vertical-align: middle;
-	}
-}
-.centered () when (default()) {
-	display: table;
-	margin-left: auto;
-	margin-right: auto;
-}
-.block-row () {
-	display: block;
-	margin-left: 0;
-	width: auto;
-}
-.block-column () {
-	display: block;
-	margin-left: 0;
-	width: auto;
-}
-.hide {
-	display: none;
-}
-.show {
-	display: inherit;
-}
-.block {
-	display: block;
-}

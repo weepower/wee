@@ -35,26 +35,6 @@
 		},
 
 		/**
-		 * Bind event(s) to selection for single execution
-		 *
-		 * @deprecated
-		 * @param {(object|string)} a - event name or object of events
-		 * @param {(function|object)} [b] - event callback or options object
-		 * @param {(object|string)} [c] - event options
-		 * @param {Array} [c.args] - callback arguments
-		 * @param {(HTMLElement|string)} [c.context=document]
-		 * @param {(HTMLElement|string)} [c.delegate]
-		 * @param {boolean} [c.once=true] - remove event after first execution
-		 * @param {object} [c.scope]
-		 * @returns {$} selection
-		 */
-		one: function(a, b, c) {
-			E.one(this, a, b, c);
-
-			return this;
-		},
-
-		/**
 		 * Execute event on selection
 		 *
 		 * @param {string} event name

@@ -52,10 +52,8 @@
 		}
 		.check();
 	}
-	// DEPRECATED BOLD CLASS
 	b,
-	strong,
-	.bold {
+	strong {
 		font-weight: @boldFontWeight;
 	}
 	mark {
@@ -157,11 +155,6 @@
 	.h6 {
 		.font-size(@h6);
 	}
-	// DEPRECATED SUBHEADING
-	.subheading {
-		color: @subHeadingColor;
-		font-weight: @subHeadingFontWeight;
-	}
 	p {
 		color: @paragraphColor;
 		font-weight: @paragraphFontWeight;
@@ -171,12 +164,10 @@
 	small {
 		.font-size(@smallFontSize);
 	}
-	// DEPRECATED ITALIC CLASS
 	dfn,
 	em,
 	i,
-	var,
-	.italic {
+	var {
 		font-style: italic;
 	}
 	blockquote,
@@ -201,10 +192,6 @@
 		cite {
 			display: block;
 		}
-	}
-	.wee-blockquote () when not (@quoteBorderWidth = 0)
-		and not (@quoteBorderWidth = false) {
-		.border(left; @quoteBorderColor; @quoteBorderWidth);
 	}
 	blockquote,
 	.blockquote {
