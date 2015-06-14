@@ -42,7 +42,7 @@ Wee.fn.extend({
 					// JSHint
 					var jshintConfig = grunt.file.readJSON(
 						project.script.validate.jshint === true ?
-							config.paths.assets + '/wee/script/.jshintrc' :
+							'wee/script/.jshintrc' :
 							project.script.validate.jshint
 					);
 
@@ -74,8 +74,8 @@ Wee.fn.extend({
 					// JSCS
 					var jscsConfig = grunt.file.readJSON(
 							project.script.validate.jscs === true ?
-							config.paths.assets + '/wee/script/.jscs.json' :
-							project.script.validate.jscs
+								'wee/script/.jscs.json' :
+								project.script.validate.jscs
 						),
 						checker = new JSCS();
 
@@ -109,7 +109,7 @@ Wee.fn.extend({
 	},
 	notify: function(data, type) {
 		var notifier = require('node-notifier'),
-			iconPath = config.paths.assets + '/wee/build/img/';
+			iconPath = '../build/img/';
 		type = type || 'notice';
 
 		if (type == 'error') {
@@ -141,7 +141,7 @@ module.exports = function(grunt) {
 	global.reloadPaths = [];
 	global.legacyBuild = [];
 	global.legacyConvert = [];
-	global.version = '2.4.0';
+	global.version = '3.0.0';
 
 	grunt.initConfig({
 		less: {
@@ -166,7 +166,7 @@ module.exports = function(grunt) {
 			lib: {
 				files: [{
 					expand: true,
-					cwd: '<%= config.paths.css %>/lib',
+					cwd: '<%= config.paths.cssSource %>/lib',
 					dest: '<%= config.paths.css %>/lib',
 					src: [
 						'**/*.{css,less}',
@@ -193,7 +193,7 @@ module.exports = function(grunt) {
 			lib: {
 				files: [{
 					expand: true,
-					cwd: '<%= config.paths.js %>/lib',
+					cwd: '<%= config.paths.jsSource %>/lib',
 					dest: '<%= config.paths.js %>/lib',
 					src: [
 						'**/*.js',
@@ -257,8 +257,8 @@ module.exports = function(grunt) {
 			},
 			scriptLib: {
 				files: [
-					'<%= config.paths.js %>/lib/**/*.js',
-					'!<%= config.paths.js %>/lib/**/*.min.js'
+					'<%= config.paths.jsSource %>/lib/**/*.js',
+					'!<%= config.paths.jsSource %>/lib/**/*.min.js'
 				],
 				tasks: [
 					'uglify:lib',
@@ -267,8 +267,8 @@ module.exports = function(grunt) {
 			},
 			styleCore: {
 				files: [
-					'<%= config.paths.assets %>/wee/style/**/*.less',
-					'<%= config.paths.css %>/custom/**/*.less',
+					'wee/style/**/*.less',
+					'<%= config.paths.cssSource %>/custom/**/*.less',
 					'!<%= config.paths.temp %>wee.legacy.less'
 				],
 				tasks: [
@@ -278,8 +278,8 @@ module.exports = function(grunt) {
 			},
 			styleLib: {
 				files: [
-					'<%= config.paths.css %>/lib/**/*.{css,less}',
-					'!<%= config.paths.css %>/lib/**/*.min.css'
+					'<%= config.paths.cssSource %>/lib/**/*.{css,less}',
+					'!<%= config.paths.cssSource %>/lib/**/*.min.css'
 				],
 				tasks: [
 					'less:lib',
@@ -288,7 +288,7 @@ module.exports = function(grunt) {
 			},
 			styleBuild: {
 				files: [
-					'<%= config.paths.css %>/build/**/*.{css,less}'
+					'<%= config.paths.cssSource %>/build/**/*.{css,less}'
 				],
 				tasks: [
 					'buildStyle',
@@ -303,7 +303,7 @@ module.exports = function(grunt) {
 			},
 			styleBuildUpdate: {
 				files: [
-					'<%= config.paths.css %>/build/**/*.{css,less}'
+					'<%= config.paths.cssSource %>/build/**/*.{css,less}'
 				],
 				tasks: [
 					'less:core',
@@ -328,7 +328,7 @@ module.exports = function(grunt) {
 			project: {
 				files: [
 					'<%= config.path %>',
-					'<%= config.paths.modules %>/*/module.json'
+					'<%= config.paths.modulesSource %>/*/module.json'
 				],
 				tasks: [
 					'default',
@@ -338,14 +338,14 @@ module.exports = function(grunt) {
 		}
 	});
 
-	// Watch for changes to validate
-	if (project.script.validate.watch) {
-		grunt.event.on('watch', function(action, file) {
-			if (action !== 'deleted') {
-				Wee.validate(config, grunt, file);
-			}
-		});
-	}
+	//// Watch for changes to validate
+	//if (project.script.validate.watch) {
+	//	grunt.event.on('watch', function(action, file) {
+	//		if (action !== 'deleted') {
+	//			Wee.validate(config, grunt, file);
+	//		}
+	//	});
+	//}
 
 	// -------------------------------------
 	// Load Plugins

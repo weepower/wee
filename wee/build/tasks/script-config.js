@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 		// Core scripts
 		if (project.script.core.enable === true) {
 			var features = project.script.core.features,
-				weeScriptRoot = config.paths.assets + '/wee/script/';
+				weeScriptRoot = 'wee/script/';
 
 			config.script.files.push(weeScriptRoot + 'wee.js');
 
@@ -69,18 +69,18 @@ module.exports = function(grunt) {
 		}
 
 		// Build/vendor directory scripts
-		config.script.files.push(config.paths.js + '/build/vendor/**/*.js');
+		config.script.files.push(config.paths.jsSource + '/build/vendor/**/*.js');
 
 		// Remaining build directory scripts
-		config.script.files.push(config.paths.js + '/build/**/*.js');
+		config.script.files.push(config.paths.jsSource + '/build/**/*.js');
 
 		// Project.config file build files
 		project.script.build.forEach(function(name) {
-			config.script.files.push(Wee.buildPath(config.paths.js, name));
+			config.script.files.push(Wee.buildPath(config.paths.jsSource, name));
 		});
 
 		// Custom/script.js file
-		config.script.files.push(config.paths.js + '/custom/script.js');
+		config.script.files.push(config.paths.jsSource + '/custom/script.js');
 
 		// Compile custom
 		for (var target in project.script.compile) {
@@ -90,10 +90,10 @@ module.exports = function(grunt) {
 
 			if (sources instanceof Array) {
 				for (var source in sources) {
-					src.push(Wee.buildPath(config.paths.js, sources[source]));
+					src.push(Wee.buildPath(config.paths.jsSource, sources[source]));
 				}
 			} else {
-				src = Wee.buildPath(config.paths.js, sources);
+				src = Wee.buildPath(config.paths.jsSource, sources);
 			}
 
 			// Merge watch config
@@ -119,6 +119,7 @@ module.exports = function(grunt) {
 		// Configure source maps
 		if (project.script.sourceMaps === true) {
 			grunt.config.set('uglify.options.sourceMap', true);
+			grunt.config.set('uglify.options.sourceMapIncludeSources', true);
 			grunt.config.set('uglify.options.sourceMapName', function(dest) {
 				var scriptRoot = path.normalize(config.paths.js),
 					moduleRoot = path.normalize(config.paths.modules);

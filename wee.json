@@ -3,7 +3,9 @@
 	"description": "Project description",
 	"paths": {
 		"root": "public",
-		"assets": "assets"
+		"assets": "assets",
+		"source": "source",
+		"wee": "wee"
 	},
 	"data": {
 
@@ -95,7 +97,7 @@
 	"generator": {
 		"enable": true,
 		"build": [
-			"public/assets/guide/config.json"
+			"source/guide/config.json"
 		]
 	},
 	"server": {

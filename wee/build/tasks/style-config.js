@@ -6,6 +6,8 @@ module.exports = function(grunt) {
 
 		// Core style features
 		config.style.vars = {
+			sourcePath: '"../' + config.paths.cssSource + '"',
+			modulePath: '"../' + config.paths.modulesSource + '"',
 			buttonEnabled: features.buttons === true,
 			codeEnabled: features.code === true,
 			formEnabled: features.forms === true,
@@ -32,7 +34,7 @@ module.exports = function(grunt) {
 		if (config.style.vars.printEnabled) {
 			config.style.print = '@media print {\n';
 			config.style.print += '@import (inline) "../style/wee.print.less";\n';
-			config.style.print += '@import (optional) "../../css/custom/print.less";\n';
+			config.style.print += '@import (optional) "@{sourcePath}/custom/print.less";\n';
 			config.style.print += '}';
 		}
 
@@ -74,7 +76,7 @@ module.exports = function(grunt) {
 				files = [];
 
 			for (var sourcePath in sources) {
-				files.push(Wee.buildPath(config.paths.css, sources[sourcePath]));
+				files.push(Wee.buildPath(config.paths.cssSource, sources[sourcePath]));
 			}
 
 			// Set watch config

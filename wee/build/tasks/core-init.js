@@ -5,27 +5,31 @@ module.exports = function(grunt) {
 		// Reset config object and set core paths
 		var project = grunt.file.readJSON(configPath),
 			rootPath = project.paths.root,
+			sourcePath = project.paths.source,
 			assetPath = path.normalize(
 				rootPath !== '' ?
 					rootPath + '/' + project.paths.assets :
 					project.assets
 			),
-			weePath = assetPath + '/wee/',
-			tempPath = weePath + 'temp/';
+			tempPath = 'wee/temp/';
 
 		global.project = project;
 
 		global.config = {
 			path: configPath,
 			paths: {
+				source: sourcePath,
 				assets: assetPath,
+				cssSource: sourcePath + '/css',
 				css: assetPath + '/css',
+				jsSource: sourcePath + '/js',
 				js: assetPath + '/js',
+				modulesSource: sourcePath + '/modules',
 				modules: assetPath + '/modules',
 				root: './' + rootPath,
-				maps: weePath + 'maps/',
+				maps: assetPath + '/js/maps/',
 				temp: tempPath,
-				wee: weePath,
+				wee: 'wee/',
 				weeTemp: tempPath + 'wee.less'
 			},
 			script: {

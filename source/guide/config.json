@@ -28,25 +28,25 @@
 		"general": {
 			"name": "General",
 			"template": "default",
-			"target": "index.html",
+			"target": "../../public/assets/guide/index.html",
 			"content": "content/general/*.md"
 		},
 		"elements": {
 			"name": "Elements",
 			"template": "default",
-			"target": "elements.html",
+			"target": "../../public/assets/guide/elements.html",
 			"content": "content/elements/*.md"
 		},
 		"forms": {
 			"name": "Forms",
 			"template": "default",
-			"target": "forms.html",
+			"target": "../../public/assets/guide/forms.html",
 			"content": "content/forms/*.md"
 		},
 		"typography": {
 			"name": "Typography",
 			"template": "default",
-			"target": "typography.html",
+			"target": "../../public/assets/guide/typography.html",
 			"contentRoot": "content/typography/",
 			"content": [
 				"fonts.md",

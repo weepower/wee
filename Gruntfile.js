@@ -2,23 +2,16 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY
 
-/* global __dirname, global, module, project, require */
+/* global __dirname, global, module, require */
 
 (function() {
 	'use strict';
 
 	module.exports = function(grunt) {
 		global.rootPath = __dirname;
-		global.configPath = './' + (grunt.option('config') || 'project.json');
+		global.configPath = './' + (grunt.option('config') || 'wee.json');
 
-		global.project = grunt.file.readJSON(global.configPath);
-
-		var assetPath = (project.paths.root !== '') ?
-				project.paths.root + '/' + project.paths.assets :
-				project.assets,
-			buildPath = assetPath + '/wee/build/';
-
-		require('./' + buildPath + 'config.js')(grunt);
-		grunt.loadTasks(buildPath + 'tasks');
+		require('./wee/build/config.js')(grunt);
+		grunt.loadTasks('wee/build/tasks');
 	};
 })();

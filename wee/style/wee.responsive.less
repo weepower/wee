@@ -1,17 +1,17 @@
 .wee-mobile-landscape () when not (@mobileLandscapeWidth = false) {
-	@import (optional) '../../css/@{responsivePath}/mobile-landscape.less';
+	@import (optional) '@{sourcePath}/@{responsivePath}/mobile-landscape.less';
 }
 .wee-tablet-portrait () when not (@tabletPortraitWidth = false) {
-	@import (optional) '../../css/@{responsivePath}/tablet-portrait.less';
+	@import (optional) '@{sourcePath}/@{responsivePath}/tablet-portrait.less';
 }
 .wee-desktop-small () when not (@desktopSmallWidth = false) {
-	@import (optional) '../../css/@{responsivePath}/desktop-small.less';
+	@import (optional) '@{sourcePath}/@{responsivePath}/desktop-small.less';
 }
 .wee-desktop-medium () when not (@desktopMediumWidth = false) {
-	@import (optional) '../../css/@{responsivePath}/desktop-medium.less';
+	@import (optional) '@{sourcePath}/@{responsivePath}/desktop-medium.less';
 }
 .wee-desktop-large () when not (@desktopLargeWidth = false) {
-	@import (optional) '../../css/@{responsivePath}/desktop-large.less';
+	@import (optional) '@{sourcePath}/@{responsivePath}/desktop-large.less';
 }
 
 .responsive () when (@responsiveEnabled = true) and not (@legacyMode = true) {

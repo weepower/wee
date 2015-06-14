@@ -7,16 +7,15 @@ module.exports = function(grunt) {
 
 		// Ensure legacy support is enabled
 		if (legacy.enable === true) {
-			var styleRoot = config.paths.assets + '/css',
+			var styleRoot = config.paths.css,
 				legacyTemp = config.paths.temp + 'wee.legacy.less',
-				less = grunt.file.read(config.paths.assets + '/wee/style/wee.legacy.less'),
+				less = grunt.file.read('wee/style/wee.legacy.less'),
 				dest = Wee.buildPath(styleRoot, legacy.dest),
 				imports = [];
 
 			// Build configured
 			legacy.build.forEach(function(name) {
-				var filePath = '../..' + Wee.buildPath(styleRoot, name)
-					.replace(config.paths.assets, '');
+				var filePath = '@{sourcePath}' + '/' + name.replace(config.paths.source, '');
 
 				if (path.extname(filePath) == '.css') {
 					imports.push('@import (inline) "' + filePath + '";');

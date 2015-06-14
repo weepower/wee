@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 							modulePath + '/module/script/*.js'
 						],
 						vars = JSON.parse(JSON.stringify(config.style.vars)),
-						less = grunt.file.read(config.paths.assets + '/wee/style/wee.module.less');
+						less = grunt.file.read('wee/style/wee.module.less');
 
 					// Set module variables
 					vars.moduleName = name;
@@ -219,7 +219,7 @@ module.exports = function(grunt) {
 
 					// Create module style compile task
 					var dest = (module.autoload === true) ?
-							config.paths.assets + '/wee/temp/' + name + '.css' :
+							'wee/temp/' + name + '.css' :
 							modulePath + '/screen.min.css',
 						obj = {};
 
