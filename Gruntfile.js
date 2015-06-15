@@ -8,10 +8,12 @@
 	'use strict';
 
 	module.exports = function(grunt) {
-		global.rootPath = __dirname;
-		global.configPath = './' + (grunt.option('config') || 'source/project.json');
+		var buildPath = './node_modules/wee-core/build/';
 
-		require('./node_modules/wee-core/build/config.js')(grunt);
-		grunt.loadTasks('./node_modules/wee-core/build/tasks');
+		global.rootPath = __dirname;
+		global.configPath = './' + (grunt.option('config') || 'src/wee.json');
+
+		require(buildPath + 'config.js')(grunt);
+		grunt.loadTasks(buildPath + 'tasks');
 	};
 })();

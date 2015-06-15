@@ -1,0 +1,11 @@
+{
+	"name": "Welcome",
+	"description": "Welcome to Wee",
+	"version": "1.0.0",
+	"author": "Wee",
+	"homepage": "https://www.weepower.com",
+	"autoload": true,
+	"dependencies": {
+		"wee": "^3.0.0"
+	}
+}

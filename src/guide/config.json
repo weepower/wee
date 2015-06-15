@@ -1,0 +1,66 @@
+{
+	"name": "Style Guide",
+	"description": "Project style guide description",
+	"config": {
+		"watch": true,
+		"minify": true,
+		"enhanceTypography": true,
+		"removeIndex": true,
+		"removeTrailingSlashes": true,
+		"paths": {
+			"target": "../../public/guide/",
+			"templates": "templates",
+			"partials": "partials",
+			"extensions": "extensions"
+		}
+	},
+	"env": {
+		"default": {
+
+		},
+		"prod": {
+
+		}
+	},
+	"data": {
+		"heading": "Style Guide"
+	},
+	"sections": {
+		"general": {
+			"name": "General",
+			"template": "default",
+			"target": "index.html",
+			"content": "content/general/*.md"
+		},
+		"elements": {
+			"name": "Elements",
+			"template": "default",
+			"target": "elements.html",
+			"content": "content/elements/*.md"
+		},
+		"forms": {
+			"name": "Forms",
+			"template": "default",
+			"target": "forms.html",
+			"content": "content/forms/*.md"
+		},
+		"typography": {
+			"name": "Typography",
+			"template": "default",
+			"target": "typography.html",
+			"contentRoot": "content/typography/",
+			"content": [
+				"fonts.md",
+				"paragraph.md",
+				"headings.md",
+				"inline.md",
+				"unordered.md",
+				"ordered.md",
+				"description.md",
+				"blockquote.md",
+				"address.md",
+				"*.md"
+			]
+		}
+	}
+}

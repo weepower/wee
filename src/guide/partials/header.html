@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" id="global" itemscope itemtype="http://schema.org/WebPage">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>{{section.name}} | {{site.name}}</title>
+	<meta name="description" content="{{description}}">
+
+	<link rel="stylesheet" href="/assets/css/style.min.css">
+	<link rel="stylesheet" href="/assets/css/module.guide.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,700">
+
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" href="/assets/css/ie8.min.css">
+	<link rel="stylesheet" href="/assets/css/module.guide.ie8.min.css">
+	<script src="/assets/js/ie8.min.js"></script>
+	<![endif]-->
+
+	<!--[if lte IE 9]>
+	<link rel="stylesheet" href="/assets/css/ie9.min.css">
+	<script src="/assets/js/ie9.min.js"></script>
+	<![endif]-->
+	</head>
+<body>
+	<header role="banner" class="header --guide">
+		<div class="container">
+			<a href="/" rel="home" class="logo">
+				<img src="/assets/img/wee.svg" alt="Wee Framework">
+			</a>
+
+			<h1 class="heading">{{site.heading}}</h1>
+
+			<nav role="navigation" class="jump">
+				<ol class="jump__links">
+					{{#site.sections}}
+					<li{{#isActive}} class="is-active"{{/isActive}}><a href="{{target}}">{{name}}</a></li>
+					{{/site.sections}}
+				</ol>
+			</nav>
+		</div>
+	</header>
+
+	<main role="main" class="container">

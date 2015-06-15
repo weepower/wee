@@ -1,0 +1,131 @@
+{
+	"name": "Project Name",
+	"description": "Project description",
+	"paths": {
+		"root": "public",
+		"assets": "assets",
+		"source": "src"
+	},
+	"data": {
+
+	},
+	"style": {
+		"data": {
+
+		},
+		"core": {
+			"buttons": true,
+			"code": true,
+			"forms": true,
+			"print": true,
+			"tables": true,
+			"responsive": {
+				"enable": true,
+				"offset": 25,
+				"breakpoints": {
+					"mobileLandscape": 480,
+					"tabletPortrait": 768,
+					"desktopSmall": 1024,
+					"desktopMedium": 1280,
+					"desktopLarge": 1440
+				}
+			}
+		},
+		"build": [
+
+		],
+		"compile": {
+			"guide.min.css": "custom/guide.less",
+			"ie9.min.css": "custom/ie9.less"
+		},
+		"legacy": {
+			"enable": true,
+			"watch": false,
+			"breakpoint": 4,
+			"rootSize": "62.5%",
+			"dest": "ie8.min.css",
+			"build": [
+				"custom/ie8.less"
+			],
+			"compile": {
+
+			}
+		}
+	},
+	"script": {
+		"data": {
+
+		},
+		"core": {
+			"enable": true,
+			"features": {
+				"assets": true,
+				"chain": true,
+				"data": true,
+				"dom": true,
+				"events": true,
+				"routes": true,
+				"screen": true,
+				"view": true
+			}
+		},
+		"build": [
+
+		],
+		"compile": {
+			"ie8.min.js": [
+				"polyfill/es5-shim.js",
+				"polyfill/html5shiv.js",
+				"polyfill/sizzle.js",
+				"polyfill/wee.svg.js",
+				"custom/ie8.js"
+			],
+			"ie9.min.js": [
+				"polyfill/wee.slice.js",
+				"polyfill/wee.placeholder.js"
+			],
+			"guide.min.js": "custom/guide.js"
+		},
+		"validate": {
+			"watch": true,
+			"jscs": ".jscs.json",
+			"jshint": ".jshintrc"
+		},
+		"sourceMaps": true
+	},
+	"generator": {
+		"enable": true,
+		"build": [
+			"src/guide/config.json"
+		]
+	},
+	"server": {
+		"ghostMode": true,
+		"host": "auto",
+		"port": 9000,
+		"inject": [
+
+		],
+		"reload": {
+			"enable": true,
+			"watch": {
+				"root": true,
+				"paths": [
+
+				],
+				"extensions": [
+					"html"
+				]
+			}
+		},
+		"tasks": {
+			"local": {
+				"https": false,
+				"proxy": "http://wee.dev"
+			},
+			"static": {
+				"https": false
+			}
+		}
+	}
+}

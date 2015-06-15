@@ -3,6 +3,4 @@ languages:
 exclude_paths:
 - "*.min.js"
 - "wee/tests/*"
-- "public/assets/js/polyfill/es5-shim.js"
-- "public/assets/js/polyfill/html5shiv.js"
-- "public/assets/js/polyfill/sizzle.js"
+- "public/assets/js/polyfill/*.js"
