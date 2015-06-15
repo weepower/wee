@@ -9,7 +9,6 @@
 	# Wee
 #------------------------------------
 
-**/wee/temp/*
 bower_components/
 node_modules/
 out/

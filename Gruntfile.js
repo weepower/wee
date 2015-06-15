@@ -9,9 +9,9 @@
 
 	module.exports = function(grunt) {
 		global.rootPath = __dirname;
-		global.configPath = './' + (grunt.option('config') || 'wee.json');
+		global.configPath = './' + (grunt.option('config') || 'source/project.json');
 
-		require('./wee/build/config.js')(grunt);
-		grunt.loadTasks('wee/build/tasks');
+		require('./node_modules/wee-core/build/config.js')(grunt);
+		grunt.loadTasks('./node_modules/wee-core/build/tasks');
 	};
 })();

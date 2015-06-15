@@ -4,8 +4,7 @@
 	"paths": {
 		"root": "public",
 		"assets": "assets",
-		"source": "source",
-		"wee": "wee"
+		"source": "source"
 	},
 	"data": {
 
@@ -95,7 +94,7 @@
 		"sourceMaps": true
 	},
 	"generator": {
-		"enable": false,
+		"enable": true,
 		"build": [
 			"source/guide/config.json"
 		]

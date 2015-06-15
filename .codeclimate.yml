@@ -2,8 +2,6 @@ languages:
   JavaScript: true
 exclude_paths:
 - "*.min.js"
-- "wee/build/*"
-- "wee/temp/*"
 - "wee/tests/*"
 - "public/assets/js/polyfill/es5-shim.js"
 - "public/assets/js/polyfill/html5shiv.js"

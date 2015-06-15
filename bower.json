@@ -5,12 +5,10 @@
 	"homepage": "https://www.weepower.com",
 	"license": "Apache-2.0",
 	"main": [
-		"./public/assets/css/*",
-		"./public/assets/js/*",
-		"./wee/*",
+		"./public/assets/*",
+		"./source/*",
 		"./gruntfile.js",
-		"./package.json",
-		"./project.json"
+		"./package.json"
 	],
 	"ignore": [
 		"**/.*"
