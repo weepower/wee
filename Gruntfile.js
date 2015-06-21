@@ -11,7 +11,7 @@
 		var buildPath = './node_modules/wee-core/build/';
 
 		global.rootPath = __dirname;
-		global.configPath = './' + (grunt.option('config') || 'src/wee.json');
+		global.configPath = './' + (grunt.option('config') || 'wee.json');
 
 		require(buildPath + 'config.js')(grunt);
 		grunt.loadTasks(buildPath + 'tasks');

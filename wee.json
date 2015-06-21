@@ -59,13 +59,16 @@
 		"core": {
 			"enable": true,
 			"features": {
+				"animate": true,
 				"assets": true,
 				"chain": true,
 				"data": true,
 				"dom": true,
 				"events": true,
+				"history": true,
 				"routes": true,
 				"screen": true,
+				"touch": true,
 				"view": true
 			}
 		},
@@ -109,7 +112,7 @@
 		"reload": {
 			"enable": true,
 			"watch": {
-				"root": true,
+				"root": false,
 				"paths": [
 
 				],
