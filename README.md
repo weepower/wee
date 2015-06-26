@@ -21,7 +21,9 @@ JavaScript toolset to build scalable, organized client-side codebase < *11KB gzi
 * **Routing library** to flexibly associate endpoints to actions
 * **Event handling** to bind actions to elements
 * **Data loading** for Ajax and JSON interaction
+* **HTML5 history** helper to create highly dynamic experiences
 * **Template rendering** to parse complex data structures
+* **Data binding** to sync data sources to the DOM
 * **Resource loading** for JavaScript, CSS, and images
 * **Breakpoint watching** for efficient media query callbacks
 * **Polyfill support** for HTML5, ES5, SVG, and input placeholders
@@ -286,16 +288,4 @@ Keep track of development and news by following [@weecss](https://twitter.com/we
 
 ## License
 
-Copyright 2015 [Caddis Interactive, LLC](https://www.caddis.co)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-	http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Copyright 2015 [Caddis Interactive, LLC](https://www.caddis.co). Licensed under the [Apache License, Version 2.0](https://github.com/weepower/wee/LICENSE).
