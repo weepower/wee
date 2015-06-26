@@ -1,0 +1,135 @@
+// Splash Module (weepower.com)
+// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
+// DO NOT MODIFY
+
+/*------------------------------------*\
+	# General
+\*------------------------------------*/
+
+html,
+body {
+	.min-height(100%);
+}
+body {
+	.background(@colorBlue; 'bg.svg');
+	.background-position(right);
+	.background-size(cover);
+}
+.container {
+	.max-width(100);
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Header
+\*------------------------------------*/
+
+.header {
+	.padding(vertical; 7%);
+}
+.logo {
+	.align(middle);
+	.spaced(1);
+	&:hover {
+		.opacity(90%);
+	}
+	&,
+	img {
+		.inline-block(10.5; 3.5);
+	}
+}
+.heading {
+	.font(@headingFont; 2.3; 300);
+	.font-size(2.3);
+	.font-weight(300);
+	.spaced(0);
+	.white();
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Footer
+\*------------------------------------*/
+
+.footer {
+	.color(@colorLightBlue);
+	.padding(top; 6);
+	a {
+		.color(@colorLighterBlue);
+		&:hover {
+			.white();
+		}
+	}
+	&__license,
+	&__links {
+		.font-size(1.3; 1.4em);
+	}
+	&__license {
+		.spaced-block(.8);
+	}
+	&__links {
+		.inline-list(1.2);
+		.spaced(3);
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Index
+\*------------------------------------*/
+
+.instructions {
+	.color(@colorLightBlue);
+	.font(@headingFont; 1.7);
+	.font-weight(300);
+	.spaced(3);
+}
+.nav {
+	&__button {
+		.border(@colorMediumBlue);
+		.color(@colorLightBlue);
+		.fill();
+		.font(@headingFont; 1.2);
+		.spaced(1);
+		.uppercase();
+		&,
+		&:hover,
+		&:focus,
+		&:active {
+			.background(transparent);
+			.outline(none);
+		}
+		&:focus,
+		&:hover {
+			.border(@colorLighterBlue);
+		}
+		&:active {
+			.translate(y; 1px);
+		}
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	# 404
+\*------------------------------------*/
+
+.not-found {
+	p {
+		.color(@colorMediumBlue);
+		.font(@headingFont; 1.7);
+		.font-weight(300);
+	}
+}
