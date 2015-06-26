@@ -2,5 +2,5 @@ languages:
   JavaScript: true
 exclude_paths:
 - "*.min.js"
-- "wee/tests/*"
-- "public/assets/js/polyfill/*.js"
+- "source/js/tests/*"
+- "source/js/polyfill/*.js"

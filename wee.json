@@ -1,10 +1,9 @@
 {
 	"name": "Project Name",
-	"description": "Project description",
 	"paths": {
 		"root": "public",
 		"assets": "assets",
-		"source": "src"
+		"source": "source"
 	},
 	"data": {
 
@@ -84,8 +83,8 @@
 				"custom/ie8.js"
 			],
 			"ie9.min.js": [
-				"polyfill/wee.slice.js",
-				"polyfill/wee.placeholder.js"
+				"polyfill/wee.placeholder.js",
+				"polyfill/wee.slice.js"
 			],
 			"guide.min.js": "custom/guide.js"
 		},
@@ -99,7 +98,7 @@
 	"generator": {
 		"enable": true,
 		"build": [
-			"src/guide/config.json"
+			"source/guide/config.json"
 		]
 	},
 	"server": {

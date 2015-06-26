@@ -4,21 +4,20 @@
 	"description": "Blueprint for modern web development",
 	"homepage": "https://www.weepower.com",
 	"license": "Apache-2.0",
+	"keywords": [
+		"css",
+		"framework",
+		"javascript",
+		"responsive"
+	],
 	"main": [
 		"./public/assets/*",
 		"./source/*",
 		"./gruntfile.js",
-		"./package.json"
+		"./package.json",
+		"./wee.json"
 	],
 	"ignore": [
 		"**/.*"
-	],
-	"keywords": [
-		"bootstrap",
-		"css",
-		"framework",
-		"javascript",
-		"less",
-		"responsive"
 	]
 }
