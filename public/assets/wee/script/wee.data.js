@@ -105,7 +105,7 @@
 						'application/x-www-form-urlencoded; charset=UTF-8';
 				}
 
-				send = typeof (conf.data || '') == 'string' ?
+				send = typeof conf.data == 'string' ?
 					conf.data :
 					JSON.stringify(conf.data);
 			}
