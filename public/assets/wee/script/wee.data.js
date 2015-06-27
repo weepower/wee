@@ -28,22 +28,23 @@
 				}, options);
 
 			if (conf.cache === false) {
-				conf.data.dt = new Date().getTime();
+				conf.data.dt = Date.now();
 			}
 
 			if (conf.jsonp) {
-				var head = W._doc.getElementsByTagName('head')[0];
+				var head = W.$('head')[0];
 
 				if (conf.success) {
-					var func = conf.jsonpCallback;
+					var fn = conf.jsonpCallback;
 
-					if (! func) {
+					if (! fn) {
 						var v = this.$get('v', 1);
-						func = 'jsonp' + v;
+						fn = 'jsonp' + v;
+
 						this.$set('v', v + 1);
 					}
 
-					W._win[func] = function(data) {
+					W._win[fn] = function(data) {
 						conf.args.unshift(data);
 
 						W.$exec(conf.success, {
@@ -52,7 +53,11 @@
 						});
 					};
 
-					conf.data[conf.jsonp === true ? 'callback' : conf.jsonp] = func;
+					conf.data[
+						conf.jsonp === true ?
+							'callback' :
+							conf.jsonp
+						] = fn;
 				}
 
 				if (Object.keys(conf.data).length > 0) {
@@ -73,58 +78,66 @@
 				}
 
 				head.appendChild(el);
-			} else {
-				var scope = this,
-					x = new XMLHttpRequest();
 
-				x.onreadystatechange = function() {
-					return scope.$private.processChange(x, conf);
-				};
-
-				var send = null;
-
-				// Post or get endpoint based on specification
-				if (conf.method == 'post') {
-					x.open('POST', conf.url, true);
-					x.setRequestHeader(
-						'Content-Type',
-						'application/x-www-form-urlencoded; charset=UTF-8'
-					);
-					send = W.$isObject(conf.data) ?
-						W.$serialize(conf.data) :
-						conf.data;
-				} else {
-					if (Object.keys(conf.data).length > 0) {
-						conf.url += '?' + W.$serialize(conf.data);
-					}
-
-					x.open(conf.method.toUpperCase(), conf.url, true);
-				}
-
-				// Add X-Requested-With header for same domain requests
-				var xrw = 'X-Requested-With';
-
-				if (! conf.headers.hasOwnProperty(xrw)) {
-					var a = W._doc.createElement('a');
-					a.href = conf.url;
-
-					if (a.hostname == W._win.location.hostname) {
-						conf.headers[xrw] = 'XMLHttpRequest';
-					}
-				}
-
-				// Set request headers
-				for (var key in conf.headers) {
-					var val = conf.headers[key];
-
-					if (val !== false) {
-						x.setRequestHeader(key, val);
-					}
-				}
-
-				// Send request
-				x.send(send);
+				return;
 			}
+
+			var scope = this,
+				x = new XMLHttpRequest();
+
+			x.onreadystatechange = function() {
+				scope.$private.change(x, conf);
+			};
+
+			var contentTypeHeader = 'Content-Type',
+				method = conf.method.toUpperCase(),
+				send = null,
+				headers = [];
+
+			// Format data based on specified verb
+			if (method == 'GET') {
+				if (Object.keys(conf.data).length > 0) {
+					conf.url += '?' + W.$serialize(conf.data);
+				}
+			} else {
+				if (method == 'POST') {
+					headers[contentTypeHeader] =
+						'application/x-www-form-urlencoded; charset=UTF-8';
+				}
+
+				send = typeof (conf.data || '') == 'string' ?
+					conf.data :
+					JSON.stringify(conf.data);
+			}
+
+			x.open(method, conf.url, true);
+
+			// Add JSON header
+			if (conf.json) {
+				headers[contentTypeHeader] = 'application/json';
+			}
+
+			// Add X-Requested-With header for same domain requests
+			var xrw = 'X-Requested-With',
+				a = W._doc.createElement('a');
+			a.href = conf.url;
+
+			if (a.hostname == W._win.location.hostname) {
+				headers[xrw] = 'XMLHttpRequest';
+			}
+
+			headers = W.$extend(headers, conf.headers);
+
+			// Set request headers
+			for (var key in headers) {
+				var val = headers[key];
+
+				if (val !== false) {
+					x.setRequestHeader(key, val);
+				}
+			}
+
+			x.send(send);
 		},
 
 		/**
@@ -146,11 +159,11 @@
 		 * @param {object} conf
 		 * @returns {*}
 		 */
-		processChange: function(x, conf) {
+		change: function(x, conf) {
 			if (x.readyState === 4) {
 				if (x.status >= 200 && x.status < 400) {
 					if (conf.success) {
-						return this.processSuccess(x, conf);
+						return this.success(x, conf);
 					}
 				} else {
 					if (conf.failure) {
@@ -174,7 +187,7 @@
 		 * @param {object} conf
 		 * @returns {boolean}
 		 */
-		processSuccess: function(x, conf) {
+		success: function(x, conf) {
 			var resp = x.responseText,
 				orig = resp;
 
