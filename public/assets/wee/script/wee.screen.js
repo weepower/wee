@@ -8,11 +8,19 @@
 		 * @returns {int} breakpoint value
 		 */
 		size: function() {
-			var size = W._legacy ?
-					(W._html.currentStyle ? W._html.currentStyle.fontFamily : null) :
-					W._win.getComputedStyle(W._html, null).getPropertyValue('font-family');
+			var style = W._html.currentStyle,
+				size = W._legacy ?
+				(style ?
+					style.fontFamily :
+					null
+				) :
+				W._win.getComputedStyle(W._html, null)
+					.getPropertyValue('font-family');
 
-			return parseFloat(size.replace(/[^0-9\.]+/g, ''), 10);
+			return parseFloat(
+				size.replace(/[^0-9\.]+/g, ''),
+				10
+			);
 		},
 
 		/**
@@ -29,18 +37,27 @@
 		 * @param {function} rules.callback
 		 */
 		map: function(rules) {
-			var scope = this,
+			var priv = this.$private,
 				sets = W.$toArray(rules),
 				i = 0;
 
 			// Delay check 1ms to prevent incorrect breakpoint value in IE
 			setTimeout(function() {
 				for (; i < sets.length; i++) {
-					scope.$private.addRule(sets[i]);
+					priv.addRule(sets[i]);
 				}
 			}, 1);
 		}
 	}, {
+		/**
+		 * Setup initial variables
+		 *
+		 * @private
+		 */
+		_construct: function() {
+			this.events = [];
+		},
+
 		/**
 		 * Add individual ruleset to mapped events
 		 *
@@ -57,27 +74,28 @@
 		 */
 		addRule: function(conf) {
 			if (conf.callback) {
-				var cb = this.check;
+				var scope = this,
+					check = scope.check.bind(scope);
 
 				// Only setup watching when enabled
 				if (conf.watch !== false) {
-					this.$push('evts', conf);
+					scope.events.push(conf);
 
 					// Only attach event once
-					if (! this.$get('on')) {
-						this.$set('on', 1);
-						this.$set('evts', [conf]);
+					if (! this.bound) {
+						scope.bound = 1;
+						scope.events = [conf];
 
 						// Attach resize event
 						W._legacy ?
-							W._win.attachEvent('onresize', cb) :
-							W._win.addEventListener('resize', cb);
+							W._win.attachEvent('onresize', check) :
+							W._win.addEventListener('resize', check);
 					}
 				}
 
 				// Check current screen if not disabled
 				if (conf.init !== false) {
-					this.check(true, [conf]);
+					check(true, [conf]);
 				}
 			}
 		},
@@ -90,12 +108,14 @@
 		 * @param {Array} [rules] - breakpoint rules
 		 */
 		check: function(init, rules) {
-			var size = W.screen.size(),
-				prev = this.$get('size');
+			var scope = W.screen,
+				priv = scope.$private,
+				size = scope.size(),
+				prev = priv.current;
 
 			// If breakpoint has been hit or resize logic initialized
-			if (size && (size !== prev || init)) {
-				var evts = rules || this.$get('evts'),
+			if (size && (size !== prev || init === true)) {
+				var evts = rules || priv.events,
 					i = 0;
 
 				for (; i < evts.length; i++) {
@@ -109,7 +129,7 @@
 						(sz && sz === size) ||
 						(mn && size >= mn && (init || prev < mn) && (! mx || size <= mx)) ||
 						(mx && size <= mx && (init || prev > mx) && (! mn || size >= mn))) {
-						this.execute(evt, {
+						priv.execute(evt, {
 							dir: init ? 0 : (size > prev ? 1 : -1),
 							size: size,
 							prev: prev,
@@ -119,7 +139,7 @@
 				}
 
 				// Update current breakpoint value
-				this.$set('size', size);
+				priv.current = size;
 			}
 		},
 
@@ -138,9 +158,9 @@
 
 			// Disable future execution if set for once
 			if (evt.once) {
-				this.$set('evts', this.$get('evts').filter(function(el) {
+				this.events = this.events.filter(function(el) {
 					return el !== evt;
-				}));
+				});
 			}
 		}
 	});
