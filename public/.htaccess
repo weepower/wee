@@ -18,6 +18,9 @@ Options +FollowSymLinks -Indexes -MultiViews
 # Internet Explorer document mode
 Header set X-UA-Compatible "IE=edge"
 
+# X-Frame-Options
+Header always append X-Frame-Options SAMEORIGIN
+
 # Character set
 AddDefaultCharset utf-8
 AddCharset utf-8 .atom .css .js .json .map .rss .xml
