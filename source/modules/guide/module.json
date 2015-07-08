@@ -1,9 +1,9 @@
 {
 	"name": "Guide",
-	"description": "Style Guide template",
 	"version": "1.0.0",
-	"author": "Wee",
+	"description": "Style guide template",
 	"homepage": "https://www.weepower.com",
+	"author": "Wee",
 	"autoload": false,
 	"style": {
 		"build": "css/screen.less"

@@ -7,7 +7,7 @@
 		"removeIndex": true,
 		"removeTrailingSlashes": true,
 		"paths": {
-			"target": "../../public/guide/",
+			"target": "../../../public/guide/",
 			"templates": "templates",
 			"partials": "partials",
 			"extensions": "extensions"

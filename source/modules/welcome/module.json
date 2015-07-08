@@ -1,9 +1,9 @@
 {
-	"name": "Splash",
-	"description": "Sample landing page",
+	"name": "Welcome",
 	"version": "1.0.0",
-	"author": "Wee",
+	"description": "Sample landing page",
 	"homepage": "https://www.weepower.com",
+	"author": "Wee",
 	"autoload": true,
 	"dependencies": {
 		"wee": "^3.0.0"

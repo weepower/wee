@@ -98,7 +98,7 @@
 	"generator": {
 		"enable": true,
 		"build": [
-			"source/guide/config.json"
+			"source/modules/guide/config.json"
 		]
 	},
 	"server": {
