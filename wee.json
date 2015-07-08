@@ -111,7 +111,7 @@
 		"reload": {
 			"enable": true,
 			"watch": {
-				"root": false,
+				"root": true,
 				"paths": [
 
 				],
