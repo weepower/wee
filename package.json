@@ -25,13 +25,9 @@
 		"grunt-contrib-uglify": "~0.9.1",
 		"grunt-contrib-watch": "~0.6.1",
 		"grunt-newer": "~1.1.1",
-		"wee-core": "~3.0.0"
+		"wee-core": "~1.0.0-alpha"
 	},
 	"scripts": {
-		"clean": "node node_modules/wee-core/commands/clean.js",
-		"test": "node node_modules/wee-core/node_modules/.bin/intern-runner config=source/js/tests/config.js",
-		"make:controller": "node node_modules/wee-core/commands/make.js type:controller",
-		"make:module": "node node_modules/wee-core/commands/make.js type:module",
-		"make:test": "node node_modules/wee-core/commands/make.js type:test"
+		"test": "node node_modules/wee-core/node_modules/.bin/intern-runner config=source/js/tests/config.js"
 	}
 }

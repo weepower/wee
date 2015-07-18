@@ -23,8 +23,7 @@ out/
 .settings/
 .tern-project
 *.sublime-*
-browserstack.json
-BrowserStackLocal
+browserstack.js
 codekit-config.json
 mixture.json
 prepros.json

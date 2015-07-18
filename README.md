@@ -6,7 +6,7 @@ Wee is a lightweight front-end framework for logically building complex, respons
 
 ## Features
 
-Mobile-first CSS framework with reset, base, and Less mixin library < *4KB gzipped*
+Mobile-first CSS framework with reset, base, and Less mixin library ~ *3KB gzipped*
 
 * **Central configuration** for style normalization
 * **Feature toggling** to minimize overhead
@@ -14,7 +14,7 @@ Mobile-first CSS framework with reset, base, and Less mixin library < *4KB gzipp
 * **Legacy rules** for IE8 compatibility
 * **Print styling** to generate print-optimized pages
 
-JavaScript toolset to build scalable, organized client-side codebase < *11KB gzipped*
+JavaScript toolset to build scalable, organized client-side codebase ~ *12KB gzipped*
 
 * **Foundation** of utilities, helpers, and module structure
 * **Chainable DOM** traversal and manipulation with familiar API
@@ -126,7 +126,7 @@ Wee.fn.make('controllerName', {
 
 ##### Routing [→](https://www.weepower.com/script/routes)
 
-Create independence between markup and script using the powerful routing options. 
+Create independence between markup and script using the powerful routing options.
 
 ```javascript
 Wee.routes.map({
@@ -213,7 +213,7 @@ Wee.events.on('ref:element', 'mouseenter', function(e, el) {
 
 ##### Requests [→](https://www.weepower.com/script/data)
 
-You can submit any type of request with a number of callback options. 
+You can submit any type of request with a number of callback options.
 
 ```javascript
 Wee.data.request({
@@ -266,9 +266,9 @@ Get started using one of these methods:
 
 Wee officially supports the following minimum browser versions:
 
-Internet Explorer  | Chrome | Firefox | Safari | iOS Safari | Android
------------------- | ------ | ------- | ------ | ---------- | -------
-8                  | 30     | 24      | 6.1    | 5.1        | 4.1
+Internet Explorer | Chrome | Firefox | Safari | iOS Safari | Android
+----------------- | ------ | ------- | ------ | ---------- | -------
+8                 | 30     | 24      | 6.1    | 5.1        | 4.1
 
 ## Bugs
 

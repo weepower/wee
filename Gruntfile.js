@@ -2,7 +2,7 @@
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 // DO NOT MODIFY
 
-/* global __dirname, global, module, require */
+/* global __dirname, global, module */
 
 (function() {
 	'use strict';
