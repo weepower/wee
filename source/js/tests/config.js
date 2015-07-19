@@ -1,9 +1,9 @@
-// Documentation available at https://theintern.github.io/intern/#common-config
+// Documentation available at https://theintern.github.io
 
 define({
 	proxyPort: 9010,
 	proxyUrl: 'http://localhost:9010/',
-	excludeInstrumentation: /^(?:bower_components|node_modules|tests)\//,
+	excludeInstrumentation: /^(?:bower_components|node_modules)\//,
 	tunnel: 'NullTunnel',
 	loader: {
 		packages: [
@@ -18,10 +18,6 @@ define({
 
 	],
 	suites: [
-		// Core Wee tests
-		'node_modules/wee-core/script/tests/unit/wee',
-
-		// Custom tests
 		'source/js/tests/unit/example'
 	],
 	environments: [
