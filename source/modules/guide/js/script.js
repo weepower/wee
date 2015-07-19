@@ -1,7 +1,3 @@
-// Guide Module (weepower.com)
-// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY
-
 /* global hljs */
 
 Wee.fn.make('guide', {
@@ -75,21 +71,24 @@ Wee.fn.make('guide', {
 	 * @param {($|HTMLElement|string)} el - source button
 	 */
 	toggleCode: function(el) {
-		var $el = $(el);
+		var $el = $(el),
+			activeClass = '--is-active',
+			ariaExpanded = 'aria-expanded',
+			ariaHidden = 'aria-hidden';
 
-		if ($el.attr('aria-expanded') != 'false') {
-			$el.removeClass('--is-active')
+		if ($el.attr(ariaExpanded) != 'false') {
+			$el.removeClass(activeClass)
 				.text('<' + $el.data('lang') + '/>')
-				.attr('aria-expanded', 'false')
+				.attr(ariaExpanded, 'false')
 				.next()
-				.attr('aria-hidden', 'true')
+				.attr(ariaHidden, 'true')
 				.hide();
 		} else {
-			$el.addClass('--is-active')
+			$el.addClass(activeClass)
 				.text('x')
-				.attr('aria-expanded', 'true')
+				.attr(ariaExpanded, 'true')
 				.next()
-				.attr('aria-hidden', 'false')
+				.attr(ariaHidden, 'false')
 				.show();
 		}
 	}
