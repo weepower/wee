@@ -18,6 +18,8 @@ JavaScript toolset to build scalable, organized client-side codebase ~ *12KB gzi
 
 * **Foundation** of utilities, helpers, and module structure
 * **Chainable DOM** traversal and manipulation with familiar API
+* **Animation** methods to tween CSS attributes and properties
+* **Touch support** for directional swipe events
 * **Routing library** to flexibly associate endpoints to actions
 * **Event handling** to bind actions to elements
 * **Data loading** for Ajax and JSON interaction
@@ -203,8 +205,8 @@ Wee.screen.map([
 Create organized interaction on your page with the simple event API.
 
 ```javascript
-Wee.events.on('ref:element', 'mouseenter', function(e, el) {
-	// Click logic
+Wee.events.on('ref:element', 'click swipeRight', function(e, el) {
+	// Event logic
 	e.preventDefault();
 }, {
 	once: true
@@ -226,13 +228,13 @@ Wee.data.request({
 	success: function(data) {
 		// Success logic
 	},
-	failure: function(data) {
+	error: function(data) {
 	   // Failure logic
 	}
 });
 ```
 
-##### Asset Loading [→](https://www.weepower.com/style/assets)
+##### Asset Loading [→](https://www.weepower.com/script/assets)
 
 Load what you need on demand to optimize page speed and preserve bandwidth.
 
@@ -248,6 +250,41 @@ Wee.assets.load({
 		// Success logic
 	},
 	failure: function() {
+		// Failure logic
+	}
+});
+```
+
+##### Animation [→](https://www.weepower.com/script/animation)
+
+Tween attributes and properties with granular control and callback functionality.
+
+```javascript
+Wee.animate.tween('ref:element', {
+	height: 100
+}, {
+	duration: 200,
+	easing: 'linear',
+	complete: function() {
+		// Completion logic
+	}
+});
+```
+
+##### History [→](https://www.weepower.com/script/history)
+
+Create dynamic experiences through partial Ajax loading and the HTML5 History API.
+
+```javascript
+Wee.history.go({
+	path: 'test.html',
+	scrollTop: '.heading',
+	partials: 'title, .heading, .main',
+	data: {
+	success: function(data, xhr, targets) {
+		// Success logic
+	},
+	error: function(xhr, targets) {
 		// Failure logic
 	}
 });
