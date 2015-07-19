@@ -281,11 +281,12 @@ Wee.history.go({
 	scrollTop: '.heading',
 	partials: 'title, .heading, .main',
 	data: {
-	success: function(data, xhr, targets) {
-		// Success logic
-	},
-	error: function(xhr, targets) {
-		// Failure logic
+		success: function(data, xhr, targets) {
+			// Success logic
+		},
+		error: function(xhr, targets) {
+			// Failure logic
+		}
 	}
 });
 ```
