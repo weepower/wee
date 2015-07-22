@@ -34,7 +34,6 @@
 
 		],
 		"compile": {
-			"guide.min.css": "custom/guide.less",
 			"ie9.min.css": "custom/ie9.less"
 		},
 		"legacy": {
@@ -85,13 +84,12 @@
 			"ie9.min.js": [
 				"polyfill/wee.placeholder.js",
 				"polyfill/wee.slice.js"
-			],
-			"guide.min.js": "custom/guide.js"
+			]
 		},
 		"validate": {
 			"watch": true,
-			"jscs": ".jscs.json",
-			"jshint": ".jshintrc"
+			"jscs": "source/.jscs.json",
+			"jshint": "source/.jshintrc"
 		},
 		"sourceMaps": true
 	},
