@@ -1,6 +1,6 @@
 ---
 name: Headings
-heading: Headings establish the hierarchy of importance on a page
+heading: Headings establish a semantic hierarchy of importance
 class: headings
 ---
 

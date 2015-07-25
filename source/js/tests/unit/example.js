@@ -8,7 +8,7 @@ define(function(require) {
 			var type = Wee.$type('Wee');
 
 			assert.equal(type, 'string',
-				'Type correctly evaluated as a string.'
+				'Type value "string" is a string.'
 			);
 		}
 	});

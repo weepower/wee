@@ -6,7 +6,7 @@ name: Description List
 
 <dl>
 	<dt>Lorem ipsum dolor</dt>
-	<dd>Lorem ipsum dolor</dd>
+	<dd>Sit amet, consectetur adipiscing elit.</dd>
 	<dt>Lorem ipsum dolor</dt>
-	<dd>Lorem ipsum dolor</dd>
+	<dd>Sit amet, consectetur adipiscing elit.</dd>
 </dl>

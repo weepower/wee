@@ -1,6 +1,5 @@
 {
 	"name": "Wee",
-	"version": "3.0.0",
 	"description": "Blueprint for modern web development",
 	"homepage": "https://www.weepower.com",
 	"license": "Apache-2.0",
@@ -13,8 +12,9 @@
 	"main": [
 		"./public/assets/*",
 		"./source/*",
-		"./gruntfile.js",
+		"./Gruntfile.js",
 		"./package.json",
+		"./wee.js",
 		"./wee.json"
 	],
 	"ignore": [

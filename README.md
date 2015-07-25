@@ -25,7 +25,7 @@ JavaScript toolset to build scalable, organized client-side codebase ~ *12KB gzi
 * **Data loading** for Ajax and JSON interaction
 * **HTML5 history** helper to create highly dynamic experiences
 * **Template rendering** to parse complex data structures
-* **Data binding** to sync data sources to the DOM
+* **Data binding** to sync data models to views
 * **Resource loading** for JavaScript, CSS, and images
 * **Breakpoint watching** for efficient media query callbacks
 * **Polyfill support** for HTML5, ES5, SVG, and input placeholders
@@ -221,6 +221,7 @@ You can submit any type of request with a number of callback options.
 Wee.data.request({
 	url: '/login',
 	method: 'post',
+	json: true,
 	data: {
 		username: 'user@weepower.com',
 		password: 'pass123'
@@ -249,7 +250,7 @@ Wee.assets.load({
 	success: function() {
 		// Success logic
 	},
-	failure: function() {
+	error: function() {
 		// Failure logic
 	}
 });

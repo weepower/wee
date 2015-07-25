@@ -7,8 +7,8 @@
 	} catch (e) {
 		Array.prototype.slice = function(start, end) {
 			var len = this.length,
-				i = 0,
-				arr = [];
+				arr = [],
+				i = 0;
 
 			if (this.charAt) {
 				for (; i < len; i++) {
