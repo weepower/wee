@@ -393,17 +393,21 @@
 		 * @param {function} [fn]
 		 */
 		off: function(sel, evt, fn) {
+			var scope = this;
+
 			W.$each(this.$public.bound(sel, evt, fn), function(e) {
-				W._legacy ?
-					e.el.detachEvent('on' + e.evt, e.cb) :
-					e.el.removeEventListener(e.evt, e.cb);
+				if ('on' + e.evt in W._doc) {
+					W._legacy ?
+						e.el.detachEvent('on' + e.evt, e.cb) :
+						e.el.removeEventListener(e.evt, e.cb);
 
-				// Remove object from the bound array
-				var bound = this.$get('evts');
+					// Remove object from the bound array
+					var bound = scope.$get('evts');
 
-				bound.splice(bound.indexOf(e), 1);
-			}, {
-				scope: this
+					bound.splice(bound.indexOf(e), 1);
+				} else if (scope.custom[evt]) {
+					scope.custom[evt][1](e.el, e.cb);
+				}
 			});
 		}
 	});
