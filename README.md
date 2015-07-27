@@ -90,7 +90,7 @@ Becomes...
 }
 ```
 
-##### DOM [→](https://www.weepower.com/style/chain)
+##### DOM [→](https://www.weepower.com/script/chain)
 
 Familiar chainable API and pre-cached [references](https://www.weepower.com/script/#selection) make DOM interaction easy.
 
@@ -102,7 +102,7 @@ Familiar chainable API and pre-cached [references](https://www.weepower.com/scri
 $('ref:element').addClass('--is-active').attr('aria-selected', 'true');
 ```
 
-##### Controllers [→](https://www.weepower.com/style/core)
+##### Controllers [→](https://www.weepower.com/script/core)
 
 Controllers along with the automated build process create well-organized projects.
 
@@ -230,7 +230,7 @@ Wee.data.request({
 });
 ```
 
-##### Asset Loading [→](https://www.weepower.com/style/assets)
+##### Asset Loading [→](https://www.weepower.com/script/assets)
 
 Load what you need on demand to optimize page speed and preserve bandwidth.
 
@@ -264,9 +264,9 @@ Get started using one of these methods:
 
 Wee officially supports the following minimum browser versions:
 
-Internet Explorer  | Chrome | Firefox | Safari | iOS Safari | Android
------------------- | ------ | ------- | ------ | ---------- | -------
-8                  | 30     | 24      | 6.1    | 5.1        | 4.1
+Internet Explorer | Chrome | Firefox | Safari | iOS Safari | Android
+----------------- | ------ | ------- | ------ | ---------- | -------
+8                 | 30     | 24      | 6.1    | 5.1        | 4.1
 
 ## Bugs
 
