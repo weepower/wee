@@ -1976,11 +1976,14 @@
 .circle (@diameter; @crop; ...) when (@crop = true) {
 	overflow: hidden;
 }
-.circle (@diameter; @crop: val; @display: block) when (@display = block) {
-	display: block;
-}
-.circle (@diameter; @crop: val; @display) when (@display = inline) {
-	display: inline-block;
+.circle (@diameter; @crop: val; @display: block) {
+	.check () when (@display = block) {
+		display: block;
+	}
+	.check () when (@display = inline) {
+		display: inline-block;
+	}
+	.check();
 }
 .min-width (@value: @minWidth) when not (@value = false) {
 	.check () when (isunit(@value, '')) {
