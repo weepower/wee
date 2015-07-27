@@ -119,6 +119,10 @@
 								Private = W.$extend(Private, data);
 							}
 
+							// Clone public and private objects
+							Public = W.$extend({}, Public);
+							Private = W.$extend({}, Private);
+
 							// If private object exists expose $private methods
 							if (priv) {
 								/**
@@ -153,7 +157,7 @@
 								Public._construct();
 							}
 
-							return W.$extend({}, Public);
+							return Public;
 						};
 
 						W[name] = new W.fn[name]();
