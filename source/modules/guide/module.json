@@ -6,7 +6,10 @@
 	"author": "Wee",
 	"autoload": false,
 	"style": {
-		"build": "css/screen.less"
+		"build": [
+			"css/variables.less",
+			"css/screen.less"
+		]
 	},
 	"script": {
 		"build": "js/script.js"

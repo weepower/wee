@@ -5,6 +5,9 @@
 body {
 	.background();
 }
+.container {
+	.max-width(100);
+}
 
 
 
@@ -15,31 +18,10 @@ body {
 \*------------------------------------*/
 
 .header {
-	.border(bottom; none);
-	&.\--guide {
-		.background(@gray; 'bg.svg');
-		.background-position(right);
-		.background-size(cover);
-		.spaced();
-	}
+	.align(left);
+	.background-gradient(@colorBlue; @colorBlue; @colorTeal);
+	.spaced(6);
 }
-.logo {
-	.margin(right; 1.4);
-}
-.heading {
-	.align(top);
-	.inline();
-	.lowercase();
-}
-
-
-
-
-
-/*------------------------------------*\
-	# Guide
-\*------------------------------------*/
-
 .jump {
 	.font(@headingFont; 1.2);
 	.margin(top; 1);
@@ -47,7 +29,7 @@ body {
 	&__links {
 		.inline-list(1.4);
 		a {
-			.lightGray();
+			.color(@colorLightBlue);
 			&:hover {
 				.white();
 			}
@@ -62,6 +44,15 @@ body {
 		}
 	}
 }
+
+
+
+
+
+/*------------------------------------*\
+	# Guide
+\*------------------------------------*/
+
 .guide-pattern {
 	.spaced(6);
 	&__title {

@@ -11,12 +11,10 @@ body {
 	.min-height(100%);
 }
 body {
-	.background(@colorBlue; 'bg.svg');
-	.background-position(right);
-	.background-size(cover);
+	.background-gradient(@colorBlue; @colorBlue; @colorTeal);
 }
 .container {
-	.max-width(100);
+	.max-width(64);
 }
 
 
@@ -28,23 +26,16 @@ body {
 \*------------------------------------*/
 
 .header {
+	.align(center);
 	.padding(vertical; 7%);
 }
 .logo {
 	.align(middle);
 	.spaced(1);
-	&:hover {
-		.opacity(90%);
-	}
 	&,
 	img {
-		.inline-block(10.5; 3.5);
+		.inline-block(12);
 	}
-}
-.heading {
-	.font(@headingFont; 2.3; 300);
-	.spaced(0);
-	.white();
 }
 
 
@@ -56,24 +47,16 @@ body {
 \*------------------------------------*/
 
 .footer {
-	.color(@colorLightBlue);
-	.padding(top; 6);
+	.align(center);
 	a {
-		.color(@colorLighterBlue);
+		.color(@colorLightBlue);
 		&:hover {
 			.white();
 		}
 	}
-	&__license,
 	&__links {
 		.font-size(1.3; 1.4em);
-	}
-	&__license {
-		.spaced-block(.8);
-	}
-	&__links {
 		.inline-list(1.2);
-		.spaced(3);
 	}
 }
 
@@ -82,15 +65,26 @@ body {
 
 
 /*------------------------------------*\
-	# Index
+	# Content
 \*------------------------------------*/
 
-.instructions {
-	.color(@colorLightBlue);
-	.font(@headingFont; 1.7; 300);
-	.spaced(3);
+.main {
+	.align(center);
+	p {
+		.color(@colorLightBlue);
+		.font(@headingFont; 1.7; 300; @paragraphLineHeight);
+		code {
+			.background(light; 15%);
+			.color(@colorLightBlue);
+		}
+	}
+}
+.heading {
+	.font(@headingFont; 2.6; 300);
+	.white();
 }
 .nav {
+	.margin(vertical; 6; 10);
 	&__button {
 		.border(@colorMediumBlue);
 		.color(@colorLightBlue);
@@ -112,20 +106,5 @@ body {
 		&:active {
 			.translate(y; 1px);
 		}
-	}
-}
-
-
-
-
-
-/*------------------------------------*\
-	# 404
-\*------------------------------------*/
-
-.not-found {
-	p {
-		.color(@colorMediumBlue);
-		.font(@headingFont; 1.7; 300);
 	}
 }
