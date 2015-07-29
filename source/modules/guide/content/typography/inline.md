@@ -5,7 +5,7 @@ heading: Miscellaneous inline text formatting
 
 ---html|render---
 
-<ul>
+<ul class="unstyled">
 	<li><a href="#">This is a simple link</a></li>
 	<li><strong>Strong defines important text</strong></li>
 	<li><em>The em tag renders as emphasized text</em></li>

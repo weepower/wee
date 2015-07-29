@@ -9,12 +9,12 @@
 	<meta name="description" content="{{description}}">
 
 	<link rel="stylesheet" href="/assets/css/style.min.css">
-	<link rel="stylesheet" href="/assets/css/module.guide.min.css">
+	<link rel="stylesheet" href="/assets/modules/guide/style.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,700">
 
 	<!--[if lt IE 9]>
 	<link rel="stylesheet" href="/assets/css/ie8.min.css">
-	<link rel="stylesheet" href="/assets/css/module.guide.legacy.min.css">
+	<link rel="stylesheet" href="/assets/modules/guide/legacy.min.css">
 	<script src="/assets/js/ie8.min.js"></script>
 	<![endif]-->
 
@@ -27,13 +27,13 @@
 	<header role="banner" class="header">
 		<div class="container">
 			<a href="/" rel="home" class="logo">
-				<img src="/assets/img/logo.svg" alt="Wee Framework">
+				<img src="/assets/img/logo.svg" alt="{{site.name}}">
 			</a>
 
 			<nav role="navigation" class="jump">
 				<ol class="jump__links">
 					{{#site.sections}}
-					<li{{#isActive}} class="is-active"{{/isActive}}>
+					<li{{#isActive}} class="--is-active"{{/isActive}}>
 						<a href="{{target}}">{{name}}</a>
 					</li>
 					{{/site.sections}}

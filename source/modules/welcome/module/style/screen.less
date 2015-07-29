@@ -30,7 +30,6 @@ body {
 	.padding(vertical; 7%);
 }
 .logo {
-	.align(middle);
 	.spaced(1);
 	&,
 	img {
@@ -56,7 +55,7 @@ body {
 	}
 	&__links {
 		.font-size(1.3; 1.4em);
-		.inline-list(1.2);
+		.inline-list(1.4);
 	}
 }
 
@@ -72,9 +71,9 @@ body {
 	.align(center);
 	p {
 		.color(@colorLightBlue);
-		.font(@headingFont; 1.7; 300; @paragraphLineHeight);
+		.font(@headingFont; 1.6; 300);
 		code {
-			.background(light; 15%);
+			.background(light; 10%);
 			.color(@colorLightBlue);
 		}
 	}
@@ -84,14 +83,16 @@ body {
 	.white();
 }
 .nav {
-	.margin(vertical; 6; 10);
+	.margin(vertical; 6);
+	.row(3%);
 	&__button {
-		.border(@colorMediumBlue);
-		.color(@colorLightBlue);
-		.fill();
+		.border(@white);
+		.column(spaced; 1; 2; 3%);
 		.font(@headingFont; 1.2);
+		.padded(0);
 		.spaced(1);
 		.uppercase();
+		.white();
 		&,
 		&:hover,
 		&:focus,
@@ -101,7 +102,8 @@ body {
 		}
 		&:focus,
 		&:hover {
-			.border(@colorLighterBlue);
+			.border(@colorYellow);
+			.color(@colorYellow);
 		}
 		&:active {
 			.translate(y; 1px);

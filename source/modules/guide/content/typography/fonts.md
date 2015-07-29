@@ -2,7 +2,7 @@
 name: Fonts
 ---
 
-<ul>
+<ul class="unstyled">
 	<li class="font --base">Base <span>@baseFont</span></li>
 	<li class="font --heading">Heading <span>@headingFont</span></li>
 	<li class="font --description-title">Description Title <span>@dtFont</span></li>

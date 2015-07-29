@@ -8,6 +8,9 @@ body {
 .container {
 	.max-width(100);
 }
+.unstyled {
+	.unstyled();
+}
 
 
 
@@ -18,8 +21,8 @@ body {
 \*------------------------------------*/
 
 .header {
-	.align(left);
 	.background-gradient(@colorBlue; @colorBlue; @colorTeal);
+	.padding(bottom; 2);
 	.spaced(6);
 }
 .jump {
@@ -27,7 +30,7 @@ body {
 	.margin(top; 1);
 	.uppercase();
 	&__links {
-		.inline-list(1.4);
+		.inline-list(1.8);
 		a {
 			.color(@colorLightBlue);
 			&:hover {
@@ -36,9 +39,9 @@ body {
 		}
 		li {
 			.padding(bottom; .2);
-			&.is-active {
+			&.\--is-active {
 				a {
-					.white();
+					.color(@colorYellow);
 				}
 			}
 		}
@@ -55,11 +58,9 @@ body {
 
 .guide-pattern {
 	.spaced(6);
-	&__title {
-		.spaced(1);
-	}
 	&__heading {
 		.gray();
+		.margin(top; -2);
 	}
 	&__output {
 		.spaced(2);
