@@ -3,13 +3,13 @@
 define({
 	proxyPort: 9010,
 	proxyUrl: 'http://localhost:9010/',
-	excludeInstrumentation: /^(?:bower_components|node_modules)\//,
+	excludeInstrumentation: /^(?:bower_components|node_modules|public)\//,
 	tunnel: 'NullTunnel',
-	loader: {
+	loaderOptions: {
 		packages: [
 			{
 				name: 'Wee',
-				location: 'public/assets/js',
+				location: '/public/assets/js',
 				main: 'script.min.js'
 			}
 		]
@@ -18,7 +18,7 @@ define({
 
 	],
 	suites: [
-		'source/js/tests/unit/example'
+		'/source/js/tests/unit/example'
 	],
 	environments: [
 		{
