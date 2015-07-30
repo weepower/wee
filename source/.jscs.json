@@ -19,6 +19,7 @@
 	"disallowMultipleLineStrings": true,
 	"disallowMultipleSpaces": true,
 	"disallowPaddingNewlinesInBlocks": true,
+	"disallowParenthesesAroundArrowParam": true,
 	"disallowSpaceAfterPrefixUnaryOperators": [
 		"++",
 		"--",
@@ -27,7 +28,9 @@
 		"~"
 	],
 	"disallowSpaceAfterObjectKeys": true,
+	"disallowSpaceBeforeComma": true,
 	"disallowSpaceBeforePostfixUnaryOperators": true,
+	"disallowSpaceBeforeSemicolon": true,
 	"disallowSpacesInAnonymousFunctionExpression": {
 		"beforeOpeningRoundBrace": true
 	},
@@ -76,6 +79,7 @@
 	"requireDotNotation": true,
 	"requireLineBreakAfterVariableAssignment": true,
 	"requireMultipleVarDecl": true,
+	"requireObjectKeysOnNewLine": true,
 	"requireOperatorBeforeLineBreak": true,
 	"requirePaddingNewlinesBeforeKeywords": [
 		"do",
