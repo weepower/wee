@@ -11,10 +11,14 @@ body {
 	.min-height(100%);
 }
 body {
-	.background-gradient(@colorBlue; @colorBlue; @colorTeal);
+	.background(@colorBlue; 'bg.jpg');
+	.background-size(cover);
 }
 .container {
-	.max-width(64);
+	.max-width(100);
+}
+.inner {
+	.max-width(60);
 }
 
 
@@ -26,14 +30,13 @@ body {
 \*------------------------------------*/
 
 .header {
-	.align(center);
-	.padding(vertical; 7%);
+	.padding(vertical; 20%; 1);
 }
 .logo {
 	.spaced(1);
 	&,
 	img {
-		.inline-block(12);
+		.inline-block(11);
 	}
 }
 
@@ -46,7 +49,6 @@ body {
 \*------------------------------------*/
 
 .footer {
-	.align(center);
 	a {
 		.color(@colorLightBlue);
 		&:hover {
@@ -68,26 +70,25 @@ body {
 \*------------------------------------*/
 
 .main {
-	.align(center);
 	p {
 		.color(@colorLightBlue);
 		.font(@headingFont; 1.6; 300);
 		code {
-			.background(light; 10%);
+			.background(light; 15%);
 			.color(@colorLightBlue);
 		}
 	}
 }
 .heading {
-	.font(@headingFont; 2.6; 300);
+	.font(@headingFont; 2.4; 300);
 	.white();
 }
 .nav {
-	.margin(vertical; 6);
-	.row(3%);
+	.row();
+	.spaced(6);
 	&__button {
 		.border(@white);
-		.column(spaced; 1; 2; 3%);
+		.column(spaced; 1; 2);
 		.font(@headingFont; 1.2);
 		.padded(0);
 		.spaced(1);
