@@ -2,8 +2,6 @@
 
 Wee is a lightweight front-end framework for logically building complex, responsive web projects.
 
-[![Code Climate](https://codeclimate.com/github/weepower/wee/badges/gpa.svg)](https://codeclimate.com/github/weepower/wee)
-
 ## Features
 
 Mobile-first CSS framework with reset, base, and Less mixin library ~ *3KB gzipped*
