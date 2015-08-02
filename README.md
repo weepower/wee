@@ -1,4 +1,4 @@
-[![Wee](https://www.weepower.com/share.png?v1)](https://www.weepower.com)
+[![Wee](https://www.weepower.com/repo/banner.jpg?v1)](https://www.weepower.com)
 
 Wee is a lightweight front-end framework for logically building complex, responsive web projects.
 
