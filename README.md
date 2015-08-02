@@ -305,9 +305,9 @@ Get started using one of these methods:
 
 Wee officially supports the following minimum browser versions:
 
-Internet Explorer | Chrome | Firefox | Safari | iOS Safari | Android
------------------ | ------ | ------- | ------ | ---------- | -------
-8                 | 30     | 24      | 6.1    | 5.1        | 4.1
+IE | Edge | Chrome | Firefox | Safari | iOS Safari | Android
+-- | ---- | ------ | ------- | ------ | ---------- | -------
+8  | 0.11 | 30     | 29      | 6.1    | 6.1        | 4.1
 
 ## Bugs
 
