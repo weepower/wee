@@ -9,7 +9,7 @@ define({
 		packages: [
 			{
 				name: 'Wee',
-				location: '/public/assets/js',
+				location: 'public/assets/js',
 				main: 'script.min.js'
 			}
 		]
@@ -18,7 +18,7 @@ define({
 
 	],
 	suites: [
-		'/source/js/tests/unit/example'
+		'source/js/tests/unit/example'
 	],
 	environments: [
 		{
