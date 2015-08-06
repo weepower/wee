@@ -1,6 +1,0 @@
-languages:
-  JavaScript: true
-exclude_paths:
-- "*.min.js"
-- "source/js/polyfill/*.js"
-- "source/js/tests/*"
