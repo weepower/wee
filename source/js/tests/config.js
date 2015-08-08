@@ -14,11 +14,11 @@ define({
 			}
 		]
 	},
-	functionalSuites: [
-
-	],
 	suites: [
 		'source/js/tests/unit/example'
+	],
+	functionalSuites: [
+
 	],
 	environments: [
 		{

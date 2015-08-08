@@ -2,7 +2,7 @@
 
 Wee.fn.make('guide', {
 	/**
-	 * Highlight code and bind code click events
+	 * Highlight code and bind click events
 	 *
 	 * @constructor
 	 */
@@ -28,7 +28,7 @@ Wee.fn.make('guide', {
 	}
 }, {
 	/**
-	 * Load highlight.js assets and highlight all code
+	 * Load highlight.js assets and highlight code
 	 *
 	 * @private
 	 */
@@ -36,7 +36,7 @@ Wee.fn.make('guide', {
 		// Don't load in IE8-
 		if (! Wee._legacy) {
 			Wee.assets.load({
-				root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/',
+				root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/',
 				files: [
 					'highlight.min.js',
 					'styles/vs.min.css'

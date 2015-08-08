@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="/assets/css/ie9.min.css">
 	<script src="/assets/js/ie9.min.js"></script>
 	<![endif]-->
-	</head>
+</head>
 <body>
 	<header role="banner" class="header">
 		<div class="container">
@@ -31,13 +31,13 @@
 			</a>
 
 			<nav role="navigation" class="jump">
-				<ol class="jump__links">
+				<ul class="jump__links">
 					{{#site.sections}}
 					<li{{#isActive}} class="--is-active"{{/isActive}}>
 						<a href="{{target}}">{{name}}</a>
 					</li>
 					{{/site.sections}}
-				</ol>
+				</ul>
 			</nav>
 		</div>
 	</header>

@@ -20,8 +20,13 @@ out/
 
 .bundle
 .idea/
+.komodotools
+.project
 .settings/
 .tern-project
+.tmproj
+*.esproj
+*.komodoproject
 *.sublime-*
 browserstack.js
 codekit-config.json
@@ -38,14 +43,12 @@ prepros.json
 .tmp
 *.diff
 *.err
-*.gem
 *.lock
 *.log
 *.orig
-*.out
-*.pid
+*.rej
+*.swo
 *.swp
-*.tmproj
 *.vi
 error_log
 Thumbs.db

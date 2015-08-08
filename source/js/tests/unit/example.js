@@ -7,19 +7,19 @@ define(function(require) {
 		name: 'Example Suite',
 
 		setup: function() {
-			// Executes before suite starts
+			// Execute before suite starts
 		},
 
 		teardown: function() {
-			// Executes after suite ends
+			// Execute after suite ends
 		},
 
 		beforeEach: function() {
-			// Executes before each test
+			// Execute before each test
 		},
 
 		afterEach: function() {
-			// Executes after each test
+			// Execute after each test
 		},
 
 		'Example Test': function() {

@@ -50,14 +50,12 @@
 			"contentRoot": "content/typography/",
 			"content": [
 				"fonts.md",
-				"paragraph.md",
 				"headings.md",
+				"paragraph.md",
 				"inline.md",
-				"unordered.md",
 				"ordered.md",
+				"unordered.md",
 				"description.md",
-				"blockquote.md",
-				"address.md",
 				"*.md"
 			]
 		}
