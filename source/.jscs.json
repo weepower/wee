@@ -13,13 +13,14 @@
 	"disallowKeywordsOnNewLine": [
 		"else"
 	],
-	"disallowNewlineBeforeBlockStatements": true,
 	"disallowMixedSpacesAndTabs": "smart",
 	"disallowMultipleLineBreaks": true,
 	"disallowMultipleLineStrings": true,
 	"disallowMultipleSpaces": true,
+	"disallowNewlineBeforeBlockStatements": true,
 	"disallowPaddingNewlinesInBlocks": true,
 	"disallowParenthesesAroundArrowParam": true,
+	"disallowSpaceAfterObjectKeys": true,
 	"disallowSpaceAfterPrefixUnaryOperators": [
 		"++",
 		"--",
@@ -27,7 +28,6 @@
 		"-",
 		"~"
 	],
-	"disallowSpaceAfterObjectKeys": true,
 	"disallowSpaceBeforeComma": true,
 	"disallowSpaceBeforePostfixUnaryOperators": true,
 	"disallowSpaceBeforeSemicolon": true,
@@ -38,10 +38,10 @@
 	"disallowSpacesInFunction": {
 		"beforeOpeningRoundBrace": true
 	},
-	"disallowSpacesInFunctionExpression": {
+	"disallowSpacesInFunctionDeclaration": {
 		"beforeOpeningRoundBrace": true
 	},
-	"disallowSpacesInFunctionDeclaration": {
+	"disallowSpacesInFunctionExpression": {
 		"beforeOpeningRoundBrace": true
 	},
 	"disallowSpacesInNamedFunctionExpression": {
@@ -67,13 +67,13 @@
 	"requireCapitalizedConstructors": true,
 	"requireCommaBeforeLineBreak": true,
 	"requireCurlyBraces": [
-		"if",
+		"catch",
+		"do",
 		"else",
 		"for",
-		"while",
-		"do",
+		"if",
 		"try",
-		"catch"
+		"while"
 	],
 	"requireDollarBeforejQueryAssignment": true,
 	"requireDotNotation": true,
@@ -95,29 +95,29 @@
 	"requireSemicolons": true,
 	"requireSpaceAfterBinaryOperators": true,
 	"requireSpaceAfterKeywords": [
+		"case",
+		"catch",
 		"do",
+		"else",
 		"for",
 		"if",
-		"else",
+		"return",
 		"switch",
-		"case",
 		"try",
-		"catch",
+		"typeof",
 		"void",
 		"while",
-		"with",
-		"return",
-		"typeof"
+		"with"
 	],
+	"requireSpaceAfterLineComment": true,
 	"requireSpaceAfterPrefixUnaryOperators": [
 		"!"
 	],
-	"requireSpaceAfterLineComment": true,
 	"requireSpaceBeforeBinaryOperators": true,
 	"requireSpaceBeforeBlockStatements": true,
 	"requireSpaceBeforeKeywords": [
-		"else",
 		"catch",
+		"else",
 		"finally"
 	],
 	"requireSpaceBeforeObjectValues": true,
@@ -144,7 +144,7 @@
 	"validateLineBreaks": "LF",
 	"validateParameterSeparator": ", ",
 	"validateQuoteMarks": {
-		"mark": "'",
-		"escape": true
+		"escape": true,
+		"mark": "'"
 	}
 }
