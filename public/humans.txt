@@ -2,15 +2,15 @@
 	# Team
 #------------------------------------
 
-Wee / hello@weepower.com / twitter.com/weecss
 Caddis / hello@caddis.co / twitter.com/caddisint
+Wee / hello@weepower.com / twitter.com/weecss
 
 
 #------------------------------------
 	# Technology
 #------------------------------------
 
-Standards: HTML5, CSS3, ARIA, Schema
+Standards: ARIA, CSS3, HTML5, Schema
 Components: Wee
 
 __  _  __ ____   ____

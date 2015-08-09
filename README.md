@@ -23,7 +23,7 @@ JavaScript toolset to build scalable, organized client-side codebase ~ *12KB gzi
 * **Data loading** for Ajax and JSON interaction
 * **HTML5 history** helper to create highly dynamic experiences
 * **Template rendering** to parse complex data structures
-* **Data binding** to sync data models to views
+* **Data binding** to sync data models to the DOM
 * **Resource loading** for JavaScript, CSS, and images
 * **Breakpoint watching** for efficient media query callbacks
 * **Polyfill support** for HTML5, ES5, SVG, and input placeholders
