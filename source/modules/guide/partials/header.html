@@ -24,13 +24,13 @@
 	<![endif]-->
 </head>
 <body>
-	<header role="banner" class="header">
+	<header class="header" role="banner">
 		<div class="container">
 			<a href="/" rel="home" class="logo">
 				<img src="/assets/img/logo.svg" alt="{{site.name}}">
 			</a>
 
-			<nav role="navigation" class="jump">
+			<nav class="jump" role="navigation">
 				<ul class="jump__links">
 					{{#site.sections}}
 					<li{{#isActive}} class="--is-active"{{/isActive}}>
@@ -42,4 +42,4 @@
 		</div>
 	</header>
 
-	<main role="main" class="container">
+	<main class="container" role="main">
