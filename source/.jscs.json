@@ -1,5 +1,9 @@
 {
-	"disallowEmptyBlocks": true,
+	"disallowEmptyBlocks": {
+		"allExcept": [
+			"comments"
+		]
+	},
 	"disallowFunctionDeclarations": true,
 	"disallowImplicitTypeConversion": [
 		"binary",
@@ -54,7 +58,9 @@
 	"disallowTrailingComma": true,
 	"disallowTrailingWhitespace": true,
 	"disallowYodaConditions": true,
-	"requireBlocksOnNewline": true,
+	"requireBlocksOnNewline": {
+		"includeComments": true
+	},
 	"requireCamelCaseOrUpperCaseIdentifiers": true,
 	"requireCapitalizedComments": {
 		"allExcept": [
