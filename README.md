@@ -4,7 +4,7 @@ Wee is a lightweight front-end framework for logically building complex, respons
 
 ## Features
 
-Mobile-first CSS framework with reset, base, and Less mixin library ~ *3KB gzipped*
+Mobile-first CSS framework with reset, base, and mixin library ~ *3KB gzipped*
 
 * **Central configuration** for style normalization
 * **Feature toggling** to minimize overhead
@@ -12,7 +12,7 @@ Mobile-first CSS framework with reset, base, and Less mixin library ~ *3KB gzipp
 * **Legacy rules** for IE8 compatibility
 * **Print styling** to generate print-optimized pages
 
-JavaScript toolset to build scalable, organized client-side codebase ~ *12KB gzipped*
+JavaScript toolset to build scalable, organized client logic ~ *12KB gzipped*
 
 * **Foundation** of utilities, helpers, and module structure
 * **Chainable DOM** traversal and manipulation with familiar API
@@ -92,6 +92,16 @@ Becomes...
 }
 ```
 
+##### Core [→](https://www.weepower.com/script/core)
+
+There are a couple dozen useful feaures and utilities in the core script. For instance, applications serve as the foundation for simple one-way client/server data binding.
+
+```javascript
+Wee.app.make({
+	// ...
+});
+```
+
 ##### DOM [→](https://www.weepower.com/script/chain)
 
 Familiar chainable API and pre-cached [references](https://www.weepower.com/script/#selection) make DOM interaction easy.
@@ -106,7 +116,7 @@ $('ref:element').addClass('--is-active').attr('aria-selected', 'true');
 
 ##### Controllers [→](https://www.weepower.com/script/core)
 
-Controllers along with the automated build process create well-organized projects.
+Controllers along with the automated build process create well-organized projects. There are public and private objects with constructors, destructors, and other helpful components.
 
 ```javascript
 Wee.fn.make('controllerName', {
@@ -126,7 +136,7 @@ Wee.fn.make('controllerName', {
 
 ##### Routing [→](https://www.weepower.com/script/routes)
 
-Create independence between markup and script using the powerful routing options.
+Create independence between markup and script using the powerful routing options. There are some helpful built-in filters and custom filters can also also be registered.
 
 ```javascript
 Wee.routes.map({
@@ -148,7 +158,7 @@ Wee.routes.map({
 
 ##### Templating [→](https://www.weepower.com/script/view)
 
-The template parser supports fallbacks, loops, functions, filters, helpers, partials, and more. It also powers the [static site generator](https://www.weepower.com/generator).
+The template parser supports fallbacks, loops, functions, filters, helpers, partials, and more. It also powers the [static site generator](https://www.weepower.com/generator) and application parser.
 
 ```javascript
 var template = 'My name is {{firstName}}{{#lastName|notEmpty}} {{lastName}}{{/lastName}}',
@@ -168,7 +178,7 @@ Becomes...
 
 ##### Breakpoints [→](https://www.weepower.com/script/screen)
 
-Seamlessly combine and trigger breakpoint logic based on configured project media queries.
+Seamlessly combine and trigger breakpoint logic based on configured project media queries. Events can be setup to watch, initially fire, trigger only once, and more.
 
 ```javascript
 Wee.screen.map([
@@ -200,7 +210,7 @@ Wee.screen.map([
 
 ##### Events [→](https://www.weepower.com/script/events)
 
-Create organized interaction on your page with the simple event API.
+Create organized interaction on your page with the simple event API. Custom events can also be registered such as with the core Wee touch events.
 
 ```javascript
 Wee.events.on('ref:element', 'click swipeRight', function(e, el) {
@@ -213,7 +223,7 @@ Wee.events.on('ref:element', 'click swipeRight', function(e, el) {
 
 ##### Requests [→](https://www.weepower.com/script/data)
 
-You can submit any type of request with a number of callback options.
+You can submit any type of request with a number of callback options. There are a number of callback options as well as advanced featured like custom header support and JSONP handling.
 
 ```javascript
 Wee.data.request({
@@ -235,7 +245,7 @@ Wee.data.request({
 
 ##### Asset Loading [→](https://www.weepower.com/script/assets)
 
-Load what you need on demand to optimize page speed and preserve bandwidth.
+Load what you need on demand to optimize page speed and preserve bandwidth. Assets can be grouped and checked against later for advanced usage.
 
 ```javascript
 Wee.assets.load({
@@ -256,14 +266,14 @@ Wee.assets.load({
 
 ##### Animation [→](https://www.weepower.com/script/animation)
 
-Tween attributes and properties with granular control and callback functionality.
+Tween attributes and properties with granular control and callback functionality. Custom easing function can be registered for granular control of the motion.
 
 ```javascript
 Wee.animate.tween('ref:element', {
 	height: 100
 }, {
 	duration: 200,
-	easing: 'linear',
+	ease: 'linear',
 	complete: function() {
 		// Completion logic
 	}
@@ -272,14 +282,14 @@ Wee.animate.tween('ref:element', {
 
 ##### History [→](https://www.weepower.com/script/history)
 
-Create dynamic experiences through partial Ajax loading and the HTML5 History API.
+Create dynamic experiences through partial Ajax loading and the HTML5 History API. With one method call static navigation can transform into a seamless, efficient user flow.
 
 ```javascript
 Wee.history.go({
-	path: 'test.html',
+	path: '/resource/path',
 	scrollTop: '.heading',
 	partials: 'title, .heading, .main',
-	data: {
+	request: {
 		success: function(data, xhr, targets) {
 			// Success logic
 		},
