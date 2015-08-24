@@ -18,7 +18,6 @@
 				"buttons": true,
 				"code": true,
 				"forms": true,
-				"mixins": true,
 				"print": true,
 				"tables": true
 			},
