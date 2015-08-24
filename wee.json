@@ -13,11 +13,15 @@
 
 		},
 		"core": {
-			"buttons": true,
-			"code": true,
-			"forms": true,
-			"print": true,
-			"tables": true,
+			"namespace": false,
+			"features": {
+				"buttons": true,
+				"code": true,
+				"forms": true,
+				"mixins": true,
+				"print": true,
+				"tables": true
+			},
 			"responsive": {
 				"enable": true,
 				"offset": 25,
