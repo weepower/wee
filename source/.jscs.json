@@ -55,6 +55,7 @@
 	"disallowSpacesInsideBrackets": true,
 	"disallowSpacesInsideObjectBrackets": true,
 	"disallowSpacesInsideParentheses": true,
+	"disallowSpacesInsideParenthesizedExpression": true,
 	"disallowTrailingComma": true,
 	"disallowTrailingWhitespace": true,
 	"disallowYodaConditions": true,
