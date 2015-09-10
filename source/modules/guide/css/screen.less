@@ -26,9 +26,7 @@ body {
 	.spaced(6);
 }
 .jump {
-	.font(@headingFont; 1.2);
-	.margin(top; 1);
-	.uppercase();
+	.font(@headingFont; 1.4; 400);
 	&__links {
 		.inline-list(1.8);
 		a {
@@ -41,7 +39,7 @@ body {
 			.padding(bottom; .2);
 			&.\--is-active {
 				a {
-					.color(@colorYellow);
+					.white();
 				}
 			}
 		}

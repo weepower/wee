@@ -6,20 +6,13 @@
 	# General
 \*------------------------------------*/
 
-html,
 body {
-	.min-height(100%);
-}
-body {
-	.background(@colorBlue; 'bg.jpg');
-	.background-size(cover);
+	.background(@colorBlue; 'texture.png');
 	.padding(bottom; @blockMarginBottom);
 }
 .container {
+	.align(center);
 	.max-width(100);
-}
-.inner {
-	.max-width(56);
 }
 
 
@@ -37,7 +30,7 @@ body {
 	.spaced(1);
 	&,
 	img {
-		.inline-block(11);
+		.inline-block(10);
 	}
 	&:hover {
 		.opacity(90%);
@@ -88,15 +81,14 @@ body {
 	.white();
 }
 .nav {
-	.row();
-	.spaced(6);
+	.row(2%);
+	.spaced(3);
 	&__button {
-		.border(@white);
-		.column(spaced; 1; 2);
-		.font(@headingFont; 1.2);
+		.border(light; 70%; 2px);
+		.column(spaced; 1; 2; 2%);
+		.font(@headingFont; 1.4);
 		.padded(0);
 		.spaced(1);
-		.uppercase();
 		.white();
 		&,
 		&:hover,
@@ -107,8 +99,7 @@ body {
 		}
 		&:focus,
 		&:hover {
-			.border(@colorYellow);
-			.color(@colorYellow);
+			.border-color(@white);
 		}
 		&:active {
 			.translate(y; 1px);
