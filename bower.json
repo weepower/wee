@@ -10,7 +10,7 @@
 		"responsive"
 	],
 	"main": [
-		"./public/assets/*",
+		"./public/*",
 		"./source/*",
 		"./Gruntfile.js",
 		"./package.json",

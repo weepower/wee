@@ -1,7 +1,7 @@
 {
 	"name": "Welcome",
 	"version": "1.0.0",
-	"description": "Sample landing page",
+	"description": "Sample framework landing page",
 	"homepage": "https://www.weepower.com",
 	"author": "Wee",
 	"autoload": true,

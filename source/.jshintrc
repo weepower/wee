@@ -21,6 +21,7 @@
 	"predef": {
 		"$": false,
 		"define": false,
+		"JSON": true,
 		"module": false,
 		"require": false,
 		"Wee": false

@@ -1,14 +1,25 @@
+/* global chalk */
+
 (function() {
 	'use strict';
 
 	module.exports = function(config) {
-		console.log('Options');
-		console.log(config.options);
+		var heading = chalk.bold.underline.cyan;
 
-		console.log('Arguments');
-		console.log(config.args);
-
-		console.log('Project');
+		console.log(heading('Project'));
 		console.log(config.project.name);
+		console.log();
+
+		console.log(heading('Options'));
+		console.dir(config.options, {
+			colors: true
+		});
+		console.log();
+
+		console.log(heading('Arguments'));
+		console.dir(config.args, {
+			colors: true
+		});
+		console.log();
 	};
 })();

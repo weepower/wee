@@ -23,10 +23,10 @@ define(function(require) {
 		},
 
 		'Example Test': function() {
-			var type = Wee.$type('Wee');
+			var type = Wee.$type('Example');
 
 			assert.equal(type, 'string',
-				'Type value "string" is a string.'
+				'Type of value "Example" is a string.'
 			);
 		}
 	});

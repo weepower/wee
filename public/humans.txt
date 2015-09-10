@@ -13,8 +13,7 @@ Wee / hello@weepower.com / twitter.com/weecss
 Standards: ARIA, CSS3, HTML5, Schema
 Components: Wee
 
-__  _  __ ____   ____
-\ \/ \/ // __ \_/ __ \
- \     /\  ___/\  ___/
-  \/\_/  \___  >\___  >
-             \/     \/
+\ \        /
+ \ \  \   / _ \  _ \
+  \ \  \ /  __/  __/
+   \_/\_/ \___|\___|
