@@ -853,12 +853,12 @@ var hasAutomationEqualityBug = (function () {
     /* globals window */
     if (typeof window === 'undefined') { return false; }
     for (var k in window) {
-        if (!blacklistedKeys['$' + k] && owns(window, k) && window[k] !== null && typeof window[k] === 'object') {
-            try {
+        try {
+            if (!blacklistedKeys['$' + k] && owns(window, k) && window[k] !== null && typeof window[k] === 'object') {
                 equalsConstructorPrototype(window[k]);
-            } catch (e) {
-                return true;
             }
+        } catch (e) {
+            return true;
         }
     }
     return false;
@@ -943,7 +943,7 @@ var keysWorksWithArguments = $Object.keys && (function () {
 }(1, 2));
 var keysHasArgumentsLengthBug = $Object.keys && (function () {
     var argKeys = $Object.keys(arguments);
-	return arguments.length !== 1 || argKeys.length !== 1 || argKeys[0] !== 1;
+    return arguments.length !== 1 || argKeys.length !== 1 || argKeys[0] !== 1;
 }(1));
 var originalKeys = $Object.keys;
 defineProperties($Object, {
@@ -1099,8 +1099,10 @@ if (doesNotParseY2KNewYear || acceptsInvalidDates || !supportsExtendedYears) {
             } else {
                 date = NativeDate.apply(this, arguments);
             }
-            // Prevent mixups with unfixed Date object
-            defineProperties(date, { constructor: DateShim }, true);
+            if (!isPrimitive(date)) {
+              // Prevent mixups with unfixed Date object
+              defineProperties(date, { constructor: DateShim }, true);
+            }
             return date;
         };
 
