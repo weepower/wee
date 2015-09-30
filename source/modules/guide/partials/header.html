@@ -32,7 +32,7 @@
 
 			<nav class="jump" role="navigation">
 				<ul class="jump__links">
-					{{#site.sections}}
+					{{#site.sections|each}}
 					<li{{#isActive}} class="--is-active"{{/isActive}}>
 						<a href="{{target}}">{{name}}</a>
 					</li>
