@@ -1,20 +1,20 @@
-[![Wee](https://www.weepower.com/repo/banner.jpg?v1)](https://www.weepower.com)
+[![Wee](https://www.weepower.com/repo/logo.svg)](https://www.weepower.com)
 
 Wee is a lightweight front-end framework for logically building complex, responsive web projects.
 
 ## Features
 
-Mobile-first CSS framework with reset, base, and mixin library ~ *3KB gzipped*
+Mobile-first CSS framework with configurable reset and mixin library ~ *3KB gzipped*
 
 * **Central configuration** for style normalization
-* **Feature toggling** to minimize overhead
-* **Structured breakpoints** to keep responsive logic organized
+* **Feature toggling** to minimize build size
+* **Structured breakpoints** to organize responsive logic
 * **Legacy rules** for IE8 compatibility
 * **Print styling** to generate print-optimized pages
 
-JavaScript toolset to build scalable, organized client logic ~ *13KB gzipped*
+JavaScript toolset to build scalable, organized client logic ~ *14KB gzipped*
 
-* **Foundation** of utilities, helpers, and module structure
+* **Foundation** of utilities, helpers, and controller structure
 * **Chainable DOM** traversal and manipulation with familiar API
 * **Animation** methods to tween CSS attributes and properties
 * **Touch support** for directional swipe events
@@ -28,9 +28,9 @@ JavaScript toolset to build scalable, organized client logic ~ *13KB gzipped*
 * **Breakpoint watching** for efficient media query callbacks
 * **Polyfill support** for HTML5, ES5, SVG, and input placeholders
 
-JSON-configured Grunt process to compile, optimize, and minify your project
+JSON-configured build process to compile, optimize, and minify your project
 
-* **Built-in server** for static development
+* **Built-in server** for local static development
 * **Live reloading** of assets and markup
 * **Ghost mode** to mirror actions across multiple browsers
 * **Static site generator** perfect for living style guides
@@ -66,7 +66,7 @@ Improved organization and readability using [Less](http://lesscss.org) along wit
 		&:hover {
 			.background(light; 5%; @brandColor);
 		}
-		&./--bordered {
+		&.\--bordered {
 			.border(@brandColor);
 		}
 	}
@@ -87,31 +87,45 @@ Becomes...
 	background-color: #167da3;
 	background-color: rgba(255, 255, 255, .05);
 }
-.nav__button./--bordered {
+.nav__button.--bordered {
 	border: 1px solid #167da3;
 }
 ```
 
 ##### Core [→](https://www.weepower.com/script/core)
 
-There are a couple dozen useful feaures and utilities in the core script. For instance, applications serve as the foundation for simple one-way client/server data binding.
+There are a couple dozen useful features and utilities in the core script. For instance, you can handle environment detection, loop through selections, serialize objects, and observe data models.
 
 ```javascript
-Wee.app.make({
-	// ...
+$.env({
+	prod: 'www.domain.com',
+	test: 'testing.domain.com'
+}, 'local');
+
+$.env(); // "local"
+```
+
+```javascript
+$.observe('user.status', function(val, type) {
+	if (val == 'active') {
+		// Trigger logic
+	}
 });
+
+$.set('user.status', 'active');
 ```
 
 ##### DOM [→](https://www.weepower.com/script/chain)
 
-Familiar chainable API and pre-cached [references](https://www.weepower.com/script/#selection) make DOM interaction easy.
+Familiar chainable API and pre-cached [references](https://www.weepower.com/script/#selection) make DOM interaction quick and easy.
 
 ```html
 <button data-ref="element">Button</button>
 ```
 
 ```javascript
-$('ref:element').addClass('--is-active').attr('aria-selected', 'true');
+$('ref:element').addClass('--is-active')
+	.attr('aria-selected', 'true');
 ```
 
 ##### Controllers [→](https://www.weepower.com/script/core)
@@ -124,10 +138,20 @@ Wee.fn.make('controllerName', {
 		this.publicVariable = 'Public Variable';
 		this.init();
 	},
+	
+	/**
+	 * Call a private method with an argument
+	 */
 	init: function() {
 		this.$private.privateMethod('varName');
 	}
 }, {
+	/**
+	 * Return the provided argument
+	 *
+	 * @param {string} key
+	 * @returns {string}
+	 */
 	privateMethod: function(key) {
 		return key;
 	}
@@ -140,7 +164,7 @@ Create independence between markup and script using the powerful routing options
 
 ```javascript
 Wee.routes.map({
-	'$any': 'common', // Call the init method of the common controller
+	'$any': 'common', // Fire the init method of the common controller
 	'$root': 'home',
 	'category': {
 		'$root': 'controllerName:publicMethod',
@@ -158,22 +182,32 @@ Wee.routes.map({
 
 ##### Templating [→](https://www.weepower.com/script/view)
 
-The template parser supports fallbacks, loops, functions, filters, helpers, partials, and more. It also powers the [static site generator](https://www.weepower.com/generator) and application parser.
+The template parser supports fallbacks, loops, functions, filters, helpers, partials, and more. It also powers the [static site generator](https://www.weepower.com/generator) and data-binding apps.
 
 ```javascript
-var template = 'My name is {{firstName}}{{#lastName|notEmpty}} {{lastName}}{{/lastName}}',
-	data = {
-		firstName: 'John',
-		lastName: 'Smith'
-	};
-
-Wee.view.render(template, data);
+Wee.view.render('My name is {{firstName}}{{#lastName|notEmpty}} {{lastName}}{{/lastName}}', {
+	firstName: 'John',
+	lastName: 'Smith'
+});
 ```
 
 Becomes...
 
 ```javascript
 "My name is John Smith"
+```
+
+##### Apps [→](https://www.weepower.com/script/view)
+
+Wee includes a powerful application framework for one-way data-binding. Simply call into one of the many data methods to manipulate your model and watch the DOM update automatically.
+
+```javascript
+Wee.app.make({
+	view: 'ref:application',
+	model: {
+		key: 'value'
+	}
+});
 ```
 
 ##### Breakpoints [→](https://www.weepower.com/script/screen)
@@ -185,7 +219,7 @@ Wee.screen.map([
 	{
 		size: 1,
 		callback: [
-			'common:mobile', // Call the mobile method of the common controller
+			'common:mobile', // Fire the mobile method of the common controller
 			'common:smallScreen'
 		]
 	},
@@ -217,13 +251,14 @@ Wee.events.on('ref:element', 'click swipeRight', function(e, el) {
 	// Event logic
 	e.preventDefault();
 }, {
+	delegate: '.selector',
 	once: true
 });
 ```
 
 ##### Requests [→](https://www.weepower.com/script/data)
 
-You can submit any type of request with a number of callback options. There are a number of callback options as well as advanced featured like custom header support and JSONP handling.
+Submit any type of request with a number of callback options. Supports advanced features like custom headers and JSONP handling.
 
 ```javascript
 Wee.data.request({
@@ -238,7 +273,7 @@ Wee.data.request({
 		// Success logic
 	},
 	error: function(data) {
-	   // Failure logic
+		// Failure logic
 	}
 });
 ```
@@ -251,9 +286,9 @@ Load what you need on demand to optimize page speed and preserve bandwidth. Asse
 Wee.assets.load({
 	root: 'https://cdn.weepower.com/assets/alert/',
 	files: [
-		'script.js',
+		'close.png',
 		'style.css',
-		'close.png'
+		'script.js'
 	],
 	success: function() {
 		// Success logic
@@ -282,13 +317,13 @@ Wee.animate.tween('ref:element', {
 
 ##### History [→](https://www.weepower.com/script/history)
 
-Create dynamic experiences through partial Ajax loading and the HTML5 History API. With one method call static navigation can transform into a seamless, efficient user flow.
+Create dynamic experiences through partial Ajax loading and the HTML5 History API. With one method static navigation can transform into a seamless, efficient user flow.
 
 ```javascript
 Wee.history.go({
 	path: '/resource/path',
 	scrollTop: '.heading',
-	partials: 'title, .heading, .main',
+	partials: 'title, main, .heading',
 	request: {
 		success: function(data, xhr, targets) {
 			// Success logic
@@ -307,7 +342,9 @@ Get started using one of these methods:
 * [Download the latest release](https://github.com/weepower/wee/archive/master.zip) or
 * Clone the repository from `git clone git://github.com/weepower/wee.git`
 
-*Node.js 0.11.14+ and the Grunt CLI are required for the [build process](https://www.weepower.com/build/#setup).*
+Then run `npm install` from the root of your project followed by `node wee run:static`.
+
+*Node.js 4.1.1+ and the Grunt CLI are required for the [build process](https://www.weepower.com/build/#setup).*
 
 ## Compatibility
 
