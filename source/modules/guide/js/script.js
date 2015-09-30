@@ -36,7 +36,7 @@ Wee.fn.make('guide', {
 		// Don't load in IE8-
 		if (! Wee._legacy) {
 			Wee.assets.load({
-				root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/',
+				root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/',
 				files: [
 					'highlight.min.js',
 					'styles/vs.min.css'
