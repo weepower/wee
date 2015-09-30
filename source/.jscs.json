@@ -58,6 +58,7 @@
 	"disallowSpacesInsideParenthesizedExpression": true,
 	"disallowTrailingComma": true,
 	"disallowTrailingWhitespace": true,
+	"disallowUnusedParams": true,
 	"disallowYodaConditions": true,
 	"requireBlocksOnNewline": {
 		"includeComments": true
@@ -65,10 +66,7 @@
 	"requireCamelCaseOrUpperCaseIdentifiers": true,
 	"requireCapitalizedComments": {
 		"allExcept": [
-			"exported",
-			"falls",
-			"global",
-			"jshint"
+			"falls"
 		]
 	},
 	"requireCapitalizedConstructors": true,
@@ -146,6 +144,9 @@
 	"validateAlignedFunctionParameters": {
 		"lineBreakAfterOpeningBraces": true,
 		"lineBreakBeforeClosingBraces": true
+	},
+	"validateCommentPosition": {
+		"position": "above"
 	},
 	"validateIndentation": "\t",
 	"validateLineBreaks": "LF",
