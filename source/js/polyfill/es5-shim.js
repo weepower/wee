@@ -396,7 +396,7 @@ defineProperties(ArrayPrototype, {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
         var i = -1;
-        var length = self.length >>> 0;
+        var length = ES.ToUint32(self.length);
         var T;
         if (arguments.length > 1) {
           T = arguments[1];
@@ -428,7 +428,7 @@ defineProperties(ArrayPrototype, {
     map: function map(callbackfn/*, thisArg*/) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
-        var length = self.length >>> 0;
+        var length = ES.ToUint32(self.length);
         var result = $Array(length);
         var T;
         if (arguments.length > 1) {
@@ -460,7 +460,7 @@ defineProperties(ArrayPrototype, {
     filter: function filter(callbackfn /*, thisArg*/) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
-        var length = self.length >>> 0;
+        var length = ES.ToUint32(self.length);
         var result = [];
         var value;
         var T;
@@ -492,7 +492,7 @@ defineProperties(ArrayPrototype, {
     every: function every(callbackfn /*, thisArg*/) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
-        var length = self.length >>> 0;
+        var length = ES.ToUint32(self.length);
         var T;
         if (arguments.length > 1) {
             T = arguments[1];
@@ -519,7 +519,7 @@ defineProperties(ArrayPrototype, {
     some: function some(callbackfn/*, thisArg */) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
-        var length = self.length >>> 0;
+        var length = ES.ToUint32(self.length);
         var T;
         if (arguments.length > 1) {
             T = arguments[1];
@@ -550,7 +550,7 @@ defineProperties(ArrayPrototype, {
     reduce: function reduce(callbackfn /*, initialValue*/) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
-        var length = self.length >>> 0;
+        var length = ES.ToUint32(self.length);
 
         // If no callback function or if callback is not a callable function
         if (!isCallable(callbackfn)) {
@@ -601,7 +601,7 @@ defineProperties(ArrayPrototype, {
     reduceRight: function reduceRight(callbackfn/*, initial*/) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
-        var length = self.length >>> 0;
+        var length = ES.ToUint32(self.length);
 
         // If no callback function or if callback is not a callable function
         if (!isCallable(callbackfn)) {
@@ -652,7 +652,7 @@ var hasFirefox2IndexOfBug = ArrayPrototype.indexOf && [0, 1].indexOf(1, 2) !== -
 defineProperties(ArrayPrototype, {
     indexOf: function indexOf(searchElement /*, fromIndex */) {
         var self = splitString && isString(this) ? strSplit(this, '') : ES.ToObject(this);
-        var length = self.length >>> 0;
+        var length = ES.ToUint32(self.length);
 
         if (length === 0) {
             return -1;
@@ -681,7 +681,7 @@ var hasFirefox2LastIndexOfBug = ArrayPrototype.lastIndexOf && [0, 1].lastIndexOf
 defineProperties(ArrayPrototype, {
     lastIndexOf: function lastIndexOf(searchElement /*, fromIndex */) {
         var self = splitString && isString(this) ? strSplit(this, '') : ES.ToObject(this);
-        var length = self.length >>> 0;
+        var length = ES.ToUint32(self.length);
 
         if (length === 0) {
             return -1;
@@ -1185,19 +1185,14 @@ if (doesNotParseY2KNewYear || acceptsInvalidDates || !supportsExtendedYears) {
                     hourOffset = $Number(match[10] || 0),
                     minuteOffset = $Number(match[11] || 0),
                     result;
+                var hasMinutesOrSecondsOrMilliseconds = minute > 0 || second > 0 || millisecond > 0;
                 if (
-                    hour < (
-                        minute > 0 || second > 0 || millisecond > 0 ?
-                        24 : 25
-                    ) &&
+                    hour < (hasMinutesOrSecondsOrMilliseconds ? 24 : 25) &&
                     minute < 60 && second < 60 && millisecond < 1000 &&
                     month > -1 && month < 12 && hourOffset < 24 &&
                     minuteOffset < 60 && // detect invalid offsets
                     day > -1 &&
-                    day < (
-                        dayFromMonth(year, month + 1) -
-                        dayFromMonth(year, month)
-                    )
+                    day < (dayFromMonth(year, month + 1) - dayFromMonth(year, month))
                 ) {
                     result = (
                         (dayFromMonth(year, month) + day) * 24 +
@@ -1419,6 +1414,7 @@ if (
 ) {
     (function () {
         var compliantExecNpcg = typeof (/()??/).exec('')[1] === 'undefined'; // NPCG: nonparticipating capturing group
+        var maxSafe32BitInt = Math.pow(2, 32) - 1;
 
         StringPrototype.split = function (separator, limit) {
             var string = this;
@@ -1446,15 +1442,13 @@ if (
                 separator2 = new RegExp('^' + separatorCopy.source + '$(?!\\s)', flags);
             }
             /* Values for `limit`, per the spec:
-             * If undefined: 4294967295 // Math.pow(2, 32) - 1
+             * If undefined: 4294967295 // maxSafe32BitInt
              * If 0, Infinity, or NaN: 0
              * If positive number: limit = Math.floor(limit); if (limit > 4294967295) limit -= 4294967296;
              * If negative number: 4294967296 - Math.floor(Math.abs(limit))
              * If other: Type-convert, then use the above rules
              */
-            var splitLimit = typeof limit === 'undefined' ?
-                -1 >>> 0 : // Math.pow(2, 32) - 1
-                ES.ToUint32(limit);
+            var splitLimit = typeof limit === 'undefined' ? maxSafe32BitInt : ES.ToUint32(limit);
             match = separatorCopy.exec(string);
             while (match) {
                 // `separatorCopy.lastIndex` is not reliable cross-browser
