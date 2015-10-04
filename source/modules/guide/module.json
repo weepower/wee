@@ -5,15 +5,6 @@
 	"homepage": "https://www.weepower.com",
 	"author": "Wee",
 	"autoload": false,
-	"style": {
-		"build": [
-			"css/variables.less",
-			"css/screen.less"
-		]
-	},
-	"script": {
-		"build": "js/script.js"
-	},
 	"dependencies": {
 		"wee": "^3.0.0"
 	}

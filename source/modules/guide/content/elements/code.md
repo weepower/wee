@@ -4,7 +4,7 @@ name: Code
 
 A <code>&lt;code&gt;</code> element wrapped in a <code>&lt;pre&gt;</code> element is used to generate code example blocks.
 
----html|render---
+---HTML|render---
 
 <pre><code class="nohighlight">&lt;figure&gt;
 	&lt;img src=&quot;//placehold.it/800x400&quot; alt=&quot;Figure Image&quot;&gt;

@@ -21,16 +21,15 @@ body {
 \*------------------------------------*/
 
 .header {
-	.background(@colorBlue);
-	.padding(vertical; 5%; 2);
-	.spaced(6);
+	.background(@primary);
+	.padding(vertical; 8%; 2);
 }
-.jump {
+.sections {
 	.font(@headingFont; 1.4; 400);
 	&__links {
 		.inline-list(1.8);
 		a {
-			.color(@colorLightBlue);
+			.color(@primaryLight);
 			&:hover {
 				.white();
 			}
@@ -55,46 +54,43 @@ body {
 \*------------------------------------*/
 
 .guide-pattern {
-	.spaced(6);
+	.margin(vertical; 4);
+	&__title {
+		.color(@primary);
+		.font(@headingFont; 2.2);
+		.spaced(0);
+	}
 	&__heading {
+		.font-size(1.4);
 		.gray();
-		.margin(top; -2);
+		.spaced(0);
 	}
 	&__output {
-		.spaced(2);
-	}
-	&__input {
-		.padding(0);
-		.spaced(1);
+		.margin(vertical; 2);
 	}
 	&__toggle {
-		.border(@lighterGray);
+		.cursor();
+		.darkGray();
 		.fill();
 		.font(@headingFont; 1.3);
-		.gray();
-		.uppercase();
-		&,
-		&:hover,
-		&:active {
-			.background(transparent);
-		}
+		.padding(bottom; 1);
+		.user-select();
 		&:hover {
-			.darkGray();
+			.darkerGray();
 		}
 		&:active {
 			.darkestGray();
 		}
-		&.\--is-active {
-			.border(bottom; none);
-			.rounded(bottom; 0);
-		}
+	}
+	&__input {
+		.padding(0);
+		.spaced(0);
 	}
 }
-code.hljs {
-	.border(@lighterGray);
-	.border(top; none);
-	.padding(@codeBlockPaddingVertical; @codeBlockPaddingHorizontal);
-	.rounded(top; 0);
+code {
+	&.hljs {
+		.padding(@codeBlockPaddingVertical; @codeBlockPaddingHorizontal);
+	}
 }
 
 
@@ -107,8 +103,6 @@ code.hljs {
 
 .resolution {
 	&:after {
-		.font(@baseFont; @baseFontSize);
-		.font-weight(normal);
 		.gray();
 		.margin(left; 2);
 	}
@@ -147,6 +141,7 @@ code.hljs {
 		}
 	}
 }
+
 .colors {
 	.max-width(80);
 }
@@ -158,11 +153,10 @@ code.hljs {
 	.margin(right; 1);
 	.spaced(2);
 	&:before {
-		.black();
 		.block();
+		.color();
 		.height(4);
 		.line-height(40px);
-		.rounded(2);
 	}
 	&.\--white {
 		&:before {
@@ -236,8 +230,6 @@ code.hljs {
 
 .font {
 	&:after {
-		.font(@baseFont);
-		.font-weight(normal);
 		.gray();
 		.margin(left; 2);
 	}
@@ -247,7 +239,7 @@ code.hljs {
 	}
 	&.\--base {
 		span {
-			.font(@baseFont);
+			.font();
 		}
 		&:after {
 			.content(@baseFont);
@@ -342,6 +334,7 @@ code.hljs {
 		}
 	}
 }
+
 .headings {
 	h1,
 	h2,

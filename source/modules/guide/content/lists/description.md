@@ -2,7 +2,7 @@
 name: Description List
 ---
 
----html|render---
+---HTML|render---
 
 <dl>
 	<dt>Lorem ipsum dolor</dt>

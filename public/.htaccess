@@ -64,7 +64,7 @@ ErrorDocument 404 /404.html
 #RewriteCond %{HTTP_HOST} ^weepower\.com$ [NC]
 #RewriteRule ^(.*)$ http://www.weepower.com/$1 [R=301,L]
 
-# Remove www (don't use both force and remove)
+# Remove www (use either force or remove)
 #RewriteCond %{HTTP_HOST} !^.weepower\.com$ [NC]
 #RewriteRule ^(.*)$ http://weepower.com/$1 [R=301,L]
 

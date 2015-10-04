@@ -2,7 +2,7 @@
 name: Table
 ---
 
----html|render---
+---HTML|render---
 
 <table itemscope itemtype="http://schema.org/Table">
 	<caption itemprop="about">Caption ipsum dolor sit amet</caption>

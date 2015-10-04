@@ -43,6 +43,12 @@
 			"target": "forms.html",
 			"content": "content/forms/*.md"
 		},
+		"lists": {
+			"name": "Lists",
+			"template": "default",
+			"target": "lists.html",
+			"content": "content/lists/*.md"
+		},
 		"typography": {
 			"name": "Typography",
 			"template": "default",

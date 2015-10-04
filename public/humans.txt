@@ -7,11 +7,11 @@ Wee / hello@weepower.com / twitter.com/weecss
 
 
 #------------------------------------
-	# Technology
+	# Components
 #------------------------------------
 
 Standards: ARIA, CSS3, HTML5, Schema
-Components: Wee
+Framework: Wee
 
 \ \        /
  \ \  \   / _ \  _ \

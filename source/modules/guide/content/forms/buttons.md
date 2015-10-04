@@ -2,7 +2,7 @@
 name: Buttons
 ---
 
----html|render---
+---HTML|render---
 
 <button>Standard</button>
 <button class="button-colored">Colored</button>

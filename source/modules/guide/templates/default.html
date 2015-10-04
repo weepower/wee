@@ -1,31 +1,32 @@
 {{> header}}
 
-{{#content|each}}
+{{ #content|each }}
 <div class="guide-pattern">
-	<h3 class="guide-pattern__title">{{name}}</h3>
-	{{#heading}}
-	<p class="guide-pattern__heading">{{heading}}</p>
-	{{/heading}}
+	<h3 class="guide-pattern__title">{{ name }}</h3>
 
-	<div class="guide-pattern__output {{class}}">{{output|raw}}</div>
+	{{ #heading }}
+	<p class="guide-pattern__heading">{{ . }}</p>
+	{{ /heading }}
 
-	{{#blocks}}
-		{{#name|not(content)}}
-		<div class="button guide-pattern__toggle"
-			aria-controls="{{../sourceName}}-code"
-			aria-expanded="false"
-			data-ref="toggle"
-			data-lang="{{lang||'html'}}"
-		>
-			&lt;{{lang||'html'}}/&gt;
-		</div>
-		<pre class="guide-pattern__input js-hide"
-			id="{{../sourceName}}-code"
-			aria-hidden="true"
-			data-ref="code"><code class="{{lang||'html'}}">{{input}}</code></pre>
-		{{/name}}
-	{{/blocks}}
+	<div class="guide-pattern__output {{ class }}">{{ output|raw }}</div>
+
+	{{ #blocks|each }}
+		{{ #name|not('content') }}
+			<div class="guide-pattern__toggle"
+				aria-controls="{{ ../sourceName }}-code"
+				aria-expanded="false"
+				data-ref="toggle"
+				data-lang="{{ lang||'HTML' }}"
+			>
+				View {{ lang||'HTML' }}
+			</div>
+			<pre class="guide-pattern__input js-hide"
+				id="{{ ../sourceName }}-code"
+				aria-hidden="true"
+				data-ref="code"><code class="{{ lang||'HTML' }}">{{ input }}</code></pre>
+		{{ /name }}
+	{{ /blocks }}
 </div>
-{{/content}}
+{{ /content }}
 
 {{> footer}}

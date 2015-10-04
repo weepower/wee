@@ -3,7 +3,7 @@ name: Inline
 heading: Miscellaneous inline text formatting
 ---
 
----html|render---
+---HTML|render---
 
 <ul class="unstyled">
 	<li><a href="#">This is a simple link</a></li>

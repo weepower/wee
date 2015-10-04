@@ -1,17 +1,12 @@
-// Welcome Module (weepower.com)
-// Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
-// DO NOT MODIFY
-
 /*------------------------------------*\
 	# General
 \*------------------------------------*/
 
 body {
-	.background(@colorBlue; 'texture.png');
+	.background(@primary);
 	.padding(bottom; @blockMarginBottom);
 }
 .container {
-	.align(center);
 	.max-width(100);
 }
 
@@ -24,16 +19,13 @@ body {
 \*------------------------------------*/
 
 .header {
-	.padding(vertical; 20%; 1);
+	.padding(top; 20%);
 }
 .logo {
+	.inline-block(10);
 	.spaced(1);
-	&,
-	img {
-		.inline-block(10);
-	}
-	&:hover {
-		.opacity(90%);
+	&__img {
+		.width(10);
 	}
 }
 
@@ -47,14 +39,14 @@ body {
 
 .footer {
 	a {
-		.color(@colorLightBlue);
+		.color(@primaryLight);
 		&:hover {
 			.white();
 		}
 	}
 	&__links {
-		.font-size(1.3; 1.4em);
-		.inline-list(1.4);
+		.font(@headingFont; 1.4; 400);
+		.inline-list(1);
 	}
 }
 
@@ -66,43 +58,82 @@ body {
 	# Content
 \*------------------------------------*/
 
-.main {
-	p {
-		.color(@colorLightBlue);
-		.font(@headingFont; 1.6; 300);
-		code {
-			.background(light; 15%);
-			.color(@colorLightBlue);
-		}
-	}
-}
 .heading {
 	.font(@headingFont; 2.4; 300);
 	.white();
 }
 .nav {
 	.row(2%);
-	.spaced(3);
+	.spaced(2);
 	&__button {
-		.border(light; 70%; 2px);
+		.background(@primaryLight);
+		.color(@primary);
 		.column(spaced; 1; 2; 2%);
 		.font(@headingFont; 1.4);
 		.padded(0);
 		.spaced(1);
-		.white();
-		&,
-		&:hover,
-		&:focus,
-		&:active {
-			.background(transparent);
-			.outline(none);
-		}
-		&:focus,
 		&:hover {
-			.border-color(@white);
+			.background();
+			.color(@primary);
 		}
 		&:active {
 			.translate(y; 1px);
 		}
+	}
+}
+.copy {
+	.color(@primaryLight);
+	.font(@headingFont; 1.6; 300);
+	code {
+		.background(light; 15%);
+		.color(@primaryLight);
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Tasks
+\*------------------------------------*/
+
+.todo {
+	.spaced(5);
+	.unstyled();
+	&__item {
+		.relative();
+		.white();
+		&.\--is-done {
+			.line-through();
+			.todo__toggle {
+				&:after {
+					.content('\2714');
+					.opaque();
+				}
+			}
+		}
+	}
+	&__toggle {
+		.absolute();
+		.cursor();
+		.user-select();
+		&:after {
+			.align(center);
+			.border(@white);
+			.circle(3);
+			.content();
+			.opacity(50%);
+		}
+		&:hover {
+			&:after {
+				.opacity(70%);
+			}
+		}
+	}
+	&__label {
+		.block();
+		.font(@headingFont; 1.8; 300; 1.3);
+		.padding(.3; false; 1.2; 4.4);
 	}
 }

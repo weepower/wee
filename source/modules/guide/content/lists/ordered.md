@@ -2,7 +2,7 @@
 name: Ordered List
 ---
 
----html|render---
+---HTML|render---
 
 <ol>
 	<li>Lorem ipsum dolor

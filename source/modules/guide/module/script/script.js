@@ -34,12 +34,12 @@ Wee.fn.make('guide', {
 	 */
 	highlightCode: function() {
 		// Don't load in IE8-
-		if (! Wee._legacy) {
+		if (! $._legacy) {
 			Wee.assets.load({
 				root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/',
 				files: [
 					'highlight.min.js',
-					'styles/vs.min.css'
+					'styles/github.min.css'
 				],
 				success: function() {
 					hljs.initHighlightingOnLoad();
@@ -55,8 +55,8 @@ Wee.fn.make('guide', {
 	 * @param {HTMLElement} el - target code
 	 */
 	selectCode: function(el) {
-		var range = Wee._doc.createRange(),
-			sel = Wee._win.getSelection();
+		var range = $._doc.createRange(),
+			sel = $._win.getSelection();
 
 		range.selectNodeContents(el);
 
@@ -72,20 +72,18 @@ Wee.fn.make('guide', {
 	 */
 	toggleCode: function(el) {
 		var $el = $(el),
-			activeClass = '--is-active',
+			lang = $el.data('lang'),
 			ariaExpanded = 'aria-expanded',
 			ariaHidden = 'aria-hidden';
 
-		if ($el.attr(ariaExpanded) != 'false') {
-			$el.removeClass(activeClass)
-				.text('<' + $el.data('lang') + '/>')
+		if ($el.attr(ariaExpanded) !== 'false') {
+			$el.text('View ' + lang)
 				.attr(ariaExpanded, 'false')
 				.next()
 				.attr(ariaHidden, 'true')
 				.hide();
 		} else {
-			$el.addClass(activeClass)
-				.text('x')
+			$el.text('Hide ' + lang)
 				.attr(ariaExpanded, 'true')
 				.next()
 				.attr(ariaHidden, 'false')

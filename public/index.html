@@ -39,19 +39,19 @@
 		<div class="inner">
 			<header class="header" role="banner">
 				<a href="/" rel="home" class="logo">
-					<img src="/assets/img/logo.svg" alt="Wee Framework">
+					<img src="/assets/img/logo.svg" alt="Wee Framework" class="logo__img">
 				</a>
 			</header>
 
-			<main class="main" role="main">
+			<main role="main">
 				<h1 class="heading">Blueprint for modern web development</h1>
 
-				<nav class="nav" role="navigation">
+				<nav class="nav" role="navigation" data-ref="nav">
 					<a href="https://www.weepower.com/start" class="button nav__button">Documentation</a>
 					<a href="/guide" class="button nav__button">Style guide</a>
 				</nav>
 
-				<p>Running <code>node wee reset</code> will reset this project by deleting the bower.json, LICENSE, README.md, and Welcome module files.</p>
+				<p class="copy">Running <code>node wee reset</code> will reset this project by deleting the bower.json, LICENSE, README.md, and Welcome module files.</p>
 			</main>
 
 			<footer class="footer" role="contentinfo">
@@ -67,6 +67,18 @@
 			</footer>
 		</div>
 	</div>
+
+	<script type="text/wee" data-ref="template">
+		<ul class="todo" data-ref="todo">
+			{{ #todo|each }}
+				<li class="todo__item{{ #done }} --is-done{{ /done }}">
+					<div class="todo__toggle" data-ref="toggle" data-id="{{ # }}"></div>
+					<span class="todo__label">{{ label }}</span>
+				</li>
+			{{ /todo }}
+		</ul>
+	</script>
+
 	<script src="/assets/js/script.min.js"></script>
 </body>
 </html>

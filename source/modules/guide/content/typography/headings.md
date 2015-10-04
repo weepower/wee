@@ -4,7 +4,7 @@ heading: Headings establish a semantic hierarchy of importance
 class: headings
 ---
 
----html|render---
+---HTML|render---
 
 <h1>Heading <small>.h1</small></h1>
 <h2>Heading <small>.h2</small></h2>
