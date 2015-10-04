@@ -123,8 +123,8 @@
 		},
 		"tasks": {
 			"local": {
-				"https": false,
-				"proxy": "http://wee.dev"
+				"https": true,
+				"proxy": "https://wee.dev"
 			},
 			"static": {
 				"https": true
