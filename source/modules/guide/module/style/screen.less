@@ -98,7 +98,7 @@ code {
 
 
 /*------------------------------------*\
-	# General
+	# Breakpoints
 \*------------------------------------*/
 
 .resolution {
@@ -142,6 +142,14 @@ code {
 	}
 }
 
+
+
+
+
+/*------------------------------------*\
+	# Colors
+\*------------------------------------*/
+
 .colors {
 	.max-width(80);
 }
@@ -157,6 +165,27 @@ code {
 		.color();
 		.height(4);
 		.line-height(40px);
+	}
+	&.\--primary {
+		&:before {
+			.background(@primary);
+			.content(@primary);
+			.white();
+		}
+	}
+	&.\--secondary {
+		&:before {
+			.background(@secondary);
+			.content(@secondary);
+			.white();
+		}
+	}
+	&.\--tertiary {
+		&:before {
+			.background(@tertiary);
+			.content(@tertiary);
+			.white();
+		}
 	}
 	&.\--white {
 		&:before {
@@ -334,6 +363,14 @@ code {
 		}
 	}
 }
+
+
+
+
+
+/*------------------------------------*\
+	# Headings
+\*------------------------------------*/
 
 .headings {
 	h1,
