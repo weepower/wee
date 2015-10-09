@@ -99,6 +99,7 @@
 	"requireParenthesesAroundIIFE": true,
 	"requireSemicolons": true,
 	"requireSpaceAfterBinaryOperators": true,
+	"requireSpaceAfterComma": true,
 	"requireSpaceAfterKeywords": [
 		"case",
 		"catch",
