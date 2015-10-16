@@ -100,7 +100,7 @@ There are a couple dozen useful features and utilities in the core script. For i
 $.env({
 	prod: 'www.domain.com',
 	test: 'testing.domain.com'
-}, 'local');
+});
 
 $.env(); // "local"
 ```
@@ -182,7 +182,7 @@ Wee.routes.map({
 
 ##### Templating [→](https://www.weepower.com/script/view)
 
-The template parser supports fallbacks, loops, functions, filters, helpers, partials, and more. It also powers the [static site generator](https://www.weepower.com/generator) and data-binding apps.
+The template parser supports fallbacks, loops, functions, helpers, partials, and more. It also powers the [static site generator](https://www.weepower.com/generator) and data-binding apps.
 
 ```javascript
 Wee.view.render('My name is {{firstName}}{{#lastName|notEmpty}} {{lastName}}{{/lastName}}', {
@@ -231,6 +231,7 @@ Wee.screen.map([
 	},
 	{
 		min: 5,
+		once: true,
 		args: [
 			'varName'
 		],
@@ -286,9 +287,9 @@ Load what you need on demand to optimize page speed and preserve bandwidth. Asse
 Wee.assets.load({
 	root: 'https://cdn.weepower.com/assets/alert/',
 	files: [
-		'close.png',
-		'style.css',
-		'script.js'
+		'close.svg',
+		'style.min.css',
+		'script.min.js'
 	],
 	success: function() {
 		// Success logic
@@ -305,7 +306,8 @@ Tween attributes and properties with granular control and callback functionality
 
 ```javascript
 Wee.animate.tween('ref:element', {
-	height: 100
+	height: 100,
+	width: 200
 }, {
 	duration: 200,
 	ease: 'linear',
