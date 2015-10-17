@@ -12,7 +12,6 @@
 	"main": [
 		"./public/*",
 		"./source/*",
-		"./Gruntfile.js",
 		"./package.json",
 		"./wee.js",
 		"./wee.json"

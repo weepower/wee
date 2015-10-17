@@ -4,4 +4,4 @@
 
 /* global __dirname */
 
-require(__dirname + '/node_modules/wee-core/cli.js')(__dirname);
+require('./node_modules/wee-core/cli.js')(__dirname);
