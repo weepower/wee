@@ -1,4 +1,4 @@
-// Add custom view helpers and partials here
+// Add custom view helpers here
 
 // Wee.view.addHelper('upper', function() {
 // 	return this.val.toUpperCase();
