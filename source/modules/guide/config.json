@@ -10,7 +10,7 @@
 			"target": "../../../public/guide/",
 			"templates": "templates",
 			"partials": "partials",
-			"extensions": "extensions"
+			"helpers": "helpers"
 		}
 	},
 	"env": {

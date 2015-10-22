@@ -24,14 +24,22 @@ body {
 	.background(@primary);
 	.padding(vertical; 8%; 2);
 }
+.logo {
+	.inline-block(9);
+	.spaced(1);
+	&__img {
+		.width(9);
+	}
+}
 .sections {
-	.font(@headingFont; 1.4; 400);
+	.font(@headingFont; 1.2; 400);
+	.uppercase();
 	&__links {
 		.inline-list(1.8);
 		a {
-			.color(@primaryLight);
+			.white();
 			&:hover {
-				.white();
+				.underline();
 			}
 		}
 		li {
@@ -56,8 +64,8 @@ body {
 .guide-pattern {
 	.margin(vertical; 4);
 	&__title {
-		.color(@primary);
 		.font(@headingFont; 2.2);
+		.primary();
 		.spaced(0);
 	}
 	&__heading {
@@ -150,10 +158,10 @@ code {
 	# Colors
 \*------------------------------------*/
 
-.colors {
+.swatches {
 	.max-width(80);
 }
-.color {
+.swatch {
 	.align(center);
 	.font-size(1.2);
 	.gray();
