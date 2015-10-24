@@ -55,8 +55,6 @@ Improved organization and readability using [Less](http://lesscss.org) along wit
 ```
 
 ```less
-@brandColor: #167da3;
-
 .nav {
 	&__button {
 		.fill();
@@ -64,10 +62,10 @@ Improved organization and readability using [Less](http://lesscss.org) along wit
 		.spaced(1);
 		.uppercase();
 		&:hover {
-			.background(light; 5%; @brandColor);
+			.background(light; 5%; @primary);
 		}
 		&.\--bordered {
-			.border(@brandColor);
+			.border(@primary);
 		}
 	}
 }
@@ -84,11 +82,11 @@ Becomes...
 	text-transform: uppercase;
 }
 .nav__button:hover {
-	background-color: #167da3;
+	background-color: #349bb9;
 	background-color: rgba(255, 255, 255, .05);
 }
 .nav__button.--bordered {
-	border: 1px solid #167da3;
+	border: 1px solid #349bb9;
 }
 ```
 
@@ -106,11 +104,13 @@ $.env(); // "local"
 ```
 
 ```javascript
-$.observe('user.status', function(val, type) {
-	if (val == 'active') {
-		// Trigger logic
-	}
-});
+$.observe('user.status', function(data, type, diff) {
+	// Trigger logic
+}, {
+	diff: true,
+	once: true,
+	val: 'active'
+);
 
 $.set('user.status', 'active');
 ```
@@ -164,8 +164,9 @@ Create independence between markup and script using the powerful routing options
 
 ```javascript
 Wee.routes.map({
-	'$any': 'common', // Fire the init method of the common controller
+	'$any:once': 'common', // Fire the init method of the common controller
 	'$root': 'home',
+	'$root:unload': 'home:unload',
 	'category': {
 		'$root': 'controllerName:publicMethod',
 		'$slug': {
@@ -182,10 +183,10 @@ Wee.routes.map({
 
 ##### Templating [→](https://www.weepower.com/script/view)
 
-The template parser supports fallbacks, loops, functions, helpers, partials, and more. It also powers the [static site generator](https://www.weepower.com/generator) and data-binding apps.
+The template parser supports fallbacks, loops, helpers, partials, and more. It also powers the [static site generator](https://www.weepower.com/generator) and data-binding apps.
 
 ```javascript
-Wee.view.render('My name is {{firstName}}{{#lastName|notEmpty}} {{lastName}}{{/lastName}}', {
+Wee.view.render('My name is {{ firstName }}{{ #lastName|notEmpty }} {{ lastName }}{{ /lastName }}', {
 	firstName: 'John',
 	lastName: 'Smith'
 });
@@ -199,15 +200,17 @@ Becomes...
 
 ##### Apps [→](https://www.weepower.com/script/view)
 
-Wee includes a powerful application framework for one-way data-binding. Simply call into one of the many data methods to manipulate your model and watch the DOM update automatically.
+Wee includes a powerful application framework for one-way data-binding. Simply call into one of the many data manipulation methods to update your model and watch the DOM update automatically.
 
 ```javascript
-Wee.app.make({
+Wee.app.make('testApp', {
 	view: 'ref:application',
 	model: {
 		key: 'value'
 	}
 });
+
+testApp.$set('key', 'new value');
 ```
 
 ##### Breakpoints [→](https://www.weepower.com/script/screen)
@@ -245,14 +248,14 @@ Wee.screen.map([
 
 ##### Events [→](https://www.weepower.com/script/events)
 
-Create organized interaction on your page with the simple event API. Custom events can also be registered such as with the core Wee touch events.
+Create organized interaction on your page with the simple event API. Custom events can also be registered as they are with the core Wee touch events.
 
 ```javascript
 Wee.events.on('ref:element', 'click swipeRight', function(e, el) {
 	// Event logic
 	e.preventDefault();
 }, {
-	delegate: '.selector',
+	delegate: '.js-selector',
 	once: true
 });
 ```
@@ -310,7 +313,7 @@ Wee.animate.tween('ref:element', {
 	width: 200
 }, {
 	duration: 200,
-	ease: 'linear',
+	ease: 'custom',
 	complete: function() {
 		// Completion logic
 	}
@@ -322,17 +325,22 @@ Wee.animate.tween('ref:element', {
 Create dynamic experiences through partial Ajax loading and the HTML5 History API. With one method static navigation can transform into a seamless, efficient user flow.
 
 ```javascript
-Wee.history.go({
-	path: '/resource/path',
+Wee.history.init({
 	scrollTop: '.heading',
 	partials: 'title, main, .heading',
+	bind: {
+		click: 'a'
+	},
 	request: {
-		success: function(data, xhr, targets) {
+		success: function(xhr) {
 			// Success logic
 		},
-		error: function(xhr, targets) {
+		error: function(xhr) {
 			// Failure logic
 		}
+	},
+	complete: function(obj) {
+		// Complete logic
 	}
 });
 ```
@@ -346,7 +354,7 @@ Get started using one of these methods:
 
 Then run `npm install` from the root of your project followed by `node wee run:static`.
 
-*Node.js 4.1.1+ and the Grunt CLI are required for the [build process](https://www.weepower.com/build/#setup).*
+*Node.js 4.2.1+ and the Grunt CLI are recommended for the [build process](https://www.weepower.com/build/#setup).*
 
 ## Compatibility
 
