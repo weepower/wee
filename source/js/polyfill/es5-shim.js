@@ -326,6 +326,7 @@ var owns = call.bind(ObjectPrototype.hasOwnProperty);
 var toStr = call.bind(ObjectPrototype.toString);
 var strSlice = call.bind(StringPrototype.slice);
 var strSplit = call.bind(StringPrototype.split);
+var strIndexOf = call.bind(StringPrototype.indexOf);
 
 //
 // Array
@@ -394,7 +395,7 @@ var properlyBoxesContext = function properlyBoxed(method) {
 };
 
 defineProperties(ArrayPrototype, {
-    forEach: function forEach(callbackfn /*, thisArg*/) {
+    forEach: function forEach(callbackfn/*, thisArg*/) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
         var i = -1;
@@ -459,7 +460,7 @@ defineProperties(ArrayPrototype, {
 // http://es5.github.com/#x15.4.4.20
 // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/filter
 defineProperties(ArrayPrototype, {
-    filter: function filter(callbackfn /*, thisArg*/) {
+    filter: function filter(callbackfn/*, thisArg*/) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
         var length = ES.ToUint32(self.length);
@@ -491,7 +492,7 @@ defineProperties(ArrayPrototype, {
 // http://es5.github.com/#x15.4.4.16
 // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/every
 defineProperties(ArrayPrototype, {
-    every: function every(callbackfn /*, thisArg*/) {
+    every: function every(callbackfn/*, thisArg*/) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
         var length = ES.ToUint32(self.length);
@@ -549,7 +550,7 @@ if (ArrayPrototype.reduce) {
     reduceCoercesToObject = typeof ArrayPrototype.reduce.call('es5', function (_, __, ___, list) { return list; }) === 'object';
 }
 defineProperties(ArrayPrototype, {
-    reduce: function reduce(callbackfn /*, initialValue*/) {
+    reduce: function reduce(callbackfn/*, initialValue*/) {
         var object = ES.ToObject(this);
         var self = splitString && isString(this) ? strSplit(this, '') : object;
         var length = ES.ToUint32(self.length);
@@ -652,7 +653,7 @@ defineProperties(ArrayPrototype, {
 // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf
 var hasFirefox2IndexOfBug = ArrayPrototype.indexOf && [0, 1].indexOf(1, 2) !== -1;
 defineProperties(ArrayPrototype, {
-    indexOf: function indexOf(searchElement /*, fromIndex */) {
+    indexOf: function indexOf(searchElement/*, fromIndex */) {
         var self = splitString && isString(this) ? strSplit(this, '') : ES.ToObject(this);
         var length = ES.ToUint32(self.length);
 
@@ -681,7 +682,7 @@ defineProperties(ArrayPrototype, {
 // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/lastIndexOf
 var hasFirefox2LastIndexOfBug = ArrayPrototype.lastIndexOf && [0, 1].lastIndexOf(0, -3) !== -1;
 defineProperties(ArrayPrototype, {
-    lastIndexOf: function lastIndexOf(searchElement /*, fromIndex */) {
+    lastIndexOf: function lastIndexOf(searchElement/*, fromIndex */) {
         var self = splitString && isString(this) ? strSplit(this, '') : ES.ToObject(this);
         var length = ES.ToUint32(self.length);
 
@@ -1597,11 +1598,35 @@ defineProperties(StringPrototype, {
     }
 }, hasTrimWhitespaceBug);
 
+var hasLastIndexBug = String.prototype.lastIndexOf && 'abcあい'.lastIndexOf('あい', 2) !== -1;
+defineProperties(StringPrototype, {
+    lastIndexOf: function lastIndexOf(searchString) {
+        if (typeof this === 'undefined' || this === null) {
+            throw new TypeError("can't convert " + this + ' to object');
+        }
+        var S = $String(this);
+        var searchStr = $String(searchString);
+        var numPos = arguments.length > 1 ? $Number(arguments[1]) : NaN;
+        var pos = isActualNaN(numPos) ? Infinity : ES.ToInteger(numPos);
+        var start = min(max(pos, 0), S.length);
+        var searchLen = searchStr.length;
+        var k = start + searchLen;
+        while (k > 0) {
+            k = max(0, k - searchLen);
+            var index = strIndexOf(strSlice(S, k, start + searchLen), searchStr);
+            if (index !== -1) {
+                return k + index;
+            }
+        }
+        return -1;
+    }
+}, hasLastIndexBug);
+
 // ES-5 15.1.2.2
 if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
     /* global parseInt: true */
     parseInt = (function (origParseInt) {
-        var hexRegex = /^0[xX]/;
+        var hexRegex = /^[\-+]?0[xX]/;
         return function parseInt(str, radix) {
             var string = $String(str).trim();
             var defaultedRadix = $Number(radix) || (hexRegex.test(string) ? 16 : 10);
