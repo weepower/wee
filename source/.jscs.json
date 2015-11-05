@@ -60,6 +60,7 @@
 	"disallowTrailingWhitespace": true,
 	"disallowUnusedParams": true,
 	"disallowYodaConditions": true,
+	"requireAlignedMultilineParams": true,
 	"requireBlocksOnNewline": {
 		"includeComments": true
 	},
