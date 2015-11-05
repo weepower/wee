@@ -7,6 +7,7 @@
 		"removeIndex": true,
 		"removeTrailingSlashes": true,
 		"paths": {
+			"content": "content",
 			"target": "../../../public/guide/",
 			"templates": "templates",
 			"partials": "partials",
@@ -29,31 +30,31 @@
 			"name": "General",
 			"template": "default",
 			"target": "index.html",
-			"content": "content/general/*.md"
+			"content": "general/*.md"
 		},
 		"elements": {
 			"name": "Elements",
 			"template": "default",
 			"target": "elements.html",
-			"content": "content/elements/*.md"
+			"content": "elements/*.md"
 		},
 		"forms": {
 			"name": "Forms",
 			"template": "default",
 			"target": "forms.html",
-			"content": "content/forms/*.md"
+			"content": "forms/*.md"
 		},
 		"lists": {
 			"name": "Lists",
 			"template": "default",
 			"target": "lists.html",
-			"content": "content/lists/*.md"
+			"content": "lists/*.md"
 		},
 		"typography": {
 			"name": "Typography",
 			"template": "default",
 			"target": "typography.html",
-			"contentRoot": "content/typography/",
+			"contentRoot": "typography/",
 			"content": [
 				"fonts.md",
 				"headings.md",
