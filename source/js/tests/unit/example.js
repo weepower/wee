@@ -4,7 +4,7 @@ define(function(require) {
 		Wee = require('Wee');
 
 	registerSuite({
-		name: 'Example Suite',
+		name: 'Test Suite',
 
 		setup: function() {
 			// Execute before suite starts
@@ -22,11 +22,11 @@ define(function(require) {
 			// Execute after each test
 		},
 
-		'Example Test': function() {
+		'Type Test': function() {
 			var type = Wee.$type('Example');
 
 			assert.equal(type, 'string',
-				'Type of value "Example" is a string.'
+				'The type of value "Example" should equal "string"'
 			);
 		}
 	});

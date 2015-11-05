@@ -21,12 +21,12 @@ body {
 \*------------------------------------*/
 
 .header {
-	.background(@primary);
+	.border(bottom; @lighterGray);
 	.padding(vertical; 8%; 2);
 }
 .logo {
 	.inline-block(9);
-	.spaced(1);
+	.spaced(.8);
 	&__img {
 		.width(9);
 	}
@@ -36,17 +36,11 @@ body {
 	.uppercase();
 	&__links {
 		.inline-list(1.8);
-		a {
-			.white();
-			&:hover {
-				.underline();
-			}
-		}
 		li {
 			.padding(bottom; .2);
 			&.\--is-active {
 				a {
-					.white();
+					.darkGray();
 				}
 			}
 		}

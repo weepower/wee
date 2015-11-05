@@ -3,7 +3,7 @@
 \*------------------------------------*/
 
 body {
-	.background(@primary);
+	.background(@brandLight);
 	.padding(bottom; @blockMarginBottom);
 }
 .container {
@@ -23,7 +23,7 @@ body {
 }
 .logo {
 	.inline-block(9);
-	.spaced(1);
+	.spaced(.8);
 	&__img {
 		.width(9);
 	}
@@ -38,12 +38,6 @@ body {
 \*------------------------------------*/
 
 .footer {
-	a {
-		.white();
-		&:hover {
-			.underline();
-		}
-	}
 	&__links {
 		.font(@headingFont; 1.2; 400);
 		.inline-list(1.6);
@@ -61,23 +55,25 @@ body {
 
 .heading {
 	.font(@headingFont; 2.2; 300);
-	.white();
+	.primary();
+	.transition(margin, height;);
 }
 .nav {
 	.row(2%);
 	.spaced(3);
 	&__button {
-		.background(@primary);
-		.border(@white);
+		.background(@brandLight);
+		.border(@primary);
 		.column(spaced; 1; 2; 2%);
 		.font(@headingFont; 1.4);
 		.padded(0);
 		.rounded(5);
 		.spaced(1);
-		.white();
-		&:hover {
-			.background();
-			.primary();
+		.primary();
+		&:hover,
+		&:active {
+			.background(@primary);
+			.white();
 		}
 		&:active {
 			.translate(y; 1px);
@@ -86,11 +82,6 @@ body {
 }
 .copy {
 	.font(@headingFont; 1.6; 300);
-	.white();
-	code {
-		.background(light; 15%);
-		.white();
-	}
 }
 
 
@@ -106,12 +97,13 @@ body {
 	.unstyled();
 	&__item {
 		.relative();
-		.white();
 		&.\--is-done {
+			.gray();
 			.line-through();
 			.todo__toggle {
 				&:after {
 					.content('\2714');
+					.gray();
 					.opaque();
 				}
 			}
@@ -123,7 +115,7 @@ body {
 		.user-select();
 		&:after {
 			.align(center);
-			.border(@white);
+			.border(@gray);
 			.circle(3);
 			.content();
 			.opacity(50%);
