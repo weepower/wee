@@ -1,6 +1,6 @@
 Wee.fn.make('todo', {
 	init: function() {
-		$($('ref:template').text()).insertAfter('ref:nav');
+		$('ref:nav').after($.first('ref:template').text);
 
 		Wee.app.make('items', {
 			view: 'ref:todo',
