@@ -203,14 +203,14 @@ Becomes...
 Wee includes a powerful application framework for one-way data-binding. Simply call into one of the many data manipulation methods to update your model and watch the DOM update automatically.
 
 ```javascript
-Wee.app.make('testApp', {
+var app = Wee.app.make('testApp', {
 	view: 'ref:application',
 	model: {
 		key: 'value'
 	}
 });
 
-testApp.$set('key', 'new value');
+app.$set('key', 'new value');
 ```
 
 ##### Breakpoints [→](https://www.weepower.com/script/screen)

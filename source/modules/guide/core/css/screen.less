@@ -2,12 +2,6 @@
 	# General
 \*------------------------------------*/
 
-body {
-	.background();
-}
-.container {
-	.max-width(100);
-}
 .unstyled {
 	.unstyled();
 }
@@ -22,7 +16,7 @@ body {
 
 .header {
 	.border(bottom; @lighterGray);
-	.padding(vertical; 8%; 2);
+	.padding(vertical; 4; 2);
 }
 .logo {
 	.inline-block(9);
@@ -34,15 +28,17 @@ body {
 .sections {
 	.font(@headingFont; 1.2; 400);
 	.uppercase();
-	&__links {
-		.inline-list(1.8);
-		li {
-			.padding(bottom; .2);
-			&.\--is-active {
-				a {
-					.darkGray();
-				}
-			}
+	&__items {
+		.unstyled();
+	}
+	&__item {
+		.inline();
+		.margin(right; 1.8);
+		.padding(bottom; .2);
+	}
+	&__link {
+		&.-is-active {
+			.darkGray();
 		}
 	}
 }
@@ -112,32 +108,32 @@ code {
 		.gray();
 		.margin(left; .6);
 	}
-	&.\--mobile-portrait {
+	&.-mobile-portrait {
 		&:after {
 			.content(320px);
 		}
 	}
-	&.\--mobile-landscape {
+	&.-mobile-landscape {
 		&:after {
 			.content(@mobileLandscapeWidth);
 		}
 	}
-	&.\--tablet-portrait {
+	&.-tablet-portrait {
 		&:after {
 			.content(@tabletPortraitWidth);
 		}
 	}
-	&.\--desktop-small {
+	&.-desktop-small {
 		&:after {
 			.content(@desktopSmallWidth);
 		}
 	}
-	&.\--desktop-medium {
+	&.-desktop-medium {
 		&:after {
 			.content(@desktopMediumWidth);
 		}
 	}
-	&.\--desktop-large {
+	&.-desktop-large {
 		&:after {
 			.content(@desktopLargeWidth);
 		}
@@ -168,81 +164,81 @@ code {
 		.height(4);
 		.line-height(40px);
 	}
-	&.\--primary {
+	&.-primary {
 		&:before {
 			.background(@primary);
 			.content(@primary);
 			.white();
 		}
 	}
-	&.\--secondary {
+	&.-secondary {
 		&:before {
 			.background(@secondary);
 			.content(@secondary);
 			.white();
 		}
 	}
-	&.\--tertiary {
+	&.-tertiary {
 		&:before {
 			.background(@tertiary);
 			.content(@tertiary);
 			.white();
 		}
 	}
-	&.\--white {
+	&.-white {
 		&:before {
 			.background(@white);
 			.border(@lighterGray);
 			.content(@white);
 		}
 	}
-	&.\--lightest-gray {
+	&.-lightest-gray {
 		&:before {
 			.background(@lightestGray);
 			.content(@lightestGray);
 		}
 	}
-	&.\--lighter-gray {
+	&.-lighter-gray {
 		&:before {
 			.background(@lighterGray);
 			.content(@lighterGray);
 		}
 	}
-	&.\--light-gray {
+	&.-light-gray {
 		&:before {
 			.background(@lightGray);
 			.content(@lightGray);
 		}
 	}
-	&.\--gray {
+	&.-gray {
 		&:before {
 			.background(@gray);
 			.content(@gray);
 			.white();
 		}
 	}
-	&.\--dark-gray {
+	&.-dark-gray {
 		&:before {
 			.background(@darkGray);
 			.content(@darkGray);
 			.white();
 		}
 	}
-	&.\--darker-gray {
+	&.-darker-gray {
 		&:before {
 			.background(@darkerGray);
 			.content(@darkerGray);
 			.white();
 		}
 	}
-	&.\--darkest-gray {
+	&.-darkest-gray {
 		&:before {
 			.background(@darkestGray);
 			.content(@darkestGray);
 			.white();
 		}
 	}
-	&.\--black {
+	&.-black {
 		&:before {
 			.background(@black);
 			.content(@black);
@@ -268,7 +264,7 @@ code {
 		.gray();
 		.margin(left; .6);
 	}
-	&.\--base {
+	&.-base {
 		span {
 			.font();
 		}
@@ -276,7 +272,7 @@ code {
 			.content(@baseFont);
 		}
 	}
-	&.\--heading {
+	&.-heading {
 		span {
 			.font(@headingFont);
 		}
@@ -284,7 +280,7 @@ code {
 			.content(@headingFont);
 		}
 	}
-	&.\--description-title {
+	&.-description-title {
 		span {
 			.font(@dtFont);
 		}
@@ -292,7 +288,7 @@ code {
 			.content(@dtFont);
 		}
 	}
-	&.\--description {
+	&.-description {
 		span {
 			.font(@ddFont);
 		}
@@ -300,7 +296,7 @@ code {
 			.content(@ddFont);
 		}
 	}
-	&.\--quote {
+	&.-quote {
 		span {
 			.font(@quoteFont);
 		}
@@ -308,7 +304,7 @@ code {
 			.content(@quoteFont);
 		}
 	}
-	&.\--cite {
+	&.-cite {
 		span {
 			.font(@citeFont);
 		}
@@ -316,7 +312,7 @@ code {
 			.content(@citeFont);
 		}
 	}
-	&.\--address {
+	&.-address {
 		span {
 			.font(@addressFont);
 		}
@@ -324,7 +320,7 @@ code {
 			.content(@addressFont);
 		}
 	}
-	&.\--code {
+	&.-code {
 		span {
 			.font(@codeFont);
 		}
@@ -332,7 +328,7 @@ code {
 			.content(@codeFont);
 		}
 	}
-	&.\--code-block {
+	&.-code-block {
 		span {
 			.font(@codeBlockFont);
 		}
@@ -340,7 +336,7 @@ code {
 			.content(@codeBlockFont);
 		}
 	}
-	&.\--input {
+	&.-input {
 		span {
 			.font(@inputFont);
 		}
@@ -348,7 +344,7 @@ code {
 			.content(@inputFont);
 		}
 	}
-	&.\--legend {
+	&.-legend {
 		span {
 			.font(@legendFont);
 		}
@@ -356,7 +352,7 @@ code {
 			.content(@legendFont);
 		}
 	}
-	&.\--button {
+	&.-button {
 		span {
 			.font(@buttonFont);
 		}

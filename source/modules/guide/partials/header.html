@@ -33,10 +33,10 @@
 			</a>
 
 			<nav class="sections" role="navigation">
-				<ul class="sections__links">
+				<ul class="sections__items">
 					{{ #site.sections|each }}
-						<li{{ #isActive }} class="--is-active"{{ /isActive }}>
-							<a href="{{ target }}">{{ name }}</a>
+						<li class="sections__item">
+							<a href="{{ target }}" class="sections__link{{ #isActive }} -is-active{{ /isActive }}">{{ name }}</a>
 						</li>
 					{{ /site.sections }}
 				</ul>

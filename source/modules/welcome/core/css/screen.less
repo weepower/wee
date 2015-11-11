@@ -9,6 +9,9 @@ body {
 .container {
 	.max-width(100);
 }
+.inner {
+	.max-width(46);
+}
 
 
 
@@ -56,7 +59,6 @@ body {
 .heading {
 	.font(@headingFont; 2.2; 300);
 	.primary();
-	.transition(margin, height;);
 }
 .nav {
 	.row(2%);
@@ -97,7 +99,7 @@ body {
 	.unstyled();
 	&__item {
 		.relative();
-		&.\--is-done {
+		&.-is-done {
 			.gray();
 			.line-through();
 			.todo__toggle {

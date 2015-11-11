@@ -1,0 +1,8 @@
+<ul class="todo">
+	{{ #todo|each }}
+	<li class="todo__item{{ #done }} -is-done{{ /done }}">
+		<div class="todo__toggle" data-ref="toggle" data-id="{{ # }}"></div>
+		<span class="todo__label">{{ label }}</span>
+	</li>
+	{{ /todo }}
+</ul>

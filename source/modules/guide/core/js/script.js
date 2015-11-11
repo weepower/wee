@@ -7,21 +7,21 @@ Wee.fn.make('guide', {
 	 * @constructor
 	 */
 	_construct: function() {
-		var scope = this;
+		var priv = this.$private;
 
 		// Setup syntax highlighting
-		scope.$private.highlightCode();
+		priv.highlightCode();
 
 		// Bind code toggle and selection
 		Wee.events.on({
 			'ref:code': {
 				dblclick: function() {
-					scope.$private.selectCode(this);
+					priv.selectCode(this);
 				}
 			},
 			'ref:toggle': {
 				click: function() {
-					scope.$private.toggleCode(this);
+					priv.toggleCode(this);
 				}
 			}
 		});
@@ -33,26 +33,23 @@ Wee.fn.make('guide', {
 	 * @private
 	 */
 	highlightCode: function() {
-		// Don't load in IE8-
-		if (! $._legacy) {
-			Wee.assets.load({
-				root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/',
-				files: [
-					'highlight.min.js',
-					'styles/github.min.css'
-				],
-				success: function() {
-					hljs.initHighlightingOnLoad();
-				}
-			});
-		}
+		Wee.assets.load({
+			root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/',
+			files: [
+				'highlight.min.js',
+				'styles/github.min.css'
+			],
+			success: function() {
+				hljs.initHighlightingOnLoad();
+			}
+		});
 	},
 
 	/**
 	 * Select all markup in a code block
 	 *
 	 * @private
-	 * @param {HTMLElement} el - target code
+	 * @param {HTMLElement} el - target code wrapper
 	 */
 	selectCode: function(el) {
 		var range = $._doc.createRange(),

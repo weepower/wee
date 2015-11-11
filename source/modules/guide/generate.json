@@ -8,10 +8,10 @@
 		"removeTrailingSlashes": true,
 		"paths": {
 			"content": "content",
-			"target": "../../../public/guide/",
-			"templates": "templates",
+			"helpers": "helpers",
 			"partials": "partials",
-			"helpers": "helpers"
+			"target": "../../../public/guide/",
+			"templates": "templates"
 		}
 	},
 	"env": {
@@ -54,7 +54,7 @@
 			"name": "Typography",
 			"template": "default",
 			"target": "typography.html",
-			"contentRoot": "typography/",
+			"contentRoot": "typography",
 			"content": [
 				"fonts.md",
 				"headings.md",
