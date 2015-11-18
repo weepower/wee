@@ -1,8 +1,8 @@
 ---
-name: Description List
+name: Description list
 ---
 
----HTML|render---
+---html|render---
 
 <dl>
 	<dt>Lorem ipsum dolor</dt>

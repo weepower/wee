@@ -1,8 +1,8 @@
 ---
-name: Selection Fields
+name: Select fields
 ---
 
----HTML|render---
+---html|render---
 
 <select name="selection">
 	<option value="1">Lorem</option>

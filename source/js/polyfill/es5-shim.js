@@ -163,7 +163,6 @@ var ES = {
     // http://es5.github.com/#x9.9
     /* replaceable with https://npmjs.com/package/es-abstract ES5.ToObject */
     ToObject: function (o) {
-        /* jshint eqnull: true */
         if (o == null) { // this matches both null and undefined
             throw new TypeError("can't convert " + o + ' to object');
         }
@@ -1549,7 +1548,7 @@ if (
                         /* eslint-enable no-loop-func */
                     }
                     if (match.length > 1 && match.index < string.length) {
-                        push(output, array_slice.call(match, 1));
+                        array_push.apply(output, array_slice.call(match, 1));
                     }
                     lastLength = match[0].length;
                     lastLastIndex = lastIndex;
@@ -1686,7 +1685,9 @@ defineProperties(StringPrototype, {
 }, StringPrototype.lastIndexOf.length !== 1);
 
 // ES-5 15.1.2.2
+/* eslint-disable radix */
 if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
+/* eslint-enable radix */
     /* global parseInt: true */
     parseInt = (function (origParseInt) {
         var hexRegex = /^[\-+]?0[xX]/;

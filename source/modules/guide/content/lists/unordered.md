@@ -1,9 +1,9 @@
 ---
-name: Unordered List
+name: Unordered list
 heading: Use lists to represent groups of related data
 ---
 
----HTML|render---
+---html|render---
 
 <ul>
 	<li>Lorem ipsum dolor

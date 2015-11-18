@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400">
 
 	<link rel="apple-touch-icon" href="/assets/img/icons/touchicon.png">
+	<link rel="mask-icon" href="/assets/img/icons/pin.svg" color="#349bb9">
 
 	<!--[if lt IE 9]>
 	<link rel="stylesheet" href="/assets/css/ie8.min.css">
@@ -21,27 +22,24 @@
 	<![endif]-->
 
 	<!--[if lte IE 9]>
-	<link rel="stylesheet" href="/assets/css/ie9.min.css">
 	<script src="/assets/js/ie9.min.js"></script>
 	<![endif]-->
 </head>
 <body>
 	<header class="header" role="banner">
-		<div class="container">
-			<a href="/" rel="home" class="logo">
-				<img src="/assets/img/logo.svg" alt="{{site.name}}" class="logo__img">
-			</a>
+		<a href="/" rel="home" class="logo">
+			<img src="/assets/img/logo.svg" alt="{{ site.name }}" class="logo__img">
+		</a>
 
-			<nav class="sections" role="navigation">
-				<ul class="sections__items">
-					{{ #site.sections|each }}
-						<li class="sections__item">
-							<a href="{{ target }}" class="sections__link{{ #isActive }} -is-active{{ /isActive }}">{{ name }}</a>
-						</li>
-					{{ /site.sections }}
-				</ul>
-			</nav>
-		</div>
+		<nav class="sections" role="navigation">
+			<ul class="unstyled">
+				{{ #site.sections|each }}
+					<li class="sections__item">
+						<a href="{{ target }}" class="sections__link{{ #isActive }} -is-active{{ /isActive }}">{{ name }}</a>
+					</li>
+				{{ /site.sections }}
+			</ul>
+		</nav>
 	</header>
 
 	<main class="container" role="main">

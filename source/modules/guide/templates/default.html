@@ -1,29 +1,21 @@
 {{> header}}
 
 {{ #content|each }}
-<div class="guide-pattern">
-	<h3 class="guide-pattern__title">{{ name }}</h3>
+<div class="pattern">
+	<h3 class="pattern__title">{{ name }}</h3>
 
 	{{ #heading }}
-	<p class="guide-pattern__heading">{{ . }}</p>
+	<p class="pattern__heading">{{ . }}</p>
 	{{ /heading }}
 
-	<div class="guide-pattern__output {{ class }}">{{ output|raw }}</div>
+	<div class="pattern__output {{ class }}">{{ output|raw }}</div>
 
 	{{ #blocks|each }}
 		{{ #name|not('content') }}
-			<div class="guide-pattern__toggle"
-				aria-controls="{{ ../sourceName }}-code"
-				aria-expanded="false"
-				data-ref="toggle"
-				data-lang="{{ lang||'HTML' }}"
-			>
-				View {{ lang||'HTML' }}
-			</div>
-			<pre class="guide-pattern__input js-hide"
+			<pre class="pattern__input -{{ lang||'html' }}"
 				id="{{ ../sourceName }}-code"
 				aria-hidden="true"
-				data-ref="code"><code class="{{ lang||'HTML' }}">{{ input }}</code></pre>
+				data-ref="code"><code class="{{ lang||'html' }}">{{ input }}</code></pre>
 		{{ /name }}
 	{{ /blocks }}
 </div>

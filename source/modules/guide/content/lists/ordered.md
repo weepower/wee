@@ -1,8 +1,8 @@
 ---
-name: Ordered List
+name: Ordered list
 ---
 
----HTML|render---
+---html|render---
 
 <ol>
 	<li>Lorem ipsum dolor

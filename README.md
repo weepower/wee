@@ -235,9 +235,6 @@ Wee.screen.map([
 	{
 		min: 5,
 		once: true,
-		args: [
-			'varName'
-		],
 		callback: function(obj, val) {
 			console.log(val); // varName
 			console.log(obj);
@@ -354,7 +351,7 @@ Get started using one of these methods:
 
 Then run `npm install` from the root of your project followed by `node wee run:static`.
 
-*Node.js 4.2.1+ and the Grunt CLI are recommended for the [build process](https://www.weepower.com/build/#setup).*
+*Node.js 4.2.2+ and the Grunt CLI are recommended for the [build process](https://www.weepower.com/build/#setup).*
 
 ## Compatibility
 

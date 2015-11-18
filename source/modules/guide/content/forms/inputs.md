@@ -1,8 +1,8 @@
 ---
-name: Input Fields
+name: Input fields
 ---
 
----HTML|render---
+---html|render---
 
 <input type="email" name="name" placeholder="Email Address" required>
 

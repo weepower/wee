@@ -1,41 +1,40 @@
-<!doctype html><html lang="en" id="global" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Elements | Style Guide</title><meta name="description" content=""><link rel="stylesheet" href="/assets/css/style.min.css"><link rel="stylesheet" href="/assets/modules/guide/style.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400"><link rel="apple-touch-icon" href="/assets/img/icons/touchicon.png"><!--[if lt IE 9]><link rel="stylesheet" href="/assets/css/ie8.min.css">
+<!doctype html><html lang="en" id="global" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Elements | Style Guide</title><meta name="description" content=""><link rel="stylesheet" href="/assets/css/style.min.css"><link rel="stylesheet" href="/assets/modules/guide/style.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400"><link rel="apple-touch-icon" href="/assets/img/icons/touchicon.png"><link rel="mask-icon" href="/assets/img/icons/pin.svg" color="#349bb9"><!--[if lt IE 9]><link rel="stylesheet" href="/assets/css/ie8.min.css">
 	<link rel="stylesheet" href="/assets/modules/guide/legacy.min.css">
-	<script src="/assets/js/ie8.min.js"></script><![endif]--><!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.min.css">
-	<script src="/assets/js/ie9.min.js"></script><![endif]--></head><body><header class="header" role="banner"><div class="container"><a href="/" rel="home" class="logo"><img src="/assets/img/logo.svg" alt="Style Guide" class="logo__img"></a><nav class="sections" role="navigation"><ul class="sections__items"><li class="sections__item"><a href="index.html" class="sections__link">General</a></li><li class="sections__item"><a href="elements.html" class="sections__link -is-active">Elements</a></li><li class="sections__item"><a href="forms.html" class="sections__link">Forms</a></li><li class="sections__item"><a href="lists.html" class="sections__link">Lists</a></li><li class="sections__item"><a href="typography.html" class="sections__link">Typography</a></li></ul></nav></div></header><main class="container" role="main"><div class="guide-pattern"><h3 class="guide-pattern__title">Code</h3><div class="guide-pattern__output"><p>A <code>&lt;code&gt;</code> element wrapped in a <code>&lt;pre&gt;</code> element is used to generate code example blocks.</p><pre><code class="nohighlight">&lt;figure&gt;
+	<script src="/assets/js/ie8.min.js"></script><![endif]--><!--[if lte IE 9]><script src="/assets/js/ie9.min.js"></script><![endif]--></head><body><header class="header" role="banner"><a href="/" rel="home" class="logo"><img src="/assets/img/logo.svg" alt="Style Guide" class="logo__img"></a><nav class="sections" role="navigation"><ul class="unstyled"><li class="sections__item"><a href="index.html" class="sections__link">General</a></li><li class="sections__item"><a href="elements.html" class="sections__link -is-active">Elements</a></li><li class="sections__item"><a href="forms.html" class="sections__link">Forms</a></li><li class="sections__item"><a href="lists.html" class="sections__link">Lists</a></li><li class="sections__item"><a href="typography.html" class="sections__link">Typography</a></li></ul></nav></header><main class="container" role="main"><div class="pattern"><h3 class="pattern__title">Code</h3><div class="pattern__output"><p>A <code>&lt;code&gt;</code> element wrapped in a <code>&lt;pre&gt;</code> element is used to generate code example blocks.</p><pre><code class="nohighlight">&lt;figure&gt;
     &lt;img src=&quot;//placehold.it/800x400&quot; alt=&quot;Figure Image&quot;&gt;
     &lt;figcaption&gt;&lt;b&gt;Fig. 3.2 |&lt;/b&gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit by &lt;a href=&quot;#&quot;&gt;eiusmod tempor&lt;/a&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;</code></pre></div><div class="guide-pattern__toggle" aria-controls="-code" aria-expanded="false" data-ref="toggle" data-lang="HTML">View HTML</div><pre class="guide-pattern__input js-hide" id="-code" aria-hidden="true" data-ref="code"><code class="HTML">&lt;pre&gt;&lt;code class=&quot;nohighlight&quot;&gt;&amp;lt;figure&amp;gt;
+&lt;/figure&gt;</code></pre></div><pre class="pattern__input -html" id="-code" aria-hidden="true" data-ref="code"><code class="html">&lt;pre&gt;&lt;code class=&quot;nohighlight&quot;&gt;&amp;lt;figure&amp;gt;
 	&amp;lt;img src=&amp;quot;//placehold.it/800x400&amp;quot; alt=&amp;quot;Figure Image&amp;quot;&amp;gt;
 	&amp;lt;figcaption&amp;gt;&amp;lt;b&amp;gt;Fig. 3.2 |&amp;lt;/b&amp;gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit by &amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;eiusmod tempor&amp;lt;/a&amp;gt;&amp;lt;/figcaption&amp;gt;
-&amp;lt;/figure&amp;gt;&lt;/code&gt;&lt;/pre&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Figure</h3><p class="guide-pattern__heading">Semantic grouping of an image and associated caption</p><div class="guide-pattern__output"><figure><img src="https://placehold.it/800x400" alt="Figure Image"><figcaption><b>Fig. 3.2 |</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit by <a href="#">eiusmod tempor</a></figcaption></figure></div><div class="guide-pattern__toggle" aria-controls="-code" aria-expanded="false" data-ref="toggle" data-lang="HTML">View HTML</div><pre class="guide-pattern__input js-hide" id="-code" aria-hidden="true" data-ref="code"><code class="HTML">&lt;figure&gt;
-	&lt;img src=&quot;https://placehold.it/800x400&quot; alt=&quot;Figure Image&quot;&gt;
-	&lt;figcaption&gt;&lt;b&gt;Fig. 3.2 |&lt;/b&gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit by &lt;a href=&quot;#&quot;&gt;eiusmod tempor&lt;/a&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;</code></pre></div><div class="guide-pattern"><h3 class="guide-pattern__title">Table</h3><div class="guide-pattern__output"><table itemscope itemtype="http://schema.org/Table"><caption itemprop="about">Caption ipsum dolor sit amet</caption><thead><tr><th>Heading</th><th>Heading</th><th>Heading</th></tr></thead><tbody><tr><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td></tr><tr><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td></tr></tbody><tfoot><tr><td>Footer</td><td>Footer</td><td>Footer</td></tr></tfoot></table></div><div class="guide-pattern__toggle" aria-controls="-code" aria-expanded="false" data-ref="toggle" data-lang="HTML">View HTML</div><pre class="guide-pattern__input js-hide" id="-code" aria-hidden="true" data-ref="code"><code class="HTML">&lt;table itemscope itemtype=&quot;http://schema.org/Table&quot;&gt;
-	&lt;caption itemprop=&quot;about&quot;&gt;Caption ipsum dolor sit amet&lt;/caption&gt;
-	&lt;thead&gt;
-		&lt;tr&gt;
-			&lt;th&gt;Heading&lt;/th&gt;
-			&lt;th&gt;Heading&lt;/th&gt;
-			&lt;th&gt;Heading&lt;/th&gt;
-		&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-		&lt;tr&gt;
-			&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/td&gt;
-			&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/td&gt;
-			&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/td&gt;
-		&lt;/tr&gt;
-		&lt;tr&gt;
-			&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/td&gt;
-			&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/td&gt;
-			&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/td&gt;
-		&lt;/tr&gt;
-	&lt;/tbody&gt;
-	&lt;tfoot&gt;
-		&lt;tr&gt;
-			&lt;td&gt;Footer&lt;/td&gt;
-			&lt;td&gt;Footer&lt;/td&gt;
-			&lt;td&gt;Footer&lt;/td&gt;
-		&lt;/tr&gt;
-	&lt;/tfoot&gt;
-&lt;/table&gt;</code></pre></div></main><script src="/assets/js/script.min.js"></script><script src="/assets/modules/guide/script.min.js"></script></body></html>
+&amp;lt;/figure&amp;gt;&lt;/code&gt;&lt;/pre&gt;</code></pre></div><div class="pattern"><h3 class="pattern__title">Figure</h3><p class="pattern__heading">Semantic grouping of an image and associated caption</p><div class="pattern__output"><figure itemscope itemtype="http://schema.org/ImageObject"><img src="https://placehold.it/800x400" alt="Figure Image" itemprop="contentUrl"><figcaption itemprop="description"><b>Fig. 3.2 |</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit by <a href="#">eiusmod tempor</a></figcaption></figure></div><pre class="pattern__input -html" id="-code" aria-hidden="true" data-ref="code"><code class="html">&lt;figure itemscope itemtype=&quot;http://schema.org/ImageObject&quot;&gt;
+	&lt;img src=&quot;https://placehold.it/800x400&quot; alt=&quot;Figure Image&quot; itemprop=&quot;contentUrl&quot;&gt;
+	&lt;figcaption itemprop=&quot;description&quot;&gt;&lt;b&gt;Fig. 3.2 |&lt;/b&gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit by &lt;a href=&quot;#&quot;&gt;eiusmod tempor&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre></div><div class="pattern"><h3 class="pattern__title">Table</h3><div class="pattern__output"><div class="responsive-table"><table itemscope itemtype="http://schema.org/Table"><caption itemprop="about">Caption ipsum dolor sit amet</caption><thead><tr><th>Heading</th><th>Heading</th><th>Heading</th></tr></thead><tbody><tr><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td></tr><tr><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td></tr><tr><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td></tr></tbody></table></div></div><pre class="pattern__input -html" id="-code" aria-hidden="true" data-ref="code"><code class="html">&lt;div class=&quot;responsive-table&quot;&gt;
+	&lt;table itemscope itemtype=&quot;http://schema.org/Table&quot;&gt;
+		&lt;caption itemprop=&quot;about&quot;&gt;Caption ipsum dolor sit amet&lt;/caption&gt;
+		&lt;thead&gt;
+			&lt;tr&gt;
+				&lt;th&gt;Heading&lt;/th&gt;
+				&lt;th&gt;Heading&lt;/th&gt;
+				&lt;th&gt;Heading&lt;/th&gt;
+			&lt;/tr&gt;
+		&lt;/thead&gt;
+		&lt;tbody&gt;
+			&lt;tr&gt;
+				&lt;td&gt;Lorem ipsum dolor&lt;/td&gt;
+				&lt;td&gt;Lorem ipsum dolor&lt;/td&gt;
+				&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td&gt;Lorem ipsum dolor&lt;/td&gt;
+				&lt;td&gt;Lorem ipsum dolor&lt;/td&gt;
+				&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td&gt;Lorem ipsum dolor&lt;/td&gt;
+				&lt;td&gt;Lorem ipsum dolor&lt;/td&gt;
+				&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/tbody&gt;
+	&lt;/table&gt;
+&lt;/div&gt;</code></pre></div></main><script src="/assets/js/script.min.js"></script><script src="/assets/modules/guide/script.min.js"></script></body></html>

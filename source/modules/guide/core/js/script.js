@@ -13,17 +13,8 @@ Wee.fn.make('guide', {
 		priv.highlightCode();
 
 		// Bind code toggle and selection
-		Wee.events.on({
-			'ref:code': {
-				dblclick: function() {
-					priv.selectCode(this);
-				}
-			},
-			'ref:toggle': {
-				click: function() {
-					priv.toggleCode(this);
-				}
-			}
+		$('ref:code').on('dblclick', function() {
+			priv.selectCode(this);
 		});
 	}
 }, {
@@ -59,32 +50,5 @@ Wee.fn.make('guide', {
 
 		sel.removeAllRanges();
 		sel.addRange(range);
-	},
-
-	/**
-	 * Toggle the visibility of a code block
-	 *
-	 * @private
-	 * @param {($|HTMLElement|string)} el - source button
-	 */
-	toggleCode: function(el) {
-		var $el = $(el),
-			lang = $el.data('lang'),
-			ariaExpanded = 'aria-expanded',
-			ariaHidden = 'aria-hidden';
-
-		if ($el.attr(ariaExpanded) !== 'false') {
-			$el.text('View ' + lang)
-				.attr(ariaExpanded, 'false')
-				.next()
-				.attr(ariaHidden, 'true')
-				.hide();
-		} else {
-			$el.text('Hide ' + lang)
-				.attr(ariaExpanded, 'true')
-				.next()
-				.attr(ariaHidden, 'false')
-				.show();
-		}
 	}
 });

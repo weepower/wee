@@ -3,7 +3,7 @@
 define({
 	proxyPort: 9010,
 	proxyUrl: 'http://localhost:9010/',
-	excludeInstrumentation: /^(?:bower_components|node_modules|public)\//,
+	excludeInstrumentation: /^(?:node_modules|public)\//,
 	tunnel: 'NullTunnel',
 	loaderOptions: {
 		packages: [

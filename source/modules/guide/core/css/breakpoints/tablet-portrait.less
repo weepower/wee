@@ -15,14 +15,12 @@ body {
 \*------------------------------------*/
 
 .header {
-	.border(bottom; none);
-	.border(right; @lighterGray);
 	.fixed(0; false; false; 0);
-	.padding(vertical; 3);
-	.size(17; 100%);
+	.padding(3; 0);
+	.size(19; 100%);
 }
 .logo {
-	.margin(horizontal; 2);
+	.margin(horizontal; 3);
 	.spaced-block(2);
 }
 .sections {
@@ -32,6 +30,28 @@ body {
 	&__link {
 		.block();
 		.line-height(2.6);
-		.padded(2);
+		.padded(3);
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Guide
+\*------------------------------------*/
+
+.pattern {
+	.border(left; @lighterGray; 2px);
+	.padding(horizontal; 4);
+}
+code {
+	&.hljs {
+		.margin(horizontal; -4);
+		.opacity(40%);
+		&:hover {
+			.opaque();
+		}
 	}
 }

@@ -30,7 +30,13 @@
 			"name": "General",
 			"template": "default",
 			"target": "index.html",
-			"content": "general/*.md"
+			"contentRoot": "general",
+			"content": [
+				"brand-colors.md",
+				"notice-colors.md",
+				"grayscale.md",
+				"*.md"
+			]
 		},
 		"elements": {
 			"name": "Elements",
