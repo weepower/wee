@@ -37,7 +37,7 @@
 
 		],
 		"compile": {
-			"ie9.min.css": "custom/ie9.less"
+
 		},
 		"legacy": {
 			"enable": true,
