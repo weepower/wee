@@ -50,7 +50,7 @@ Improved organization and readability using [Less](http://lesscss.org) along wit
 
 ```html
 <nav class="nav">
-	<button class="nav__button --bordered">Button</button>
+	<button class="nav__button -bordered">Button</button>
 </nav>
 ```
 
@@ -64,7 +64,7 @@ Improved organization and readability using [Less](http://lesscss.org) along wit
 		&:hover {
 			.background(light; 5%; @primary);
 		}
-		&.\--bordered {
+		&.-bordered {
 			.border(@primary);
 		}
 	}
@@ -85,7 +85,7 @@ Becomes...
 	background-color: #349bb9;
 	background-color: rgba(255, 255, 255, .05);
 }
-.nav__button.--bordered {
+.nav__button.-bordered {
 	border: 1px solid #349bb9;
 }
 ```
@@ -124,7 +124,7 @@ Familiar chainable API and pre-cached [references](https://www.weepower.com/scri
 ```
 
 ```javascript
-$('ref:element').addClass('--is-active')
+$('ref:element').addClass('-is-active')
 	.attr('aria-selected', 'true');
 ```
 
@@ -342,16 +342,18 @@ Wee.history.init({
 });
 ```
 
-## Installation
+## Getting Started
 
-Get started using one of these methods:
+* Install the [Wee CLI](https://github.com/weepower/wee-cli) by running `npm install -g wee-cli`
+
+Then create a new Wee project using one of these methods:
 
 * [Download the latest release](https://github.com/weepower/wee/archive/master.zip) or
-* Clone the repository from `git clone git://github.com/weepower/wee.git`
+* Clone the repository using `git clone git://github.com/weepower/wee.git`
 
-Then run `npm install` from the root of your project followed by `node wee run:static`.
+Then run `npm install` from the root of your project followed by `wee run:static`.
 
-*Node.js 4.2.2+ and the Grunt CLI are recommended for the [build process](https://www.weepower.com/build/#setup).*
+*Node.js 4.1+ is required for the [build process](https://www.weepower.com/build/#setup).*
 
 ## Compatibility
 
