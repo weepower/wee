@@ -21,7 +21,7 @@ JavaScript toolset to build scalable, organized client logic ~ *14KB gzipped*
 * **Routing library** to flexibly associate endpoints to actions
 * **Event handling** to bind actions to elements
 * **Data loading** for Ajax and JSON interaction
-* **HTML5 history** helper to create highly dynamic experiences
+* **HTML5 history** and PJAX helper to create dynamic experiences
 * **Template rendering** to parse complex data structures
 * **Data binding** to sync data models to the DOM
 * **Resource loading** for JavaScript, CSS, and images
@@ -342,7 +342,7 @@ Wee.history.init({
 });
 ```
 
-## Getting Started
+## Get Started
 
 * Install the [Wee CLI](https://github.com/weepower/wee-cli) by running `npm install -g wee-cli`
 

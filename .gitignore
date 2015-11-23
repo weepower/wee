@@ -9,7 +9,6 @@
 	# Wee
 #------------------------------------
 
-bower_components/
 node_modules/
 out/
 
