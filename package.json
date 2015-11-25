@@ -19,6 +19,6 @@
 	},
 	"devDependencies": {
 		"intern": "~3.0.0",
-		"wee-core": "~1.0.0"
+		"wee-core": "~1.0.0-rc.2"
 	}
 }
