@@ -322,9 +322,6 @@ Create dynamic experiences through partial Ajax loading and the HTML5 History AP
 Wee.history.init({
 	scrollTop: '.heading',
 	partials: 'title, main, .heading',
-	bind: {
-		click: 'a'
-	},
 	request: {
 		success: function(xhr) {
 			// Success logic
@@ -348,17 +345,17 @@ Then create a new Wee project using one of these methods:
 * [Download the latest release](https://github.com/weepower/wee/archive/master.zip) or
 * Clone the repository using `git clone git://github.com/weepower/wee.git`
 
-Then run `npm install` from the root of your project followed by `wee run:static`.
+Now run `npm install` from the project root to install the build dependencies followed by `wee run:static` to launch it.
 
-*Node.js 4.1+ is required for the [build process](https://www.weepower.com/build/#setup).*
+*Node.js 4.2+ is recommended for the [build process](https://www.weepower.com/build/#setup).*
 
 ## Compatibility
 
 Wee officially supports the following minimum browser versions:
 
-IE  | Edge | Chrome | Firefox | Safari | iOS Safari | Android
---- | ---- | ------ | ------- | ------ | ---------- | -------
-9   | 20   | 30     | 29      | 6.1    | 6.1        | 4.1
+Chrome | Edge | Firefox | IE  | Safari
+------ | ---- | ------- | --- | ------
+30     | 20   | 29      | 9   | 7.1
 
 ## Bugs
 
