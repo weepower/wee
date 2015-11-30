@@ -1,0 +1,114 @@
+{
+	"name": "Project Name",
+	"paths": {
+		"root": "public",
+		"assets": "assets",
+		"source": "source"
+	},
+	"data": {
+
+	},
+	"style": {
+		"data": {
+
+		},
+		"core": {
+			"namespace": false,
+			"features": {
+				"buttons": true,
+				"code": true,
+				"forms": true,
+				"print": true,
+				"tables": true
+			},
+			"responsive": {
+				"enable": true,
+				"offset": 25,
+				"breakpoints": {
+					"mobileLandscape": 480,
+					"tabletPortrait": 768,
+					"desktopSmall": 1024,
+					"desktopMedium": 1280,
+					"desktopLarge": 1440
+				}
+			}
+		},
+		"build": [
+
+		],
+		"compile": {
+
+		}
+	},
+	"script": {
+		"data": {
+
+		},
+		"core": {
+			"enable": true,
+			"features": {
+				"animate": true,
+				"assets": true,
+				"chain": true,
+				"data": true,
+				"dom": true,
+				"events": true,
+				"history": true,
+				"routes": true,
+				"screen": true,
+				"touch": true,
+				"view": true
+			}
+		},
+		"build": [
+
+		],
+		"compile": {
+			"ie9.min.js": [
+				"polyfill/wee.placeholder.js",
+				"polyfill/wee.slice.js"
+			]
+		},
+		"validate": {
+			"watch": true,
+			"jscs": "source/.jscs.json",
+			"jshint": "source/.jshintrc"
+		},
+		"sourceMaps": true
+	},
+	"generator": {
+		"enable": true,
+		"build": [
+			"source/modules/guide/generate.json"
+		]
+	},
+	"server": {
+		"ghostMode": true,
+		"host": "auto",
+		"port": 9000,
+		"inject": [
+
+		],
+		"reload": {
+			"enable": true,
+			"watch": {
+				"root": true,
+				"paths": [
+
+				],
+				"extensions": [
+					"html"
+				]
+			}
+		},
+		"tasks": {
+			"local": {
+				"https": true,
+				"proxy": "https://wee.dev"
+			},
+			"static": {
+				"https": true
+			}
+		}
+	}
+}

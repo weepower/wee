@@ -1,0 +1,57 @@
+/*------------------------------------*\
+	# General
+\*------------------------------------*/
+
+body {
+	.padding(left; 19);
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Header
+\*------------------------------------*/
+
+.header {
+	.fixed(0; false; false; 0);
+	.padding(3; 0);
+	.size(19; 100%);
+}
+.logo {
+	.margin(horizontal; 3);
+	.spaced-block(2);
+}
+.sections {
+	&__item {
+		.margin(right; 0);
+	}
+	&__link {
+		.block();
+		.line-height(2.6);
+		.padded(3);
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Guide
+\*------------------------------------*/
+
+.pattern {
+	.border(left; @lighterGray; 2px);
+	.padding(horizontal; 4);
+}
+code {
+	&.hljs {
+		.margin(horizontal; -4);
+		.opacity(40%);
+		&:hover {
+			.opaque();
+		}
+	}
+}

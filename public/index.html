@@ -1,60 +1,70 @@
 <!doctype html>
 <html lang="en" id="global" itemscope itemtype="http://schema.org/WebPage">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Front-End Web Framework | Wee</title>
-<meta name="description" content="Blueprint for modern web development.">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/assets/css/style.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400">
-<link rel="apple-touch-icon" href="/touchicon.png">
-<link rel="publisher" href="https://plus.google.com/+weecss">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="@weecss">
-<meta property="og:site_name" content="Wee">
-<meta property="og:title" content="Front-End Web Framework" itemprop="name">
-<meta property="og:description" content="Blueprint for modern web development." itemprop="description">
-<meta property="og:url" content="https://www.weepower.com" itemprop="url">
-<meta property="og:image" content="https://www.weepower.com/share.png" itemprop="image">
-<!--[if lt IE 9]>
-<link rel="stylesheet" href="/assets/css/ie8.min.css">
-<script src="/assets/js/ie8.min.js"></script>
-<![endif]-->
-<!--[if lte IE 9]>
-<link rel="stylesheet" href="/assets/css/ie9.min.css">
-<script src="/assets/js/ie9.min.js"></script>
-<![endif]-->
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Front-End Framework | Wee</title>
+	<meta name="description" content="Blueprint for modern web development.">
+
+	<link rel="stylesheet" href="/assets/css/style.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400">
+
+	<link rel="apple-touch-icon" href="/assets/img/icons/touch.png">
+	<link rel="mask-icon" href="/assets/img/icons/pin.svg" color="#349bb9">
+	<link rel="publisher" href="https://plus.google.com/+weecss">
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@weecss">
+
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Wee">
+	<meta property="og:title" content="Front-End Framework" itemprop="name">
+	<meta property="og:description" content="Blueprint for modern web development." itemprop="description">
+	<meta property="og:url" content="https://www.weepower.com" itemprop="url">
+	<meta property="og:image" content="https://www.weepower.com/assets/img/share.png" itemprop="image">
+
+	<!--[if lte IE 9]>
+	<script src="/assets/js/ie9.min.js"></script>
+	<![endif]-->
 </head>
 <body>
-<header role="banner" class="header">
 	<div class="container">
-		<a href="/" rel="home" class="logo">
-			<img src="/assets/img/wee.svg" alt="Wee Framework">
-		</a>
-		<h1 class="heading">Blueprint for modern web development</h1>
+		<div class="inner">
+			<header class="header" role="banner">
+				<a href="/" rel="home" class="logo">
+					<img src="/assets/img/logo.svg" alt="Wee Framework" class="logo__img">
+				</a>
+			</header>
+
+			<main role="main">
+				<h1 class="heading">Blueprint for modern web development</h1>
+
+				<nav class="nav" role="navigation">
+					<a href="https://www.weepower.com/start" class="button nav__button">Documentation</a>
+					<a href="/guide" class="button nav__button">Style guide</a>
+				</nav>
+
+				<div data-ref="todo"></div>
+
+				<p class="copy">Running <code>node wee reset</code> will clean up this project by deleting the license, readme, and Welcome module files.</p>
+			</main>
+
+			<footer class="footer" role="contentinfo">
+				<nav>
+					<ul class="footer__links">
+						<li><a href="https://github.com/weepower/wee">GitHub</a></li>
+						<li><a href="https://github.com/weepower/wee/issues">Issues</a></li>
+						<li><a href="https://github.com/weepower/wee/releases">Releases</a></li>
+						<li><a href="https://www.weepower.com/blog">Blog</a></li>
+						<li><a href="https://twitter.com/weecss">Twitter</a></li>
+					</ul>
+				</nav>
+			</footer>
+		</div>
 	</div>
-</header>
-<div class="container">
-	<main role="main">
-		<p class="welcome">Welcome to Wee, a lightweight front-end framework for logically building complex, responsive web projects.</p>
-		<nav role="navigation" class="nav">
-			<a href="https://www.weepower.com/start" class="button nav__button">Documentation</a>
-			<a href="/assets/wee/tests/index.html" class="button nav__button">Unit Tests</a>
-			<a href="/assets/guide" class="button nav__button">Style Guide</a>
-		</nav>
-	</main>
-	<footer role="contentinfo" class="footer">
-		<small class="footer__license"><a href="https://www.weepower.com">Wee Powered</a> &ndash; licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2</a></small>
-		<ul class="footer__links">
-			<li><a href="https://github.com/weepower/wee">GitHub</a></li>
-			<li><a href="https://github.com/weepower/wee/issues">Issues</a></li>
-			<li><a href="https://github.com/weepower/wee/releases">Releases</a></li>
-			<li><a href="https://twitter.com/weecss">Twitter</a></li>
-			<li><a href="https://www.weepower.com/blog">Blog</a></li>
-		</ul>
-	</footer>
-</div>
-<script src="/assets/js/script.min.js"></script>
+
+	<script src="/assets/js/script.min.js"></script>
 </body>
 </html>

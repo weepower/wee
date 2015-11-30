@@ -2,8 +2,8 @@
 	# Maintenance
 #------------------------------------
 
-#RewriteCond %{REMOTE_ADDR} !^123\.456\.789\.
 #RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+#RewriteCond %{REMOTE_ADDR} !^123\.456\.789\.
 #RewriteCond $1 !^(assets) [NC]
 #RewriteRule ^(.*)$ /maintenance.html [R=307,L]
 
@@ -18,9 +18,12 @@ Options +FollowSymLinks -Indexes -MultiViews
 # Internet Explorer document mode
 Header set X-UA-Compatible "IE=edge"
 
+# Disable iframe embedding
+Header always append X-Frame-Options SAMEORIGIN
+
 # Character set
 AddDefaultCharset utf-8
-AddCharset utf-8 .atom .css .js .json .map .rss .xml
+AddCharset utf-8 .atom .css .geojson .js .json .manifest .map .rss .xml
 
 
 #------------------------------------
@@ -58,15 +61,15 @@ ErrorDocument 404 /404.html
 #------------------------------------
 
 # Force www
-#RewriteCond %{HTTP_HOST} !^www\.weepower\.com$ [NC]
+#RewriteCond %{HTTP_HOST} ^weepower\.com$ [NC]
 #RewriteRule ^(.*)$ http://www.weepower.com/$1 [R=301,L]
 
-# Remove www (don't use both force and remove)
-#RewriteCond %{HTTP_HOST} ^www\.weepower\.com$ [NC]
-#RewriteRule ^(.*)$ http://www.weepower.com/$1 [R=301,L]
+# Remove www (use either force or remove)
+#RewriteCond %{HTTP_HOST} !^.weepower\.com$ [NC]
+#RewriteRule ^(.*)$ http://weepower.com/$1 [R=301,L]
 
 # Force SSL
-#RewriteCond %{HTTPS} !=on
+#RewriteCond %{HTTPS} !on
 #RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
 # Remove trailing slash
@@ -88,4 +91,4 @@ RewriteRule (.*)\.html$ $1$2 [R=301]
 # Rewrite extension
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule (.*) $1\.html [L]
+RewriteRule (.*) $1.html [L]

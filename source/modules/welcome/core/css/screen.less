@@ -1,0 +1,135 @@
+/*------------------------------------*\
+	# General
+\*------------------------------------*/
+
+body {
+	.background(@brandLight);
+	.padding(bottom; @blockMarginBottom);
+}
+.container {
+	.max-width(100);
+}
+.inner {
+	.max-width(46);
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Header
+\*------------------------------------*/
+
+.header {
+	.padding(top; 20%);
+}
+.logo {
+	.inline-block(9);
+	.spaced(.8);
+	&__img {
+		.width(9);
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Footer
+\*------------------------------------*/
+
+.footer {
+	&__links {
+		.font(@headingFont; 1.3; 400);
+		.inline-list(1.6);
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Content
+\*------------------------------------*/
+
+.heading {
+	.font(@headingFont; 2.2; 300);
+	.primary();
+}
+.nav {
+	.row(2%);
+	.spaced(3);
+	&__button {
+		.background(@brandLight);
+		.border(@primary);
+		.column(spaced; 1; 2; 2%);
+		.font(@headingFont; 1.4);
+		.padded(0);
+		.rounded(5);
+		.spaced(1);
+		.primary();
+		&:hover,
+		&:active {
+			.background(@primary);
+			.white();
+		}
+		&:active {
+			.translate(y; 1px);
+		}
+	}
+}
+.copy {
+	.font(@headingFont; 1.6; 300);
+}
+
+
+
+
+
+/*------------------------------------*\
+	# Tasks
+\*------------------------------------*/
+
+.todo {
+	.spaced(5);
+	.unstyled();
+	&__item {
+		.relative();
+		&.-is-done {
+			.gray();
+			.line-through();
+			.todo__toggle {
+				&:after {
+					.content('\2714');
+					.gray();
+					.opaque();
+				}
+			}
+		}
+	}
+	&__toggle {
+		.absolute();
+		.cursor();
+		.user-select();
+		&:after {
+			.align(center);
+			.border(@gray);
+			.circle(3);
+			.content();
+			.opacity(50%);
+		}
+		&:hover {
+			&:after {
+				.opacity(70%);
+			}
+		}
+	}
+	&__label {
+		.block();
+		.font(@headingFont; 1.7; 300; 1.3);
+		.padding(.4; false; 1.2; 4.4);
+	}
+}

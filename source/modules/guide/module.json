@@ -1,0 +1,11 @@
+{
+	"name": "Guide",
+	"version": "1.0.0",
+	"description": "Style guide template",
+	"homepage": "https://www.weepower.com",
+	"author": "Wee",
+	"autoload": false,
+	"dependencies": {
+		"wee": "^3.0.0"
+	}
+}

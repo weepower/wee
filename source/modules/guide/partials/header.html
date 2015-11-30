@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" id="global" itemscope itemtype="http://schema.org/WebPage">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>{{ section.name }} | {{ site.name }}</title>
+	<meta name="description" content="{{description}}">
+
+	<link rel="stylesheet" href="/assets/css/style.min.css">
+	<link rel="stylesheet" href="/assets/modules/guide/style.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400">
+
+	<link rel="apple-touch-icon" href="/assets/img/icons/touchicon.png">
+	<link rel="mask-icon" href="/assets/img/icons/pin.svg" color="#349bb9">
+
+	<!--[if lte IE 9]>
+	<script src="/assets/js/ie9.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<header class="header" role="banner">
+		<a href="/" rel="home" class="logo">
+			<img src="/assets/img/logo.svg" alt="{{ site.name }}" class="logo__img">
+		</a>
+
+		<nav class="sections" role="navigation">
+			<ul class="unstyled">
+				{{ #site.sections|each }}
+					<li class="sections__item">
+						<a href="{{ target }}" class="sections__link{{ #isActive }} -is-active{{ /isActive }}">{{ name }}</a>
+					</li>
+				{{ /site.sections }}
+			</ul>
+		</nav>
+	</header>
+
+	<main class="container" role="main">

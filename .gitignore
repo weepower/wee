@@ -9,8 +9,6 @@
 	# Wee
 #------------------------------------
 
-**/wee/temp/*
-bower_components/
 node_modules/
 out/
 
@@ -21,11 +19,16 @@ out/
 
 .bundle
 .idea/
+.komodotools
+.project
 .settings/
 .tern-project
+.tmproj
+.vscode/
+*.esproj
+*.komodoproject
 *.sublime-*
-browserstack.json
-BrowserStackLocal
+browserstack.js
 codekit-config.json
 mixture.json
 prepros.json
@@ -40,14 +43,12 @@ prepros.json
 .tmp
 *.diff
 *.err
-*.gem
 *.lock
 *.log
 *.orig
-*.out
-*.pid
+*.rej
+*.swo
 *.swp
-*.tmproj
 *.vi
 error_log
 Thumbs.db
