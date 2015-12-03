@@ -124,12 +124,17 @@ $('ref:element').addClass('-is-active')
 	.attr('aria-selected', 'true');
 ```
 
-##### Controllers [→](https://www.weepower.com/script/core)
+##### Controllers [→](https://www.weepower.com/script/core#fnmake)
 
 Controllers along with the automated build process create well-organized projects. There are public and private objects with constructors, destructors, and other helpful components.
 
 ```javascript
 Wee.fn.make('controllerName', {
+	/**
+	 * Set public variable and execute init method
+	 *
+	 * @constructor
+	 */
 	_construct: function() {
 		this.publicVariable = 'Public Variable';
 		this.init();
@@ -194,7 +199,7 @@ Becomes...
 "My name is John Smith"
 ```
 
-##### Apps [→](https://www.weepower.com/script/view)
+##### Apps [→](https://www.weepower.com/script/view#app)
 
 Wee includes a powerful application framework for one-way data-binding. Simply call into one of the many data manipulation methods to update your model and watch the DOM update automatically.
 
@@ -296,7 +301,7 @@ Wee.assets.load({
 });
 ```
 
-##### Animation [→](https://www.weepower.com/script/animation)
+##### Animation [→](https://www.weepower.com/script/animate)
 
 Tween attributes and properties with granular control and callback functionality. Custom easing function can be registered for granular control of the motion.
 
