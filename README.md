@@ -46,23 +46,23 @@ Here are a few basic examples. There's much more so check out the [documentation
 Improved organization and readability using [Less](http://lesscss.org) along with Wee's powerful mixin library. 
 
 ```html
-<nav class="nav">
-	<button class="nav__button -bordered">Button</button>
+<nav class="nav" role="navigation">
+	<a href="/about" class="nav__link">About</a>
+	<a href="/contact" class="nav__link -is-active">Contact</a>
 </nav>
 ```
 
 ```less
 .nav {
-	&__button {
-		.fill();
+	&__link {
 		.font(@headingFont; 1.2);
-		.spaced(1);
+		.spaced-block(1);
 		.uppercase();
 		&:hover {
-			.background(light; 5%; @primary);
+			.background(dark; 5%);
 		}
-		&.-bordered {
-			.border(@primary);
+		&.-is-active {
+			.border(bottom; @primary);
 		}
 	}
 }
@@ -71,19 +71,18 @@ Improved organization and readability using [Less](http://lesscss.org) along wit
 Becomes...
 
 ```css
-.nav__button {
-	width: 100%;
+.nav__link {
 	font-family: Lato, sans-serif;
 	font-size: 1.2rem;
+	display: block;
 	margin-bottom: 1rem;
 	text-transform: uppercase;
 }
-.nav__button:hover {
-	background-color: #349bb9;
-	background-color: rgba(255, 255, 255, .05);
+.nav__link:hover {
+	background-color: rgba(0, 0, 0, .05);
 }
-.nav__button.-bordered {
-	border: 1px solid #349bb9;
+.nav__link.-is-active {
+	border-bottom: 1px solid #349bb9;
 }
 ```
 
@@ -94,7 +93,7 @@ There are a couple dozen useful features and utilities in the core script. For i
 ```javascript
 $.env({
 	prod: 'www.domain.com',
-	test: 'testing.domain.com'
+	test: 'dev.domain.com'
 });
 
 $.env(); // "local"
@@ -366,7 +365,7 @@ Automated testing generously provided by [BrowserStack](https://www.browserstack
 
 ## Versioning
 
-Wee adheres to [Semantic Versioning](http://semver.org/) in the form of MAJOR.MINOR.PATCH.  
+Wee adheres to [Semantic Versioning](http://semver.org) in the form of MAJOR.MINOR.PATCH.  
 Regardless of version we recommend thoroughly reviewing the [release notes](https://github.com/weepower/wee/releases) before updating.
 
 ## Community
