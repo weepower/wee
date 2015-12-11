@@ -25,7 +25,7 @@ Wee.fn.make('guide', {
 	 */
 	highlightCode: function() {
 		Wee.assets.load({
-			root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/',
+			root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/',
 			files: [
 				'highlight.min.js',
 				'styles/github.min.css'
@@ -37,7 +37,7 @@ Wee.fn.make('guide', {
 	},
 
 	/**
-	 * Select all markup in a code block
+	 * Select all content in a code block
 	 *
 	 * @private
 	 * @param {HTMLElement} el - target code wrapper
