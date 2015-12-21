@@ -26,10 +26,10 @@
 	"disallowParenthesesAroundArrowParam": true,
 	"disallowSpaceAfterObjectKeys": true,
 	"disallowSpaceAfterPrefixUnaryOperators": [
-		"++",
-		"--",
 		"+",
+		"++",
 		"-",
+		"--",
 		"~"
 	],
 	"disallowSpaceBeforeComma": true,
