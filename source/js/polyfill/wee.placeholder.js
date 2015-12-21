@@ -1,4 +1,4 @@
-// Wee Placeholder 1.0.2 (weepower.com)
+// Wee Placeholder 1.1.0 (weepower.com)
 // Licensed under Apache 2 (http://www.apache.org/licenses/LICENSE-2.0)
 
 (function(W, D) {
@@ -19,7 +19,7 @@
 				}
 
 				el.onblur = function() {
-					if (this.value.replace(/^\s+|\s+$/g, '') === '') {
+					if (this.value.trim() === '') {
 						this.value = val;
 					}
 				};
