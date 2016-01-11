@@ -346,8 +346,9 @@ Wee.history.init({
 
 Then create a new Wee project using one of these methods:
 
-* [Download the latest release](https://github.com/weepower/wee/archive/master.zip) or
+* [Download the latest release](https://github.com/weepower/wee/archive/master.zip)
 * Clone the repository using `git clone git://github.com/weepower/wee.git`
+* Install with npm by running `npm install wee-framework`
 
 Now run `npm install` from the project root to install the build dependencies followed by `wee run:static` to launch it.
 
