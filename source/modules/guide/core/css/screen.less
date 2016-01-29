@@ -365,39 +365,50 @@ code {
 	h6 {
 		&:after {
 			.font(@baseFont; @baseFontSize);
+			.font-size(1.4);
 			.font-weight(normal);
 			.gray();
-			.margin(left; 2);
+			.margin(left; 1);
+		}
+		code {
+			.font-size(1.4);
+			.margin(left; 1);
 		}
 	}
 	h1 {
 		&:after {
-			.content(unit(@h1, @defaultUnit) / @headingLineHeight);
+			@fontSize: unit(@h1, @defaultUnit);
+			.content('@{fontSize} (@{headingLineHeight})');
 		}
 	}
 	h2 {
 		&:after {
-			.content(unit(@h2, @defaultUnit) / @headingLineHeight);
+			@fontSize: unit(@h2, @defaultUnit);
+			.content('@{fontSize} (@{headingLineHeight})');
 		}
 	}
 	h3 {
 		&:after {
-			.content(unit(@h3, @defaultUnit) / @headingLineHeight);
+			@fontSize: unit(@h3, @defaultUnit);
+			.content('@{fontSize} (@{headingLineHeight})');
 		}
 	}
 	h4 {
 		&:after {
-			.content(unit(@h4, @defaultUnit) / @headingLineHeight);
+			@fontSize: unit(@h4, @defaultUnit);
+			.content('@{fontSize} (@{headingLineHeight})');
 		}
 	}
 	h5 {
 		&:after {
-			.content(unit(@h5, @defaultUnit) / @headingLineHeight);
+			@fontSize: unit(@h5, @defaultUnit);
+			.content('@{fontSize} (@{headingLineHeight})');
 		}
 	}
 	h6 {
 		&:after {
-			.content(unit(@h6, @defaultUnit) / @headingLineHeight);
+			@fontSize: unit(@h6, @defaultUnit);
+			.content('@{fontSize} (@{headingLineHeight})');
 		}
 	}
 }

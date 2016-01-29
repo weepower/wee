@@ -5,7 +5,7 @@ name: Table
 ---html|render---
 
 <div class="responsive-table">
-	<table itemscope itemtype="http://schema.org/Table">
+	<table class="table-bordered" itemscope itemtype="http://schema.org/Table">
 		<caption itemprop="about">Caption ipsum dolor sit amet</caption>
 		<thead>
 			<tr>
