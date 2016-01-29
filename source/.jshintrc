@@ -22,7 +22,6 @@
 		"require": false,
 		"Wee": false
 	},
-	"strict": "implied",
 	"undef": true,
 	"unused": true
 }
