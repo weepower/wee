@@ -30,7 +30,6 @@ out/
 *.sublime-*
 browserstack.js
 codekit-config.json
-mixture.json
 prepros.json
 
 
