@@ -46,6 +46,17 @@ AddCharset utf-8 .atom .css .geojson .js .json .jsonld .manifest .map .rss .xml
 
 
 #------------------------------------
+	# Cache Control
+#------------------------------------
+
+ExpiresActive on
+
+<FilesMatch "\.(css|eot|gif|ico|jpe?g|otf|png|svg|ttf|webp|woff2?)$">
+	ExpiresDefault "access plus 1 month"
+</FilesMatch>
+
+
+#------------------------------------
 	# Errors
 #------------------------------------
 
