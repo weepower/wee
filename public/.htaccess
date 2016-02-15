@@ -15,18 +15,26 @@
 RewriteEngine On
 Options +FollowSymLinks -Indexes -MultiViews
 
-# Internet Explorer document mode
-Header set X-UA-Compatible "IE=edge"
-
-# Disable iframe embedding
-Header always append X-Frame-Options SAMEORIGIN
-
 # Character set
 AddDefaultCharset utf-8
 AddCharset utf-8 .atom .css .geojson .js .json .jsonld .manifest .map .rss .xml
 
+# Disable iframe embedding
+Header set X-Frame-Options SAMEORIGIN
+
+# Internet Explorer document mode
+Header set X-UA-Compatible "IE=edge"
+
 # HTTP Strict Transport Security
 # Header always set Strict-Transport-Security "max-age=7776000; includeSubDomains"
+
+# Conditionally target static assets
+<FilesMatch "\.(css|eot|gif|ico|jpe?g|otf|png|svg|ttf|webp|woff2?)$">
+	Header set Cache-control max-age=2592000
+
+	Header unset X-Frame-Options
+	Header unset X-UA-Compatible
+</FilesMatch>
 
 
 #------------------------------------
@@ -36,23 +44,12 @@ AddCharset utf-8 .atom .css .geojson .js .json .jsonld .manifest .map .rss .xml
 # Cross-origin images
 <FilesMatch "\.(bmp|gif|ico|jpe?g|png|svg|webp)$">
 	SetEnvIf Origin ":" IS_CORS
-	Header set Access-Control-Allow-Origin "*" env=IS_CORS
+	Header always set Access-Control-Allow-Origin "*" env=IS_CORS
 </FilesMatch>
 
 # Cross-origin web fonts
 <FilesMatch "\.(eot|otf|ttf|woff2?)$">
-	Header set Access-Control-Allow-Origin "*"
-</FilesMatch>
-
-
-#------------------------------------
-	# Cache Control
-#------------------------------------
-
-ExpiresActive on
-
-<FilesMatch "\.(css|eot|gif|ico|jpe?g|otf|png|svg|ttf|webp|woff2?)$">
-	ExpiresDefault "access plus 1 month"
+	Header always set Access-Control-Allow-Origin "*"
 </FilesMatch>
 
 
