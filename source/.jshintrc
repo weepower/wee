@@ -5,7 +5,6 @@
 	"debug": true,
 	"devel": true,
 	"eqnull": true,
-	"esversion": 5,
 	"expr": true,
 	"latedef": true,
 	"loopfunc": true,
