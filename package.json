@@ -1,6 +1,6 @@
 {
 	"name": "wee-framework",
-	"version": "3.2.0",
+	"version": "3.2.1",
 	"description": "Blueprint for modern web development",
 	"homepage": "https://www.weepower.com",
 	"license": "Apache-2.0",
@@ -19,6 +19,6 @@
 	},
 	"devDependencies": {
 		"intern": "~3.0.0",
-		"wee-core": "~1.2.0"
+		"wee-core": "~1.2.1"
 	}
 }
