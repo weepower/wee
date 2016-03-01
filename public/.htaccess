@@ -2,9 +2,9 @@
 	# Maintenance
 #------------------------------------
 
-# RewriteCond %{REQUEST_URI} !^/maintenance\.html$
-# RewriteCond %{REMOTE_ADDR} !^123\.456\.789\.
-# RewriteCond $1 !^(assets) [NC]
+# RewriteCond %{REQUEST_URI} !^/maintenance.html$
+# RewriteCond %{REMOTE_ADDR} !^123.456.789.
+# RewriteCond $1 !^/assets [NC]
 # RewriteRule ^(.*)$ /maintenance.html [R=307,L]
 
 
@@ -72,12 +72,12 @@ ErrorDocument 404 /404.html
 #------------------------------------
 
 # Force www
-# RewriteCond %{HTTP_HOST} !^www.weepower.com$ [NC]
-# RewriteRule ^(.*)$ http://www.weepower.com/$1 [R=301,L]
+# RewriteCond %{HTTP_HOST} !^www.domain.com$ [NC]
+# RewriteRule ^(.*)$ http://www.domain.com/$1 [R=301,L]
 
 # Remove www (use either force or remove)
-# RewriteCond %{HTTP_HOST} !^weepower.com$ [NC]
-# RewriteRule ^(.*)$ http://weepower.com/$1 [R=301,L]
+# RewriteCond %{HTTP_HOST} !^domain.com$ [NC]
+# RewriteRule ^(.*)$ http://domain.com/$1 [R=301,L]
 
 # Force SSL
 # RewriteCond %{HTTPS} !on
