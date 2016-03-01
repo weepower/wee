@@ -5,7 +5,8 @@
 	"homepage": "https://www.weepower.com",
 	"author": "Wee",
 	"autoload": false,
+	"extension": true,
 	"dependencies": {
-		"wee": "^3.0.0"
+		"wee": "^3.2.0"
 	}
 }
