@@ -1,6 +1,6 @@
 ---
 name: Grayscale
-heading: This muted pallet is used for complementary visual structure
+heading: This muted palette is used for complementary visual structure
 ---
 
 <ol class="swatches">

@@ -1,6 +1,5 @@
 ---
 name: Unordered list
-heading: Use lists to represent groups of related data
 ---
 
 ---html|render---

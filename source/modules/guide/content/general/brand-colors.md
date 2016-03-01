@@ -1,6 +1,6 @@
 ---
 name: Brand colors
-heading: Our primary color pallet is used for major UI visuals and controls
+heading: Our primary color palette is used for major UI visuals and controls
 ---
 
 <ol class="swatches">
