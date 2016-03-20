@@ -1,6 +1,6 @@
 ---
 name: Breakpoints
-heading: These represent our primary responsive breakpoints
+heading: These represent the minimum breakpoint widths
 ---
 
 <div class="responsive-table">
