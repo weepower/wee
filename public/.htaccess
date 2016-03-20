@@ -30,8 +30,8 @@ Header set X-UA-Compatible "IE=edge"
 
 # Conditionally target static assets
 <FilesMatch "\.(css|eot|gif|ico|jpe?g|otf|png|svg|ttf|webp|woff2?)$">
+	SetEnv IS_STATIC true
 	Header set Cache-control max-age=2592000
-
 	Header unset X-Frame-Options
 	Header unset X-UA-Compatible
 </FilesMatch>
@@ -100,6 +100,7 @@ RewriteCond %{REQUEST_URI} ^GET\ (.*).html(.*)\ HTTP
 RewriteRule (.*).html$ $1$2 [R=301]
 
 # Rewrite extension
+RewriteCond %{ENV:IS_STATIC} !true
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule (.*) $1.html [L]
