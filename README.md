@@ -4,14 +4,14 @@ Wee is a lightweight front-end framework for logically building complex, respons
 
 ## Features
 
-Mobile-first CSS framework with configurable reset and mixin library ~ *3KB gzipped*
+Mobile-first CSS framework with configurable reset and mixin library ~ *3KB gzip*
 
 * **Central configuration** for style normalization
 * **Feature toggling** to minimize build size
 * **Structured breakpoints** to organize responsive logic
 * **Print styling** to generate print-optimized pages
 
-JavaScript toolset to build scalable, organized client logic ~ *14KB gzipped*
+JavaScript toolset to build scalable, organized client logic ~ *14KB gzip*
 
 * **Foundation** of utilities, helpers, and controller structure
 * **Chainable DOM** traversal and manipulation with familiar API
@@ -324,6 +324,7 @@ Create dynamic experiences through partial Ajax loading and the HTML5 History AP
 
 ```javascript
 Wee.history.init({
+	bind: true,
 	scrollTop: '.heading',
 	partials: 'title, main, .heading',
 	request: {
@@ -350,9 +351,9 @@ Then create a new Wee project using one of these methods:
 * Clone the repository using `git clone git://github.com/weepower/wee.git`
 * Install with npm by running `npm install wee-framework`
 
-Now run `npm install` from the project root to install the build dependencies followed by `wee run:static` to launch it.
+Now run `npm install` from the project root to install the build dependencies followed by `wee` to launch it.
 
-*Node.js 4.2+ is recommended for the [build process](https://www.weepower.com/build/#setup).*
+*Node.js 4.4+ is recommended for the [build process](https://www.weepower.com/build/#setup).*
 
 ## Compatibility
 
