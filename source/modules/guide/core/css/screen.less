@@ -353,6 +353,45 @@ code {
 
 
 /*------------------------------------*\
+	# Icons
+\*------------------------------------*/
+
+.load-font('icons');
+
+.icons {
+	&__icon {
+		&:after {
+			.darkerGray();
+			.font('icons');
+		}
+		&.-wee {
+			&:after {
+				.content(@iconWee);
+			}
+		}
+		&.-twitter {
+			&:after {
+				.content(@iconTwitter);
+			}
+		}
+		&.-facebook {
+			&:after {
+				.content(@iconFacebook);
+			}
+		}
+		&.-github {
+			&:after {
+				.content(@iconGitHub);
+			}
+		}
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
 	# Headings
 \*------------------------------------*/
 

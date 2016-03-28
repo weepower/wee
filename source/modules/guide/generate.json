@@ -64,6 +64,7 @@
 			"contentRoot": "typography",
 			"content": [
 				"fonts.md",
+				"icons.md",
 				"headings.md",
 				"paragraph.md",
 				"inline.md",
