@@ -271,10 +271,10 @@ Wee.data.request({
 		username: 'user@weepower.com',
 		password: 'pass123'
 	},
-	success: function(data) {
+	success: function(data, xhr) {
 		// Success logic
 	},
-	error: function(data) {
+	error: function(xhr) {
 		// Failure logic
 	}
 });
@@ -328,7 +328,7 @@ Wee.history.init({
 	scrollTop: '.heading',
 	partials: 'title, main, .heading',
 	request: {
-		success: function(xhr) {
+		success: function(data, xhr) {
 			// Success logic
 		},
 		error: function(xhr) {
