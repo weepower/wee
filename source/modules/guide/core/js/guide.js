@@ -36,7 +36,7 @@ Wee.fn.make('guide', {
 				'styles/github.min.css'
 			],
 			success: function() {
-				$('pre code').each(
+				$('ref:code').find('code').each(
 					hljs.highlightBlock
 				);
 			}

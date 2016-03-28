@@ -6,6 +6,6 @@ A <code>&lt;code&gt;</code> element wrapped in a <code>&lt;pre&gt;</code> elemen
 
 ---html|render---
 
-<pre><code class="nohighlight">.selector {
+<pre><code>.selector {
 	color: #ccc;
 }</code></pre>
