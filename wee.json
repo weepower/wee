@@ -46,6 +46,7 @@
 		},
 		"core": {
 			"enable": true,
+			"namespace": "Wee",
 			"features": {
 				"animate": true,
 				"assets": true,
@@ -82,8 +83,9 @@
 			"source/modules/guide/generate.json"
 		]
 	},
+	"defaultCommand": "run:static",
 	"server": {
-		"ghostMode": true,
+		"ghostMode": false,
 		"host": "auto",
 		"port": 9000,
 		"inject": [
@@ -91,6 +93,9 @@
 		],
 		"reload": {
 			"enable": true,
+			"ignore": [
+
+			],
 			"watch": {
 				"root": true,
 				"paths": [
