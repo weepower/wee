@@ -6,6 +6,6 @@
 	"author": "Wee",
 	"autoload": true,
 	"dependencies": {
-		"wee": "^3.0.0"
+		"wee": "^3.3.0"
 	}
 }

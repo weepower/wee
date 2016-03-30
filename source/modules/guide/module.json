@@ -7,6 +7,6 @@
 	"autoload": false,
 	"extension": true,
 	"dependencies": {
-		"wee": "^3.2.0"
+		"wee": "^3.3.0"
 	}
 }

@@ -8,7 +8,7 @@ define({
 	loaderOptions: {
 		packages: [
 			{
-				name: 'Wee',
+				name: 'Script',
 				location: 'public/assets/js',
 				main: 'script.min.js'
 			}
