@@ -11,7 +11,7 @@ Mobile-first CSS framework with configurable reset and mixin library ~ *3KB gzip
 * **Structured breakpoints** to organize responsive logic
 * **Print styling** to generate print-optimized pages
 
-JavaScript toolset to build scalable, organized client logic ~ *14KB gzip*
+JavaScript toolset to build scalable, organized client logic ~ *15KB gzip*
 
 * **Foundation** of utilities, helpers, and controller structure
 * **Chainable DOM** traversal and manipulation with familiar API
