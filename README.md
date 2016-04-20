@@ -2,6 +2,8 @@
 
 Wee is a lightweight front-end framework for logically building complex, responsive web projects.
 
+[![NPM version](https://img.shields.io/npm/v/wee-framework.svg?style=flat)](https://www.npmjs.com/package/wee-framework)
+
 ## Features
 
 Mobile-first CSS framework with configurable reset and mixin library ~ *3KB gzip*
