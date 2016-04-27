@@ -20,20 +20,23 @@ AddDefaultCharset utf-8
 AddCharset utf-8 .atom .css .geojson .js .json .jsonld .manifest .map .rss .xml
 
 # Disable iframe embedding
-Header set X-Frame-Options SAMEORIGIN
 
 # Internet Explorer document mode
 Header set X-UA-Compatible "IE=edge"
 
-# HTTP Strict Transport Security
+# Security headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options SAMEORIGIN
+# Header set X-XSS-Protection "1; mode=block"
 # Header always set Strict-Transport-Security "max-age=7776000; includeSubDomains"
 
 # Conditionally target static assets
 <FilesMatch "\.(css|eot|gif|ico|jpe?g|otf|png|svg|ttf|webp|woff2?)$">
 	SetEnv IS_STATIC true
 	Header set Cache-control max-age=2592000
-	Header unset X-Frame-Options
 	Header unset X-UA-Compatible
+	Header unset X-Frame-Options
+	# Header unset X-XSS-Protection
 </FilesMatch>
 
 
