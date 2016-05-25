@@ -30,7 +30,7 @@ Wee.fn.make('guide', {
 	 */
 	highlightCode: function() {
 		Wee.assets.load({
-			root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/',
+			root: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/',
 			files: [
 				'highlight.min.js',
 				'styles/github.min.css'
