@@ -5,13 +5,9 @@
 		"assets": "assets",
 		"source": "source"
 	},
-	"data": {
-
-	},
+	"data": {},
 	"style": {
-		"data": {
-
-		},
+		"data": {},
 		"core": {
 			"namespace": false,
 			"features": {
@@ -33,17 +29,11 @@
 				}
 			}
 		},
-		"build": [
-
-		],
-		"compile": {
-
-		}
+		"build": [],
+		"compile": {}
 	},
 	"script": {
-		"data": {
-
-		},
+		"data": {},
 		"core": {
 			"enable": true,
 			"namespace": "Wee",
@@ -61,9 +51,7 @@
 				"view": true
 			}
 		},
-		"build": [
-
-		],
+		"build": [],
 		"compile": {
 			"ie9.min.js": [
 				"polyfill/wee.placeholder.js",
@@ -88,19 +76,13 @@
 		"ghostMode": false,
 		"host": "auto",
 		"port": 9000,
-		"inject": [
-
-		],
+		"inject": [],
 		"reload": {
 			"enable": true,
-			"ignore": [
-
-			],
+			"ignore": [],
 			"watch": {
 				"root": true,
-				"paths": [
-
-				],
+				"paths": [],
 				"extensions": [
 					"html"
 				]
