@@ -1,6 +1,6 @@
 {
 	"name": "wee-framework",
-	"version": "3.3.2",
+	"version": "3.3.3",
 	"description": "Blueprint for modern web development",
 	"homepage": "https://www.weepower.com",
 	"license": "Apache-2.0",
@@ -9,15 +9,10 @@
 		"framework",
 		"javascript"
 	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/weepower/wee.git"
-	},
-	"bugs": {
-		"url": "https://github.com/weepower/wee/issues"
-	},
+	"repository": "weepower/wee",
+	"bugs": "https://github.com/weepower/wee/issues",
 	"devDependencies": {
 		"intern": "~3.1.1",
-		"wee-core": "~1.3.5"
+		"wee-core": "~1.3.7"
 	}
 }
