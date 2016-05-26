@@ -15,9 +15,7 @@ define({
 	suites: [
 		'source/js/tests/unit/example'
 	],
-	functionalSuites: [
-
-	],
+	functionalSuites: [],
 	environments: [{
 		browserName: 'chrome'
 	}]
