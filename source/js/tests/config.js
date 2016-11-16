@@ -2,9 +2,9 @@
 
 define({
 	proxyPort: 9010,
-	proxyUrl: 'https://localhost:9010/',
+	proxyUrl: 'http://localhost:9010/',
 	excludeInstrumentation: /^(?:node_modules|public)\//,
-	tunnel: 'NullTunnel',
+	tunnel: 'nullTunnel',
 	loaderOptions: {
 		packages: [{
 			name: 'Script',
