@@ -1,18 +1,18 @@
 {
-	"name": "wee-framework",
-	"version": "3.3.8",
-	"description": "Blueprint for modern web development",
-	"homepage": "https://www.weepower.com",
-	"license": "Apache-2.0",
-	"keywords": [
-		"css",
-		"framework",
-		"javascript"
-	],
-	"repository": "weepower/wee",
-	"bugs": "https://github.com/weepower/wee/issues",
-	"devDependencies": {
-		"intern": "~3.2.3",
-		"wee-core": "~1.7.0"
-	}
+  "name": "wee-framework",
+  "version": "3.3.9",
+  "description": "Blueprint for modern web development",
+  "homepage": "https://www.weepower.com",
+  "license": "Apache-2.0",
+  "keywords": [
+    "css",
+    "framework",
+    "javascript"
+  ],
+  "repository": "weepower/wee",
+  "bugs": "https://github.com/weepower/wee/issues",
+  "devDependencies": {
+    "intern": "~3.2.3",
+    "wee-core": "~1.7.0"
+  }
 }
