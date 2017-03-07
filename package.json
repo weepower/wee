@@ -13,6 +13,6 @@
   "bugs": "https://github.com/weepower/wee/issues",
   "devDependencies": {
     "intern": "~3.2.3",
-    "wee-core": "~1.7.0"
+    "wee-core": "~1.8.1"
   }
 }
