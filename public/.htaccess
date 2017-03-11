@@ -19,8 +19,6 @@ Options +FollowSymLinks -Indexes -MultiViews
 AddDefaultCharset utf-8
 AddCharset utf-8 .atom .css .geojson .js .json .jsonld .manifest .map .rss .xml
 
-# Disable iframe embedding
-
 # Internet Explorer document mode
 Header set X-UA-Compatible "IE=edge"
 
