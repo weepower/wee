@@ -1,101 +1,41 @@
 {
-	"name": "Project Name",
 	"paths": {
 		"root": "public",
 		"assets": "assets",
-		"source": "source"
+		"source": "resources",
+		"build": "build"
 	},
-	"data": {},
 	"style": {
-		"data": {},
-		"core": {
-			"namespace": false,
-			"features": {
-				"buttons": true,
-				"code": true,
-				"forms": true,
-				"print": true,
-				"tables": true
-			},
-			"responsive": {
-				"enable": true,
-				"offset": 25,
-				"breakpoints": {
-					"mobileLandscape": 480,
-					"tabletPortrait": 768,
-					"desktopSmall": 1024,
-					"desktopMedium": 1280,
-					"desktopLarge": 1440
-				}
-			}
+		"features": {
+			"buttons": true,
+			"code": true,
+			"forms": true,
+			"print": true,
+			"tables": true
 		},
-		"build": [],
-		"compile": {}
-	},
-	"script": {
-		"data": {},
-		"core": {
-			"enable": true,
-			"namespace": "Wee",
-			"features": {
-				"animate": true,
-				"assets": true,
-				"chain": true,
-				"dom": true,
-				"events": true,
-				"fetch": true,
-				"history": true,
-				"routes": true,
-				"screen": true,
-				"touch": true,
-				"view": true
-			}
+		"breakpoints": {
+			"mobileLandscape": 480,
+			"tablet": 768,
+			"desktop": 1024,
+			"desktop2": 1280,
+			"desktop3": 1440
 		},
-		"build": [],
-		"compile": {
-			"ie9.min.js": [
-				"polyfill/wee.placeholder.js",
-				"polyfill/wee.slice.js"
-			]
-		},
-		"validate": {
-			"watch": true,
-			"jscs": "source/.jscs.json",
-			"jshint": "source/.jshintrc"
-		},
-		"sourceMaps": true
-	},
-	"generator": {
-		"enable": true,
+		"breakpointOffset": 25,
 		"build": [
-			"source/modules/guide/generate.json"
-		]
-	},
-	"defaultCommand": "run:static",
-	"server": {
-		"ghostMode": false,
-		"host": "auto",
-		"port": 9000,
-		"inject": [],
-		"reload": {
-			"enable": true,
-			"ignore": [],
-			"watch": {
-				"root": true,
-				"paths": [],
-				"extensions": [
-					"html"
-				]
-			}
-		},
-		"tasks": {
-			"local": {
-				"https": true,
-				"proxy": "https://wee.dev"
-			},
-			"static": {
-				"https": true
-			}
+			"./resources/assets/styles/custom1.pcss",
+			"custom/*.pcss"
+		],
+		"compile": {
+			"file.min.css": [
+				"./resources/assets/styles/custom1.pcss",
+				"./resources/assets/styles/custom2.pcss"
+			],
+			"custom.min.css": "custom/*.pcss",
+			"full-custom.min.css": [
+				"./resources/assets/styles/custom1.pcss",
+				"./resources/assets/styles/custom2.pcss",
+				"custom/*.pcss"
+			]
 		}
 	}
 }
