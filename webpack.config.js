@@ -1,9 +1,10 @@
 const { resolve } = require('path');
 const webpack = require('webpack');
 const prod = process.env.NODE_ENV === 'production';
+const basePath = process.env.BASE_PATH;
 
 module.exports = {
-	context: resolve('resources/assets'),
+	context: resolve(basePath),
 	entry: {
 		app: './scripts/app.js'
 	},

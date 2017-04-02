@@ -13,7 +13,7 @@
   "bugs": "https://github.com/weepower/wee/issues",
   "config": {
     "root": "public",
-    "source": "resources/assets",
+    "source": "source",
     "build": "build"
   },
   "scripts": {
@@ -23,8 +23,8 @@
     "webpack:prod": "NODE_ENV=production webpack --config=webpack.config.js -p",
     "postcss": "node $npm_package_config_build/postcss.js --config=wee.json",
     "imagemin": "imagemin $npm_package_config_source/images/* -o public/assets/images",
-    "build:css": "npm-run-all -p postcss",
-    "build:js": "npm run webpack",
+    "build:css": "npm run postcss",
+    "build:js": "BASE_PATH=$npm_package_config_source npm run webpack",
     "build:images": "npm run imagemin",
     "build:init": "node build/init.js",
     "build": "npm-run-all -p build:init build:js build:css build:images",
