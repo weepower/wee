@@ -6,16 +6,13 @@ const responsive = require('./responsive');
 const config = fs.readJsonSync(paths.project + '/wee.json');
 const packageJson = fs.readJsonSync(paths.packageJson);
 
-// Set project paths
-const assetsPath = `${config.paths.source}/${config.paths.assets}`;
-
 // Update package.json
 if (! packageJson.config) {
 	packageJson.config = {};
 }
 
 packageJson.config.root = config.paths.root;
-packageJson.config.source = assetsPath;
+packageJson.config.source = config.paths.source;
 packageJson.config.build = config.paths.build;
 fs.writeJsonSync(paths.packageJson, packageJson, {spaces: 2});
 
