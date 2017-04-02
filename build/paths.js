@@ -5,7 +5,6 @@ const packageJsonPath = projectPath + '/package.json';
 const weeJsonPath = projectPath + '/wee.json';
 const config = fs.readJsonSync(weeJsonPath);
 const sourcePath = `${projectPath}/${config.paths.source}`;
-const assetsPath = `${sourcePath}/${config.paths.assets}`;
 const rootPath = `${projectPath}/${config.paths.root}`;
 const modulesPath = projectPath + '/node_modules';
 
@@ -17,10 +16,9 @@ module.exports = {
 	build: buildPath,
 	root: rootPath,
 	source: sourcePath,
-	assets: assetsPath,
-	styles: `${assetsPath}/styles`,
-	scripts: `${assetsPath}/scripts`,
-	components: `${assetsPath}/components`,
+	styles: `${sourcePath}/styles`,
+	scripts: `${sourcePath}/scripts`,
+	components: `${sourcePath}/components`,
 	output: {
 		styles: `${rootPath}/${config.paths.assets}/styles`,
 		scripts: `${rootPath}/${config.paths.assets}/scripts`
