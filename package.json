@@ -1,6 +1,6 @@
 {
   "name": "wee",
-  "version": "4.0.0-alpha",
+  "version": "4.0.0-alpha.1",
   "description": "Blueprint for modern web development",
   "homepage": "https://www.weepower.com",
   "license": "Apache-2.0",
@@ -64,6 +64,6 @@
     "vue-template-compiler": "^2.1.10",
     "webpack": "^2.2.0",
     "webpack-uglify-js-plugin": "^1.1.9",
-    "wee-core": "^1.6.1"
+    "wee-core": "next"
   }
 }
