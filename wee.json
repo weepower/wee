@@ -2,7 +2,7 @@
 	"paths": {
 		"root": "public",
 		"assets": "assets",
-		"source": "resources",
+		"source": "source",
 		"build": "build"
 	},
 	"style": {
@@ -21,21 +21,7 @@
 			"desktop3": 1440
 		},
 		"breakpointOffset": 25,
-		"build": [
-			"./resources/assets/styles/custom1.pcss",
-			"custom/*.pcss"
-		],
-		"compile": {
-			"file.min.css": [
-				"./resources/assets/styles/custom1.pcss",
-				"./resources/assets/styles/custom2.pcss"
-			],
-			"custom.min.css": "custom/*.pcss",
-			"full-custom.min.css": [
-				"./resources/assets/styles/custom1.pcss",
-				"./resources/assets/styles/custom2.pcss",
-				"custom/*.pcss"
-			]
-		}
+		"build": [],
+		"compile": {}
 	}
 }
