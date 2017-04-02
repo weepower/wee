@@ -13,6 +13,7 @@ const paths = require('./paths');
 // Config
 const config = fs.readJsonSync(args.config);
 const breakpoints = config.style.breakpoints;
+const features = config.style.features;
 const compile = config.style.compile;
 const variables = require(paths.styles + '/variables.js')();
 const plugins = [
@@ -55,6 +56,18 @@ function calcBreakpoints(breakpoints, offset) {
 	}
 
 	return breakpoints;
+}
+
+/**
+ * Change camelCase to dash-case (including numbers)
+ *
+ * @param value
+ * @returns {string}
+ */
+function convertCamelToDash(value) {
+	return value.replace(/([a-z])([A-Z])/g, '$1-$2')
+		.toLowerCase()
+		.replace(/([a-z])([0-9])/g, '$1-$2');
 }
 
 /**
@@ -129,41 +142,50 @@ for (let i = 0; i < files.length; i++) {
 // Main output file
 result = '';
 
+// Add reset and base styling
 result += fs.readFileSync(paths.weeCore + '/styles/reset.pcss', 'utf-8');
 result += fs.readFileSync(__dirname + '/temp/responsive.pcss', 'utf-8');
 
-// TODO: Add forms,buttons,code,print,tables
+// Add features
+if (features.buttons) {
+	result += fs.readFileSync(paths.weeCore + '/styles/components/buttons.pcss', 'utf-8');
+}
 
-// Add print files
-result += `@media print {
-	${fs.readFileSync(paths.weeCore + '/styles/print.pcss')}
-	${getCSS('print.pcss')}
-}`;
+if (features.code) {
+	result += fs.readFileSync(paths.weeCore + '/styles/components/code.pcss', 'utf-8');
+}
+
+if (features.forms) {
+	result += fs.readFileSync(paths.weeCore + '/styles/components/forms.pcss', 'utf-8');
+}
+
+if (features.tables) {
+	result += fs.readFileSync(paths.weeCore + '/styles/components/tables.pcss', 'utf-8');
+}
+
+if (features.print) {
+	// Add print files
+	result += `@media print {
+		${fs.readFileSync(paths.weeCore + '/styles/print.pcss')}
+		${getCSS('print.pcss')}
+	}`;
+}
 
 // Add breakpoint files
-glob.sync(paths.styles + '/breakpoints/**/*.{pcss,css}').forEach(file => {
-	let segments = file.split('/'),
-		name = '';
+for (let breakpoint in breakpoints) {
+	let file = `${paths.styles}/breakpoints/${convertCamelToDash(breakpoint)}.pcss`;
 
-	segments[segments.length - 1].replace(/\.pcss$|\.css$/, '')
-		.split('-')
-		.forEach((word, i) => {
-			if (i) {
-				name += (word.substr(0, 1).toUpperCase() + word.substr(1));
-			} else {
-				name += word;
-			}
-		});
+	fs.ensureFileSync(file);
 
 	ignore.push(file);
 
-	if (breakpoints[name]) {
-		result += `@${name} { ${fs.readFileSync(file, 'utf-8')} }`;
+	if (breakpoints[breakpoint]) {
+		result += `@${breakpoint} { ${fs.readFileSync(file, 'utf-8')} }`;
 	} else {
 		console.log(chalk.bgRed(`Unregistered breakpoint: ${name}`));
 		console.log('Check breakpoint files against registered breakpoints in wee.json');
 	}
-});
+}
 
 // Add component files
 glob.sync(paths.components + '/**/*.{pcss,css}').forEach(file => {
