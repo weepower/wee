@@ -171,6 +171,9 @@ if (features.print) {
 	}`;
 }
 
+// Add class helpers
+result += fs.readFileSync(paths.weeCore + '/styles/components/helpers.pcss', 'utf-8');
+
 // Add breakpoint files
 for (let breakpoint in breakpoints) {
 	let file = `${paths.styles}/breakpoints/${convertCamelToDash(breakpoint)}.pcss`;
