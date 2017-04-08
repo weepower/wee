@@ -3,15 +3,10 @@ const glob = require('glob');
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const syntax = require('postcss-wee-syntax');
-const args = require('command-line-args')([{
-	name: 'config',
-	alias: 'c',
-	type: String
-}]);
 const paths = require('./paths');
 
 // Config
-const config = fs.readJsonSync(args.config);
+const config = fs.readJsonSync(paths.project + '/wee.json');
 const breakpoints = config.style.breakpoints;
 const features = config.style.features;
 const compile = config.style.compile;
