@@ -27,7 +27,7 @@
 	"server": {
 		"ghostMode": false,
 		"host": "auto",
-		"port": 3000,
+		"port": 9000,
 		"https": true,
 		"proxy": false,
 		"static": true,

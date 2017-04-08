@@ -37,6 +37,12 @@ module.exports = {
 	ghostMode: config.ghostMode,
     host: config.host === 'auto' ? null : config.host,
 	port: config.port,
+	ui: {
+		port: config.port + 1,
+		weinre: {
+			port: config.port + 100
+		}
+	},
 	open: 'external',
     files: reloadPaths,
 	https: config.https,
