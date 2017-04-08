@@ -17,7 +17,6 @@
     "build": "build"
   },
   "scripts": {
-    "env": "env",
     "serve": "browser-sync start --config bs-config.js",
     "webpack": "webpack --config=webpack.config.js",
     "webpack:prod": "NODE_ENV=production webpack --config=webpack.config.js -p",
