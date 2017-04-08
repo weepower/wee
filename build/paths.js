@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const buildPath = __dirname;
-const projectPath = buildPath + '/..';
+const projectPath = buildPath.split('/').slice(0, -1).join('/');
 const packageJsonPath = projectPath + '/package.json';
 const weeJsonPath = projectPath + '/wee.json';
 const config = fs.readJsonSync(weeJsonPath);
