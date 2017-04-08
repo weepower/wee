@@ -23,5 +23,24 @@
 		"breakpointOffset": 25,
 		"build": [],
 		"compile": {}
+	},
+	"server": {
+		"ghostMode": false,
+		"host": "auto",
+		"port": 3000,
+		"https": true,
+		"proxy": false,
+		"static": true,
+		"reload": {
+			"enable": true,
+			"watch": {
+				"root": true,
+				"paths": [],
+				"extensions": [
+					"html"
+				],
+				"ignore": []
+			}
+		}
 	}
 }

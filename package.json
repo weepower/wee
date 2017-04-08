@@ -17,10 +17,10 @@
     "build": "build"
   },
   "scripts": {
-    "serve": "browser-sync start --config bs-config.js",
+    "serve": "browser-sync start --config $npm_package_config_build/bs-config.js",
     "webpack": "webpack --config=webpack.config.js",
     "webpack:prod": "NODE_ENV=production webpack --config=webpack.config.js -p",
-    "postcss": "node $npm_package_config_build/postcss.js --config=wee.json",
+    "postcss": "node $npm_package_config_build/postcss.js",
     "imagemin": "imagemin $npm_package_config_source/images/* -o public/assets/images",
     "build:css": "npm run postcss",
     "build:js": "BASE_PATH=$npm_package_config_source npm run webpack",
