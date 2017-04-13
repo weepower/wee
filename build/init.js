@@ -11,6 +11,7 @@ if (! packageJson.config) {
 	packageJson.config = {};
 }
 
+// Update config properties in package.json to be used by npm scripts
 packageJson.config.root = config.paths.root;
 packageJson.config.source = config.paths.source;
 packageJson.config.build = config.paths.build;
