@@ -26,13 +26,13 @@
     "build:js": "BASE_PATH=$npm_package_config_source npm run webpack",
     "build:images": "npm run imagemin",
     "build:init": "node build/init.js",
-    "build": "npm-run-all -p build:init build:js build:css build:images",
+    "build": "npm run cleanup && npm-run-all -p build:init build:js build:css build:images",
+    "cleanup": "node build/cleanup.js",
     "watch:js": "onchange $npm_package_config_source/scripts/* $npm_package_config_source/scripts/**/* $npm_package_config_source/components/**/*.js $npm_package_config_source/components/**/*.vue $npm_package_config_source/components/*.vue -- npm run build:js",
     "watch:css": "onchange $npm_package_config_source/styles/* $npm_package_config_source/components/**/*.pcss -- npm run build:css",
     "watch:images": "onchange $npm_package_config_source/images -- npm run build:images",
     "watch": "npm-run-all -p watch:js watch:css watch:images",
-    "start": "npm-run-all -p serve build watch",
-    "init": "npm run build:init -s"
+    "start": "npm-run-all -p serve build watch"
   },
   "devDependencies": {
     "async": "^2.1.4",
