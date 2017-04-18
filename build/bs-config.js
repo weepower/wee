@@ -46,10 +46,8 @@ module.exports = {
 	open: 'external',
     files: reloadPaths,
 	https: config.https,
-
-	// Not using paths.root for better terminal print out
 	server: config.static ? paths.root : false,
-    proxy: config.proxy,
+    proxy: config.static ? false : config.proxy,
 	logPrefix: 'Wee',
 	logFileChanges: true
 };
