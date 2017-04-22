@@ -24,12 +24,17 @@
 		"build": [],
 		"compile": {}
 	},
+	"script": {
+		"entry": {
+			"app": "app.js"
+		}
+	},
 	"server": {
 		"ghostMode": false,
 		"host": "auto",
 		"port": 9000,
 		"https": true,
-		"proxy": false,
+		"proxy": "https://wee.dev",
 		"static": true,
 		"reload": {
 			"enable": true,

@@ -18,7 +18,7 @@
   },
   "scripts": {
     "serve": "browser-sync start --config $npm_package_config_build/bs-config.js",
-    "webpack": "webpack --config=webpack.config.js",
+    "webpack": "webpack --config=$npm_package_config_build/webpack.config.js",
     "webpack:prod": "NODE_ENV=production webpack --config=webpack.config.js -p",
     "postcss": "node $npm_package_config_build/postcss.js",
     "imagemin": "imagemin $npm_package_config_source/images/* -o public/assets/images",
@@ -32,7 +32,8 @@
     "watch:css": "onchange $npm_package_config_source/styles/* $npm_package_config_source/components/**/*.pcss -- npm run build:css",
     "watch:images": "onchange $npm_package_config_source/images -- npm run build:images",
     "watch": "npm-run-all -p watch:js watch:css watch:images",
-    "start": "npm-run-all -p serve build watch"
+    "start": "npm-run-all -p serve build watch",
+    "wee": "wee"
   },
   "devDependencies": {
     "async": "^2.1.4",
@@ -62,6 +63,8 @@
     "vue-template-compiler": "^2.1.10",
     "webpack": "^2.2.0",
     "webpack-uglify-js-plugin": "^1.1.9",
+    "wee-cli": "next",
     "wee-core": "next"
-  }
+  },
+  "dependencies": {}
 }
