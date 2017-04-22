@@ -26,7 +26,15 @@
 	},
 	"script": {
 		"entry": {
-			"app": "app.js"
+			"app": "app.js",
+			"other": "other.js"
+		},
+		"chunking": {
+			"enable": true,
+			"options": {
+				"name": "test",
+				"minChunks": 2
+			}
 		}
 	},
 	"server": {

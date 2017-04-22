@@ -3,6 +3,7 @@ const prod = process.env.NODE_ENV === 'production';
 const paths = require('./paths');
 const glob = require('glob');
 const config = require(paths.project + '/wee.json');
+let plugins = [];
 
 /**
  * Determine base path of provided file path
@@ -57,11 +58,17 @@ function buildEntries(entries) {
 	return result;
 }
 
+// Add chunking of shared modules between entry points
+if (config.script.chunking.enable) {
+	plugins.push(new webpack.optimize.CommonsChunkPlugin(config.script.chunking.options));
+}
+
 module.exports = {
 	entry: buildEntries(config.script.entry),
 	output: {
-		filename: '[name].bundle.js',
+		filename: '[name].bundle.js', // TODO: This could be configured
 		path: paths.output.scripts,
+		publicPath: paths.root,
 		pathinfo: prod === false
 	},
 	devtool: 'source-map',
@@ -74,8 +81,21 @@ module.exports = {
 			{
 				test: /\.js/,
 				loader: 'babel-loader',
-				exclude: /node_modules/
+				exclude: /node_modules/,
+				options: {
+					presets: [
+						require('babel-preset-es2015'),
+						require('babel-preset-es2016')
+					]
+				}
 			}
+		]
+	},
+	plugins: plugins,
+	resolve: {
+		modules: [
+			paths.weeCore + '/scripts',
+			paths.nodeModules
 		]
 	}
 };
