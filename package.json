@@ -64,7 +64,7 @@
     "webpack": "^2.2.0",
     "webpack-uglify-js-plugin": "^1.1.9",
     "wee-cli": "next",
-    "wee-core": "next"
+    "wee-core": "^2.0.0-alpha.6"
   },
   "dependencies": {}
 }
