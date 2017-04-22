@@ -29,6 +29,9 @@
 			"app": "app.js",
 			"other": "other.js"
 		},
+		"output": {
+			"filename": "[name].bundle.js"
+		},
 		"chunking": {
 			"enable": true,
 			"options": {

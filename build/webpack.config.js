@@ -66,7 +66,7 @@ if (config.script.chunking.enable) {
 module.exports = {
 	entry: buildEntries(config.script.entry),
 	output: {
-		filename: '[name].bundle.js', // TODO: This could be configured
+		filename: config.script.output.filename,
 		path: paths.output.scripts,
 		publicPath: paths.root,
 		pathinfo: prod === false
