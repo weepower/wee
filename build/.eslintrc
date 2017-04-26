@@ -1,0 +1,17 @@
+{
+    "extends": "airbnb-base",
+    "plugins": [
+        "import"
+    ],
+	"settings": {
+		"import/resolver": {
+			"webpack": {
+				"config": "./build/webpack.config.js"
+			}
+		}
+	},
+	"rules": {
+		"indent": ["error", "tab"],
+		"eol-last": 0
+	}
+}
