@@ -21,7 +21,9 @@ module.exports = {
 	components: `${sourcePath}/components`,
 	output: {
 		styles: `${rootPath}/${config.paths.assets}/styles`,
-		scripts: `${rootPath}/${config.paths.assets}/scripts`
+		scripts: `${rootPath}/${config.paths.assets}/scripts`,
+		images: `${rootPath}/${config.paths.assets}/images`,
+		fonts: `${rootPath}/${config.paths.assets}/fonts`
 	},
 	nodeModules: modulesPath,
 	weeCore: modulesPath + '/wee-core',
