@@ -25,7 +25,10 @@ if (reload.enable) {
 	}
 
 	// Watch web root assets
-	reloadPaths.unshift(paths.root + '/assets/**/*.{css,gif,jpg,jpeg,js,png,svg,webp,woff,woff2}');
+	reloadPaths = reloadPaths.concat(glob.sync(paths.output.scripts + '/*.js'))
+		.concat(glob.sync(paths.output.styles + '/*.css'))
+		.concat(paths.output.images + '/**/*.{gif,jpg,jpeg,png,svg}')
+		.concat(paths.output.fonts + '/**/*.{webp,woff,woff2,svg}');
 
 	// Add ignored files
 	watch.ignore.forEach(path => {
