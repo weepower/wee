@@ -173,6 +173,7 @@ result += fs.readFileSync(paths.weeCore + '/styles/components/helpers.pcss', 'ut
 for (let breakpoint in breakpoints) {
 	let file = `${paths.styles}/breakpoints/${convertCamelToDash(breakpoint)}.pcss`;
 
+	// Create file if not already generated
 	fs.ensureFileSync(file);
 
 	ignore.push(file);
