@@ -26,14 +26,13 @@
 	},
 	"script": {
 		"entry": {
-			"app": "app.js",
-			"other": "other.js"
+			"app": "app.js"
 		},
 		"output": {
 			"filename": "[name].bundle.js"
 		},
 		"chunking": {
-			"enable": true,
+			"enable": false,
 			"options": {
 				"name": "test",
 				"minChunks": 2
