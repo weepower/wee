@@ -21,13 +21,12 @@
     "webpack": "webpack --config=$npm_package_config_build/webpack.config.js || true",
     "webpack:prod": "NODE_ENV=production webpack --config=$npm_package_config_build/webpack.config.js -p",
     "postcss": "node $npm_package_config_build/postcss.js",
-    "imagemin": "imagemin $npm_package_config_source/images/* -o public/assets/images",
     "build:css": "npm run postcss",
     "build:js": "BASE_PATH=$npm_package_config_source npm run webpack",
-    "build:images": "npm run imagemin",
-    "build:init": "node build/init.js",
+    "build:images": "node $npm_package_config_build/images.js",
+    "build:init": "node $npm_package_config_build/init.js",
     "build": "npm run reset && npm-run-all -p build:init build:js build:css build:images",
-    "reset": "node build/reset.js",
+    "reset": "node $npm_package_config_build/reset.js",
     "watch:js": "onchange $npm_package_config_source/scripts/* $npm_package_config_source/scripts/**/* $npm_package_config_source/components/**/*.js $npm_package_config_source/components/**/*.vue $npm_package_config_source/components/*.vue -- npm run build:js",
     "watch:css": "onchange $npm_package_config_source/styles/* $npm_package_config_source/components/**/*.pcss -- npm run build:css",
     "watch:images": "onchange $npm_package_config_source/images -- npm run build:images",
@@ -53,7 +52,10 @@
     "eslint-plugin-import": "^2.2.0",
     "fs-extra": "^2.0.0",
     "glob": "^7.1.1",
-    "imagemin-cli": "^3.0.0",
+    "imagemin": "^5.3.1",
+    "imagemin-mozjpeg": "^6.0.0",
+    "imagemin-pngquant": "^5.0.0",
+    "imagemin-svgo": "^5.2.2",
     "npm-run-all": "^4.0.1",
     "onchange": "^3.2.1",
     "postcss": "^5.2.12",
@@ -69,7 +71,7 @@
     "webpack": "^2.2.0",
     "webpack-uglify-js-plugin": "^1.1.9",
     "wee-cli": "next",
-    "wee-core": "^2.0.0-alpha.6"
+    "wee-core": "next"
   },
   "dependencies": {}
 }
