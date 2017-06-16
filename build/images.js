@@ -7,8 +7,9 @@ const glob = require('glob');
 const chalk = require('chalk');
 
 // Declare start of image compression
-console.log(chalk.underline.blue('Compressing Images\n'));
+console.log(chalk.underline.blue('\nCompressing Images\n'));
 
+// Find all image paths
 glob.sync(paths.images + '/**/*.{jpg,jpeg,png,svg}').forEach(file => {
 	let segments = file.split('/');
 	let destination = segments.slice(segments.indexOf('images') + 1);
@@ -18,6 +19,7 @@ glob.sync(paths.images + '/**/*.{jpg,jpeg,png,svg}').forEach(file => {
 		destination.pop();
 	}
 
+	// Compress image
 	imagemin([file], `${paths.output.images}/${destination.join('/')}/`, {
 		plugins: [
 			mozjpeg({
@@ -33,9 +35,9 @@ glob.sync(paths.images + '/**/*.{jpg,jpeg,png,svg}').forEach(file => {
 			let segments = file.path.split('/');
 			let destination = '/' + segments.slice(segments.indexOf('images')).join('/');
 
-			console.log(chalk.blue('Compressed:') + destination);
+			console.log(chalk.blue('Compressed: ') + destination);
 		});
 	}).catch(error => {
-		console.log(error.message);
+		console.log(chalk.red('Error: ') + error.message);
 	});
 });

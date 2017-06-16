@@ -110,6 +110,8 @@ function processCSS(css, destination) {
  * Start of process
  */
 
+console.log(chalk.cyan.underline('\nCompiling CSS\n'));
+
 // Make sure output directories exist
 fs.mkdirsSync(paths.output.styles);
 
@@ -132,6 +134,8 @@ for (let i = 0; i < files.length; i++) {
 	}
 
 	processCSS(result, `${paths.output.styles}/${files[i]}`);
+
+	console.log(chalk.cyan('Compiled: ') + files[i]);
 }
 
 // Main output file
@@ -205,3 +209,5 @@ glob.sync(paths.styles + '**/*.{pcss,css}', {
 
 // Process main style file
 processCSS(result, paths.output.styles + '/style.min.css');
+
+console.log(chalk.cyan('Compiled: ') + 'style.min.css');
