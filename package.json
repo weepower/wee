@@ -26,13 +26,13 @@
     "build:images": "node $npm_package_config_build/images.js",
     "build:fonts": "node $npm_package_config_build/fonts.js",
     "build:init": "node $npm_package_config_build/init.js",
-    "build": "npm run reset && npm-run-all -p build:init build:js build:css build:images",
+    "build": "npm run --silent reset && npm run --silent build:init && npm-run-all --silent -p build:js build:css build:images build:fonts",
     "reset": "node $npm_package_config_build/reset.js",
     "watch:js": "onchange $npm_package_config_source/scripts/* $npm_package_config_source/scripts/**/* $npm_package_config_source/components/**/*.js $npm_package_config_source/components/**/*.vue $npm_package_config_source/components/*.vue -- npm run build:js",
     "watch:css": "onchange $npm_package_config_source/styles/* $npm_package_config_source/components/**/*.pcss -- npm run build:css",
     "watch:images": "onchange $npm_package_config_source/images -- npm run build:images",
     "watch": "npm-run-all -p watch:js watch:css watch:images",
-    "start": "npm run build && npm-run-all -p serve watch",
+    "start": "npm run --silent build && npm-run-all -p serve watch",
     "wee": "wee"
   },
   "devDependencies": {
