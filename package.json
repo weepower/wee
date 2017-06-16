@@ -24,6 +24,7 @@
     "build:css": "npm run postcss",
     "build:js": "BASE_PATH=$npm_package_config_source npm run webpack",
     "build:images": "node $npm_package_config_build/images.js",
+    "build:fonts": "node $npm_package_config_build/fonts.js",
     "build:init": "node $npm_package_config_build/init.js",
     "build": "npm run reset && npm-run-all -p build:init build:js build:css build:images",
     "reset": "node $npm_package_config_build/reset.js",
