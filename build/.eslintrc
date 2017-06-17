@@ -11,7 +11,9 @@
 		}
 	},
 	"rules": {
+		"comma-dangle": ["error", "never"],
 		"indent": ["error", "tab"],
+		"no-tabs": 0,
 		"eol-last": 0
 	}
 }
