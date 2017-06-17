@@ -19,7 +19,7 @@
   "scripts": {
     "serve": "browser-sync start --config $npm_package_config_build/bs-config.js",
     "webpack": "webpack --config=$npm_package_config_build/webpack.config.js || true",
-    "webpack:prod": "NODE_ENV=production webpack --config=$npm_package_config_build/webpack.config.js -p",
+    "webpack:prod": "webpack --display-modules --config=$npm_package_config_build/webpack.config.js -p",
     "postcss": "node $npm_package_config_build/postcss.js",
     "build:css": "npm run postcss",
     "build:js": "BASE_PATH=$npm_package_config_source npm run webpack",
