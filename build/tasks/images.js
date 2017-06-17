@@ -2,12 +2,13 @@ const imagemin = require('imagemin');
 const mozjpeg = require('imagemin-mozjpeg');
 const pngquant = require('imagemin-pngquant');
 const svgo = require('imagemin-svgo');
-const paths = require('./paths');
+const paths = require('../paths');
 const glob = require('glob');
 const chalk = require('chalk');
+const log = require('../utils').log;
 
 // Declare start of image compression
-console.log(chalk.underline.blue('\nCompressing Images\n'));
+log.heading('Compressing Images', 'blue');
 
 // Find all image paths
 glob.sync(paths.images + '/**/*.{jpg,jpeg,png,svg}').forEach(file => {
@@ -35,9 +36,9 @@ glob.sync(paths.images + '/**/*.{jpg,jpeg,png,svg}').forEach(file => {
 			let segments = file.path.split('/');
 			let destination = '/' + segments.slice(segments.indexOf('images')).join('/');
 
-			console.log(chalk.blue('Compressed: ') + destination);
+			log.message('Compressed: ' + destination, 'blue');
 		});
 	}).catch(error => {
-		console.log(chalk.red('Error: ') + error.message);
+		log.error('Errors: ' + error.message);
 	});
 });

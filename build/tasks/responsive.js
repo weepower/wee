@@ -1,4 +1,4 @@
-const paths = require('./paths');
+const paths = require('../paths');
 const fs = require('fs-extra');
 const glob = require('glob');
 

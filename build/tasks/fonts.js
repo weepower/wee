@@ -1,10 +1,11 @@
 const glob = require('glob');
 const fs = require('fs-extra');
-const paths = require('./paths');
+const paths = require('../paths');
 const chalk = require('chalk');
+const log = require('../utils').log;
 
 // Declare start of image compression
-console.log(chalk.underline.magenta('\nCopying Fonts\n'));
+log.heading('Copying Fonts', 'magenta');
 
 glob.sync(paths.fonts + '/**/*.{svg,otf,ttf,woff,woff2,eot}').forEach(file => {
 	let segments = file.split('/');
@@ -12,9 +13,9 @@ glob.sync(paths.fonts + '/**/*.{svg,otf,ttf,woff,woff2,eot}').forEach(file => {
 
 	fs.copy(file, paths.output.fonts + destination, error => {
 		if (error) {
-			return console.log(chalk.red('Error: ') + error.message);
+			return log.error('Error: ' + error.message);
 		}
 
-		console.log(chalk.magenta('Copied: ') + '/fonts' + destination);
+		log.message('Copied: /fonts' + destination, 'magenta');
 	});
 });

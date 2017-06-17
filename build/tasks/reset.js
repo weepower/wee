@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const paths = require('./paths');
+const paths = require('../paths');
 const utils = require('wee-core/utils');
 const chalk = require('chalk');
 

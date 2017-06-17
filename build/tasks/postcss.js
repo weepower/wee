@@ -3,7 +3,8 @@ const glob = require('glob');
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const syntax = require('postcss-wee-syntax');
-const paths = require('./paths');
+const paths = require('../paths');
+const log = require('../utils').log;
 
 // Config
 const config = fs.readJsonSync(paths.project + '/wee.json');
@@ -97,12 +98,12 @@ function processCSS(css, destination) {
 		.then(result => {
 			fs.writeFile(destination, result.css, err => {
 				if (err) {
-					console.log(err);
+					log.error(err);
 				}
 			});
 		})
 		.catch(err => {
-			console.log(err);
+			log.error(err);
 		});
 }
 
@@ -110,7 +111,7 @@ function processCSS(css, destination) {
  * Start of process
  */
 
-console.log(chalk.cyan.underline('\nCompiling CSS\n'));
+log.heading('Compiling CSS', 'cyan');
 
 // Make sure output directories exist
 fs.mkdirsSync(paths.output.styles);
@@ -135,7 +136,7 @@ for (let i = 0; i < files.length; i++) {
 
 	processCSS(result, `${paths.output.styles}/${files[i]}`);
 
-	console.log(chalk.cyan('Compiled: ') + files[i]);
+	log.message('Compiled: ' + files[i], 'cyan');
 }
 
 // Main output file
@@ -143,7 +144,7 @@ result = '';
 
 // Add reset and base styling
 result += fs.readFileSync(paths.weeCore + '/styles/reset.pcss', 'utf-8');
-result += fs.readFileSync(__dirname + '/temp/responsive.pcss', 'utf-8');
+result += fs.readFileSync(__dirname + '/../temp/responsive.pcss', 'utf-8');
 
 // Add features
 if (features.buttons) {
@@ -185,8 +186,8 @@ for (let breakpoint in breakpoints) {
 	if (breakpoints[breakpoint]) {
 		result += `@${breakpoint} { ${fs.readFileSync(file, 'utf-8')} }`;
 	} else {
-		console.log(chalk.bgRed(`Unregistered breakpoint: ${name}`));
-		console.log('Check breakpoint files against registered breakpoints in wee.json');
+		log.error('Unregistered breakpoint: ' + name);
+		log.message('Check breakpoint files against registered breakpoints in wee.json');
 	}
 }
 
@@ -210,4 +211,4 @@ glob.sync(paths.styles + '**/*.{pcss,css}', {
 // Process main style file
 processCSS(result, paths.output.styles + '/style.min.css');
 
-console.log(chalk.cyan('Compiled: ') + 'style.min.css');
+log.message('Compiled: style.min.css', 'cyan');

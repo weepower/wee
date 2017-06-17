@@ -14,20 +14,21 @@
   "config": {
     "root": "public",
     "source": "source",
-    "build": "build"
+    "build": "build",
+    "tasks": "build/tasks"
   },
   "scripts": {
     "serve": "browser-sync start --config $npm_package_config_build/bs-config.js",
     "webpack": "webpack --config=$npm_package_config_build/webpack.config.js || true",
     "webpack:prod": "webpack --display-modules --config=$npm_package_config_build/webpack.config.js -p",
-    "postcss": "node $npm_package_config_build/postcss.js",
+    "postcss": "node $npm_package_config_tasks/postcss.js",
     "build:css": "npm run postcss",
     "build:js": "BASE_PATH=$npm_package_config_source npm run webpack",
-    "build:images": "node $npm_package_config_build/images.js",
-    "build:fonts": "node $npm_package_config_build/fonts.js",
-    "build:init": "node $npm_package_config_build/init.js",
+    "build:images": "node $npm_package_config_tasks/images.js",
+    "build:fonts": "node $npm_package_config_tasks/fonts.js",
+    "build:init": "node $npm_package_config_tasks/init.js",
     "build": "npm run --silent reset && npm run --silent build:init && npm-run-all --silent -p build:js build:css build:images build:fonts",
-    "reset": "node $npm_package_config_build/reset.js",
+    "reset": "node $npm_package_config_tasks/reset.js",
     "watch:js": "onchange $npm_package_config_source/scripts/* $npm_package_config_source/scripts/**/* $npm_package_config_source/components/**/*.js $npm_package_config_source/components/**/*.vue $npm_package_config_source/components/*.vue -- npm run build:js",
     "watch:css": "onchange $npm_package_config_source/styles/* $npm_package_config_source/components/**/*.pcss -- npm run build:css",
     "watch:images": "onchange $npm_package_config_source/images -- npm run build:images",

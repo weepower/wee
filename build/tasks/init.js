@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const paths = require('./paths');
+const paths = require('../paths');
 const responsive = require('./responsive');
 
 // Config files
@@ -15,6 +15,7 @@ if (! packageJson.config) {
 packageJson.config.root = config.paths.root;
 packageJson.config.source = config.paths.source;
 packageJson.config.build = config.paths.build;
+packageJson.config.tasks = config.paths.build + '/tasks';
 fs.writeJsonSync(paths.packageJson, packageJson, {spaces: 2});
 
 // Create wee.responsive.pcss file
