@@ -34,7 +34,7 @@
 		"chunking": {
 			"enable": false,
 			"options": {
-				"name": "test",
+				"name": "common",
 				"minChunks": 2
 			}
 		}
