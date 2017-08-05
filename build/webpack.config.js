@@ -63,6 +63,11 @@ if (config.script.chunking.enable) {
 	plugins.push(new webpack.optimize.CommonsChunkPlugin(config.script.chunking.options));
 }
 
+// Load globals - will be replaced during bundling
+plugins.push(new webpack.DefinePlugin({
+	'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+}));
+
 module.exports = {
 	entry: buildEntries(config.script.entry),
 	output: {
