@@ -1,5 +1,8 @@
 {
     "extends": "airbnb-base",
+	"env": {
+		"browser": true
+	},
     "plugins": [
         "import"
     ],
@@ -12,8 +15,9 @@
 	},
 	"rules": {
 		"comma-dangle": ["error", "never"],
+		"consistent-return": 0,
+		"eol-last": 0,
 		"indent": ["error", "tab"],
-		"no-tabs": 0,
-		"eol-last": 0
+		"no-tabs": 0
 	}
 }
