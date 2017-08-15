@@ -1,11 +1,8 @@
 {
-    "extends": "airbnb-base",
-	"env": {
-		"browser": true
-	},
-    "plugins": [
-        "import"
-    ],
+	"extends": "airbnb-base",
+	"plugins": [
+		"import"
+	],
 	"settings": {
 		"import/resolver": {
 			"webpack": {
@@ -15,9 +12,11 @@
 	},
 	"rules": {
 		"comma-dangle": ["error", "never"],
-		"consistent-return": 0,
-		"eol-last": 0,
 		"indent": ["error", "tab"],
-		"no-tabs": 0
+		"no-tabs": 0,
+		"eol-last": 0,
+		"import/prefer-default-export": 0,
+		"space-unary-ops": 0,
+		"newline-per-chained-call": 0
 	}
 }
