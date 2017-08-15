@@ -91,15 +91,19 @@ function getCSS(filePath) {
  * @param {string} destination
  */
 function processCSS(css, destination) {
-	postcss(plugins)
+	return postcss(plugins)
 		.process(css, {
 			syntax: syntax
 		})
 		.then(result => {
-			fs.writeFile(destination, result.css, err => {
-				if (err) {
-					log.error(err);
-				}
+			return new Promise((resolve, reject) => {
+				fs.writeFile(destination, result.css, err => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
+				});
 			});
 		})
 		.catch(err => {
@@ -111,7 +115,7 @@ function processCSS(css, destination) {
  * Start of process
  */
 
-log.heading('Compiling CSS', 'cyan');
+log.heading('Compiling CSS', 'red');
 
 // Make sure output directories exist
 fs.mkdirsSync(paths.output.styles);
@@ -134,9 +138,9 @@ for (let i = 0; i < files.length; i++) {
 		result += getCSS(block);
 	}
 
-	processCSS(result, `${paths.output.styles}/${files[i]}`);
-
-	log.message('Compiled: ' + files[i], 'cyan');
+	processCSS(result, `${paths.output.styles}/${files[i]}`).then(() => {
+		log.message('Compiled: ' + files[i], 'red');
+	});
 }
 
 // Main output file
@@ -209,6 +213,9 @@ glob.sync(paths.styles + '**/*.{pcss,css}', {
 });
 
 // Process main style file
-processCSS(result, paths.output.styles + '/style.min.css');
+processCSS(result, paths.output.styles + '/style.min.css').then(() => {
+	log.message('Compiled: style.min.css', 'red');
 
-log.message('Compiled: style.min.css', 'cyan');
+	// Add newline for separation from proceeding webpack printout
+	console.log('\n');
+});
