@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const prod = process.env.NODE_ENV === 'production';
 const paths = require('./paths');
 const glob = require('glob');
+const BabiliPlugin = require('babili-webpack-plugin');
 const config = require(paths.project + '/wee.json');
 let plugins = [];
 
@@ -62,11 +63,26 @@ function buildEntries(entries) {
 if (config.script.chunking.enable) {
 	plugins.push(new webpack.optimize.CommonsChunkPlugin(config.script.chunking.options));
 }
+// Configure for maximum minification
+if (prod) {
+	// Short-circuits all Vue.js warning code
+	plugins.push(new webpack.DefinePlugin({
+		'process.env': {
+			NODE_ENV: '"production"'
+		}
+    }));
 
-// Load globals - will be replaced during bundling
-plugins.push(new webpack.DefinePlugin({
-	'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-}));
+	// Minify with dead-code elimination
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
+		compress: {
+			warnings: false
+		}
+    }));
+
+	// Add babili plugin if building for production
+	// Uglify cannot minify bundle properly
+	plugins.push(new BabiliPlugin());
+}
 
 module.exports = {
 	entry: buildEntries(config.script.entry),
@@ -76,12 +92,12 @@ module.exports = {
 		publicPath: paths.root,
 		pathinfo: prod === false
 	},
-	devtool: 'source-map',
+	devtool: prod ? 'source-map' : 'eval',
 	module: {
 		rules: [
 			{
 				enforce: 'pre',
-				test: /\.js$/,
+				test: /\.(js|vue)$/,
 				exclude: /node_modules/,
 				include: [
 					paths.scripts
@@ -92,14 +108,20 @@ module.exports = {
 				}
 			},
 			{
-				test: /\.vue/,
+				test: /\.vue$/,
 				loader: 'vue-loader'
 			},
 			{
-				test: /\.js/,
+				test: /\.js$/,
 				loader: 'babel-loader',
-				exclude: /node_modules/,
+				exclude: /node_modules\/(?!wee-core)/,
 				options: {
+					// NOTE: Any changes to options need to be updated
+					// in .babelrc - vue-loader uses .babelrc
+					plugins: [
+						// Consolidates/reuses babel helpers
+						require('babel-plugin-transform-runtime')
+					],
 					presets: [
 						require('babel-preset-es2015'),
 						require('babel-preset-es2016')
