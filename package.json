@@ -4,6 +4,7 @@
   "description": "Blueprint for modern web development",
   "homepage": "https://www.weepower.com",
   "license": "Apache-2.0",
+  "moduleRoots": "node_modules/wee-core/scripts",
   "keywords": [
     "css",
     "framework",
