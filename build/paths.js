@@ -28,15 +28,5 @@ module.exports = {
 		fonts: `${rootPath}/${config.paths.assets}/fonts`
 	},
 	nodeModules: modulesPath,
-	weeCore: modulesPath + '/wee-core',
-
-	/**
-	 * Set paths on path object
-	 *
-	 * @param {string} key
-	 * @param {string|Object} value
-	 */
-	set(key, value) {
-		this[key] = value;
-	}
+	weeCore: modulesPath + '/wee-core'
 };
