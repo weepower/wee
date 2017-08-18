@@ -71,6 +71,7 @@
     "postcss-variable-media": "^1.0.1",
     "postcss-variables": "^1.1.1",
     "postcss-wee-syntax": "3.0.0",
+    "tinycolor2": "^1.4.1",
     "vue-loader": "^13.0.0",
     "vue-template-compiler": "^2.1.10",
     "webpack": "^2.2.0",
