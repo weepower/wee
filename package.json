@@ -38,6 +38,7 @@
     "wee": "wee"
   },
   "devDependencies": {
+    "ajv": "^5.2.2",
     "async": "^2.1.4",
     "autoprefixer": "^6.6.1",
     "babel-core": "^6.21.0",
@@ -50,7 +51,7 @@
     "chalk": "^1.1.3",
     "css-mqpacker": "^5.0.1",
     "cssnano": "^3.10.0",
-    "eslint": "^3.19.0",
+    "eslint": "^4.4.1",
     "eslint-config-airbnb-base": "^11.1.3",
     "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-loader": "^1.7.1",
