@@ -74,7 +74,7 @@
     "tinycolor2": "^1.4.1",
     "vue-loader": "^13.0.0",
     "vue-template-compiler": "^2.1.10",
-    "webpack": "^2.2.0",
+    "webpack": "^3.5.5",
     "webpack-uglify-js-plugin": "^1.1.9",
     "wee-cli": "next"
   },
