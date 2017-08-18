@@ -79,6 +79,7 @@
     "wee-cli": "next"
   },
   "dependencies": {
+    "es6-promise": "^4.1.1",
     "vue": "^2.0.1",
     "wee-core": "next"
   }
