@@ -6,7 +6,7 @@ module.exports = {
 			console.log(chalk[color].underline(`\n${text}\n`));
 		},
 		error(text) {
-			this.message(text, 'red');
+			this.message('Error: ' + text, 'red');
 		},
 		message(text, prefixColor = 'white') {
 			let segments = text.split(':');
