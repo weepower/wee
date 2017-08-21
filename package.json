@@ -72,7 +72,7 @@
     "postcss-js-mixins": "^2.5.2",
     "postcss-nested": "^2.1.2",
     "postcss-nested-selectors": "^0.1.1",
-    "postcss-variable-media": "^1.0.1",
+    "postcss-variable-media": "^1.0.3",
     "postcss-variables": "^1.1.1",
     "postcss-wee-syntax": "3.0.0",
     "tinycolor2": "^1.4.1",
