@@ -12,6 +12,10 @@
   ],
   "repository": "weepower/wee",
   "bugs": "https://github.com/weepower/wee/issues",
+  "browserslist": [
+    "last 2 versions",
+    "ie > 9"
+  ],
   "config": {
     "root": "public",
     "source": "source",

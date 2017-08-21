@@ -26,12 +26,7 @@ const plugins = [
 	require('postcss-variable-media')({
 		breakpoints: calcBreakpoints(breakpoints, config.style.breakpointOffset)
 	}),
-	require('autoprefixer')({
-		browsers: [
-			'last 2 versions',
-			'ie > 9'
-		]
-	}),
+	require('autoprefixer')(),
 	require('cssnano')({
 		safe: true
 	})
