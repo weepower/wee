@@ -14,14 +14,12 @@ module.exports = (vars = {}) => {
 		 *
 		 * Example:
 		 */
-		lineHeight(...args) => {
-			let value;
-
-			if (isEmpty(args)) {
-				value = '1em';
-			}
-
-			return decl('line-height', value);
-		};
+		// lineHeight(value) => {
+		// 	if (isEmpty(args)) {
+		// 		value = '1em';
+		// 	}
+		//
+		// 	return decl('line-height', value);
+		// };
 	};
 };
