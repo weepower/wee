@@ -3,8 +3,8 @@
  * Refer to https://github.com/nathanhood/postcss-js-mixins
  * for full list of helper methods
  */
-// const Decl = require('postcss-js-mixins/lib/declaration');
-// const Rule = require('postcss-js-mixins/lib/rule');
+// const decl = require('postcss-js-mixins/lib/declaration');
+// const rule = require('postcss-js-mixins/lib/rule');
 // const { isObject, isEmpty, isPercentage, isColor } = require('postcss-js-mixins/lib/helpers');
 
 module.exports = (vars = {}) => {
@@ -21,7 +21,7 @@ module.exports = (vars = {}) => {
 		// 		value = '10em';
 		// 	}
 		//
-		// 	return new Decl('line-height', value);
+		// 	return decl('line-height', value);
 		// };
 	};
 };
