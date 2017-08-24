@@ -15,7 +15,7 @@ module.exports = (vars = {}) => {
 		 * Example:
 		 */
 		// lineHeight(value) => {
-		// 	if (isEmpty(args)) {
+		// 	if (isEmpty(value)) {
 		// 		value = '1em';
 		// 	}
 		//
