@@ -17,6 +17,7 @@
 		"eol-last": 0,
 		"import/prefer-default-export": 0,
 		"space-unary-ops": 0,
-		"newline-per-chained-call": 0
+		"newline-per-chained-call": 0,
+		"radix": 0
 	}
 }
