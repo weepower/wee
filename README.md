@@ -71,4 +71,4 @@ Keep track of development and news by following [@weecss](https://twitter.com/we
 
 ## License
 
-Copyright 2016 [Caddis Interactive, LLC](https://www.caddis.co). Licensed under the [Apache License, Version 2.0](https://github.com/weepower/wee/blob/master/LICENSE).
+&copy; 2017 [Lewis Communications](https://www.lewiscommunications.com/). Licensed under the [Apache License, Version 2.0](https://github.com/weepower/wee/blob/master/LICENSE).
