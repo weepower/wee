@@ -1,5 +1,5 @@
+const register = require('postcss-variables/lib/register');
 let v = require('wee-core/styles/variables');
-let register = require('postcss-variables/lib/register');
 
 /**
  * Add and overwrite variables here
