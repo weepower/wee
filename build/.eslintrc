@@ -1,0 +1,23 @@
+{
+	"extends": "airbnb-base",
+	"plugins": [
+		"import"
+	],
+	"settings": {
+		"import/resolver": {
+			"webpack": {
+				"config": "./build/webpack.config.js"
+			}
+		}
+	},
+	"rules": {
+		"comma-dangle": ["error", "never"],
+		"indent": ["error", "tab"],
+		"no-tabs": 0,
+		"eol-last": 0,
+		"import/prefer-default-export": 0,
+		"space-unary-ops": 0,
+		"newline-per-chained-call": 0,
+		"radix": 0
+	}
+}

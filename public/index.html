@@ -6,11 +6,11 @@
 	<title>Front-End Framework | Wee</title>
 	<meta name="description" content="Blueprint for modern web development.">
 
-	<link rel="stylesheet" href="/assets/css/style.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400">
+	<link rel="stylesheet" href="/assets/styles/style.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Heebo">
 
-	<link rel="apple-touch-icon" href="/assets/img/icons/touch.png">
-	<link rel="mask-icon" href="/assets/img/icons/pin.svg" color="#349bb9">
+	<link rel="apple-touch-icon" href="/assets/images/icons/touch.png">
+	<link rel="mask-icon" href="/assets/images/icons/pin.svg" color="#5789ff">
 	<link rel="publisher" href="https://plus.google.com/+weecss">
 
 	<meta name="twitter:card" content="summary">
@@ -21,48 +21,30 @@
 	<meta property="og:title" content="Front-End Framework" itemprop="name">
 	<meta property="og:description" content="Blueprint for modern web development." itemprop="description">
 	<meta property="og:url" content="https://www.weepower.com" itemprop="url">
-	<meta property="og:image" content="https://www.weepower.com/assets/img/share.png" itemprop="image">
-
-	<!--[if lte IE 9]>
-	<script src="/assets/js/ie9.min.js"></script>
-	<![endif]-->
+	<meta property="og:image" content="https://www.weepower.com/assets/images/share.png" itemprop="image">
 </head>
 <body>
-	<div class="container">
-		<div class="inner">
-			<header class="header" role="banner">
-				<a href="/" rel="home" class="logo">
-					<img src="/assets/img/logo.svg" alt="Wee Framework" class="logo__img">
-				</a>
-			</header>
-
-			<main role="main">
-				<h1 class="heading">Blueprint for modern web development</h1>
-
-				<nav class="nav" role="navigation">
-					<a href="https://www.weepower.com/start" class="button nav__button">Documentation</a>
-					<a href="/guide" class="button nav__button">Style guide</a>
-				</nav>
-
-				<div data-ref="todo"></div>
-
-				<p class="copy">Running <code>wee reset</code> will clean up this project by deleting the license, readme, and welcome module files.</p>
-			</main>
-
-			<footer class="footer" role="contentinfo">
-				<nav>
-					<ul class="footer__links">
-						<li><a href="https://github.com/weepower/wee">GitHub</a></li>
-						<li><a href="https://github.com/weepower/wee/issues">Issues</a></li>
-						<li><a href="https://github.com/weepower/wee/releases">Releases</a></li>
-						<li><a href="https://www.weepower.com/blog">Blog</a></li>
-						<li><a href="https://twitter.com/weecss">Twitter</a></li>
-					</ul>
-				</nav>
-			</footer>
-		</div>
+	<div class="content">
+		<img src="/assets/images/logo.svg" alt="Wee Framework" class="logo">
+		<ul class="links">
+			<li class="links__item">
+				<a href="https://www.weepower.com/guide/introduction" class="links__link" target="_blank">Docs</a>
+			</li>
+			<li class="links__item">
+				<a href="https://github.com/weepower/wee-demo" class="links__link" target="_blank">Demo</a>
+			</li>
+			<li class="links__item">
+				<a href="https://github.com/weepower/wee" class="links__link" target="_blank">GitHub</a>
+			</li>
+			<li class="links__item">
+				<a href="https://github.com/weepower/wee-core" class="links__link" target="_blank">Wee Core</a>
+			</li>
+			<li class="links__item">
+				<a href="https://github.com/weepower/wee-cli" class="links__link" target="_blank">Wee CLI</a>
+			</li>
+		</ul>
 	</div>
 
-	<script src="/assets/js/script.min.js"></script>
+	<script src="/assets/scripts/app.bundle.js"></script>
 </body>
 </html>

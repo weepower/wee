@@ -1,100 +1,60 @@
 {
-	"name": "Project Name",
 	"paths": {
 		"root": "public",
 		"assets": "assets",
-		"source": "source"
+		"source": "source",
+		"build": "build"
 	},
-	"data": {},
 	"style": {
-		"data": {},
-		"core": {
-			"namespace": false,
-			"features": {
-				"buttons": true,
-				"code": true,
-				"forms": true,
-				"print": true,
-				"tables": true
-			},
-			"responsive": {
-				"enable": true,
-				"offset": 25,
-				"breakpoints": {
-					"mobileLandscape": 480,
-					"tabletPortrait": 768,
-					"desktopSmall": 1024,
-					"desktopMedium": 1280,
-					"desktopLarge": 1440
-				}
-			}
+		"features": {
+			"buttons": true,
+			"code": true,
+			"forms": true,
+			"print": true,
+			"tables": true
 		},
+		"breakpoints": {
+			"mobileLandscape": 480,
+			"tablet": 768,
+			"desktop": 1024,
+			"desktop2": 1280,
+			"desktop3": 1440
+		},
+		"breakpointOffset": 25,
 		"build": [],
 		"compile": {}
 	},
 	"script": {
-		"data": {},
-		"core": {
-			"enable": true,
-			"namespace": "Wee",
-			"features": {
-				"animate": true,
-				"assets": true,
-				"chain": true,
-				"dom": true,
-				"events": true,
-				"fetch": true,
-				"history": true,
-				"routes": true,
-				"screen": true,
-				"touch": true,
-				"view": true
+		"entry": {
+			"app": "app.js"
+		},
+		"output": {
+			"filename": "[name].bundle.js"
+		},
+		"chunking": {
+			"enable": false,
+			"options": {
+				"name": "common",
+				"minChunks": 2
 			}
-		},
-		"build": [],
-		"compile": {
-			"ie9.min.js": [
-				"polyfill/wee.placeholder.js",
-				"polyfill/wee.slice.js"
-			]
-		},
-		"validate": {
-			"watch": true,
-			"jscs": "source/.jscs.json",
-			"jshint": "source/.jshintrc"
-		},
-		"sourceMaps": true
+		}
 	},
-	"generator": {
-		"enable": true,
-		"build": [
-			"source/modules/guide/generate.json"
-		]
-	},
-	"defaultCommand": "run:static",
 	"server": {
 		"ghostMode": false,
 		"host": "auto",
 		"port": 9000,
-		"inject": [],
+		"https": true,
+		"proxy": "https://wee.dev",
+		"static": true,
 		"reload": {
 			"enable": true,
-			"ignore": [],
 			"watch": {
 				"root": true,
 				"paths": [],
 				"extensions": [
 					"html"
-				]
-			}
-		},
-		"tasks": {
-			"local": {
-				"https": true,
-				"proxy": "https://wee.dev"
-			},
-			"static": {
-				"https": true
+				],
+				"ignore": []
 			}
 		}
 	}
