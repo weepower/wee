@@ -78,7 +78,8 @@ function getCSS(filePath) {
  */
 function processCSS(css, destination) {
 	let result = sass.renderSync({
-		data: css
+		data: css,
+		outputStyle: 'compressed'
 	});
 
 	return postcss(plugins)
@@ -141,36 +142,36 @@ data += fs.readFileSync(__dirname + '/../temp/responsive.scss', 'utf-8');
 
 // Add features
 if (features.buttons) {
-	data += fs.readFileSync(paths.weeCore + '/styles/components/buttons.scss', 'utf-8');
+	data += fs.readFileSync(paths.weeCore + '/styles/components/buttons.scss', 'utf-8') + '\n';
 }
 
 if (features.code) {
-	data += fs.readFileSync(paths.weeCore + '/styles/components/code.scss', 'utf-8');
+	data += fs.readFileSync(paths.weeCore + '/styles/components/code.scss', 'utf-8') + '\n';
 }
 
 if (features.forms) {
-	data += fs.readFileSync(paths.weeCore + '/styles/components/forms.scss', 'utf-8');
+	data += fs.readFileSync(paths.weeCore + '/styles/components/forms.scss', 'utf-8') + '\n';
 }
 
 if (features.tables) {
-	data += fs.readFileSync(paths.weeCore + '/styles/components/tables.scss', 'utf-8');
+	data += fs.readFileSync(paths.weeCore + '/styles/components/tables.scss', 'utf-8') + '\n';
 }
 
 if (features.print) {
 	// Add print files
 	data += `@media print {
-		${fs.readFileSync(paths.weeCore + '/styles/print.pcss')}
+		${fs.readFileSync(paths.weeCore + '/styles/print.scss')}
 		${getCSS('print.scss')}
-	}`;
+	}\n` ;
 }
 
 // Add class helpers
-data += fs.readFileSync(paths.weeCore + '/styles/components/helpers.scss', 'utf-8');
+data += fs.readFileSync(paths.weeCore + '/styles/components/helpers.scss', 'utf-8') + '\n';
 
 // Add breakpoint files
 for (let breakpoint in breakpoints) {
 	let name = convertCamelToDash(breakpoint),
-		file = `${paths.styles}/breakpoints/${name}.pcss`;
+		file = `${paths.styles}/breakpoints/${name}.scss`;
 
 	// Create file if not already generated
 	fs.ensureFileSync(file);
@@ -178,7 +179,7 @@ for (let breakpoint in breakpoints) {
 	ignore.push(file);
 
 	if (breakpoints[breakpoint]) {
-		data += `@${breakpoint} { ${fs.readFileSync(file, 'utf-8')} }`;
+		data += `@${breakpoint} { ${fs.readFileSync(file, 'utf-8')} }\n`;
 	} else {
 		log.error(`Unregistered breakpoint: ${name}`);
 		log.message('Check breakpoint files against registered breakpoints in wee.json');
@@ -187,7 +188,7 @@ for (let breakpoint in breakpoints) {
 
 // Add component files
 glob.sync(paths.components + '/**/*.{scss,css}').forEach(file => {
-	data += fs.readFileSync(file, 'utf-8');
+	data += fs.readFileSync(file, 'utf-8') + '\n';
 });
 
 // Add all build files
@@ -196,10 +197,10 @@ config.style.build.forEach(pattern => {
 });
 
 // Concatenate all other files
-glob.sync(paths.styles + '**/*.{pcss,css}', {
+glob.sync(paths.styles + '**/*.{scss,css}', {
 	ignore
 }).forEach(file => {
-	data += fs.readFileSync(file, 'utf-8');
+	data += fs.readFileSync(file, 'utf-8') + '\n';
 });
 
 // Process main style file
