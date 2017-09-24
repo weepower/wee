@@ -1,0 +1,33 @@
+body,
+html,
+.content {
+	@include size(100%);
+}
+.content {
+	@include flexContainer($justify: center, $align: center, $direction: column);
+}
+.logo {
+	margin-bottom: 6rem;
+}
+.links {
+	text-align: center;
+	list-style: none;
+	&__link {
+		transition: color .1s ease-in-out;
+		color: $secondary;
+		&:hover {
+			color: $primary;
+		}
+	}
+}
+
+@mobileLandscape {
+	.links {
+		&__item {
+			display: inline-block;
+			&:not(:last-child) {
+				margin-right: 3rem;
+			}
+		}
+	}
+}
