@@ -135,10 +135,20 @@ for (let i = 0; i < files.length; i++) {
 data = '';
 
 // Add reset and base styling
-data += fs.readFileSync(paths.weeCore + '/styles/variables.scss', 'utf-8');
-data += fs.readFileSync(paths.weeCore + '/styles/mixins.scss', 'utf-8');
-data += fs.readFileSync(paths.weeCore + '/styles/reset.scss', 'utf-8');
-data += fs.readFileSync(__dirname + '/../temp/responsive.scss', 'utf-8');
+data += fs.readFileSync(paths.weeCore + '/styles/variables.scss', 'utf-8') + '\n';
+data += fs.readFileSync(paths.weeCore + '/styles/mixins.scss', 'utf-8') + '\n';
+data += fs.readFileSync(paths.weeCore + '/styles/reset.scss', 'utf-8') + '\n';
+data += fs.readFileSync(__dirname + '/../temp/responsive.scss', 'utf-8') + '\n';
+
+// Add user variable overrides and mixins
+const variables = paths.styles + '/variables.scss';
+const mixins = paths.styles + '/mixins.scss';
+
+data += fs.readFileSync(variables, 'utf-8') + '\n';
+data += fs.readFileSync(mixins, 'utf-8') + '\n';
+
+ignore.push(variables);
+ignore.push(mixins);
 
 // Add features
 if (features.buttons) {
@@ -160,13 +170,19 @@ if (features.tables) {
 if (features.print) {
 	// Add print files
 	data += `@media print {
-		${fs.readFileSync(paths.weeCore + '/styles/print.scss')}
+		${fs.readFileSync(paths.weeCore + '/styles/print.scss', 'utf-8')}
 		${getCSS('print.scss')}
-	}\n` ;
+	}\n`;
 }
 
 // Add class helpers
 data += fs.readFileSync(paths.weeCore + '/styles/components/helpers.scss', 'utf-8') + '\n';
+
+const screen = paths.styles + '/screen.scss';
+
+data += fs.readFileSync(screen, 'utf-8') + '\n';
+
+ignore.push(screen);
 
 // Add breakpoint files
 for (let breakpoint in breakpoints) {
@@ -200,6 +216,7 @@ config.style.build.forEach(pattern => {
 glob.sync(paths.styles + '**/*.{scss,css}', {
 	ignore
 }).forEach(file => {
+	console.log(file);
 	data += fs.readFileSync(file, 'utf-8') + '\n';
 });
 
