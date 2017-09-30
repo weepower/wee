@@ -25,6 +25,9 @@ let ignore = [];
 // Main output file
 let data;
 
+let mixins;
+let variables;
+
 /**
  * Calculate breakpoints with offset included
  *
@@ -136,19 +139,20 @@ data = '';
 
 // Add reset and base styling
 data += fs.readFileSync(paths.weeCore + '/styles/variables.scss', 'utf-8') + '\n';
-data += fs.readFileSync(paths.weeCore + '/styles/mixins.scss', 'utf-8') + '\n';
-data += fs.readFileSync(paths.weeCore + '/styles/reset.scss', 'utf-8') + '\n';
-data += fs.readFileSync(__dirname + '/../temp/responsive.scss', 'utf-8') + '\n';
 
 // Add user variable overrides and mixins
-const variables = paths.styles + '/variables.scss';
-const mixins = paths.styles + '/mixins.scss';
-
+variables = paths.styles + '/variables.scss';
 data += fs.readFileSync(variables, 'utf-8') + '\n';
-data += fs.readFileSync(mixins, 'utf-8') + '\n';
-
 ignore.push(variables);
+
+data += fs.readFileSync(paths.weeCore + '/styles/mixins.scss', 'utf-8') + '\n';
+
+mixins = paths.styles + '/mixins.scss';
+data += fs.readFileSync(mixins, 'utf-8') + '\n';
 ignore.push(mixins);
+
+data += fs.readFileSync(paths.weeCore + '/styles/reset.scss', 'utf-8') + '\n';
+data += fs.readFileSync(__dirname + '/../temp/responsive.scss', 'utf-8') + '\n';
 
 // Add features
 if (features.buttons) {
