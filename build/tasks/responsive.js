@@ -18,5 +18,5 @@ module.exports = breakpoints => {
 	}
 
 	fs.mkdirsSync(paths.temp);
-	fs.writeFileSync(paths.temp + '/responsive.pcss', result);
+	fs.writeFileSync(paths.temp + '/responsive.scss', result);
 };
