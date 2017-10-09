@@ -137,13 +137,13 @@ for (let i = 0; i < files.length; i++) {
 
 data = '';
 
-// Add reset and base styling
-data += fs.readFileSync(paths.weeCore + '/styles/variables.scss', 'utf-8') + '\n';
-
 // Add user variable overrides and mixins
 variables = paths.styles + '/variables.scss';
 data += fs.readFileSync(variables, 'utf-8') + '\n';
 ignore.push(variables);
+
+// Add reset and base styling
+data += fs.readFileSync(paths.weeCore + '/styles/variables.scss', 'utf-8') + '\n';
 
 data += fs.readFileSync(paths.weeCore + '/styles/mixins.scss', 'utf-8') + '\n';
 
