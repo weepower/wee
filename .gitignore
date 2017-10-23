@@ -31,6 +31,7 @@ out/
 browserstack.js
 codekit-config.json
 prepros.json
+package-lock.json
 
 
 #------------------------------------
