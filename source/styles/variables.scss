@@ -1,4 +1,10 @@
 // Override core variables or add custom values here
 // Default settings available at https://www.weepower.com/style/variables
 
+// $primary: red;
+
 @import "wee-core/styles/variables.scss";
+
+// Assign variables that need to reference default variables below
+
+// $liMarginBottom: $blockMarginBottom;
