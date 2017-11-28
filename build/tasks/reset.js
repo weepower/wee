@@ -3,7 +3,7 @@ const paths = require('../paths');
 const utils = require('wee-core/utils');
 const chalk = require('chalk');
 
-fs.remove(paths.root + '/assets', err => {
+fs.remove(paths.assets, err => {
 	if (err) {
 		utils.logError(err, 'error');
 	}
