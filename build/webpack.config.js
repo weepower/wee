@@ -120,11 +120,15 @@ module.exports = {
 					// in .babelrc - vue-loader uses .babelrc
 					plugins: [
 						// Consolidates/reuses babel helpers
-						require('babel-plugin-transform-runtime')
+						require('babel-plugin-transform-runtime'),
+						require('babel-plugin-transform-object-rest-spread')
 					],
 					presets: [
-						require('babel-preset-es2015'),
-						require('babel-preset-es2016')
+						["env", {
+							"targets": {
+								"browsers": ["last 2 versions", "ie 10", "ie 11"]
+							}
+						}]
 					]
 				}
 			}
@@ -133,7 +137,7 @@ module.exports = {
 	plugins: plugins,
 	resolve: {
 		modules: [
-			paths.weeCore + '/scripts',
+			`${paths.weeCore}/scripts`,
 			paths.nodeModules
 		]
 	}
