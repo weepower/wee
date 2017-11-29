@@ -81,6 +81,6 @@
     "node-sass": "^4.5.3",
     "path-to-regexp": "^1.7.0",
     "vue": "^2.0.1",
-    "wee-core": "2.1.5"
+    "wee-core": "2.1.8"
   }
 }
