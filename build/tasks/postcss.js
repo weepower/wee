@@ -75,6 +75,8 @@ for (let breakpoint in breakpoints) {
 
 data += readFile(`${paths.styles}/screen.scss`);
 
+log.heading('Compiling CSS', 'red');
+
 // Add component files
 glob.sync(paths.components + '/**/*.{scss,css}').forEach(file => {
 	data += readFile(file) + '\n';
@@ -161,7 +163,7 @@ function processCSS(css, destination) {
 	});
 
 	return postcss(plugins)
-		.process(result.css.toString())
+		.process(result.css.toString(), { from: undefined })
 		.then(result => {
 			return new Promise((resolve, reject) => {
 				fs.ensureFileSync(destination);
