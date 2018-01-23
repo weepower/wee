@@ -47,10 +47,10 @@
     "autoprefixer": "^7.1.4",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-minify-webpack-plugin": "^0.2.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
-    "babili-webpack-plugin": "^0.1.2",
     "browser-sync": "^2.18.6",
     "chalk": "^2.1.0",
     "css-mqpacker": "^6.0.1",
@@ -66,6 +66,7 @@
     "imagemin-mozjpeg": "^6.0.0",
     "imagemin-pngquant": "^5.0.0",
     "imagemin-svgo": "^5.2.2",
+    "node-sass": "^4.5.3",
     "npm-run-all": "^4.1.1",
     "onchange": "^3.2.1",
     "postcss": "^6.0.11",
@@ -78,7 +79,6 @@
   },
   "dependencies": {
     "es6-promise": "^4.1.1",
-    "node-sass": "^4.5.3",
     "path-to-regexp": "^1.7.0",
     "vue": "^2.0.1",
     "wee-core": "2.1.8"

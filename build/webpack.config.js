@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const prod = process.env.NODE_ENV === 'production';
 const paths = require('./paths');
 const glob = require('glob');
-const BabiliPlugin = require('babili-webpack-plugin');
+const BabelMinify = require("babel-minify-webpack-plugin");
 const config = require(paths.project + '/wee.json');
 let plugins = [];
 
@@ -81,7 +81,7 @@ if (prod) {
 
 	// Add babili plugin if building for production
 	// Uglify cannot minify bundle properly
-	plugins.push(new BabiliPlugin());
+	plugins.push(new BabelMinify());
 }
 
 module.exports = {
