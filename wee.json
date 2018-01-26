@@ -29,7 +29,7 @@
 			"app": "app.js"
 		},
 		"output": {
-			"filename": "[name].bundle.js"
+			"filename": "[name].bundle.[hash].js"
 		},
 		"chunking": {
 			"enable": false,
