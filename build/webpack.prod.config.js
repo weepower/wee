@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const base = require('./webpack.base.config');
 const BabelMinify = require('babel-minify-webpack-plugin');
+const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 module.exports = merge(base, {
 	devtool: 'source-map',
@@ -24,6 +26,13 @@ module.exports = merge(base, {
 		}),
 
 		// Uglify cannot minify bundle properly
-		new BabelMinify()
+		new BabelMinify(),
+
+		// Minify images
+		new ImageminPlugin({
+			pngquant: {
+				quality: '99'
+			},
+		}),
 	]
 });
