@@ -2,17 +2,25 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
+const glob = require('glob');
 const paths = require('./paths');
 const config = require(`${paths.project}/wee.json`);
 const { buildEntries, calcBreakpoints } = require('./helpers');
 
 const extractSCSS = new ExtractTextPlugin({
-	filename: '../styles/[name].css',
+	filename: '../styles/[name].[md5:contenthash:base64:12].css',
 	allChunks: true
 });
 
 module.exports = {
-	entry: buildEntries(config.script.entry),
+	entry: {
+		...buildEntries(config.script.entry),
+		components: glob.sync(`${paths.components}/**/*.scss`),
+		styles: glob.sync(`${paths.styles}/**/*.scss`),
+		// core: glob.sync(`${paths.weeCore}/styles/**/*.scss`)
+	},
 	output: {
 		filename: config.script.output.filename,
 		path: paths.output.scripts,
@@ -101,10 +109,10 @@ module.exports = {
 								ident: 'postcss',
 								parser: require('postcss-comment'),
 								plugins: loader => [
-									require('postcss-variable-media')({
-										breakpoints: calcBreakpoints(config.style.breakpoints, config.style.breakpointOffset)
-									}),
-									require('autoprefixer')()
+									// require('postcss-variable-media')({
+									// 	breakpoints: calcBreakpoints(config.style.breakpoints, config.style.breakpointOffset)
+									// }),
+									// require('autoprefixer')()
 								]
 							}
 						}
@@ -121,16 +129,7 @@ module.exports = {
 					// Move fonts one level back from scripts directory
 					outputPath: '../'
 				},
-			},
-			{
-				test: /\.(jpg|png|svg)$/,
-				use: {
-					loader: "file-loader",
-					options: {
-						name: "[path][name].[hash].[ext]",
-					},
-				},
-			},
+			}
 		]
 	},
 	plugins: [
@@ -152,13 +151,25 @@ module.exports = {
 			test: /\.css$/,
 			log: true,
 			plugins: [
+				require('postcss-variable-media')({
+					breakpoints: calcBreakpoints(config.style.breakpoints, config.style.breakpointOffset)
+				}),
+				require('autoprefixer')(),
+
 				// Pack same CSS media query rules into one media query rule
 				require('css-mqpacker')(),
 				require('cssnano')({
 					safe: true
-				})
+				}),
 			],
-		})
+		}),
+
+		// Copy images from source to public
+		new CopyWebpackPlugin([
+			{ from: paths.images, to: paths.output.images },
+		]),
+
+		new SuppressChunksPlugin(['components', 'styles']),
 	],
 	resolve: {
 		modules: [
