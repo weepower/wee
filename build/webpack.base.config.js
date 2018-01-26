@@ -19,6 +19,7 @@ module.exports = {
 		...buildEntries(config.script.entry),
 		components: glob.sync(`${paths.components}/**/*.scss`),
 		styles: glob.sync(`${paths.styles}/**/*.scss`),
+		// TODO: Figure out
 		// core: glob.sync(`${paths.weeCore}/styles/**/*.scss`)
 	},
 	output: {
