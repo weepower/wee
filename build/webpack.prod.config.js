@@ -7,6 +7,9 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 module.exports = merge(base, {
 	devtool: 'source-map',
+	output: {
+		pathinfo: true,
+	},
 	plugins: [
 		// Short-circuits all Vue.js warning code
 		new webpack.DefinePlugin({
@@ -14,9 +17,6 @@ module.exports = merge(base, {
 				NODE_ENV: '"production"'
 			}
 		}),
-
-		// TODO: look more into this
-		// new webpack.optimize.CommonsChunkPlugin('common'),
 
 		// Minify with dead-code elimination
 		new webpack.optimize.UglifyJsPlugin({
