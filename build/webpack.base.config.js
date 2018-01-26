@@ -3,30 +3,24 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
+const ManifestPlugin = require('webpack-manifest-plugin');
 const glob = require('glob');
 const paths = require('./paths');
 const config = require(`${paths.project}/wee.json`);
 const { buildEntries, calcBreakpoints } = require('./helpers');
 
 const extractSCSS = new ExtractTextPlugin({
-	filename: '../styles/[name].[md5:contenthash:base64:12].css',
+	// Add path to file name to output into it's own directory
+	filename: '../styles/[name].[contenthash].css',
 	allChunks: true
 });
 
 module.exports = {
-	entry: {
-		...buildEntries(config.script.entry),
-		components: glob.sync(`${paths.components}/**/*.scss`),
-		styles: glob.sync(`${paths.styles}/**/*.scss`),
-		// TODO: Figure out
-		// core: glob.sync(`${paths.weeCore}/styles/**/*.scss`)
-	},
+	entry: buildEntries(config.script.entry),
 	output: {
 		filename: config.script.output.filename,
 		path: paths.output.scripts,
 		publicPath: paths.root,
-		// pathinfo: prod === false
 	},
 	module: {
 		rules: [
@@ -78,8 +72,8 @@ module.exports = {
 				use: extractSCSS.extract({
 					// Fallback to style loader
 					fallback: 'style-loader',
+					publicPath: '../../../',
 					use: [
-						// { loader: 'css-loader', options: { minimize: true } },
 						{ loader: 'css-loader' },
 						{
 							loader: 'sass-loader',
@@ -104,21 +98,8 @@ module.exports = {
 								]
 							},
 						},
-						{
-							loader: 'postcss-loader',
-							options: {
-								ident: 'postcss',
-								parser: require('postcss-comment'),
-								plugins: loader => [
-									// require('postcss-variable-media')({
-									// 	breakpoints: calcBreakpoints(config.style.breakpoints, config.style.breakpointOffset)
-									// }),
-									// require('autoprefixer')()
-								]
-							}
-						}
-					]
-				})
+					],
+				}),
 			},
 			{
 				test: /\.(ttf|eot|woff|woff2)$/,
@@ -130,16 +111,13 @@ module.exports = {
 					// Move fonts one level back from scripts directory
 					outputPath: '../'
 				},
-			}
-		]
+			},
+		],
 	},
 	plugins: [
 		// Delete output directory contents
 		new CleanWebpackPlugin([
-			'public/assets/scripts',
-			'public/assets/fonts',
-			'public/assets/images',
-			'public/assets/styles',
+			paths.assets
 		], {
 			root: paths.project
 		}),
@@ -152,13 +130,15 @@ module.exports = {
 			test: /\.css$/,
 			log: true,
 			plugins: [
+				// Use custom media query @ rules
 				require('postcss-variable-media')({
 					breakpoints: calcBreakpoints(config.style.breakpoints, config.style.breakpointOffset)
 				}),
+				// Autoprefix css properties
 				require('autoprefixer')(),
-
 				// Pack same CSS media query rules into one media query rule
 				require('css-mqpacker')(),
+				// Minify css
 				require('cssnano')({
 					safe: true
 				}),
@@ -170,7 +150,34 @@ module.exports = {
 			{ from: paths.images, to: paths.output.images },
 		]),
 
-		new SuppressChunksPlugin(['components', 'styles']),
+		// Create a manifest json file of the output chunks
+		new ManifestPlugin({
+			// Move manifest file back one directory
+			fileName: '../manifest.json',
+			// Map over manifest and remove reference to style path,
+			// for some reason overriding the publicPath in
+			// extractTextPlugin doesn't work
+			map(manifest) {
+				if (manifest.path.includes('../styles/')) {
+					manifest.path = manifest.path.replace('../styles/', '');
+				}
+
+				return manifest;
+			}
+		}),
+
+		// Chunk all vendor scripts
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor',
+			minChunks: module => module.context && module.context.includes('node_modules'),
+		}),
+
+		// Chunk all common scripts, this will include the
+		// webpack boilerplate
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'common',
+			minChunks: Infinity
+		}),
 	],
 	resolve: {
 		modules: [
