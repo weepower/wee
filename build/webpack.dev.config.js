@@ -1,21 +1,31 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const base = require('./webpack.base.config');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const path = require('path');
+const fs = require('fs-extra');
+const base = require('./webpack.base.config');
+const paths = require('./paths');
+const weeJson = fs.readJsonSync(`${paths.project}/wee.json`);
+const config = weeJson.server;
 
 module.exports = merge(base, {
 	devtool: 'eval',
-	// devServer: {
-	// 	// hot: true, // this enables hot reload
-	// 	inline: true, // use inline method for hmr
-	// 	host: "localhost",
-	// 	port: 8080,
-	// 	contentBase: path.join(__dirname, "public"),
-	// 	watchOptions: {
-	// 		poll: false // needed for homestead/vagrant setup
-	// 	}
-	// },
-	// output: {
-	// 	publicPath: 'http://localhost:8080'
-	// }
+	plugins: [
+		new BrowserSyncPlugin({
+			host: config.host === 'auto' ? null : config.host,
+			port: config.port,
+			ui: {
+				port: config.port + 1,
+				weinre: {
+					port: config.port + 100
+				}
+			},
+			open: 'external',
+			https: config.https,
+			server: config.static ? paths.root : false,
+			proxy: config.static ? false : config.proxy,
+			logPrefix: 'Wee',
+			logFileChanges: true
+		})
+	]
 });
