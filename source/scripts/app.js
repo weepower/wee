@@ -1,6 +1,5 @@
 import './bootstrap';
 
-
 // Begin your application here
 // Example:
 
