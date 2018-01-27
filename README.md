@@ -3,6 +3,7 @@
 Wee is a front-end framework for logically building complex, responsive web projects.
 
 [![NPM version](https://img.shields.io/npm/v/wee-framework.svg?style=flat)](https://www.npmjs.com/package/wee-framework)
+[![David]](https://david-dm.org/)(https://david-dm.org/weepower/wee.svg)
 
 ## Features
 
@@ -56,13 +57,13 @@ Wee officially supports all major browsers including IE10+ and Safari 8+
 
 ## Bugs
 
-Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).  
+Have a bug or a feature request? [Open a new issue](https://github.com/weepower/wee/issues).
 
 Automated testing generously provided by [BrowserStack](https://www.browserstack.com).
 
 ## Versioning
 
-Wee adheres to [Semantic Versioning](http://semver.org) in the form of MAJOR.MINOR.PATCH.  
+Wee adheres to [Semantic Versioning](http://semver.org) in the form of MAJOR.MINOR.PATCH.
 Regardless of version we recommend thoroughly reviewing the [release notes](https://github.com/weepower/wee/releases) before updating.
 
 ## Community
