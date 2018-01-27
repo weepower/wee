@@ -9,7 +9,7 @@ const paths = require('./paths');
 const weeJson = fs.readJsonSync(`${paths.project}/wee.json`);
 const config = weeJson.server;
 
-module.exports = env => {
+module.exports = (env = {}) => {
 	const plugins = [
 		new BrowserSyncPlugin({
 			host: config.host === 'auto' ? null : config.host,
