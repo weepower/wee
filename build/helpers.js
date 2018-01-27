@@ -38,20 +38,18 @@ function getPaths(filePaths) {
  * @returns {Object}
  */
 function buildEntries(entries) {
-	const firstEntry = Object.keys(entries)[0];
 	let result = {};
 
 	Object.keys(entries).forEach(entry => {
-		result[entry] = getPaths(entries[entry]);
-	});
+		let paths = getPaths(entries[entry]);
 
-	result[firstEntry] = [
-		...result[firstEntry],
-		`${paths.temp}/responsive.scss`,
-		`${paths.styles}/global.scss`,
-		`${paths.styles}/print.scss`,
-		...glob.sync(`${paths.components}/**/*.scss`),
-	];
+		// If single entry point, extract from array
+		if (paths.length === 1) {
+			paths = paths[0];
+		}
+
+		result[entry] = paths;
+	});
 
 	return result;
 }
