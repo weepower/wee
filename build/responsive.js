@@ -16,7 +16,7 @@ function buildBreakpoint(breakpoint, count) {
 
 module.exports = breakpoints => {
 	let count = 2,
-		result = '';
+		result = '/* stylelint-disable */\n\n';
 
 	for (let breakpoint in breakpoints) {
 		result += buildBreakpoint(breakpoint, count);
