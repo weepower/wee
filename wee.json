@@ -35,7 +35,7 @@
 			}
 		},
 		"chunking": {
-			"enabled": true,
+			"enabled": false,
 			"options": {
 				"name": "common",
 				"minChunks": 2
