@@ -200,6 +200,8 @@ module.exports = {
 		// Lint styles
 		new StyleLintPlugin({
 			configFile: `${paths.build}/.stylelintrc`,
+			// Skip linting on start, and only lint dirty modules
+			lintDirtyModulesOnly: true,
 			syntax: 'scss'
 		}),
 
