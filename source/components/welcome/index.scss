@@ -13,12 +13,12 @@ html,
 }
 
 .links {
-    text-align: center;
     list-style: none;
+    text-align: center;
 
     &__link {
-        transition: color .1s ease-in-out;
         color: $secondary;
+        transition: color .1s ease-in-out;
 
         &:hover {
             color: $primary;
