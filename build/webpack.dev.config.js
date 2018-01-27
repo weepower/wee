@@ -9,7 +9,7 @@ const weeJson = fs.readJsonSync(`${paths.project}/wee.json`);
 const config = weeJson.server;
 
 module.exports = merge(base, {
-	devtool: 'eval',
+	devtool: 'cheap-module-eval-source-map',
 	plugins: [
 		new BrowserSyncPlugin({
 			host: config.host === 'auto' ? null : config.host,
