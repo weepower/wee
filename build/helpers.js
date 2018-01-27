@@ -7,8 +7,8 @@ const glob = require('glob');
  * @param {string} path
  * @returns {string}
  */
-function getBasePath(path) {
-	return path.split('/')[0] === '.' ? paths.project : paths.scripts;
+function getBasePath(path, type) {
+	return path.split('/')[0] === '.' ? paths.project : paths[type];
 }
 
 /**
@@ -17,31 +17,25 @@ function getBasePath(path) {
  * @param {string|Array} filePath
  * @returns {Array}
  */
-function getPaths(filePaths) {
+function getPaths(filePaths, type) {
 	if (Array.isArray(filePaths)) {
 		let paths = [];
 
 		filePaths.forEach(filePath => {
-			paths = paths.concat(glob.sync(`${getBasePath(filePath)}/${filePath}`));
+			paths = paths.concat(glob.sync(`${getBasePath(filePath, type)}/${filePath}`));
 		});
 
 		return paths;
 	}
 
-	return glob.sync(`${getBasePath(filePaths)}/${filePaths}`);
+	return glob.sync(`${getBasePath(filePaths, type)}/${filePaths}`);
 }
 
-/**
- * Process entries from wee.json
- *
- * @param {Object} entries
- * @returns {Object}
- */
-function buildEntries(entries) {
+function buildEntry(entries, type) {
 	let result = {};
 
 	Object.keys(entries).forEach(entry => {
-		let paths = getPaths(entries[entry]);
+		let paths = getPaths(entries[entry], type);
 
 		// If single entry point, extract from array
 		if (paths.length === 1) {
@@ -52,6 +46,19 @@ function buildEntries(entries) {
 	});
 
 	return result;
+}
+
+/**
+ * Process entries from wee.json
+ *
+ * @param {Object} entries
+ * @returns {Object}
+ */
+function buildEntries(scripts, styles) {
+	return {
+		...buildEntry(scripts, 'scripts'),
+		...buildEntry(styles, 'styles'),
+	};
 }
 
 /**
