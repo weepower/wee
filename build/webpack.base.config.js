@@ -4,6 +4,8 @@ const PostCSSAssetsPlugin = require('postcss-assets-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+const path = require('path');
 const glob = require('glob');
 const paths = require('./paths');
 const config = require(`${paths.project}/wee.json`);
@@ -14,6 +16,44 @@ const extractSCSS = new ExtractTextPlugin({
 	filename: '../styles/[name].[contenthash].css',
 	allChunks: true
 });
+
+const plugins = [];
+
+if (config.script.vendor.enabled) {
+	plugins.push(
+		// Put any node_modules scripts into seperate bundle
+		new webpack.optimize.CommonsChunkPlugin({
+			name: config.script.vendor.options.name,
+			minChunks: module => module.context && module.context.includes('node_modules')
+		}))
+}
+
+if (config.script.manifest.enabled) {
+	plugins.push(
+		// Create a manifest json file of the output chunks
+		new ManifestPlugin({
+			// Move manifest file back one directory
+			fileName: `../${config.script.manifest.options.name}.json`,
+			// Map over manifest and remove reference to style path,
+			// for some reason overriding the publicPath in
+			// extractTextPlugin doesn't work
+			map(manifest) {
+				if (manifest.path.includes('../styles/')) {
+					manifest.path = manifest.path.replace('../styles/', '');
+				}
+
+				return manifest;
+			}
+		}))
+}
+
+if (config.script.chunking.enabled) {
+	const { name, minChunks } = config.script.chunking.options;
+
+	plugins.push(
+		// Enable chunking
+		new webpack.optimize.CommonsChunkPlugin({ name, minChunks }))
+}
 
 module.exports = {
 	entry: buildEntries(config.script.entry),
@@ -150,39 +190,17 @@ module.exports = {
 			{ from: paths.images, to: paths.output.images },
 		]),
 
-		// Create a manifest json file of the output chunks
-		new ManifestPlugin({
-			// Move manifest file back one directory
-			fileName: '../manifest.json',
-			// Map over manifest and remove reference to style path,
-			// for some reason overriding the publicPath in
-			// extractTextPlugin doesn't work
-			map(manifest) {
-				if (manifest.path.includes('../styles/')) {
-					manifest.path = manifest.path.replace('../styles/', '');
-				}
-
-				return manifest;
-			}
+		new StyleLintPlugin({
+			configFile: `${paths.build}/.stylelintrc`,
+			syntax: 'scss'
 		}),
 
-		// Chunk all vendor scripts
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'vendor',
-			minChunks: module => module.context && module.context.includes('node_modules'),
-		}),
-
-		// Chunk all common scripts, this will include the
-		// webpack boilerplate
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'common',
-			minChunks: Infinity
-		}),
+		...plugins,
 	],
 	resolve: {
 		modules: [
 			`${paths.weeCore}/scripts`,
 			paths.nodeModules
 		]
-	}
+	},
 }
