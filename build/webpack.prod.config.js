@@ -34,5 +34,5 @@ module.exports = merge(base, {
 				quality: '99'
 			},
 		}),
-	]
+	],
 });
