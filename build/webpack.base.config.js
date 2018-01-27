@@ -25,7 +25,11 @@ if (config.script.vendor.enabled) {
 		new webpack.optimize.CommonsChunkPlugin({
 			name: config.script.vendor.options.name,
 			minChunks: module => module.context && module.context.includes('node_modules')
-		}))
+		})
+	);
+
+	// Add hashed module ids
+	plugins.push(new webpack.HashedModuleIdsPlugin());
 }
 
 if (config.script.manifest.enabled) {
@@ -44,7 +48,8 @@ if (config.script.manifest.enabled) {
 
 				return manifest;
 			}
-		}))
+		})
+	);
 }
 
 if (config.script.chunking.enabled) {
@@ -52,7 +57,8 @@ if (config.script.chunking.enabled) {
 
 	plugins.push(
 		// Enable chunking
-		new webpack.optimize.CommonsChunkPlugin({ name, minChunks }))
+		new webpack.optimize.CommonsChunkPlugin({ name, minChunks })
+	);
 }
 
 module.exports = {
