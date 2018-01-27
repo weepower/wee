@@ -6,6 +6,9 @@
 		"build": "build"
 	},
 	"style": {
+		"output": {
+			"filename": "[name].css"
+		},
 		"breakpoints": {
 			"mobileLandscape": 480,
 			"tablet": 768,
@@ -20,16 +23,16 @@
 			"app": "app.js"
 		},
 		"output": {
-			"filename": "[name].bundle.[chunkhash].js"
+			"filename": "[name].bundle.js"
 		},
 		"manifest": {
-			"enabled": true,
+			"enabled": false,
 			"options": {
 				"name": "manifest"
 			}
 		},
 		"vendor": {
-			"enabled": true,
+			"enabled": false,
 			"options": {
 				"name": "vendor"
 			}
