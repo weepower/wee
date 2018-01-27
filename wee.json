@@ -6,6 +6,7 @@
 		"build": "build"
 	},
 	"style": {
+		"entry": {},
 		"output": {
 			"filename": "[name].css"
 		},
