@@ -3,7 +3,7 @@
 Wee is a front-end framework for logically building complex, responsive web projects.
 
 [![NPM version](https://img.shields.io/npm/v/wee-framework.svg?style=flat)](https://www.npmjs.com/package/wee-framework)
-[![David]](https://david-dm.org/)(https://david-dm.org/weepower/wee.svg)
+[![David](https://david-dm.org/weepower/wee.svg)](https://david-dm.org/)
 
 ## Features
 
