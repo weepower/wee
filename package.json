@@ -70,6 +70,7 @@
     "stylelint-config-standard": "^18.0.0",
     "stylelint-order": "^0.8.0",
     "stylelint-webpack-plugin": "^0.10.1",
+    "suppress-chunks-webpack-plugin": "0.0.4",
     "vue-loader": "^13.0.0",
     "vue-template-compiler": "^2.1.10",
     "webpack": "^3.5.6",
