@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 const path = require('path');
 const glob = require('glob');
 const paths = require('./paths');
@@ -13,7 +14,7 @@ const { buildEntries, calcBreakpoints } = require('./helpers');
 
 const extractSCSS = new ExtractTextPlugin({
 	// Add path to file name to output into it's own directory
-	filename: '../styles/[name].[contenthash].css',
+	filename: `../styles/${config.style.output.filename}`,
 	allChunks: true
 });
 
@@ -62,7 +63,7 @@ if (config.script.chunking.enabled) {
 }
 
 module.exports = {
-	entry: buildEntries(config.script.entry),
+	entry: buildEntries(config.script.entry, config.style.entry),
 	output: {
 		filename: config.script.output.filename,
 		path: paths.output.scripts,
@@ -196,10 +197,14 @@ module.exports = {
 			{ from: paths.images, to: paths.output.images },
 		]),
 
+		// Lint styles
 		new StyleLintPlugin({
 			configFile: `${paths.build}/.stylelintrc`,
 			syntax: 'scss'
 		}),
+
+		// Supress the creation of any style specific entry points
+		new SuppressChunksPlugin(Object.keys(config.style.entry)),
 
 		...plugins,
 	],
