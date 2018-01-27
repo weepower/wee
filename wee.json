@@ -6,13 +6,6 @@
 		"build": "build"
 	},
 	"style": {
-		"features": {
-			"buttons": true,
-			"code": true,
-			"forms": true,
-			"print": true,
-			"tables": true
-		},
 		"breakpoints": {
 			"mobileLandscape": 480,
 			"tablet": 768,
@@ -20,9 +13,7 @@
 			"desktop2": 1280,
 			"desktop3": 1440
 		},
-		"breakpointOffset": 25,
-		"build": [],
-		"compile": {}
+		"breakpointOffset": 25
 	},
 	"script": {
 		"entry": {
@@ -31,8 +22,20 @@
 		"output": {
 			"filename": "[name].bundle.[chunkhash].js"
 		},
+		"manifest": {
+			"enabled": true,
+			"options": {
+				"name": "manifest"
+			}
+		},
+		"vendor": {
+			"enabled": true,
+			"options": {
+				"name": "vendor"
+			}
+		},
 		"chunking": {
-			"enable": false,
+			"enabled": true,
 			"options": {
 				"name": "common",
 				"minChunks": 2
