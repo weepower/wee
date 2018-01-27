@@ -68,6 +68,7 @@
     "style-loader": "^0.19.1",
     "stylelint": "^8.4.0",
     "stylelint-config-standard": "^18.0.0",
+    "stylelint-order": "^0.8.0",
     "stylelint-webpack-plugin": "^0.10.1",
     "vue-loader": "^13.0.0",
     "vue-template-compiler": "^2.1.10",
