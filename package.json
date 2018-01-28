@@ -85,6 +85,6 @@
     "es6-promise": "^4.1.1",
     "path-to-regexp": "^1.7.0",
     "vue": "^2.0.1",
-    "wee-core": "2.1.8"
+    "wee-core": "2.1.9"
   }
 }
