@@ -26,6 +26,7 @@
     "prebuild": "node build/prebuild.js",
     "build": "cross-env NODE_ENV=development BASE_PATH=$npm_package_config_source webpack --config $npm_package_config_build/webpack.dev.config.js --progress --hide-modules",
     "build:prod": "cross-env NODE_ENV=production BASE_PATH=$npm_package_config_source webpack -p --config $npm_package_config_build/webpack.prod.config.js --progress --hide-modules",
+    "start": "npm run watch",
     "watch": "npm run build -- --watch",
     "analyze": "npm run build -- --env.analyze"
   },
