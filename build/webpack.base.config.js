@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const combineLoaders = require('webpack-combine-loaders');
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 const path = require('path');
 const glob = require('glob');
@@ -12,13 +13,69 @@ const paths = require('./paths');
 const config = require(`${paths.project}/wee.json`);
 const { buildEntries, calcBreakpoints } = require('./helpers');
 
+const babelConfig = {
+	presets: [['env', { targets: { browsers: ['last 2 versions', 'ie 11'] } }]],
+	plugins: [
+		// Consolidates/reuses babel helpers
+		require('babel-plugin-transform-runtime'),
+		// Use object rest and spread plugin
+		require('babel-plugin-transform-object-rest-spread')
+	]
+}
+
 const extractSCSS = new ExtractTextPlugin({
 	// Add path to file name to output into it's own directory
 	filename: `../styles/${config.style.output.filename}`,
 	allChunks: true
 });
 
-const plugins = [];
+const plugins = [
+	// Delete output directory contents
+	new CleanWebpackPlugin([
+		paths.assets
+	], {
+			root: paths.project
+		}),
+
+	// Extract css into single file
+	extractSCSS,
+
+	// Process with postcss after extract text plugin does it's thing
+	new PostCSSAssetsPlugin({
+		test: /\.css$/,
+		log: true,
+		plugins: [
+			// Use custom media query @ rules
+			require('postcss-variable-media')({
+				breakpoints: calcBreakpoints(config.style.breakpoints, config.style.breakpointOffset)
+			}),
+			// Autoprefix css properties
+			require('autoprefixer')(),
+			// Pack same CSS media query rules into one media query rule
+			require('css-mqpacker')(),
+			// Minify css
+			require('cssnano')({
+				safe: true
+			}),
+		],
+	}),
+
+	// Copy images from source to public
+	new CopyWebpackPlugin([
+		{ from: paths.images, to: paths.output.images },
+	]),
+
+	// Lint styles
+	new StyleLintPlugin({
+		configFile: `${paths.build}/.stylelintrc`,
+		// Skip linting on start, and only lint dirty modules
+		lintDirtyModulesOnly: true,
+		syntax: 'scss'
+	}),
+
+	// Supress the creation of any style specific entry points
+	new SuppressChunksPlugin(Object.keys(config.style.entry)),
+];
 
 if (config.script.vendor.enabled) {
 	plugins.push(
@@ -88,7 +145,12 @@ module.exports = {
 			// Vue loader
 			{
 				test: /\.vue$/,
-				loader: 'vue-loader'
+				loader: 'vue-loader',
+				options: {
+					loaders: [
+						{ loader: 'babel-loader', options: babelConfig },
+					],
+				},
 			},
 
 			// Babel loader
@@ -96,21 +158,7 @@ module.exports = {
 				test: /\.js$/,
 				loader: 'babel-loader',
 				exclude: /node_modules\/(?!wee-core)/,
-				options: {
-					// NOTE: Any changes to options need to be updated
-					// in .babelrc - vue-loader uses .babelrc
-					plugins: [
-						// Consolidates/reuses babel helpers
-						require('babel-plugin-transform-runtime'),
-						// Use object rest and spread plugin
-						require('babel-plugin-transform-object-rest-spread')
-					],
-					// Use the preset-env and target the latest 2 versions of every major browser as
-					// well as IE 11
-					presets: [
-						['env', { targets: { browsers: ['last 2 versions', 'ie 11'] } }]
-					]
-				}
+				options: babelConfig,
 			},
 
 			// Sass loader config
@@ -161,59 +209,11 @@ module.exports = {
 			},
 		],
 	},
-	plugins: [
-		// Delete output directory contents
-		new CleanWebpackPlugin([
-			paths.assets
-		], {
-			root: paths.project
-		}),
-
-		// Extract css into single file
-		extractSCSS,
-
-		// Process with postcss after extract text plugin does it's thing
-		new PostCSSAssetsPlugin({
-			test: /\.css$/,
-			log: true,
-			plugins: [
-				// Use custom media query @ rules
-				require('postcss-variable-media')({
-					breakpoints: calcBreakpoints(config.style.breakpoints, config.style.breakpointOffset)
-				}),
-				// Autoprefix css properties
-				require('autoprefixer')(),
-				// Pack same CSS media query rules into one media query rule
-				require('css-mqpacker')(),
-				// Minify css
-				require('cssnano')({
-					safe: true
-				}),
-			],
-		}),
-
-		// Copy images from source to public
-		new CopyWebpackPlugin([
-			{ from: paths.images, to: paths.output.images },
-		]),
-
-		// Lint styles
-		new StyleLintPlugin({
-			configFile: `${paths.build}/.stylelintrc`,
-			// Skip linting on start, and only lint dirty modules
-			lintDirtyModulesOnly: true,
-			syntax: 'scss'
-		}),
-
-		// Supress the creation of any style specific entry points
-		new SuppressChunksPlugin(Object.keys(config.style.entry)),
-
-		...plugins,
-	],
 	resolve: {
 		modules: [
 			`${paths.weeCore}/scripts`,
 			paths.nodeModules
 		]
 	},
-}
+	plugins,
+};
