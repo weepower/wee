@@ -5,7 +5,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const combineLoaders = require('webpack-combine-loaders');
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 const path = require('path');
 const glob = require('glob');
