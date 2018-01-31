@@ -18,14 +18,14 @@ const babelConfig = {
 		// Consolidates/reuses babel helpers
 		require('babel-plugin-transform-runtime'),
 		// Use object rest and spread plugin
-		require('babel-plugin-transform-object-rest-spread')
-	]
-}
+		require('babel-plugin-transform-object-rest-spread'),
+	],
+};
 
 const extractSCSS = new ExtractTextPlugin({
 	// Add path to file name to output into it's own directory
 	filename: `../styles/${config.style.output.filename}`,
-	allChunks: true
+	allChunks: true,
 });
 
 const plugins = [
@@ -133,7 +133,7 @@ module.exports = {
 				test: /\.(js|vue)$/,
 				exclude: /node_modules/,
 				include: [
-					paths.scripts
+					paths.scripts,
 				],
 				loader: 'eslint-loader',
 				options: {
@@ -175,9 +175,9 @@ module.exports = {
 								// Include wee-core so we can @import core files
 								// using the tilda character: @import "~wee-core/styles/mixins.scss"
 								includePaths: [
-									`${paths.weeCore}`
-								]
-							}
+									`${paths.weeCore}`,
+								],
+							},
 						},
 
 						// Sass resource loader allows us to enable global access to
@@ -203,16 +203,19 @@ module.exports = {
 					// Adds the path for the font inside the CSS file
 					publicPath: '../',
 					// Move fonts one level back from scripts directory
-					outputPath: '../'
+					outputPath: '../',
 				},
 			},
 		],
 	},
 	resolve: {
+		alias: {
+			'@': paths.components,
+		},
 		modules: [
 			`${paths.weeCore}/scripts`,
-			paths.nodeModules
-		]
+			paths.nodeModules,
+		],
 	},
 	plugins,
 };
