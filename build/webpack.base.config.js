@@ -201,7 +201,7 @@ module.exports = {
 				options: {
 					name: 'fonts/[name].[ext]',
 					// Adds the path for the font inside the CSS file
-					publicPath: '../',
+					publicPath: './',
 					// Move fonts one level back from scripts directory
 					outputPath: '../',
 				},
