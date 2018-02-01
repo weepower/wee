@@ -7,6 +7,9 @@
 @import '~wee-core/styles/components/tables';
 @import './print.scss';
 
+// Import generated media query file for screen mapping
+@import '../../build/temp/responsive';
+
 #global {
     // Global helpers and state modifiers
 }
