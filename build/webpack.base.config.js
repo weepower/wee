@@ -33,8 +33,8 @@ const plugins = [
 	new CleanWebpackPlugin([
 		paths.assets
 	], {
-			root: paths.project
-		}),
+        root: paths.project
+    }),
 
 	// Extract css into single file
 	extractSCSS,
@@ -168,7 +168,12 @@ module.exports = {
 					fallback: 'style-loader',
 					publicPath: '../../../',
 					use: [
-						{ loader: 'css-loader' },
+						{
+                            loader: 'css-loader',
+                            options: {
+                                url: false
+                            }
+                        },
 						{
 							loader: 'sass-loader',
 							options: {
