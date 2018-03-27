@@ -22,6 +22,7 @@ module.exports = {
 	scripts: `${sourcePath}/scripts`,
 	components: `${sourcePath}/components`,
 	images: `${sourcePath}/images`,
+	fonts: `${sourcePath}/fonts`,
 	output: {
 		styles: `${assetsPath}/styles`,
 		scripts: `${assetsPath}/scripts`,

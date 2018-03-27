@@ -62,6 +62,7 @@ const plugins = [
 	// Copy images from source to public
 	new CopyWebpackPlugin([
 		{ from: paths.images, to: paths.output.images },
+		{ from: paths.fonts, to: paths.output.fonts },
 	]),
 
 	// Lint styles
@@ -199,17 +200,6 @@ module.exports = {
 						},
 					],
 				}),
-			},
-			{
-				test: /\.(ttf|eot|woff|woff2)$/,
-				loader: 'file-loader',
-				options: {
-					name: 'fonts/[name].[ext]',
-					// Adds the path for the font inside the CSS file
-					publicPath: './',
-					// Move fonts one level back from scripts directory
-					outputPath: '../',
-				},
 			},
 		],
 	},
