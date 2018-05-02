@@ -51,7 +51,9 @@ const plugins = [
 			// Autoprefix css properties
 			require('autoprefixer')(),
 			// Pack same CSS media query rules into one media query rule
-			require('css-mqpacker')(),
+            require('css-mqpacker')({
+                sort: true,
+            }),
 			// Minify css
 			require('cssnano')({
 				safe: true
