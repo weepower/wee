@@ -165,7 +165,7 @@ module.exports = {
 
 			// Sass loader config
 			{
-				test: /\.scss$/,
+				test: /\.s?css$/,
 				use: extractSCSS.extract({
 					// Fallback to style loader
 					fallback: 'style-loader',
