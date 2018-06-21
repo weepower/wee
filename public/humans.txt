@@ -2,8 +2,8 @@
 	# Team
 #------------------------------------
 
-Caddis / hello@caddis.co / twitter.com/caddisint
-Wee / hello@weepower.com / twitter.com/weecss
+Lewis Communications / hello@lewiscommunications.com / twitter.com/lewiscommunications
+Wee / twitter.com/weecss
 
 
 #------------------------------------
