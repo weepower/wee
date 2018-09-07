@@ -1,34 +1,34 @@
-const fs = require('fs-extra');
-const buildPath = __dirname;
-const projectPath = buildPath.split('/').slice(0, -1).join('/');
-const packageJsonPath = `${projectPath}/package.json`;
-const weeJsonPath = `${projectPath}/wee.json`;
-const config = require(weeJsonPath);
-const sourcePath = `${projectPath}/${config.paths.source}`;
-const rootPath = `${projectPath}/${config.paths.root}`;
-const assetsPath = `${rootPath}/${config.paths.assets}`;
-const modulesPath = `${projectPath}/node_modules`;
+const path = require('path');
+
+const build = __dirname;
+const project = path.resolve(build, '../');
+const wee = path.resolve(project, 'wee.json');
+const packageJson = path.resolve(project, 'package.json');
+const config = require(wee);
+const source = path.resolve(project, config.paths.source);
+const root = path.resolve(project, config.paths.root);
+const assets = path.resolve(root, config.paths.assets);
+const nodeModules = path.resolve(project, 'node_modules');
 
 module.exports = {
-	project: projectPath,
-	packageJson: packageJsonPath,
-	wee: weeJsonPath,
-	temp: `${buildPath}/temp`,
-	build: buildPath,
-	root: rootPath,
-	source: sourcePath,
-	assets: assetsPath,
-	styles: `${sourcePath}/styles`,
-	scripts: `${sourcePath}/scripts`,
-	components: `${sourcePath}/components`,
-	images: `${sourcePath}/images`,
-	fonts: `${sourcePath}/fonts`,
+    project,
+    wee,
+	packageJson,
+    build,
+	root,
+	source,
+	assets,
+	styles: path.resolve(source, 'styles'),
+	scripts: path.resolve(source, 'scripts'),
+	components: path.resolve(source, 'components'),
+	images: path.resolve(source, 'images'),
+	fonts: path.resolve(source, 'fonts'),
 	output: {
-		styles: `${assetsPath}/styles`,
-		scripts: `${assetsPath}/scripts`,
-		images: `${assetsPath}/images`,
-		fonts: `${assetsPath}/fonts`
+		styles: path.resolve(assets, 'styles'),
+		scripts: path.resolve(assets, 'scripts'),
+		images: path.resolve(assets, 'images'),
+		fonts: path.resolve(assets, 'fonts'),
 	},
-	nodeModules: modulesPath,
-	weeCore: `${modulesPath}/wee-core`
+	nodeModules,
+	weeCore: path.resolve(nodeModules, 'wee-core'),
 };

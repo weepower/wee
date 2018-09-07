@@ -1,10 +1,10 @@
-const fs = require('fs-extra');
-const glob = require('glob');
+const fs = require('fs');
+const path = require('path');
 const paths = require('./paths');
 
 // Config files
-const config = fs.readJsonSync(paths.project + '/wee.json');
-const packageJson = fs.readJsonSync(paths.packageJson);
+const config = require(paths.wee);
+const packageJson = require(paths.packageJson);
 
 // Update package.json
 if (! packageJson.config) {
@@ -15,8 +15,9 @@ if (! packageJson.config) {
 packageJson.config.root = config.paths.root;
 packageJson.config.source = config.paths.source;
 packageJson.config.build = config.paths.build;
-packageJson.config.tasks = `${config.paths.build}/tasks`;
-fs.writeJsonSync(paths.packageJson, packageJson, { spaces: 2 });
+packageJson.config.tasks = path.resolve(config.paths.build, 'tasks');
+
+fs.writeFileSync(paths.packageJson, JSON.stringify(packageJson, null, 2));
 
 /**
  * Build the breakpoint
@@ -24,10 +25,8 @@ fs.writeJsonSync(paths.packageJson, packageJson, { spaces: 2 });
  * @param {*} breakpoint
  * @param {*} count
  */
-function buildBreakpoint(breakpoint, count) {
-	let html = `html { font-family: '${count}'; }`;
-
-	return `@${breakpoint} { ${html} }\n`;
+const buildBreakpoint = (breakpoint, count) => {
+    return `@${breakpoint} { html { font-family: '${count}'; } }\n`
 }
 
 /**
@@ -36,18 +35,20 @@ function buildBreakpoint(breakpoint, count) {
  *
  * @param {*} breakpoints
  */
-function createResponsiveFile(breakpoints) {
-	let count = 2,
-		result = '/* stylelint-disable */\n\n';
+const createResponsiveFile = breakpoints => {
+	let count = 2;
+	let result = '/* stylelint-disable */\n\n';
 
 	for (let breakpoint in breakpoints) {
 		result += buildBreakpoint(breakpoint, count);
 		count++;
 	}
 
-	fs.mkdirsSync(paths.temp);
+    if (! fs.existsSync(paths.temp)) {
+        fs.mkdirSync(paths.temp);
+    }
 
-	fs.writeFileSync(paths.temp + '/responsive.scss', result);
+	fs.writeFileSync(path.resolve(paths.temp, 'responsive.scss'), result);
 };
 
 // Create temp responsive.scss file
