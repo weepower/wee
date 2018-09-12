@@ -5,7 +5,9 @@
     <meta name="format-detection">
 
 	<title>Front-End Framework | Wee</title>
-	<meta name="description" content="Blueprint for modern web development.">
+    <meta name="description" content="Blueprint for modern web development.">
+
+    <link rel="manifest" href="site.webmanifest">
 
 	<link rel="stylesheet" href="/assets/styles/app.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Heebo">
@@ -25,9 +27,12 @@
 	<meta property="og:image" content="https://www.weepower.com/assets/images/share.png" itemprop="image">
 </head>
 <body>
-	<div class="content">
+	<main class="content">
 		<img src="/assets/images/logo.svg" alt="Wee Framework" class="logo">
 		<ul class="links">
+                <li class="links__item">
+                    <a href="/test" class="links__link">Test</a>
+                </li>
 			<li class="links__item">
 				<a href="https://www.weepower.com/guide/introduction" class="links__link" target="_blank">Docs</a>
 			</li>
@@ -44,8 +49,9 @@
 				<a href="https://github.com/weepower/wee-cli" class="links__link" target="_blank">Wee CLI</a>
 			</li>
 		</ul>
-	</div>
+	</main>
 
+    <script src="/assets/scripts/vendor.bundle.js"></script>
 	<script src="/assets/scripts/app.bundle.js"></script>
 </body>
 </html>

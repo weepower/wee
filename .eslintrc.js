@@ -1,4 +1,5 @@
 module.exports = {
+    parser: 'babel-eslint',
 	extends: 'airbnb-base',
 	plugins: [
 		'import'
@@ -9,8 +10,9 @@ module.exports = {
 				config: './build/webpack.dev.config.js'
 			}
 		}
-	},
-	rules: {
+    },
+    rules: {
+        strict: 0,
 		indent: ['error', 4],
 		'eol-last': 0,
 		'no-plusplus': 0,

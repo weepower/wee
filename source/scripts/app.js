@@ -1,10 +1,18 @@
+import $router from 'wee-routes';
 import './bootstrap';
 
-// Begin your application here
-// Example:
+/**
+ * Dynamically load a component
+ * @param {String} component
+ */
+const load = component => import(/* webpackChunkName: "[request]" */ `../components/${component}`)
+    .then(m => m.default || m);
 
-// import $router from 'wee-routes';
-
-// $router.map([
-//     { path: '/', init() { 'Hello World' } }
-// ]).run();
+$router.pjax().map([
+    {
+        path: '/',
+        handler: [
+            () => load('welcome'),
+        ],
+    },
+]).run();

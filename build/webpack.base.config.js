@@ -2,23 +2,63 @@ const path = require('path');
 const Config = require('webpack-chain');
 const config = new Config();
 
+// Plugins
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const CleanObsoleteChunks = require('webpack-clean-obsolete-chunks');
+const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 
 const paths = require('./paths');
-const weeConfig = require(paths.wee);
+const wee = require(paths.wee);
 const env = process.env.NODE_ENV;
+
+/**
+ *
+ * @param {Object} entries
+ * @param {String} type - The type of entry; scripts/styles
+ */
+const addEntries = (entries, type) => {
+    for (const entry in entries) {
+        const entryFiles = entries[entry];
+        const entryConfig = config.entry(entry);
+
+        if (Array.isArray(entryFiles)) {
+            entryFiles.forEach(entry => entryConfig.add(`${paths[type]}/${entry}`));
+        } else {
+            entryConfig.add(`${paths[type]}/${entryFiles}`);
+        }
+    }
+}
 
 // Set the enviornment
 config.mode(env);
 
-config
-    .entry('app')
-        .add(`${paths.scripts}/app.js`)
-        .end()
-    .output
-        .path(paths.output.scripts)
-        .filename('[name].bundle.js');
+// Add script entries
+addEntries(wee.script.entry, 'scripts');
+
+// Add style entries
+addEntries(wee.style.entry, 'styles');
+
+// Set the output options
+if (Object.keys(wee.script.output).length) {
+    if (wee.script.output.filename) {
+        config.output.filename(wee.script.output.filename);
+    }
+
+    if (wee.script.output.chunkFilename) {
+        config.output.chunkFilename(wee.script.output.chunkFilename);
+    }
+}
+
+config.output
+    .path(paths.output.scripts)
+    .publicPath(`${wee.paths.assets}/scripts/`)
+    .filename(wee.script.output.filename)
+    .chunkFilename(wee.script.output.filename);
 
 // Process and extract css
 config.module
@@ -52,6 +92,18 @@ config.module
         })
         .end();
 
+// Babel
+config
+    .module
+    .rule('js')
+    .test(/\.js$/)
+    .exclude
+        .add(/node_modules(?!\/wee-core)/)
+        .end()
+    .use('babel')
+        .loader('babel-loader')
+        .end();
+
 // Lint JS/Vue files
 config.module
     .rule('lint')
@@ -67,14 +119,44 @@ config.module
         .loader('eslint-loader')
         .end();
 
+// Vue
+config.module
+    .rule('vue')
+    .test(/\.vue$/)
+    .use('vue')
+        .loader('vue-loader')
+        .options({
+            loaders: [
+                {
+                    loader: 'babel-loader'
+                }
+            ]
+        });
+
 config
     .plugin('extract-css')
         .use(MiniCssExtractPlugin, [{
-            filename: path.join('../styles', weeConfig.style.output.filename),
-            chunkFileName: path.join('../styles', weeConfig.style.output.chunkFilename),
+            filename: path.join('../styles', wee.style.output.filename),
+            chunkFileName: path.join('../styles', wee.style.output.chunkFilename),
         }])
         .end();
 
+config.plugin('clean-obsolete-chunks')
+    .use(CleanObsoleteChunks)
+    .end();
+
+// Delete contents of output directory
+config.plugin('clean-webpack')
+    .use(CleanWebpackPlugin, [[
+        paths.output.fonts,
+        paths.output.images
+    ], {
+        root: paths.project,
+        watch: true
+    }])
+    .end();
+
+// Lint styles
 config
     .plugin('stylelint')
         .use(StyleLintPlugin, [{
@@ -85,10 +167,89 @@ config
         }])
         .end();
 
+config.plugin('vue-loader-plugin')
+    .use(VueLoaderPlugin)
+    .end();
+
+const copyWebpackIgnore = [
+    '.gitkeep',
+    '.DS_Store'
+];
+
+// Copy fonts and images
+config.plugin('copy-webpack')
+    .use(CopyWebpackPlugin, [[
+        { from: paths.images, to: paths.output.images, ignore: copyWebpackIgnore },
+        { from: paths.fonts, to: paths.output.fonts, ignore: copyWebpackIgnore },
+    ], {
+        copyUnmodified: true
+    }]);
+
+// Don't generate js chunks for css only entry points
+config.plugin('suppress-chunks')
+    .use(SuppressChunksPlugin, [
+        ...Object.keys(wee.style.entry).map(name => ({ name, match: /\.(js|js.map)$/ }))
+    ]);
+
 config
     .resolve
     .modules
         .add(path.join(paths.weeCore, 'scripts'))
         .add(paths.nodeModules);
+
+if (wee.manifest.enabled) {
+    config.plugin('manifest')
+        .use(ManifestPlugin, [{
+            publicPath: '',
+            fileName: `../../${wee.manifest.options.filename}`,
+            map(file) {
+                file.path = file.path.replace('../styles/', '');
+
+                return file;
+            },
+            // Filter out anything that isn't css, js or source map
+            filter(file) {
+                const entries = wee.style.entry;
+                let styleEntries = [];
+
+                // While we are suppresing the js file created by webpack
+                // for the CSS only entry points, the manifest still includes
+                // them so we must filter them out.
+                for (const entry in entries) {
+                    styleEntries.push(...[
+                        entries[entry].replace('css', 'js'),
+                        entries[entry].replace('css', 'js.map')
+                    ])
+                }
+
+                return /\.(css|js|map)$/gi.test(file.name) &&
+                    ! styleEntries.includes(file.name);
+            }
+        }])
+}
+
+let cacheGroups = {};
+
+if (wee.script.vendor.enabled) {
+    cacheGroups.vendors = {
+        test: /[\\/]node_modules[\\/]/,
+        priority: -10,
+        chunks: 'initial',
+        ...wee.script.vendor.options
+    };
+}
+
+if (wee.script.chunking.enabled) {
+    cacheGroups.chunking = {
+        priority: -20,
+        chunks: 'initial',
+        reuseExistingChunk: true,
+        ...wee.script.chunking.options
+    }
+}
+
+if (Object.keys(cacheGroups).length) {
+    config.optimization.splitChunks({ cacheGroups });
+}
 
 module.exports = config;

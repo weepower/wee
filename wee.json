@@ -3,24 +3,8 @@
         "root": "public",
         "assets": "assets",
         "source": "source",
+        "components": "source/components",
         "build": "build"
-    },
-    "style": {
-        "entry": {
-            "test": "test.css"
-        },
-        "output": {
-            "filename": "[name].min.css",
-            "chunkFilename": "[id].min.css"
-        },
-        "breakpoints": {
-            "mobileLandscape": 480,
-            "tablet": 768,
-            "desktop": 1024,
-            "desktop2": 1280,
-            "desktop3": 1440
-        },
-        "breakpointOffset": 25
     },
     "manifest": {
         "enabled": false,
@@ -33,21 +17,37 @@
             "app": "app.js"
         },
         "output": {
-            "filename": "[name].bundle.js"
+            "filename": "[name].bundle.js",
+            "chunkFilename": "[name].bundle.js"
         },
         "vendor": {
-            "enabled": false,
+            "enabled": true,
             "options": {
                 "name": "vendor"
             }
         },
         "chunking": {
-            "enabled": false,
+            "enabled": true,
             "options": {
                 "name": "common",
                 "minChunks": 2
             }
         }
+    },
+    "style": {
+        "entry": {},
+        "output": {
+            "filename": "[name].min.css",
+            "chunkFilename": "[name].min.css"
+        },
+        "breakpoints": {
+            "mobileLandscape": 480,
+            "tablet": 768,
+            "desktop": 1024,
+            "desktop2": 1280,
+            "desktop3": 1440
+        },
+        "breakpointOffset": 25
     },
     "server": {
         "ghostMode": false,
