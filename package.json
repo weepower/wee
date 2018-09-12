@@ -26,6 +26,7 @@
   "scripts": {
     "clean": "rimraf $npm_package_config_root/$npm_package_config_assets",
     "start": "npm run watch",
+    "prebuild": "node build/prebuild.js",
     "build": "cross-env NODE_ENV=development BASE_PATH=$npm_package_config_source webpack --config $npm_package_config_build/webpack.dev.config.js --progress --hide-modules --display=normal",
     "build:prod": "npm run clean && cross-env NODE_ENV=production BASE_PATH=$npm_package_config_source webpack -p --config $npm_package_config_build/webpack.prod.config.js --progress --hide-modules",
     "watch": "npm run clean && npm run build -- --watch"
@@ -83,6 +84,7 @@
     "@babel/polyfill": "^7.0.0",
     "es6-promise": "^4.2.4",
     "path-to-regexp": "1.7.0",
+    "vue": "^2.5.17",
     "wee-core": "^2.2.0"
   }
 }
