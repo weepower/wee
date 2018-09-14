@@ -2,15 +2,17 @@ const path = require('path');
 
 const build = __dirname;
 const project = path.resolve(build, '../');
-const wee = path.resolve(project, 'wee.json');
+const wee = path.resolve(project, 'wee.config.js');
 const packageJson = path.resolve(project, 'package.json');
 const config = require(wee);
 const source = path.resolve(project, config.paths.source);
 const root = path.resolve(project, config.paths.root);
 const assets = path.resolve(root, config.paths.assets);
 const nodeModules = path.resolve(project, 'node_modules');
+const temp = path.resolve(build, 'temp');
 
 module.exports = {
+    temp,
     project,
     wee,
 	packageJson,
