@@ -1,3 +1,4 @@
+const merge = require('webpack-merge');
 const config = require('./webpack.base.config');
 const paths = require('../build/paths');
 const wee = require(paths.wee);
@@ -27,4 +28,4 @@ config
         logFileChanges: true
     }]);
 
-module.exports = config.toConfig();
+module.exports = merge(config.toConfig(), wee.configureWebpack);

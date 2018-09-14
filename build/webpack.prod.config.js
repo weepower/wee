@@ -1,10 +1,10 @@
+const merge = require('webpack-merge');
 const config = require('./webpack.base.config');
 const paths = require('../build/paths');
 const wee = require(paths.wee);
 
 // Plugins
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const BabelMinifyPlugin = require('babel-minify-webpack-plugin');
 const ImageMinPlugin = require('imagemin-webpack-plugin').default;
 
 const env = process.env.NODE_ENV;
@@ -19,12 +19,50 @@ config.optimization
     .nodeEnv(env)
     .minimizer([
         // Minify with dead-code elimination
-        new UglifyJsPlugin(),
-        // Uglify cannot minify bundle properly
-        new BabelMinifyPlugin({}, {
-            // Remove all comments
-            comments: false
-        })
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                output: {
+                    comments: false
+                },
+                compress: {
+                    // turn off flags with small gains to speed up minification
+                    arrows: false,
+                    collapse_vars: false, // 0.3kb
+                    comparisons: false,
+                    computed_props: false,
+                    hoist_funs: false,
+                    hoist_props: false,
+                    hoist_vars: false,
+                    inline: false,
+                    loops: false,
+                    negate_iife: false,
+                    properties: false,
+                    reduce_funcs: false,
+                    reduce_vars: false,
+                    switches: false,
+                    toplevel: false,
+                    typeofs: false,
+
+                    // a few flags with noticable gains/speed ratio
+                    // numbers based on out of the box vendor bundle
+                    booleans: true, // 0.7kb
+                    if_return: true, // 0.4kb
+                    sequences: true, // 0.7kb
+                    unused: true, // 2.3kb
+
+                    // required features to drop conditional branches
+                    conditionals: true,
+                    dead_code: true,
+                    evaluate: true
+                },
+                mangle: {
+                    safari10: true
+                }
+            },
+            sourceMap: true,
+            cache: true,
+            parallel: true
+        }),
     ]);
 
 // Minify images
@@ -36,28 +74,4 @@ config.plugin('imagemin')
         },
     }]);
 
-let cacheGroups = {};
-
-if (wee.script.vendor.enabled) {
-    cacheGroups.vendors = {
-        test: /[\\/]node_modules[\\/]/,
-        priority: -10,
-        chunks: 'initial',
-        ...wee.script.vendor.options
-    };
-}
-
-if (wee.script.chunking.enabled) {
-    cacheGroups.chunking = {
-        priority: -20,
-        chunks: 'initial',
-        reuseExistingChunk: true,
-        ...wee.script.chunking.options
-    }
-}
-
-if (Object.keys(cacheGroups).length) {
-    config.optimization.splitChunks({ cacheGroups });
-}
-
-module.exports = config.toConfig();
+module.exports = merge(config.toConfig(), wee.configureWebpack);

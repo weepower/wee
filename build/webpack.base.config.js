@@ -11,6 +11,8 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CleanObsoleteChunks = require('webpack-clean-obsolete-chunks');
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
+const DefineWebpackPlugin = require('webpack/lib/DefinePlugin');
+const NamedChunksWebpackPlugin = require('webpack/lib/NamedChunksPlugin');
 
 const paths = require('./paths');
 const wee = require(paths.wee);
@@ -37,6 +39,10 @@ const addEntries = (entries, type) => {
 // Set the enviornment
 config.mode(env);
 
+config.stats({
+    children: false,
+});
+
 // Add script entries
 addEntries(wee.script.entry, 'scripts');
 
@@ -56,7 +62,7 @@ if (Object.keys(wee.script.output).length) {
 
 config.output
     .path(paths.output.scripts)
-    .publicPath(`${wee.paths.assets}/scripts/`)
+    .publicPath('/assets/scripts/')
     .filename(wee.script.output.filename)
     .chunkFilename(wee.script.output.filename);
 
@@ -191,8 +197,7 @@ config.plugin('suppress-chunks')
         ...Object.keys(wee.style.entry).map(name => ({ name, match: /\.(js|js.map)$/ }))
     ]);
 
-config
-    .resolve
+config.resolve
     .modules
         .add(path.join(paths.weeCore, 'scripts'))
         .add(paths.nodeModules);
@@ -228,28 +233,79 @@ if (wee.manifest.enabled) {
         }])
 }
 
-let cacheGroups = {};
+// shims
+config.node
+    .merge({
+        setImmediate: false,
+        process: 'mock',
+        dgram: 'empty',
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty',
+        child_process: 'empty',
+    });
 
-if (wee.script.vendor.enabled) {
-    cacheGroups.vendors = {
-        test: /[\\/]node_modules[\\/]/,
-        priority: -10,
-        chunks: 'initial',
-        ...wee.script.vendor.options
-    };
-}
+config.plugin('define')
+    .use(DefineWebpackPlugin, [{
+        'process.env': env
+    }]);
 
-if (wee.script.chunking.enabled) {
-    cacheGroups.chunking = {
-        priority: -20,
-        chunks: 'initial',
-        reuseExistingChunk: true,
-        ...wee.script.chunking.options
+// keep chunk ids stable so async chunks have consistent hash (#1916)
+const seen = new Set();
+const nameLength = 4;
+
+config.plugin('named-chunks')
+    .use(NamedChunksWebpackPlugin, [chunk => {
+        if (chunk.name) {
+            return chunk.name;
+        }
+
+        const modules = Array.from(chunk.modulesIterable);
+
+        if (modules.length > 1) {
+            const hash = require('hash-sum');
+            const joinedHash = hash(modules.map(m => m.id).join('_'));
+            let len = nameLength;
+
+            while (seen.has(joinedHash.substr(0, len))) len++
+
+            seen.add(joinedHash.substr(0, len))
+
+            return `chunk-${joinedHash.substr(0, len)}`;
+        } else {
+            return modules[0].id;
+        }
+    }]);
+
+if (wee.chunking) {
+    let cacheGroups = {};
+
+    if (wee.chunking.vendor.enabled) {
+        cacheGroups.vendors = {
+            test: /[\\/]node_modules[\\/].+\.js$/,
+            priority: -10,
+            chunks: 'initial',
+            ...wee.chunking.vendor.options,
+        };
+    }
+
+    if (wee.chunking.common.enabled) {
+        cacheGroups.common = {
+            priority: -20,
+            chunks: 'initial',
+            reuseExistingChunk: true,
+            minChunks: 2,
+            ...wee.chunking.common.option,
+        }
+    }
+
+    if (Object.keys(cacheGroups).length) {
+        config.optimization.splitChunks({ cacheGroups });
     }
 }
 
-if (Object.keys(cacheGroups).length) {
-    config.optimization.splitChunks({ cacheGroups });
+if (wee.chainWebpack && typeof wee.chainWebpack === 'function') {
+    wee.chainWebpack(config);
 }
 
 module.exports = config;

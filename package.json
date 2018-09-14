@@ -43,6 +43,8 @@
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.2",
     "babel-minify-webpack-plugin": "^0.3.1",
+    "babel-plugin-minify-dead-code-elimination": "^0.4.3",
+    "babel-plugin-minify-mangle-names": "^0.4.3",
     "browser-sync": "^2.24.7",
     "browser-sync-webpack-plugin": "^2.2.2",
     "clean-webpack-plugin": "^0.1.19",
@@ -78,6 +80,7 @@
     "webpack-clean-obsolete-chunks": "^0.4.0",
     "webpack-cli": "^3.1.0",
     "webpack-manifest-plugin": "^2.0.3",
+    "webpack-merge": "^4.1.4",
     "wee-cli": "next"
   },
   "dependencies": {
