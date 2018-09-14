@@ -15,7 +15,6 @@ if (! packageJson.config) {
 packageJson.config.root = config.paths.root;
 packageJson.config.source = config.paths.source;
 packageJson.config.build = config.paths.build;
-packageJson.config.tasks = path.resolve(config.paths.build, 'tasks');
 
 fs.writeFileSync(paths.packageJson, JSON.stringify(packageJson, null, 2));
 
