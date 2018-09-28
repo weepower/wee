@@ -6,6 +6,7 @@ module.exports = {
     rules: {
         'order/properties-alphabetical-order': true,
         'at-rule-no-unknown': null,
+        'no-eol-whitespace': null,
         indentation: 4,
         'number-leading-zero': null,
         'at-rule-no-vendor-prefix': true,
