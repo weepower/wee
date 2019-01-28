@@ -27,7 +27,7 @@ JavaScript toolset to build scalable, organized client logic
 * **Resource loading** for JavaScript, CSS, and images
 * **Breakpoint watching** for efficient media query callbacks
 
-JSON-configured build process to compile, optimize, and minify your project
+Javascript configured build process to compile, optimize, and minify your project
 
 * **Built-in server** for local static development
 * **Live reloading** of assets and markup

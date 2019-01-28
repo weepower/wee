@@ -3,12 +3,12 @@ const path = require('path');
 const paths = require('./paths');
 
 // Config files
-const config = require(paths.wee);
+const config = require(`${paths.project}/wee.config.js`);
 const packageJson = require(paths.packageJson);
 
 // Update package.json
 if (! packageJson.config) {
-	packageJson.config = {};
+    packageJson.config = {};
 }
 
 // Update config properties in package.json to be used by npm scripts
@@ -24,9 +24,7 @@ fs.writeFileSync(paths.packageJson, JSON.stringify(packageJson, null, 2));
  * @param {*} breakpoint
  * @param {*} count
  */
-const buildBreakpoint = (breakpoint, count) => {
-    return `@${breakpoint} { html { font-family: '${count}'; } }\n`
-}
+const buildBreakpoint = (breakpoint, count) => `@${breakpoint} { html { font-family: '${count}'; } }\n`;
 
 /**
  * Create the responsive.scss file required for $screen
@@ -34,20 +32,20 @@ const buildBreakpoint = (breakpoint, count) => {
  *
  * @param {*} breakpoints
  */
-const createResponsiveFile = breakpoints => {
-	let count = 2;
-	let result = '/* stylelint-disable */\n\n';
+const createResponsiveFile = (breakpoints) => {
+    let count = 2;
+    let result = '/* stylelint-disable */\n\n';
 
-	for (let breakpoint in breakpoints) {
-		result += buildBreakpoint(breakpoint, count);
-		count++;
-	}
+    Object.keys(breakpoints).forEach((breakpoint) => {
+        result += buildBreakpoint(breakpoint, count);
+        count++;
+    });
 
     if (! fs.existsSync(paths.temp)) {
         fs.mkdirSync(paths.temp);
     }
 
-	fs.writeFileSync(path.resolve(paths.temp, 'responsive.scss'), result);
+    fs.writeFileSync(path.resolve(paths.temp, 'responsive.scss'), result);
 };
 
 // Create temp responsive.scss file

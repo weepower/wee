@@ -1,6 +1,6 @@
 const paths = require('./build/paths');
-const config = require(paths.wee);
-const { calcBreakpoints } = require('./build/helpers');
+const config = require(`${paths.project}/wee.config.js`);
+const { calcBreakpoints } = require('./build/utils');
 
 module.exports = {
     plugins: [
@@ -18,6 +18,6 @@ module.exports = {
             preset: ['default', {
                 calc: false,
             }],
-        })
-    ]
+        }),
+    ],
 };

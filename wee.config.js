@@ -6,12 +6,6 @@ module.exports = {
         components: 'source/components',
         build: 'build',
     },
-    manifest: {
-        enabled: false,
-        options: {
-            filename: 'manifest.json',
-        },
-    },
     script: {
         entry: {
             app: 'app.js',
@@ -19,6 +13,12 @@ module.exports = {
         output: {
             filename: '[name].bundle.js',
             chunkFilename: '[name].bundle.js',
+        },
+    },
+    manifest: {
+        enabled: false,
+        options: {
+            filename: 'manifest.json',
         },
     },
     chunking: {
@@ -51,7 +51,7 @@ module.exports = {
         breakpointOffset: 25,
     },
     configureWebpack: {},
-    chainWebpack: config => {},
+    chainWebpack: (config) => {},
     server: {
         ghostMode: false,
         host: 'auto',
@@ -65,10 +65,10 @@ module.exports = {
                 root: true,
                 paths: [],
                 extensions: [
-                    'html'
+                    'html',
                 ],
                 ignore: [],
             },
         },
     },
-}
+};
