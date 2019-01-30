@@ -15,6 +15,6 @@ module.exports = {
         'selector-no-vendor-prefix': true,
         'value-no-vendor-prefix': true,
         'string-quotes': 'single',
-        'at-rule-name-case': null
-    }
-}
+        'at-rule-name-case': null,
+    },
+};
