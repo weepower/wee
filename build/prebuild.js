@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const glob = require('glob');
 const paths = require('./paths');
 
 // Config files
@@ -45,8 +46,26 @@ const createResponsiveFile = (breakpoints) => {
         fs.mkdirSync(paths.temp);
     }
 
-    fs.writeFileSync(path.resolve(paths.temp, 'responsive.scss'), result);
+    fs.writeFileSync(path.resolve(paths.temp, 'responsive.scss'), result, 'utf-8');
 };
+
+/**
+ * Create an scss file with all of the component imports
+ *
+ * @param {Array} files - an array of file paths
+ */
+const createComponentsFile = (files) => {
+    let result = '/* stylelint-disable */\n\n';
+
+    files.forEach((file) => {
+        result += `@import "${file}";\n`;
+    });
+
+    fs.writeFileSync(path.resolve(paths.temp, 'components.scss'), result, 'utf-8');
+};
+
+// Create temp components.scss file
+createComponentsFile(glob.sync(`${paths.components}/**/*.scss`));
 
 // Create temp responsive.scss file
 createResponsiveFile(config.style.breakpoints);
