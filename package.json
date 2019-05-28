@@ -67,6 +67,7 @@
     "node-sass": "^4.11.0",
     "postcss-loader": "^3.0.0",
     "postcss-variable-media": "^1.0.3",
+    "purgecss-webpack-plugin": "^1.5.0",
     "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",

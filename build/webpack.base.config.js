@@ -6,6 +6,7 @@
 const Config = require('webpack-chain');
 const path = require('path');
 const hash = require('hash-sum');
+const glob = require('glob');
 const config = new Config();
 const paths = require('./paths');
 const { addEntries } = require('./utils');
@@ -23,6 +24,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 const NamedChunksWebpackPlugin = require('webpack/lib/NamedChunksPlugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const PurgecssPlugin = require('purgecss-webpack-plugin');
 
 // Set the environment
 config.mode(env);
@@ -202,8 +204,32 @@ config.plugin('copy-webpack')
 // Don't generate js chunks for css only entry points
 config.plugin('suppress-chunks')
     .use(SuppressChunksPlugin, [
-        ...Object.keys(wee.style.entry).map(name => ({ name, match: /\.(js|js.map)$/ }))
+        ...Object.keys(wee.style.entry).map(name => ({ name, match: /\.(js|js.map)$/ })),
     ]);
+
+// Purge CSS
+if (wee.purgeCss.enabled) {
+    let contentPaths = [];
+
+    if (Array.isArray(wee.purgeCss.paths)) {
+        wee.purgeCss.paths.forEach((pattern) => {
+            contentPaths = [
+                ...glob.sync(pattern, { nodir: true }),
+                ...contentPaths,
+            ];
+        });
+    } else {
+        contentPaths = [
+            ...glob.sync(wee.purgeCss.paths, { nodir: true })
+        ];
+    }
+
+    config.plugin('purge-css')
+        .use(PurgecssPlugin, [{
+            paths: contentPaths,
+        }])
+        .end();
+}
 
 // Run any project specific webpack config
 if (wee.chainWebpack && typeof wee.chainWebpack === 'function') {

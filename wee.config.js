@@ -50,6 +50,13 @@ module.exports = {
         },
         breakpointOffset: 25,
     },
+    purgeCss: {
+        enabled: false,
+        paths: [
+            'templates/**/*.twig',
+            'source/components/**/*.vue',
+        ],
+    },
     configureWebpack: {},
     chainWebpack: (config) => {},
     server: {

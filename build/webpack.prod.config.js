@@ -1,4 +1,5 @@
 const merge = require('webpack-merge');
+const glob = require('glob');
 const config = require('./webpack.base.config');
 const paths = require('./paths');
 const wee = require(`${paths.project}/wee.config.js`);
