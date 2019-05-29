@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
     parserOptions: {
         parser: 'babel-eslint',
@@ -15,7 +17,7 @@ module.exports = {
     settings: {
         'import/resolver': {
             webpack: {
-                config: './build/webpack.dev.config.js',
+                config: path.resolve(__dirname, 'build/webpack.dev.config.js'),
             },
         },
     },
