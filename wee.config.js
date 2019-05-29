@@ -18,7 +18,7 @@ module.exports = {
     manifest: {
         enabled: false,
         options: {
-            filename: 'manifest.json',
+            filename: 'assets.json',
         },
     },
     chunking: {
@@ -53,8 +53,7 @@ module.exports = {
     purgeCss: {
         enabled: false,
         paths: [
-            'templates/**/*.twig',
-            'source/components/**/*.vue',
+            'public/index.html',
         ],
     },
     configureWebpack: {},
