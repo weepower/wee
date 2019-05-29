@@ -29,7 +29,7 @@
     "lint": "eslint --ext .js,.vue source",
     "lint:fix": "npm run lint -- --fix",
     "start": "npm run watch",
-    "prebuild": "node build/prebuild.js",
+    "prebuild": "node $npm_package_config_build/prebuild.js",
     "build": "cross-env NODE_ENV=development BASE_PATH=$npm_package_config_source webpack --config $npm_package_config_build/webpack.dev.config.js --progress --hide-modules --display=normal",
     "build:prod": "npm run clean && cross-env NODE_ENV=production BASE_PATH=$npm_package_config_source webpack -p --config $npm_package_config_build/webpack.prod.config.js --progress --hide-modules",
     "watch": "npm run clean && npm run build -- --watch"
