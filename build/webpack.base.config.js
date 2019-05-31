@@ -118,6 +118,7 @@ config.module
         .loader('sass-resources-loader')
         .options({
             resources: [
+                path.join(paths.build, 'temp/mixins.scss'),
                 path.join(paths.styles, 'variables.scss'),
                 path.join(paths.styles, 'mixins.scss'),
             ],

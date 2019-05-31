@@ -22,10 +22,18 @@ fs.writeFileSync(paths.packageJson, JSON.stringify(packageJson, null, 2));
 /**
  * Build the breakpoint
  *
- * @param {*} breakpoint
- * @param {*} count
+ * @param {String} breakpoint
+ * @param {Number} count
  */
-const buildBreakpoint = (breakpoint, count) => `@${breakpoint} { html { font-family: '${count}'; } }\n`;
+const buildBreakpoint = (breakpoint, count) => `@include ${breakpoint} { html { font-family: '${count}'; } }\n`;
+
+/**
+ * Create a mixin based on the provided breakpoint information
+ *
+ * @param {String} breakpoint
+ * @param {Number} condition
+ */
+const buildMixin = (breakpoint, condition) => `@mixin ${breakpoint}() { @media (min-width: ${condition}px) { @content; } }\n`;
 
 /**
  * Create the responsive.scss file required for $screen
@@ -33,12 +41,16 @@ const buildBreakpoint = (breakpoint, count) => `@${breakpoint} { html { font-fam
  *
  * @param {*} breakpoints
  */
-const createResponsiveFile = (breakpoints) => {
+const createResponsiveFiles = (breakpoints) => {
     let count = 2;
-    let result = '/* stylelint-disable */\n\n';
+    const result = {
+        responsive: '/* stylelint-disable */\n\n',
+        mixins: '/* stylelint-disable */\n\n',
+    };
 
     Object.keys(breakpoints).forEach((breakpoint) => {
-        result += buildBreakpoint(breakpoint, count);
+        result.responsive += buildBreakpoint(breakpoint, count);
+        result.mixins += buildMixin(breakpoint, breakpoints[breakpoint]);
         count++;
     });
 
@@ -46,8 +58,9 @@ const createResponsiveFile = (breakpoints) => {
         fs.mkdirSync(paths.temp);
     }
 
-    fs.writeFileSync(path.resolve(paths.temp, 'responsive.scss'), result, 'utf-8');
+    fs.writeFileSync(path.resolve(paths.temp, 'responsive.scss'), result.responsive, 'utf-8');
+    fs.writeFileSync(path.resolve(paths.temp, 'mixins.scss'), result.mixins, 'utf-8');
 };
 
 // Create temp responsive.scss file
-createResponsiveFile(config.style.breakpoints);
+createResponsiveFiles(config.style.breakpoints);
