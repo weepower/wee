@@ -28,7 +28,7 @@ html,
     }
 }
 
-@mobileLandscape {
+@include mobileLandscape {
     .links {
         &__item {
             display: inline-block;
