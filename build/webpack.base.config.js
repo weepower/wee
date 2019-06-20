@@ -48,7 +48,7 @@ if (Object.keys(wee.script.output).length) {
 
 config.output
     .path(paths.output.scripts)
-    .publicPath(`/${wee.paths.assets}/scripts/`);
+    .publicPath((env === 'development') ? `/local-${wee.paths.assets}/scripts/` : `/${wee.paths.assets}/scripts/`);
 
 // Babel
 config

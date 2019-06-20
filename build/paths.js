@@ -1,5 +1,6 @@
 const path = require('path');
 
+const env = process.env.NODE_ENV;
 const build = __dirname;
 const project = path.resolve(build, '../');
 const wee = path.resolve(project, 'wee.config.js');
@@ -7,7 +8,7 @@ const packageJson = path.resolve(project, 'package.json');
 const config = require(wee);
 const source = path.resolve(project, config.paths.source);
 const root = path.resolve(project, config.paths.root);
-const assets = path.resolve(root, config.paths.assets);
+const assets = path.resolve(root, (env === 'development') ? `local-${config.paths.assets}` : config.paths.assets);
 const nodeModules = path.resolve(project, 'node_modules');
 const temp = path.resolve(build, 'temp');
 

@@ -8,6 +8,7 @@ temp/
 lcov.info
 tests/coverage/
 coverage/
+public/local-assets/*
 
 
 #------------------------------------

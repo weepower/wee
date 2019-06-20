@@ -13,6 +13,10 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 config
     .devtool('cheap-module-eval-source-map');
 
+config.stats({
+    children: false,
+});
+
 config.mode('development');
 
 config
