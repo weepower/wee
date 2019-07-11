@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[2],{veGz:function(n,t,i){"use strict";i.r(t);var w=i("6tEt");t["default"]=new w["a"]({init:function(){}})}}]);
+//# sourceMappingURL=2.bundle.js.map

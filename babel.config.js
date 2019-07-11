@@ -1,7 +1,6 @@
 /* eslint-disable import/newline-after-import */
 
-const paths = require('./build/paths');
-const { browserslist } = require(paths.packageJson);
+const { browserslist } = require('./package.json');
 
 module.exports = {
     presets: [

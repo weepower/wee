@@ -17,7 +17,7 @@ module.exports = {
     settings: {
         'import/resolver': {
             webpack: {
-                config: path.resolve(__dirname, 'build/webpack.dev.config.js'),
+                config: require('@weepower/cli/lib/service/config/webpack/webpack.config.js'),
             },
         },
     },

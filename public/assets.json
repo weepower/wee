@@ -1,0 +1,10 @@
+{
+  "app.css": "app.min.css",
+  "app.js": "app.bundle.js",
+  "app.css.map": "app.min.css.map",
+  "app.js.map": "app.bundle.js.map",
+  "chunk-vendors.js": "chunk-vendors.bundle.js",
+  "chunk-vendors.js.map": "chunk-vendors.bundle.js.map",
+  "2.bundle.js": "2.bundle.js",
+  "2.bundle.js.map": "2.bundle.js.map"
+}

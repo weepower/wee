@@ -1,14 +1,14 @@
 // Import wee-core reset and components - remove unused imports
-@import '~wee-core/styles/reset';
-@import '~wee-core/styles/components/helpers';
-@import '~wee-core/styles/components/buttons';
-@import '~wee-core/styles/components/code';
-@import '~wee-core/styles/components/forms';
-@import '~wee-core/styles/components/tables';
+@import '~@weepower/core/styles/reset';
+@import '~@weepower/core/styles/components/helpers';
+@import '~@weepower/core/styles/components/buttons';
+@import '~@weepower/core/styles/components/code';
+@import '~@weepower/core/styles/components/forms';
+@import '~@weepower/core/styles/components/tables';
 @import './print.scss';
 
 // Import generated media query file for screen mapping
-@import '../../build/temp/responsive';
+@import '~@weepower/core/styles/temp/responsive';
 
 #global {
     // Global helpers and state modifiers
