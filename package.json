@@ -31,7 +31,7 @@
     "wee": "wee"
   },
   "devDependencies": {
-    "@weepower/cli": "^1.0.1"
+    "@weepower/cli": "^1.0.4"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
