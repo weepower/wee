@@ -1,4 +1,4 @@
-import $router from 'wee-routes';
+import $router from '@weepower/core/scripts/wee-routes';
 import './bootstrap';
 
 $router.pjax().map([
