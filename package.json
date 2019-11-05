@@ -25,13 +25,21 @@
     "build": "build"
   },
   "scripts": {
+    "start": "wee serve",
     "build": "wee build",
     "serve": "wee serve",
     "watch": "wee serve",
-    "wee": "wee"
+    "lint": "wee lint",
+    "lint:fix": "wee lint --fix",
+    "wee": "wee",
+    "precommit": "npm run lint"
   },
   "devDependencies": {
+<<<<<<< Updated upstream
     "@weepower/cli": "^1.0.1"
+=======
+    "@weepower/cli": "^1.1.4"
+>>>>>>> Stashed changes
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
