@@ -43,9 +43,10 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "@weepower/core": "^2.2.22",
     "es6-promise": "^4.2.5",
+    "husky": "^3.0.9",
     "path-to-regexp": "1.7.0",
-    "vue": "^2.5.22",
-    "@weepower/core": "^2.2.22"
+    "vue": "^2.5.22"
   }
 }
