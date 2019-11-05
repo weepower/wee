@@ -1,8 +1,6 @@
 import $router from 'wee-routes';
 import './bootstrap';
 
-console.log('test');
-
 $router.pjax().map([
     {
         path: '/',
