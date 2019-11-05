@@ -35,11 +35,7 @@
     "precommit": "npm run lint"
   },
   "devDependencies": {
-<<<<<<< Updated upstream
-    "@weepower/cli": "^1.0.1"
-=======
     "@weepower/cli": "^1.1.4"
->>>>>>> Stashed changes
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
