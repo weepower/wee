@@ -1,11 +1,7 @@
 import $router from 'wee-routes';
 import './bootstrap';
 
-const teest = ';;;;;;';
-
-const what = 'asdfasdf'
-
-const cool = {wht: 'beans'}
+console.log('test');
 
 $router.pjax().map([
     {
