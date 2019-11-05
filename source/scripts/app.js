@@ -1,6 +1,8 @@
 import $router from 'wee-routes';
 import './bootstrap';
 
+const teest = ';;;;;;';
+
 $router.pjax().map([
     {
         path: '/',
