@@ -31,8 +31,12 @@
     "watch": "wee serve",
     "lint": "wee lint",
     "lint:fix": "wee lint --fix",
-    "wee": "wee",
-    "precommit": "npm run lint"
+    "wee": "wee"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
   },
   "devDependencies": {
     "@weepower/cli": "^1.1.4"
