@@ -25,19 +25,30 @@
     "build": "build"
   },
   "scripts": {
+    "start": "wee serve",
     "build": "wee build",
     "serve": "wee serve",
     "watch": "wee serve",
+    "lint:css": "wee stylelint",
+    "lint:css:fix": "wee stylelint --fix",
+    "lint:js": "wee eslint",
+    "lint:js:fix": "wee eslint --fix",
     "wee": "wee"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:js && npm run lint:css"
+    }
+  },
   "devDependencies": {
-    "@weepower/cli": "^1.1.1"
+    "@weepower/cli": "^1.2.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "@weepower/core": "^2.2.22",
     "es6-promise": "^4.2.5",
+    "husky": "^3.0.9",
     "path-to-regexp": "1.7.0",
-    "vue": "^2.5.22",
-    "@weepower/core": "^2.2.22"
+    "vue": "^2.5.22"
   }
 }

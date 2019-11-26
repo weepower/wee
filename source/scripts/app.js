@@ -5,7 +5,7 @@ $router.pjax().map([
     {
         path: '/',
         handler: [
-            () => import('../components/welcome').then(m => m.default || m),
+            () => import('../components/welcome').then((m) => m.default || m),
         ],
     },
 ]).run();
